@@ -29,8 +29,15 @@ namespace VotGESOrders
 		PrintDocument multidoc;
 		public Home() {
 			InitializeComponent();
-			OrdersContext.init();
+			
+			OrdersContext.init();			
+			
+		}
+
+
+		private void Page_Loaded(object sender, RoutedEventArgs e) {
 			OrdersContext.Current.FinishLoadingOrdersEvent += new OrdersContext.DelegateLoadedAllData(finish);
+			OrdersContext.load();
 		}
 
 
@@ -53,7 +60,8 @@ namespace VotGESOrders
 			cmbFilterType.ItemsSource = OrderFilter.FilterTypes;
 			cmbFilterType.DataContext = OrdersContext.Current.Filter;
 			cntrlFilter.lstAllUsers.ItemsSource = OrdersContext.Current.Context.OrdersUsers;
-			cntrlFilter.chooseObjectsWindow = new ChooseObjectsWindow();
+			cntrlFilter.chooseObjectsWindow = new ChooseObjectsWindow();			
+			
 			Logger.info("Главная страница загружена");
 		}
 
@@ -355,6 +363,8 @@ namespace VotGESOrders
 		private void btnMail_Click(object sender, RoutedEventArgs e) {
 			OrdersContext.Current.SendMail(true);
 		}
+
+		
 
 
 	}

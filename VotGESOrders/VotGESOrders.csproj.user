@@ -23,7 +23,7 @@
           </StartWorkingDirectory>
           <ShowWebRefOnDebugPrompt>True</ShowWebRefOnDebugPrompt>
           <OutOfBrowserProjectToDebug>VotGESOrders.Web</OutOfBrowserProjectToDebug>
-          <ShowRiaSvcsOnDebugPrompt>True</ShowRiaSvcsOnDebugPrompt>
+          <ShowRiaSvcsOnDebugPrompt>False</ShowRiaSvcsOnDebugPrompt>
         </SilverlightProjectProperties>
       </FlavorProperties>
     </VisualStudio>

@@ -58,6 +58,25 @@ namespace VotGESOrders.Web.Controllers
 			return View();
 		}
 
+		public ActionResult GetAllObjects() {
+			VotGESOrdersEntities context = new VotGESOrdersEntities();
+			IQueryable<OrderObjects> objects = from OrderObjects o in context.OrderObjects where o.objectID==0 select o;
+			List<string> data = new List<string>();
+			fillData(context, data, objects.ToArray()[0], "");
+			String str = String.Join("<br>", data);
+			Logging.Logger.info(str, Logging.Logger.LoggerSource.client);
+			return View();
+
+		}
+
+		protected void fillData(VotGESOrdersEntities context,List<string> data,OrderObjects par,string level){
+			IQueryable<OrderObjects> objects = from OrderObjects o in context.OrderObjects where o.parentID==par.objectID select o;
+			data.Add(level+par.objectName);
+			foreach (OrderObjects obj in objects){				
+				fillData(context, data, obj, level + "=");
+			}
+		}
+
 		public ActionResult About() {
 			return View();
 		}

@@ -84,37 +84,36 @@ namespace VotGESOrders
 		private bool readyObjects;
 		private bool readyOrders;
 		private bool readyAll;
+
+
 		protected void loadData() {
+			readyOrders = false;
+			readyAll = false;
 			readyObjects = false;
 			readyUsers = false;
-			readyOrders = true;
-			readyAll = false;
 
-			LoadOperation loadUsersOper=context.Load(context.LoadOrdersUsersQuery());
-			loadUsersOper.Completed += new EventHandler(loadUsersOper_Completed);
-			
-			LoadOperation loadObjectsOper=context.Load(context.LoadOrderObjectsQuery());
-			loadObjectsOper.Completed += new EventHandler(loadObjectsOper_Completed);
-
-			LoadOperation loadOrdersOper=context.Load(context.LoadOrdersQuery(SessionGUID));
-			loadOrdersOper.Completed += new EventHandler(loadOrdersOper_Completed);
+			LoadOperation loadUsersOper = context.Load(context.LoadOrdersUsersQuery());
+			loadUsersOper.Completed += new EventHandler(loadUsersOper_Completed);			
 		}
 
 		void loadUsersOper_Completed(object sender, EventArgs e) {
 			Logger.info("Получен список пользователей");
 			readyUsers = true;
-			loadOrders();
+			LoadOperation loadObjectsOper = context.Load(context.LoadOrderObjectsQuery());
+			loadObjectsOper.Completed += new EventHandler(loadObjectsOper_Completed);
 		}
 
 		void loadObjectsOper_Completed(object sender, EventArgs e) {
 			Logger.info("Получен список оборудования");
 			readyObjects = true;
-			loadOrders();
+			LoadOperation loadOrdersOper = context.Load(context.LoadOrdersQuery(SessionGUID));
+			loadOrdersOper.Completed += new EventHandler(loadOrdersOper_Completed);
 		}
 
 		void loadOrdersOper_Completed(object sender, EventArgs e) {
 			Logger.info("Получен список заявок");
 			readyOrders = true;			
+
 			loadOrders();
 		}
 
@@ -122,7 +121,9 @@ namespace VotGESOrders
 		public DelegateLoadedAllData FinishLoadingOrdersEvent=null;
 
 		private void loadOrders() {
+			Logger.info(String.Format("readyObjects:{0} readyUsers:{1} readyOrders:{2} readyAll:{3}", readyObjects, readyUsers, readyOrders, readyAll));
 			if (readyUsers && readyObjects&&readyOrders&&!readyAll) {
+				Logger.info("Данные загружены ");
 				OrderOperations.Current.CreateWindows();
 				readyAll = true;
 				view = new PagedCollectionView(context.Orders);
@@ -134,6 +135,7 @@ namespace VotGESOrders
 				}
 			}
 		}
+
 
 		
 
@@ -189,6 +191,9 @@ namespace VotGESOrders
 			ordersContext.context = new OrdersDomainContext();
 			ordersContext.filter = new OrderFilter();
 			GlobalStatus.Current.init();
+		}
+
+		public static void load() {
 			ordersContext.loadData();
 		}
 

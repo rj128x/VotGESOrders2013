@@ -32,9 +32,6 @@ namespace VotGESOrders
 
 			WebContext.Current.Authentication.LoadUser(OnLoadUser_Completed, null);
 			InitializeComponent();
-
-			
-			
 			
 		}
 

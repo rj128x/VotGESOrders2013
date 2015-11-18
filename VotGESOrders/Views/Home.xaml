@@ -6,7 +6,7 @@
 					  xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation" 
 					  xmlns:usr="clr-namespace:VotGESOrders.Views"
 					  mc:Ignorable="d" Title="Домашняя страница" Style="{StaticResource PageStyle}" 
-					  d:DesignHeight="500" d:DesignWidth="850" >
+					  d:DesignHeight="500" d:DesignWidth="850" Loaded="Page_Loaded" >
 
 	<Grid x:Name="LayoutRoot" VerticalAlignment="Stretch">
 		<Grid.RowDefinitions>
