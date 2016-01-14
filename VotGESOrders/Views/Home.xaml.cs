@@ -28,18 +28,26 @@ namespace VotGESOrders
 		DispatcherTimer timerExistChanges;
 		PrintDocument multidoc;
 		public Home() {
+			OrdersContext.init();
+			/*OrdersContext.Current.FinishLoadingOrdersEvent += new OrdersContext.DelegateLoadedAllData(finish);
+			OrdersContext.load();*/
 			InitializeComponent();
-			
-			OrdersContext.init();			
 			
 		}
 
 
 		private void Page_Loaded(object sender, RoutedEventArgs e) {
-			OrdersContext.Current.FinishLoadingOrdersEvent += new OrdersContext.DelegateLoadedAllData(finish);
-			OrdersContext.load();
+			
+			
 		}
 
+
+		private void ordersGridControl_Loaded(object sender, RoutedEventArgs e) {
+
+			OrdersContext.Current.FinishLoadingOrdersEvent += new OrdersContext.DelegateLoadedAllData(finish);
+			OrdersContext.load();
+			
+		}
 
 		public void finish() {
 			pnlButtons.DataContext = WebContext.Current.User;
@@ -363,6 +371,8 @@ namespace VotGESOrders
 		private void btnMail_Click(object sender, RoutedEventArgs e) {
 			OrdersContext.Current.SendMail(true);
 		}
+
+		
 
 		
 

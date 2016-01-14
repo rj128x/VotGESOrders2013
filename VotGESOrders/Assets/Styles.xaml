@@ -342,5 +342,7 @@
 		<Setter Property="HorizontalAlignment" Value="Stretch"/>
 		<Setter Property="VerticalAlignment" Value="Bottom"/>
 	</Style>
+    
+    
 
 </ResourceDictionary>
