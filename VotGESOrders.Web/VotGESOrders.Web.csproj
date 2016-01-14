@@ -181,6 +181,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>VotGESOrdersEntities.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\CranController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -288,6 +289,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\Release.pubxml" />
     <None Include="Properties\PublishProfiles\Test.pubxml" />
   </ItemGroup>

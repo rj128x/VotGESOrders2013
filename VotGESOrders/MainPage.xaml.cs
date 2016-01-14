@@ -21,12 +21,13 @@ namespace VotGESOrders
 		public MainPage() {
 			Logger.info("Старт главной страницы");			
 			InitializeComponent();	
-			LoginName.DataContext = WebContext.Current.User;
-			LinkEditTree.Visibility = WebContext.Current.User.AllowEditTree ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
-			LinkEditUsers.Visibility = WebContext.Current.User.AllowEditUsers ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;		
-			
 		}
 
+		public void startLoad() {
+			LoginName.DataContext = WebContext.Current.User;
+			LinkEditTree.Visibility = WebContext.Current.User.AllowEditTree ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+			LinkEditUsers.Visibility = WebContext.Current.User.AllowEditUsers ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+		}
 
 		public void finish() {
 			

@@ -115,6 +115,9 @@
     <Compile Include="Views\ChooseObjectsWindow.xaml.cs">
       <DependentUpon>ChooseObjectsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CrossKranWindow.xaml.cs">
+      <DependentUpon>CrossKranWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DateTimePicker.xaml.cs">
       <DependentUpon>DateTimePicker.xaml</DependentUpon>
     </Compile>
@@ -317,6 +320,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\OutOfBrowserSettings.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\CrossKranWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

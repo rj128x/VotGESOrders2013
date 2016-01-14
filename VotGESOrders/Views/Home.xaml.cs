@@ -29,23 +29,17 @@ namespace VotGESOrders
 		PrintDocument multidoc;
 		public Home() {
 			OrdersContext.init();
-			/*OrdersContext.Current.FinishLoadingOrdersEvent += new OrdersContext.DelegateLoadedAllData(finish);
-			OrdersContext.load();*/
-			InitializeComponent();
-			
+			InitializeComponent();			
 		}
 
 
 		private void Page_Loaded(object sender, RoutedEventArgs e) {
-			
-			
+			OrdersContext.Current.FinishLoadingOrdersEvent += new OrdersContext.DelegateLoadedAllData(finish);
+			OrdersContext.load();
 		}
 
 
 		private void ordersGridControl_Loaded(object sender, RoutedEventArgs e) {
-
-			OrdersContext.Current.FinishLoadingOrdersEvent += new OrdersContext.DelegateLoadedAllData(finish);
-			OrdersContext.load();
 			
 		}
 

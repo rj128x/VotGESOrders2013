@@ -30,25 +30,22 @@ namespace VotGESOrders
 							
 			this.ApplicationLifetimeObjects.Add(webcontext);
 
-			WebContext.Current.Authentication.LoadUser(OnLoadUser_Completed, null);
+			webcontext.Authentication.LoadUser(OnLoadUser_Completed, null);
 			InitializeComponent();
 			
 		}
 
 		private void Application_Startup(object sender, StartupEventArgs e) {
 			//this.RootVisual = new MainPage();
-			
+			this.RootVisual = new MainPage();
 		}
 
 		private void OnLoadUser_Completed(LoadUserOperation operation) {			
 			Logger.info("Пользователь авторизовался в клиенте");
-			this.RootVisual = new MainPage();
+			(this.RootVisual as MainPage).startLoad();
 			
 		}
 
-		public void finish() {
-				
-		}
 				
 		
 
