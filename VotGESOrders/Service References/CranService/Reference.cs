@@ -18,18 +18,16 @@ namespace VotGESOrders.CranService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CranFilter", Namespace="http://schemas.datacontract.org/2004/07/VotGESOrders.Web.Models")]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(VotGESOrders.CranService.CranTaskInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(VotGESOrders.CranService.ReturnMessage))]
     public partial class CranFilter : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private object DataField;
+        private System.Collections.ObjectModel.ObservableCollection<VotGESOrders.CranService.CranTaskInfo> DataField;
         
         private System.DateTime DateEndField;
         
         private System.DateTime DateStartField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public object Data {
+        public System.Collections.ObjectModel.ObservableCollection<VotGESOrders.CranService.CranTaskInfo> Data {
             get {
                 return this.DataField;
             }
@@ -103,6 +101,18 @@ namespace VotGESOrders.CranService {
         private System.DateTime NeedStartDateField;
         
         private int NumberField;
+        
+        private string StateField;
+        
+        private bool canChangeField;
+        
+        private bool canCheckField;
+        
+        private bool changeField;
+        
+        private bool changedField;
+        
+        private bool checkField;
         
         private bool initField;
         
@@ -245,6 +255,84 @@ namespace VotGESOrders.CranService {
                 if ((this.NumberField.Equals(value) != true)) {
                     this.NumberField = value;
                     this.RaisePropertyChanged("Number");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string State {
+            get {
+                return this.StateField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StateField, value) != true)) {
+                    this.StateField = value;
+                    this.RaisePropertyChanged("State");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool canChange {
+            get {
+                return this.canChangeField;
+            }
+            set {
+                if ((this.canChangeField.Equals(value) != true)) {
+                    this.canChangeField = value;
+                    this.RaisePropertyChanged("canChange");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool canCheck {
+            get {
+                return this.canCheckField;
+            }
+            set {
+                if ((this.canCheckField.Equals(value) != true)) {
+                    this.canCheckField = value;
+                    this.RaisePropertyChanged("canCheck");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool change {
+            get {
+                return this.changeField;
+            }
+            set {
+                if ((this.changeField.Equals(value) != true)) {
+                    this.changeField = value;
+                    this.RaisePropertyChanged("change");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool changed {
+            get {
+                return this.changedField;
+            }
+            set {
+                if ((this.changedField.Equals(value) != true)) {
+                    this.changedField = value;
+                    this.RaisePropertyChanged("changed");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool check {
+            get {
+                return this.checkField;
+            }
+            set {
+                if ((this.checkField.Equals(value) != true)) {
+                    this.checkField = value;
+                    this.RaisePropertyChanged("check");
                 }
             }
         }

@@ -10,7 +10,7 @@ namespace VotGESOrders.Web.Models {
 	public class CranFilter {
 		public DateTime DateStart { get; set; }
 		public DateTime DateEnd { get; set; }
-		public IQueryable<CranTaskInfo> Data { get; set; }
+		public List<CranTaskInfo> Data { get; set; }
 	}
 
 	public class ReturnMessage {
@@ -38,26 +38,45 @@ namespace VotGESOrders.Web.Models {
 		public DateTime AllowDateEnd { get; set; }
 		public bool Allowed { get; set; }
 		public bool Denied { get; set; }
-		public bool init;
+		public string State { get; set; }
+		public bool init{get;set;}
+		public bool change { get; set; }
+		public bool check { get; set; }
+		public bool changed { get; set; }
+
+		public bool canChange { get; set; }
+		public bool canCheck { get; set; }
 
 		public CranTaskInfo() {
 
 		}
 
 		public CranTaskInfo(CranTask tbl) {
+			OrdersUser currentUser=OrdersUser.loadFromCache(HttpContext.Current.User.Identity.Name);
 			CranNumber = tbl.CranNumber;
 			Number = tbl.Number;
 			NeedStartDate = tbl.NeedDateStart;
 			NeedEndDate = tbl.NeedDateEnd;
 			Comment = tbl.Comment;
 			Author = OrdersUser.loadFromCache(tbl.Author).FullName;
+			State = "Новая";
 			Allowed = tbl.Allowed;
 			Denied = tbl.Denied;
+			canChange = (!Allowed)&&(!Denied)&&tbl.Author.ToLower() == currentUser.Name.ToLower();
+			canCheck = currentUser.AllowReviewOrder;
+			if (Denied) {
+				State = "Отклонена";
+				canChange = false;
+			}
 			if (tbl.Allowed) {
 				AuthorAllow = OrdersUser.loadFromCache(tbl.AuthorAllow).FullName;
 				AllowDateStart = tbl.AllowedDateStart.Value;
 				AllowDateEnd = tbl.AllowedDateEnd.Value;
+				canChange = false;
+				State = "Разрешена";
 			}
+			
+
 		}
 
 		public static ReturnMessage  CreateCranTask(CranTaskInfo task) {
@@ -74,11 +93,12 @@ namespace VotGESOrders.Web.Models {
 						task.Number = tsk.Number+1;
 					}
 					else {
-						tsk.Number = 1;
+						task.Number = 1;
 					}
 					tbl.Allowed = false;
 					tbl.Denied = false;
 					tbl.Author = currentUser.Name;
+					eni.CranTask.AddObject(tbl);
 					result="Заявка на кран успешно создана";
 				}
 				else {
@@ -89,30 +109,37 @@ namespace VotGESOrders.Web.Models {
 					tbl = tsk;
 					result = "Заявка на кран успешно создана";
 				}
+				tbl.Number = task.Number;
 				tbl.NeedDateStart = task.NeedStartDate;
 				tbl.NeedDateEnd = task.NeedEndDate;
 				tbl.Comment = task.Comment;
 				tbl.CranNumber = task.CranNumber;
-				if (task.Allowed) {
+				if (task.Allowed) {					
 					tbl.AllowedDateStart = task.AllowDateStart;
 					tbl.AllowedDateEnd = task.AllowDateEnd;
 					tbl.Denied = false;
+					tbl.Allowed = true;
 					result = "Заявка на кран разрешена";
 				}
-
 				if (task.Denied) {
 					tbl.AllowedDateStart = null;
 					tbl.AllowedDateEnd = null;
 					tbl.Allowed = false;
+					tbl.Denied = true;
 					result = "Заявка на кран отклонена";
 				}
 
-				eni.CranTask.AddObject(tbl);
+				if (task.Allowed || task.Denied) {
+					tbl.AuthorAllow = currentUser.Name;
+				}
+
+
+				
 				eni.SaveChanges();
 				return new ReturnMessage(true,result);
 			}
 			catch (Exception e) {
-				Logger.info("Ошибка при создании/изменении заявки на работу крана", Logger.LoggerSource.server);
+				Logger.info("Ошибка при создании/изменении заявки на работу крана "+e.ToString(), Logger.LoggerSource.server);
 				return new ReturnMessage(false,"Ошибка при создании/изменении заявки на работу крана");
 			}
 		}
@@ -129,7 +156,7 @@ namespace VotGESOrders.Web.Models {
 			foreach (CranTask tbl in data) {
 				result.Add(new CranTaskInfo(tbl));
 			}
-			Filter.Data = result.AsQueryable();
+			Filter.Data = result;
 			return Filter;
 		}
 
