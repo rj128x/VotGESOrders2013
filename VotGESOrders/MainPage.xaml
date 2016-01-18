@@ -52,7 +52,7 @@
 					<Rectangle x:Name="Divider2" Style="{StaticResource DividerStyle}"/>
 
 					<HyperlinkButton x:Name="Link2" Style="{StaticResource LinkStyle}" 
-                                     NavigateUri="/About" TargetName="ContentFrame" Content="о программе"/>
+                                     NavigateUri="/CransPage" TargetName="ContentFrame" Content="Краны МЗ"/>
 
 				</StackPanel>
 			</Border>

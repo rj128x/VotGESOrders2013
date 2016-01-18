@@ -27,6 +27,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -83,6 +84,7 @@
       <Private>True</Private>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <EmbedInteropTypes>False</EmbedInteropTypes>
@@ -183,11 +185,15 @@
     </Compile>
     <Compile Include="Controllers\CranController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="CranService.svc.cs">
+      <DependentUpon>CranService.svc</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\CranTaskInfo.cs" />
     <Compile Include="Models\LastUpdate.cs" />
     <Compile Include="Models\MailContext.cs" />
     <Compile Include="Models\Order.cs" />
@@ -208,6 +214,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ClientBin\VotGESOrders.xap" />
+    <Content Include="CranService.svc" />
     <Content Include="Global.asax" />
     <Content Include="Silverlight.js" />
     <Content Include="SQL\1.xml" />

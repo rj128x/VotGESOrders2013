@@ -124,6 +124,22 @@ namespace VotGESOrders.Web.ADONETEntities
             }
         }
         private ObjectSet<Users> _Users;
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        public ObjectSet<CranTask> CranTask
+        {
+            get
+            {
+                if ((_CranTask == null))
+                {
+                    _CranTask = base.CreateObjectSet<CranTask>("CranTask");
+                }
+                return _CranTask;
+            }
+        }
+        private ObjectSet<CranTask> _CranTask;
 
         #endregion
 
@@ -152,6 +168,14 @@ namespace VotGESOrders.Web.ADONETEntities
         {
             base.AddObject("Users", users);
         }
+    
+        /// <summary>
+        /// Устаревший метод для добавления новых объектов в набор EntitySet CranTask. Взамен можно использовать метод .Add связанного свойства ObjectSet&lt;T&gt;.
+        /// </summary>
+        public void AddToCranTask(CranTask cranTask)
+        {
+            base.AddObject("CranTask", cranTask);
+        }
 
         #endregion
 
@@ -160,6 +184,317 @@ namespace VotGESOrders.Web.ADONETEntities
     #endregion
 
     #region Сущности
+    
+    /// <summary>
+    /// Нет доступной документации по метаданным.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="VotGESOrdersModel", Name="CranTask")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class CranTask : EntityObject
+    {
+        #region Фабричный метод
+    
+        /// <summary>
+        /// Создание нового объекта CranTask.
+        /// </summary>
+        /// <param name="number">Исходное значение свойства Number.</param>
+        /// <param name="cranNumber">Исходное значение свойства CranNumber.</param>
+        /// <param name="author">Исходное значение свойства Author.</param>
+        /// <param name="needDateStart">Исходное значение свойства NeedDateStart.</param>
+        /// <param name="comment">Исходное значение свойства Comment.</param>
+        /// <param name="allowed">Исходное значение свойства Allowed.</param>
+        /// <param name="denied">Исходное значение свойства Denied.</param>
+        /// <param name="needDateEnd">Исходное значение свойства NeedDateEnd.</param>
+        public static CranTask CreateCranTask(global::System.Int32 number, global::System.Int32 cranNumber, global::System.String author, global::System.DateTime needDateStart, global::System.String comment, global::System.Boolean allowed, global::System.Boolean denied, global::System.DateTime needDateEnd)
+        {
+            CranTask cranTask = new CranTask();
+            cranTask.Number = number;
+            cranTask.CranNumber = cranNumber;
+            cranTask.Author = author;
+            cranTask.NeedDateStart = needDateStart;
+            cranTask.Comment = comment;
+            cranTask.Allowed = allowed;
+            cranTask.Denied = denied;
+            cranTask.NeedDateEnd = needDateEnd;
+            return cranTask;
+        }
+
+        #endregion
+
+        #region Свойства-примитивы
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Number
+        {
+            get
+            {
+                return _Number;
+            }
+            set
+            {
+                if (_Number != value)
+                {
+                    OnNumberChanging(value);
+                    ReportPropertyChanging("Number");
+                    _Number = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Number");
+                    OnNumberChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Number;
+        partial void OnNumberChanging(global::System.Int32 value);
+        partial void OnNumberChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 CranNumber
+        {
+            get
+            {
+                return _CranNumber;
+            }
+            set
+            {
+                OnCranNumberChanging(value);
+                ReportPropertyChanging("CranNumber");
+                _CranNumber = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CranNumber");
+                OnCranNumberChanged();
+            }
+        }
+        private global::System.Int32 _CranNumber;
+        partial void OnCranNumberChanging(global::System.Int32 value);
+        partial void OnCranNumberChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Author
+        {
+            get
+            {
+                return _Author;
+            }
+            set
+            {
+                OnAuthorChanging(value);
+                ReportPropertyChanging("Author");
+                _Author = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Author");
+                OnAuthorChanged();
+            }
+        }
+        private global::System.String _Author;
+        partial void OnAuthorChanging(global::System.String value);
+        partial void OnAuthorChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime NeedDateStart
+        {
+            get
+            {
+                return _NeedDateStart;
+            }
+            set
+            {
+                OnNeedDateStartChanging(value);
+                ReportPropertyChanging("NeedDateStart");
+                _NeedDateStart = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NeedDateStart");
+                OnNeedDateStartChanged();
+            }
+        }
+        private global::System.DateTime _NeedDateStart;
+        partial void OnNeedDateStartChanging(global::System.DateTime value);
+        partial void OnNeedDateStartChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Comment
+        {
+            get
+            {
+                return _Comment;
+            }
+            set
+            {
+                OnCommentChanging(value);
+                ReportPropertyChanging("Comment");
+                _Comment = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Comment");
+                OnCommentChanged();
+            }
+        }
+        private global::System.String _Comment;
+        partial void OnCommentChanging(global::System.String value);
+        partial void OnCommentChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean Allowed
+        {
+            get
+            {
+                return _Allowed;
+            }
+            set
+            {
+                OnAllowedChanging(value);
+                ReportPropertyChanging("Allowed");
+                _Allowed = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Allowed");
+                OnAllowedChanged();
+            }
+        }
+        private global::System.Boolean _Allowed;
+        partial void OnAllowedChanging(global::System.Boolean value);
+        partial void OnAllowedChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> AllowedDateStart
+        {
+            get
+            {
+                return _AllowedDateStart;
+            }
+            set
+            {
+                OnAllowedDateStartChanging(value);
+                ReportPropertyChanging("AllowedDateStart");
+                _AllowedDateStart = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AllowedDateStart");
+                OnAllowedDateStartChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _AllowedDateStart;
+        partial void OnAllowedDateStartChanging(Nullable<global::System.DateTime> value);
+        partial void OnAllowedDateStartChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> AllowedDateEnd
+        {
+            get
+            {
+                return _AllowedDateEnd;
+            }
+            set
+            {
+                OnAllowedDateEndChanging(value);
+                ReportPropertyChanging("AllowedDateEnd");
+                _AllowedDateEnd = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AllowedDateEnd");
+                OnAllowedDateEndChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _AllowedDateEnd;
+        partial void OnAllowedDateEndChanging(Nullable<global::System.DateTime> value);
+        partial void OnAllowedDateEndChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String AuthorAllow
+        {
+            get
+            {
+                return _AuthorAllow;
+            }
+            set
+            {
+                OnAuthorAllowChanging(value);
+                ReportPropertyChanging("AuthorAllow");
+                _AuthorAllow = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("AuthorAllow");
+                OnAuthorAllowChanged();
+            }
+        }
+        private global::System.String _AuthorAllow;
+        partial void OnAuthorAllowChanging(global::System.String value);
+        partial void OnAuthorAllowChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean Denied
+        {
+            get
+            {
+                return _Denied;
+            }
+            set
+            {
+                OnDeniedChanging(value);
+                ReportPropertyChanging("Denied");
+                _Denied = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Denied");
+                OnDeniedChanged();
+            }
+        }
+        private global::System.Boolean _Denied;
+        partial void OnDeniedChanging(global::System.Boolean value);
+        partial void OnDeniedChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime NeedDateEnd
+        {
+            get
+            {
+                return _NeedDateEnd;
+            }
+            set
+            {
+                OnNeedDateEndChanging(value);
+                ReportPropertyChanging("NeedDateEnd");
+                _NeedDateEnd = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NeedDateEnd");
+                OnNeedDateEndChanged();
+            }
+        }
+        private global::System.DateTime _NeedDateEnd;
+        partial void OnNeedDateEndChanging(global::System.DateTime value);
+        partial void OnNeedDateEndChanged();
+
+        #endregion
+
+    
+    }
     
     /// <summary>
     /// Нет доступной документации по метаданным.

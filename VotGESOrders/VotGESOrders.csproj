@@ -105,15 +105,24 @@
     <Compile Include="Converters\ForegroundColorConverter.cs" />
     <Compile Include="Converters\BackgroundColorConverter.cs" />
     <Compile Include="Converters\ExpiredTimeConverter.cs" />
+    <Compile Include="CransContext.cs" />
     <Compile Include="GlobalStatus.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="OrderOperations.cs" />
     <Compile Include="OrdersContext.cs" />
+    <Compile Include="Service References\CranService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Views\AcceptWindow.xaml.cs">
       <DependentUpon>AcceptWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ChooseObjectsWindow.xaml.cs">
       <DependentUpon>ChooseObjectsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CransPage.xaml.cs">
+      <DependentUpon>CransPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CrossKranWindow.xaml.cs">
       <DependentUpon>CrossKranWindow.xaml</DependentUpon>
@@ -312,8 +321,24 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\CransPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\DataSources\VotGESOrders.Web.Services.OrdersDomainContext.datasource" />
+    <None Include="Service References\CranService\CranService.wsdl" />
+    <None Include="Service References\CranService\CranService.xsd" />
+    <None Include="Service References\CranService\CranService1.wsdl" />
+    <None Include="Service References\CranService\CranService1.xsd" />
+    <None Include="Service References\CranService\CranService2.xsd" />
+    <Content Include="ServiceReferences.ClientConfig" />
+    <None Include="Service References\CranService\VotGESOrders.CranService.CranFilter.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CranService\VotGESOrders.CranService.ReturnMessage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -326,6 +351,24 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\CranService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CranService\CranService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CranService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CranService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CranService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
