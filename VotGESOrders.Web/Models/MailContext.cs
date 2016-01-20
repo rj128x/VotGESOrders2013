@@ -5,10 +5,8 @@ using System.Web;
 using VotGESOrders.Web.Logging;
 using System.Net.Mail;
 
-namespace VotGESOrders.Web.Models
-{
-	public class MailContext
-	{
+namespace VotGESOrders.Web.Models {
+	public class MailContext {
 		protected static string smtpServer;
 		protected static string smtpUser;
 		protected static string smtpPassword;
@@ -22,26 +20,26 @@ namespace VotGESOrders.Web.Models
 			smtpPassword = System.Configuration.ConfigurationManager.AppSettings["smtpPassword"];
 			smtpDomain = System.Configuration.ConfigurationManager.AppSettings["smtpDomain"];
 			smtpFrom = System.Configuration.ConfigurationManager.AppSettings["smtpFrom"];
-			Int32.TryParse(System.Configuration.ConfigurationManager.AppSettings["smtpPort"],out smtpPort);
+			Int32.TryParse(System.Configuration.ConfigurationManager.AppSettings["smtpPort"], out smtpPort);
 
 
 		}
-		public static void sendMail(string header, Order order, bool isNewOrder, bool onlyAuthor, Order prevOrder=null) {
-			if (HttpContext.Current.Request.Url.Port == 8071 || HttpContext.Current.Request.Url.Port == 8090)
+		public static void sendMail(string header, Order order, bool isNewOrder, bool onlyAuthor, Order prevOrder = null) {
+			if (HttpContext.Current.Request.Url.Port == 8072 || HttpContext.Current.Request.Url.Port == 8090)
 				return;
 			try {
-				IQueryable users=OrdersUser.getAllUsers();
-				List<string> mailToList=new List<string>();
+				IQueryable users = OrdersUser.getAllUsers();
+				List<string> mailToList = new List<string>();
 
 				foreach (OrdersUser user in users) {
 					if (
 						user.SendAllAgreeMail && order.AgreeUsers.Contains(user) && !mailToList.Contains(user.Mail) && !onlyAuthor ||
 						user.SendAllMail && !mailToList.Contains(user.Mail) ||
-						user.SendCreateMail && order.UserCreateOrderID == user.UserID && !mailToList.Contains(user.Mail)||
-						onlyAuthor && order.UserCreateOrderID == user.UserID && !mailToList.Contains(user.Mail)||
+						user.SendCreateMail && order.UserCreateOrderID == user.UserID && !mailToList.Contains(user.Mail) ||
+						onlyAuthor && order.UserCreateOrderID == user.UserID && !mailToList.Contains(user.Mail) ||
 						isNewOrder && (user.SendAllCreateMail || user.SendAgreeMail && order.AgreeUsers.Contains(user)) && !mailToList.Contains(user.Mail) && !onlyAuthor
 						) {
-						if (user.Mails.Count>0) {
+						if (user.Mails.Count > 0) {
 							foreach (string mail in user.Mails) {
 								if (!String.IsNullOrEmpty(mail)) {
 									mailToList.Add(mail);
@@ -51,25 +49,75 @@ namespace VotGESOrders.Web.Models
 					}
 				}
 
-				string message=OrderView.getOrderHTML(order);
-				if (prevOrder!=null) {
-					message += "<hr/>" + OrderView.getOrderHTML(prevOrder,false);
+				string message = OrderView.getOrderHTML(order);
+				if (prevOrder != null) {
+					message += "<hr/>" + OrderView.getOrderHTML(prevOrder, false);
 				}
 				message += String.Format("<h3><a href='{0}'>Перейти к списку заявок</a></h3>", String.Format("http://{0}:{1}", HttpContext.Current.Request.Url.Host, HttpContext.Current.Request.Url.Port));
-				
+
 				if (mailToList.Count > 0) {
 					//SendMailLocal("mx-votges-021.corp.gidroogk.com", 25, "", "", "", "SR-VOTGES-INT@votges.rushydro.ru", mailToList, header, message, true);
 					SendMailLocal(smtpServer, smtpPort, smtpUser, smtpPassword, smtpDomain, smtpFrom, mailToList, header, message, true);
 				}
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				Logger.error(String.Format("Ошибка при отправке почты: {0}", e.ToString()), Logger.LoggerSource.server);
 			}
 		}
 
+		public static void sendCranTask(string header, CranTaskInfo task) {
+			/*if (HttpContext.Current.Request.Url.Port == 8071 || HttpContext.Current.Request.Url.Port == 8090)
+				return;*/
+			try {
+				IQueryable users = OrdersUser.getAllUsers();
+				List<string> mailToList = new List<string>();
+
+				foreach (OrdersUser user in users) {
+					if (
+							!mailToList.Contains(user.Mail) &&
+						(
+						user.SendAllMail ||	
+						user.SendCreateMail && task.Author.ToLower() == user.Name.ToLower()  ||						
+						task.init && user.SendAllCreateMail 
+						))		
+					{
+						if (user.Mails.Count > 0) {
+							foreach (string mail in user.Mails) {
+								if (!String.IsNullOrEmpty(mail)) {
+									mailToList.Add(mail);
+								}
+							}
+						}
+					}
+				}
+
+				string message = String.Format("<h1>Заявка на работу крана №{0}</h1><br/><h2>Автор: {1}<br/>Текст: {2}<br/>Запрошенное время: {3} - {4} <br/></h2>",
+					task.CranNumber, task.Author, task.Comment, task.NeedStartDate.ToString("dd.MM.yyyy HH:mm"), task.NeedEndDate.ToString("dd.MM.yyyy HH:mm"));
+				if (task.Allowed || task.Denied) {
+					message += String.Format("<h1>{1}</h1><h2> Заявку рассмотрел: {0}", task.AuthorAllow, task.Allowed ? "Заявка разрешена" : "Заявка отклонена");
+				}
+				if (task.Allowed)
+					message += string.Format("<h2>Разрешенное время: {0} - {1}</h2>", task.AllowDateStart.ToString("dd.MM.yyyy HH:mm"), task.AllowDateEnd.ToString("dd.MM.yyyy HH:mm"));
+				
+				message += String.Format("<h3><a href='{0}'>Перейти к списку заявок</a></h3>", String.Format("http://{0}:{1}", HttpContext.Current.Request.Url.Host, HttpContext.Current.Request.Url.Port));
+
+				if (mailToList.Count > 0) {
+					//SendMailLocal("mx-votges-021.corp.gidroogk.com", 25, "", "", "", "SR-VOTGES-INT@votges.rushydro.ru", mailToList, header, message, true);
+					SendMailLocal(smtpServer, smtpPort, smtpUser, smtpPassword, smtpDomain, smtpFrom, mailToList, header, message, true);
+				}
+			}
+			catch (Exception e) {
+				Logger.error(String.Format("Ошибка при отправке почты: {0}", e.ToString()), Logger.LoggerSource.server);
+			}
+		}
+
+
+
+
 		public static void sendOrdersList(string header, List<Order> orders) {
 			try {
-				IQueryable users=OrdersUser.getAllUsers();
-				List<string> mailToList=new List<string>();
+				IQueryable users = OrdersUser.getAllUsers();
+				List<string> mailToList = new List<string>();
 
 				OrdersUser CurrentUser = OrdersUser.loadFromCache(HttpContext.Current.User.Identity.Name);
 				foreach (string mail in CurrentUser.Mails) {
@@ -78,17 +126,18 @@ namespace VotGESOrders.Web.Models
 					}
 				}
 
-				bool isFirst=true;
+				bool isFirst = true;
 				if (mailToList.Count > 0) {
-					string message="";
+					string message = "";
 					foreach (Order order in orders) {
 						message += OrderView.getOrderHTML(order, isFirst) + "<hr/>";
 						isFirst = false;
 					}
 					//SendMailLocal("mx-votges-021.corp.gidroogk.com", 25, "", "", "", "SR-VOTGES-INT@votges.rushydro.ru", mailToList, header, message,true);
 					SendMailLocal(smtpServer, smtpPort, smtpUser, smtpPassword, smtpDomain, smtpFrom, mailToList, header, message, true);
-				}				
-			} catch (Exception e) {
+				}
+			}
+			catch (Exception e) {
 				Logger.error(String.Format("Ошибка при отправке почты: {0}", e.ToString()), Logger.LoggerSource.server);
 			}
 		}
@@ -96,7 +145,7 @@ namespace VotGESOrders.Web.Models
 
 		private static bool SendMailLocal(string smtp_server, int port, string mail_user, string mail_password, string domain, string mail_from, List<string> mailToList, string subject, string message, bool is_html) {
 
-			System.Net.Mail.MailMessage mess =	new System.Net.Mail.MailMessage();
+			System.Net.Mail.MailMessage mess = new System.Net.Mail.MailMessage();
 
 			mess.From = new MailAddress(mail_from);
 			mess.Subject = subject; mess.Body = message;
@@ -107,11 +156,12 @@ namespace VotGESOrders.Web.Models
 			mess.SubjectEncoding = System.Text.Encoding.UTF8;
 			mess.BodyEncoding = System.Text.Encoding.UTF8;
 			mess.IsBodyHtml = is_html;
-			System.Net.Mail.SmtpClient client =	new System.Net.Mail.SmtpClient(smtp_server, port);
+			System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient(smtp_server, port);
 			client.EnableSsl = true;
 			if (string.IsNullOrEmpty(mail_user)) {
 				client.UseDefaultCredentials = true;
-			} else {
+			}
+			else {
 				client.Credentials = new System.Net.NetworkCredential(mail_user, mail_password, domain);
 			}
 			// Отправляем письмо

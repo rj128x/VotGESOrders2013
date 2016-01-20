@@ -83,6 +83,7 @@ namespace VotGESOrders.Web.Models {
 			Logger.info("Создание/изменение заявки на работу крана",Logger.LoggerSource.server);
 			try {
 				string result="";
+				string message=String.Format("Заявка на работу крана {0} №",task.CranNumber);
 				OrdersUser currentUser=OrdersUser.loadFromCache(HttpContext.Current.User.Identity.Name);
 				VotGESOrdersEntities eni = new VotGESOrdersEntities();
 				CranTask tbl = new CranTask();
@@ -98,6 +99,7 @@ namespace VotGESOrders.Web.Models {
 					tbl.Allowed = false;
 					tbl.Denied = false;
 					tbl.Author = currentUser.Name;
+					task.Author = currentUser.FullName;
 					eni.CranTask.AddObject(tbl);
 					result="Заявка на кран успешно создана";
 				}
@@ -107,8 +109,10 @@ namespace VotGESOrders.Web.Models {
 						return new ReturnMessage(false,"Заявка не найдена");
 					}
 					tbl = tsk;
-					result = "Заявка на кран успешно создана";
+					result = "Заявка на кран успешно создана";					
 				}
+				message+=task.Number+". ";
+
 				tbl.Number = task.Number;
 				tbl.NeedDateStart = task.NeedStartDate;
 				tbl.NeedDateEnd = task.NeedEndDate;
@@ -119,14 +123,20 @@ namespace VotGESOrders.Web.Models {
 					tbl.AllowedDateEnd = task.AllowDateEnd;
 					tbl.Denied = false;
 					tbl.Allowed = true;
+					task.AuthorAllow = currentUser.FullName;
 					result = "Заявка на кран разрешена";
+					message+=" Заявка разрешена";
 				}
-				if (task.Denied) {
+				else if (task.Denied) {
 					tbl.AllowedDateStart = null;
 					tbl.AllowedDateEnd = null;
 					tbl.Allowed = false;
 					tbl.Denied = true;
+					task.AuthorAllow = currentUser.FullName;
 					result = "Заявка на кран отклонена";
+					message+=" Заявка отклонена";
+				}else if (!task.init){
+					message+=" Заявка изменена";
 				}
 
 				if (task.Allowed || task.Denied) {
@@ -136,6 +146,7 @@ namespace VotGESOrders.Web.Models {
 
 				
 				eni.SaveChanges();
+				MailContext.sendCranTask(message, task);
 				return new ReturnMessage(true,result);
 			}
 			catch (Exception e) {

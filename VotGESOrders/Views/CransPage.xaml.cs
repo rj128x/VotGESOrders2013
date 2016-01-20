@@ -12,7 +12,7 @@ using System.Windows.Shapes;
 using System.Windows.Navigation;
 using VotGESOrders.CranService;
 using System.ComponentModel;
-using System.Windows.Controls.DataVisualization.Charting;
+using Visiblox.Charts;
 
 namespace VotGESOrders.Views {
 
@@ -54,6 +54,8 @@ namespace VotGESOrders.Views {
 			CransContext.init();
 			grdRight.DataContext = this;
 			init();
+			initChart();
+			newTask.Visibility = WebContext.Current.User.AllowCreateOrder ? Visibility.Visible : Visibility.Collapsed;
 		}
 
 		// Выполняется, когда пользователь переходит на эту страницу.
@@ -61,74 +63,19 @@ namespace VotGESOrders.Views {
 
 		}
 
-		protected DateTimeAxis xAxis;
-		protected LinearAxis yAxis;
-		protected Style slGreen;
-		protected Style spGreen;
-		protected Style slRed;
-		protected Style spRed;
-		protected Style slGray;
-		protected Style spGray;
-		protected Style slSel;
-		protected Style spSel;
-		protected Dictionary<int, Style> StylesPoly;
-		protected Dictionary<int, Style> StylesPoint;
+		public void initChart() {
+			CurrentChart.YAxis = new LinearAxis();
+			CurrentChart.XAxis = new DateTimeAxis();
+			CurrentChart.YAxis.AutoScaleToVisibleData = false;
+			CurrentChart.YAxis.LabelFormatString="";
+			IRange range=CurrentChart.YAxis.CreateRange();
+			range.Minimum = 0;
+			range.Maximum = 2.99;
+			CurrentChart.YAxis.SetActualRange(range);
+		}
+
 
 		public void init() {
-			xAxis = new DateTimeAxis();
-			yAxis = new LinearAxis();
-			xAxis.Orientation = AxisOrientation.X;
-			xAxis.Location = AxisLocation.Bottom;
-			xAxis.IntervalType = DateTimeIntervalType.Hours;
-			xAxis.Interval = 6;
-			xAxis.ShowGridLines = true;
-			yAxis.Orientation = AxisOrientation.Y;
-			yAxis.Location = AxisLocation.Left;
-			yAxis.Minimum = 0;
-			yAxis.Maximum = 2.9;
-			yAxis.Interval = 1;
-			yAxis.ShowGridLines = true;
-			chtTasks.Axes.Add(xAxis);
-			chtTasks.Axes.Add(yAxis);
-
-			slGreen = new Style(typeof(Polyline));
-			slGreen.Setters.Add(new Setter(Polyline.StrokeProperty, new SolidColorBrush(Colors.Green)));
-			slGreen.Setters.Add(new Setter(Polyline.StrokeThicknessProperty, 10));
-			slGreen.Setters.Add(new Setter(Polyline.OpacityProperty, 0.8));
-			spGreen = new Style(typeof(DataPoint));
-			spGreen.Setters.Add(new Setter(DataPoint.WidthProperty, 20));
-			spGreen.Setters.Add(new Setter(DataPoint.HeightProperty, 20));
-			spGreen.Setters.Add(new Setter(DataPoint.BackgroundProperty, new SolidColorBrush(Colors.Green)));
-
-
-			slRed = new Style(typeof(Polyline));
-			slRed.Setters.Add(new Setter(Polyline.StrokeProperty, new SolidColorBrush(Colors.Red)));
-			slRed.Setters.Add(new Setter(Polyline.StrokeThicknessProperty, 10));
-			slRed.Setters.Add(new Setter(Polyline.OpacityProperty, 0.8));
-			spRed = new Style(typeof(DataPoint));
-			spRed.Setters.Add(new Setter(DataPoint.WidthProperty, 15));
-			spRed.Setters.Add(new Setter(DataPoint.HeightProperty, 15));
-			spRed.Setters.Add(new Setter(DataPoint.BackgroundProperty, new SolidColorBrush(Colors.Red)));
-
-
-			slGray = new Style(typeof(Polyline));
-			slGray.Setters.Add(new Setter(Polyline.StrokeProperty, new SolidColorBrush(Colors.Gray)));
-			slGray.Setters.Add(new Setter(Polyline.StrokeThicknessProperty, 10));
-			slGray.Setters.Add(new Setter(Polyline.OpacityProperty, 0.8));
-			spGray = new Style(typeof(DataPoint));
-			spGray.Setters.Add(new Setter(DataPoint.WidthProperty, 15));
-			spGray.Setters.Add(new Setter(DataPoint.HeightProperty, 15));
-			spGray.Setters.Add(new Setter(DataPoint.BackgroundProperty, new SolidColorBrush(Colors.Gray)));
-
-			slSel = new Style(typeof(Polyline));
-			slSel.Setters.Add(new Setter(Polyline.StrokeProperty, new SolidColorBrush(Colors.Blue)));
-			slSel.Setters.Add(new Setter(Polyline.StrokeThicknessProperty, 10));
-			slSel.Setters.Add(new Setter(Polyline.OpacityProperty, 0.8));
-			spSel = new Style(typeof(DataPoint));
-			spSel.Setters.Add(new Setter(DataPoint.WidthProperty, 15));
-			spSel.Setters.Add(new Setter(DataPoint.HeightProperty, 15));
-			spSel.Setters.Add(new Setter(DataPoint.BackgroundProperty, new SolidColorBrush(Colors.Blue)));
-
 			CransContext.Single.Client.getCranTasksCompleted += Client_getCranTasksCompleted;
 			CransContext.Single.Client.CreateCranTaskCompleted += Client_CreateCranTaskCompleted;
 			CransContext.Single.Client.getCranTasksAsync(null);
@@ -172,10 +119,13 @@ namespace VotGESOrders.Views {
 		}
 
 		private void newTask_Click(object sender, RoutedEventArgs e) {
+			TempTask = null;
 			CurrentTask = new CranTaskInfo();
 			CurrentTask.init = true;
 			CurrentTask.canChange = true;
 			CurrentTask.canCheck = false;
+			CurrentTask.CranNumber = 1;
+			CurrentTask.Comment = " ";
 			CurrentTask.NeedStartDate = DateTime.Now.Date.AddDays(1);
 			CurrentTask.NeedEndDate = DateTime.Now.Date.AddDays(2);
 			pnlTask.DataContext = CurrentTask;
@@ -204,16 +154,14 @@ namespace VotGESOrders.Views {
 			try {
 				if (grdTasks.SelectedItem != task)
 					grdTasks.SelectedItem = task;
-				foreach (LineSeries serie in chtTasks.Series) {					
+				foreach (LineSeries serie in CurrentChart.Series) {
+
 					if (serie.Name == String.Format("order_{0}", task.Number)) {
-						serie.PolylineStyle = slSel;
-						serie.DataPointStyle = spSel;
-						
+						serie.LineStrokeThickness = 10;
 					}
 					else {
 						int num = getTaskNumber(serie.Name);
-						serie.PolylineStyle = StylesPoly[num];
-						serie.DataPointStyle = StylesPoint[num];
+						serie.LineStrokeThickness = 5;
 					}
 				}
 			}
@@ -240,67 +188,82 @@ namespace VotGESOrders.Views {
 			catch { }
 		}
 
-		public void processCransData() {
 
-			chtTasks.Series.Clear();
-
-			Style legendStyle = new Style(typeof(FrameworkElement));
-			legendStyle.Setters.Add(new Setter(FrameworkElement.WidthProperty, 0));
-			chtTasks.LegendStyle = legendStyle;
-
-			Style titleStyle = new Style(typeof(FrameworkElement));
-			titleStyle.Setters.Add(new Setter(FrameworkElement.HeightProperty, 0));
-			chtTasks.TitleStyle = titleStyle;
-
-			StylesPoly = new Dictionary<int, Style>();
-			StylesPoint = new Dictionary<int, Style>();
+		public void processSingleCran(int cranNumber) {
+			Dictionary<DateTime, CranTaskInfo> crans = new Dictionary<DateTime, CranTaskInfo>();	
 
 			foreach (CranTaskInfo task in CurrentFilter.Data) {
+				DateTime date = task.NeedStartDate;
+				if (task.Allowed)
+					date = task.AllowDateStart;
+				if (task.CranNumber==cranNumber){
+					while (crans.ContainsKey(date))
+						date=date.AddMilliseconds(1);
+					crans.Add(date,task);
+				}
+			}
+			crans.OrderBy(task => task.Key);
+					
+
+			double diffA = 0;
+			double diffD = 0.05;
+			
+			foreach (KeyValuePair<DateTime,CranTaskInfo> de in crans) {
+				CranTaskInfo task = de.Value;
 				LineSeries serie = new LineSeries();
-				List<TaskInfo> Points = new List<TaskInfo>();
-				serie.DependentValuePath = "Cran";
-				serie.IndependentValuePath = "Date";
-				serie.ItemsSource = Points;
-				serie.Title = String.Format("Заявка №{0} ({1})", task.Number, task.State);
+				DataSeries<DateTime, double> Points = new DataSeries<DateTime, double>();
 				serie.Name = String.Format("order_{0}", task.Number);
-				serie.IsSelectionEnabled = false;
 				serie.MouseLeftButtonUp += serie_MouseLeftButtonUp;
+				serie.LineStrokeThickness = 5;
+				serie.PointShape = Visiblox.Charts.Primitives.ShapeType.Rectangle;
+				serie.PointSize = 15;
+				serie.ShowPoints = true;
 
 				if (task.Allowed) {
-					Points.Add(new TaskInfo(task.AllowDateStart, task.CranNumber));
-					Points.Add(new TaskInfo(task.AllowDateEnd, task.CranNumber));
-					serie.DataPointStyle = spGreen;
-					serie.PolylineStyle = slGreen;
-
-					StylesPoly.Add(task.Number, slGreen);
-					StylesPoint.Add(task.Number, spGreen);
+					Points.Add(new DataPoint<DateTime, double>(task.AllowDateStart, task.CranNumber+diffA));
+					Points.Add(new DataPoint<DateTime, double>(task.AllowDateEnd, task.CranNumber + diffA));
+					serie.LineStroke = new SolidColorBrush(Colors.Green);
+					serie.PointFill = new SolidColorBrush(Colors.Green);
+					diffA += 0.05;
 				}
 
 				else if (task.Denied) {
-					Points.Add(new TaskInfo(task.NeedStartDate, task.CranNumber - 0.3));
-					Points.Add(new TaskInfo(task.NeedEndDate, task.CranNumber - 0.3));
-					serie.DataPointStyle = spRed;
-					serie.PolylineStyle = slRed;
+					Points.Add(new DataPoint<DateTime, double>(task.NeedStartDate, task.CranNumber - diffD));
+					Points.Add(new DataPoint<DateTime, double>(task.NeedEndDate, task.CranNumber -  diffD));
 
-					StylesPoly.Add(task.Number, slRed);
-					StylesPoint.Add(task.Number, spRed);
+					serie.LineStroke = new SolidColorBrush(Colors.Red);
+					serie.PointFill = new SolidColorBrush(Colors.Red);
+					diffD += 0.05;
 				}
 
 				else {
-					Points.Add(new TaskInfo(task.NeedStartDate, task.CranNumber - 0.3));
-					Points.Add(new TaskInfo(task.NeedEndDate, task.CranNumber - 0.3));
-					serie.DataPointStyle = spGray;
-					serie.PolylineStyle = slGray;
+					Points.Add(new DataPoint<DateTime, double>(task.NeedStartDate, task.CranNumber - diffD));
+					Points.Add(new DataPoint<DateTime, double>(task.NeedEndDate, task.CranNumber - diffD));
 
-					StylesPoly.Add(task.Number, slGray);
-					StylesPoint.Add(task.Number, spGray);
+					serie.LineStroke = new SolidColorBrush(Colors.Gray);
+					serie.PointFill = new SolidColorBrush(Colors.Gray);
+					diffD += 0.05;
 				}
 
-				chtTasks.Series.Add(serie);
-				serie.IndependentAxis = xAxis;
-				serie.DependentRangeAxis = yAxis;
+				serie.DataSeries = Points;
+				CurrentChart.Series.Add(serie);
 			}
+			
+		}
 
+		void serie_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
+			LineSeries serie = sender as LineSeries;
+			CranTaskInfo task = getTaskBySerie(serie);
+			SelectTask(task);
+		}
+
+		public void processCransData() {
+			CurrentChart.Series.Clear();
+					
+			processSingleCran(1);
+			processSingleCran(2);
+		
+			grdGraph.InvalidateArrange();
 		}
 
 		private int getTaskNumber(string name) {
@@ -325,21 +288,9 @@ namespace VotGESOrders.Views {
 			}
 		}
 
-		void serie_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) {			
-			LineSeries serie = sender as LineSeries;
-			CranTaskInfo task = getTaskBySerie(serie);
-			SelectTask(task);
-		}
+
 	}
 
-	public class TaskInfo {
-		public DateTime Date { get; set; }
-		public double Cran { get; set; }
-		public TaskInfo(DateTime date, double cran) {
-			Cran = cran;
-			Date = date;
-		}
-	}
 }
 
 

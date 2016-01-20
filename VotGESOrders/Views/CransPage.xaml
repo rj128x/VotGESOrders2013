@@ -6,6 +6,7 @@
            mc:Ignorable="d"
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="800" d:DesignHeight="480"
+            xmlns:charts="clr-namespace:Visiblox.Charts;assembly=Visiblox.Charts"
            Title="CransPage Page">
     <Grid x:Name="LayoutRoot">
         <Grid Name="dataGrid">
@@ -18,12 +19,12 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <sdk:DataGrid Name="grdTasks" AutoGenerateColumns="False" SelectionChanged="grdTasks_SelectionChanged" Grid.Row="0">
+                <sdk:DataGrid Name="grdTasks" AutoGenerateColumns="False" SelectionChanged="grdTasks_SelectionChanged" Grid.Row="0" ColumnHeaderStyle="{StaticResource CenterHeaderText}">
                     <sdk:DataGrid.Columns>
                         <sdk:DataGridTemplateColumn Header="№" SortMemberPath="Number" >
                             <sdk:DataGridTemplateColumn.CellTemplate >
                                 <DataTemplate>
-                                    <ContentControl Content="{Binding Number}"/>
+                                    <ContentControl Content="{Binding Number}" />
                                 </DataTemplate>
                             </sdk:DataGridTemplateColumn.CellTemplate>
                         </sdk:DataGridTemplateColumn>
@@ -77,11 +78,24 @@
                                 </DataTemplate>
                             </sdk:DataGridTemplateColumn.CellTemplate>
                         </sdk:DataGridTemplateColumn>
+                        <sdk:DataGridTemplateColumn Header="Рассмотрел" SortMemberPath="AuthorAllow" >
+                            <sdk:DataGridTemplateColumn.CellTemplate >
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="{Binding AuthorAllow}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </sdk:DataGridTemplateColumn.CellTemplate>
+                        </sdk:DataGridTemplateColumn>
                     </sdk:DataGrid.Columns>
                 </sdk:DataGrid>
+                <Grid Grid.Row="1" Name="grdGraph">
+                    <charts:Chart Name="CurrentChart" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+						  LegendVisibility="Collapsed" >
 
-                <toolkit:Chart Name="chtTasks" Grid.Row="1">
-                </toolkit:Chart>
+                    </charts:Chart>
+                </Grid>
+
             </Grid>
 
         <Grid Grid.Column="1" Name="grdRight">
@@ -135,7 +149,7 @@
                                 <TextBlock Text="Команды" Width="50"/>
                                 <Button Name="btnAllow" Content="Разрешить" Margin="20,0,0,0" 
                                     Click="btnAllow_Click" />
-                                <Button Name="btnDenie" Content="Запретить" Margin="20,0,0,0"
+                                <Button Name="btnDenie" Content="Отклонить" Margin="20,0,0,0"
                                     Click="btnDenie_Click" />
                             </StackPanel>
                             <StackPanel>
