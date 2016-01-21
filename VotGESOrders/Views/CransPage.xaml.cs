@@ -66,11 +66,13 @@ namespace VotGESOrders.Views {
 		public void initChart() {
 			CurrentChart.YAxis = new LinearAxis();
 			CurrentChart.XAxis = new DateTimeAxis();
-			CurrentChart.YAxis.AutoScaleToVisibleData = false;
+			CurrentChart.YAxis.Element.Width = 0;
 			CurrentChart.YAxis.LabelFormatString="";
+			CurrentChart.YAxis.AutoScaleToVisibleData = false;
+			CurrentChart.YAxis.IsAutoMarginEnabled = false;
 			IRange range=CurrentChart.YAxis.CreateRange();
 			range.Minimum = 0;
-			range.Maximum = 2.99;
+			range.Maximum = 3;
 			CurrentChart.YAxis.SetActualRange(range);
 		}
 
@@ -78,6 +80,7 @@ namespace VotGESOrders.Views {
 		public void init() {
 			CransContext.Single.Client.getCranTasksCompleted += Client_getCranTasksCompleted;
 			CransContext.Single.Client.CreateCranTaskCompleted += Client_CreateCranTaskCompleted;
+			GlobalStatus.Current.IsBusy = true;
 			CransContext.Single.Client.getCranTasksAsync(null);
 		}
 
@@ -87,10 +90,13 @@ namespace VotGESOrders.Views {
 		}
 
 		void Client_CreateCranTaskCompleted(object sender, CranService.CreateCranTaskCompletedEventArgs e) {
+			GlobalStatus.Current.IsBusy = false;
 			ReturnMessage ret = e.Result as ReturnMessage;
 			MessageBox.Show(ret.Message);
 			if (ret.Result) {
 				CurrentTask = null;
+				TempTask = null;
+				GlobalStatus.Current.IsBusy = true;
 				CransContext.Single.Client.getCranTasksAsync(CurrentFilter);
 			}
 			else {
@@ -100,10 +106,13 @@ namespace VotGESOrders.Views {
 		}
 
 		void Client_getCranTasksCompleted(object sender, CranService.getCranTasksCompletedEventArgs e) {
+			GlobalStatus.Current.IsBusy = false;
 			CurrentFilter = e.Result as CranFilter;
+			pnlFilter.DataContext = CurrentFilter;
 			grdTasks.ItemsSource = CurrentFilter.Data;
 			processCransData();
 			CurrentTask = null;
+			TempTask = null;
 		}
 
 		private void btnAllow_Click(object sender, RoutedEventArgs e) {
@@ -133,6 +142,7 @@ namespace VotGESOrders.Views {
 
 		private void btnSendTask_Click(object sender, RoutedEventArgs e) {
 			if (CurrentTask != null) {
+				GlobalStatus.Current.IsBusy = true;
 				CransContext.Single.Client.CreateCranTaskAsync(CurrentTask);
 			}
 		}
@@ -155,14 +165,16 @@ namespace VotGESOrders.Views {
 				if (grdTasks.SelectedItem != task)
 					grdTasks.SelectedItem = task;
 				foreach (LineSeries serie in CurrentChart.Series) {
-
-					if (serie.Name == String.Format("order_{0}", task.Number)) {
-						serie.LineStrokeThickness = 10;
+					try {
+						if (serie.Name == String.Format("order_{0}", task.Number)) {
+							serie.LineStrokeThickness = 10;
+						}
+						else {
+							int num = getTaskNumber(serie.Name);
+							serie.LineStrokeThickness = 5;
+						}
 					}
-					else {
-						int num = getTaskNumber(serie.Name);
-						serie.LineStrokeThickness = 5;
-					}
+					catch { }
 				}
 			}
 			catch { }
@@ -259,7 +271,48 @@ namespace VotGESOrders.Views {
 
 		public void processCransData() {
 			CurrentChart.Series.Clear();
-					
+
+			DateTime min = DateTime.MaxValue;
+			DateTime max = DateTime.MinValue;
+
+			foreach (CranTaskInfo task in CurrentFilter.Data) {
+				if (!task.Allowed) {
+					if (task.NeedStartDate < min)
+						min = task.NeedStartDate;
+					if (task.NeedEndDate > max)
+						max = task.NeedEndDate;
+				}
+				if (task.Allowed) {
+					if (task.AllowDateStart < min)
+						min = task.AllowDateStart;
+					if (task.AllowDateEnd > max)
+						max = task.AllowDateEnd;
+				}
+			}
+
+			LineSeries nulSer = new LineSeries();
+			DataSeries<DateTime, double> nulP = new DataSeries<DateTime, double>();
+			nulP.Add(new DataPoint<DateTime, double>(min, 0.5));
+			nulP.Add(new DataPoint<DateTime, double>(max, 0.5));
+
+			nulSer.DataSeries = nulP;
+
+			LineSeries ser15 = new LineSeries();
+			DataSeries<DateTime, double> p15 = new DataSeries<DateTime, double>();
+			p15.Add(new DataPoint<DateTime, double>(min, 1.5));
+			p15.Add(new DataPoint<DateTime, double>(max, 1.5));
+			ser15.DataSeries = p15;
+
+			LineSeries ser3 = new LineSeries();
+			DataSeries<DateTime, double> p3 = new DataSeries<DateTime, double>();
+			p3.Add(new DataPoint<DateTime, double>(min, 2.5));
+			p3.Add(new DataPoint<DateTime, double>(max, 2.5));
+			ser3.DataSeries = p3;
+
+			CurrentChart.Series.Add(nulSer);
+			CurrentChart.Series.Add(ser15);
+			CurrentChart.Series.Add(ser3);
+
 			processSingleCran(1);
 			processSingleCran(2);
 		
@@ -287,6 +340,14 @@ namespace VotGESOrders.Views {
 				return null;
 			}
 		}
+
+		private void btnRefresh_Click(object sender, RoutedEventArgs e) {
+			GlobalStatus.Current.IsBusy = true;
+			TempTask = null;
+			CurrentTask = null;
+			CransContext.Single.Client.getCranTasksAsync(CurrentFilter);
+		}
+
 
 
 	}
