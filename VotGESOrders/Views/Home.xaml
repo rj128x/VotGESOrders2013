@@ -44,7 +44,7 @@
 
 		</StackPanel>
 
-		<usr:OrdersGridControl Grid.Row="3" x:Name="ordersGridControl" Loaded="ordersGridControl_Loaded"/>
+		<usr:OrdersGridControl Grid.Row="3" x:Name="ordersGridControl" />
 		<Button x:Name="btnVisDetails" Click="btnVisDetails_Click" Content="Детали"  Grid.Row="4" Height="8" BorderBrush="Gray" BorderThickness="4" 
 					  IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"/>
 

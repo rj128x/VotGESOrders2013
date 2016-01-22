@@ -27,21 +27,16 @@ namespace VotGESOrders
 	{
 		DispatcherTimer timerExistChanges;
 		PrintDocument multidoc;
-		public Home() {
-			OrdersContext.init();
-			InitializeComponent();			
+		public Home() {			
+			InitializeComponent();
+			if (!MainPage.STARTING)
+				finish();
 		}
 
 
 		private void Page_Loaded(object sender, RoutedEventArgs e) {
-			OrdersContext.Current.FinishLoadingOrdersEvent += new OrdersContext.DelegateLoadedAllData(finish);
-			OrdersContext.load();
 		}
 
-
-		private void ordersGridControl_Loaded(object sender, RoutedEventArgs e) {
-			
-		}
 
 		public void finish() {
 			pnlButtons.DataContext = WebContext.Current.User;
@@ -62,8 +57,7 @@ namespace VotGESOrders
 			cmbFilterType.ItemsSource = OrderFilter.FilterTypes;
 			cmbFilterType.DataContext = OrdersContext.Current.Filter;
 			cntrlFilter.lstAllUsers.ItemsSource = OrdersContext.Current.Context.OrdersUsers;
-			cntrlFilter.chooseObjectsWindow = new ChooseObjectsWindow();			
-			
+			cntrlFilter.chooseObjectsWindow = new ChooseObjectsWindow();
 			Logger.info("Главная страница загружена");
 		}
 

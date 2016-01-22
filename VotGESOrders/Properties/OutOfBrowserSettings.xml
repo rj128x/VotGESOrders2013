@@ -1,7 +1,7 @@
-<OutOfBrowserSettings ShortName="Местные заявки" EnableGPUAcceleration="True" ShowInstallMenuItem="True">
+<OutOfBrowserSettings ShortName="Местные заявки" EnableGPUAcceleration="False" ShowInstallMenuItem="True">
   <OutOfBrowserSettings.Blurb>Местные заявки</OutOfBrowserSettings.Blurb>
   <OutOfBrowserSettings.WindowSettings>
-    <WindowSettings Title="Местные заявки" WindowStyle="BorderlessRoundCornersWindow" />
+    <WindowSettings Title="Местные заявки" Height="600" Width="1200" />
   </OutOfBrowserSettings.WindowSettings>
   <OutOfBrowserSettings.SecuritySettings>
     <SecuritySettings ElevatedPermissions="Required" />

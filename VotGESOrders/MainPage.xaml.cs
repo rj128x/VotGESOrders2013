@@ -13,24 +13,39 @@ using System.Windows.Shapes;
 using VotGESOrders.Web.Services;
 using System.ServiceModel.DomainServices.Client.ApplicationServices;
 using VotGESOrders.Logging;
+using VotGESOrders.Views;
 
 namespace VotGESOrders
 {
 	public partial class MainPage : UserControl
 	{
+		public static bool STARTING;
+
 		public MainPage() {
+			STARTING = true;
 			Logger.info("Старт главной страницы");			
+			OrdersContext.init();
 			InitializeComponent();	
 		}
 
 		public void startLoad() {
+			
 			LoginName.DataContext = WebContext.Current.User;
 			LinkEditTree.Visibility = WebContext.Current.User.AllowEditTree ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
 			LinkEditUsers.Visibility = WebContext.Current.User.AllowEditUsers ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+			OrdersContext.Current.FinishLoadingOrdersEvent += new OrdersContext.DelegateLoadedAllData(finish);
+			OrdersContext.load();
+
 		}
 
 		public void finish() {
-			
+			if (ContentFrame.Content is Home){
+				(ContentFrame.Content as Home).finish();
+			}
+			else if (ContentFrame.Content is CransPage) {
+				(ContentFrame.Content as CransPage).init();
+			}
+			STARTING = false;
 		}
 
 		// После перехода в фрейме убедиться, что выбрана кнопка HyperlinkButton, представляющая текущую страницу

@@ -32,12 +32,12 @@ namespace VotGESOrders
 
 			webcontext.Authentication.LoadUser(OnLoadUser_Completed, null);
 			InitializeComponent();
-			
+			this.RootVisual = new MainPage();
 		}
 
 		private void Application_Startup(object sender, StartupEventArgs e) {
 			//this.RootVisual = new MainPage();
-			this.RootVisual = new MainPage();
+			
 		}
 
 		private void OnLoadUser_Completed(LoadUserOperation operation) {			

@@ -51,11 +51,8 @@ namespace VotGESOrders.Views {
 
 		public CransPage() {
 			InitializeComponent();
-			CransContext.init();
-			grdRight.DataContext = this;
-			init();
-			initChart();
-			newTask.Visibility = WebContext.Current.User.AllowCreateOrder ? Visibility.Visible : Visibility.Collapsed;
+			if (!MainPage.STARTING)
+				init();
 		}
 
 		// Выполняется, когда пользователь переходит на эту страницу.
@@ -78,10 +75,14 @@ namespace VotGESOrders.Views {
 
 
 		public void init() {
+			CransContext.init();
+			grdRight.DataContext = this;
 			CransContext.Single.Client.getCranTasksCompleted += Client_getCranTasksCompleted;
 			CransContext.Single.Client.CreateCranTaskCompleted += Client_CreateCranTaskCompleted;
 			GlobalStatus.Current.IsBusy = true;
 			CransContext.Single.Client.getCranTasksAsync(null);
+			initChart();
+			newTask.Visibility = WebContext.Current.User.AllowCreateOrder ? Visibility.Visible : Visibility.Collapsed;
 		}
 
 		public void deinit() {
