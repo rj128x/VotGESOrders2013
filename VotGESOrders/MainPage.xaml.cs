@@ -29,13 +29,31 @@ namespace VotGESOrders
 		}
 
 		public void startLoad() {
-			
+			if (Application.Current.IsRunningOutOfBrowser) {
+				// Проверка наличия новых версий
+
+				Application.Current.CheckAndDownloadUpdateCompleted += Current_CheckAndDownloadUpdateCompleted;
+				Application.Current.CheckAndDownloadUpdateAsync();
+			}
 			LoginName.DataContext = WebContext.Current.User;
 			LinkEditTree.Visibility = WebContext.Current.User.AllowEditTree ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
 			LinkEditUsers.Visibility = WebContext.Current.User.AllowEditUsers ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
 			OrdersContext.Current.FinishLoadingOrdersEvent += new OrdersContext.DelegateLoadedAllData(finish);
 			OrdersContext.load();
 
+		}
+
+		private void Current_CheckAndDownloadUpdateCompleted(object sender, CheckAndDownloadUpdateCompletedEventArgs e) {
+			if (e.UpdateAvailable) {
+				MessageBox.Show("Установлена новая версия. Перезапустите приложение.");
+				App.Current.MainWindow.Close();
+			}
+			else if (e.Error != null && e.Error is PlatformNotSupportedException) {
+				MessageBox.Show("Есть новые версии приложения"
+					 + "однако для их применения необходима новая версия Silverlight. " +
+					 "Посетите сайт http://silverlight.net для обновления Silverlight.");
+				App.Current.MainWindow.Close();
+			}
 		}
 
 		public void finish() {

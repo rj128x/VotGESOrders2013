@@ -352,6 +352,20 @@
     <None Include="Service References\CranService\CranService1.wsdl" />
     <None Include="Service References\CranService\CranService1.xsd" />
     <None Include="Service References\CranService\CranService2.xsd" />
+    <Content Include="Images\128.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\16.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\32.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\48.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Images\small.png" />
+    <Resource Include="Images\votges.png" />
     <Content Include="ServiceReferences.ClientConfig" />
     <None Include="Service References\CranService\VotGESOrders.CranService.CranFilter.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
