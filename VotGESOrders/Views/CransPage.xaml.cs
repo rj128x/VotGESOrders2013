@@ -71,6 +71,7 @@ namespace VotGESOrders.Views {
 			range.Minimum = 0;
 			range.Maximum = 3;
 			CurrentChart.YAxis.SetActualRange(range);
+			CurrentChart.XAxis.IsAutoMarginEnabled = false;
 		}
 
 
