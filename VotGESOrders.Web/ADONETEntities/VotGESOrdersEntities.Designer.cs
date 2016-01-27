@@ -206,7 +206,8 @@ namespace VotGESOrders.Web.ADONETEntities
         /// <param name="allowed">Исходное значение свойства Allowed.</param>
         /// <param name="denied">Исходное значение свойства Denied.</param>
         /// <param name="needDateEnd">Исходное значение свойства NeedDateEnd.</param>
-        public static CranTask CreateCranTask(global::System.Int32 number, global::System.Int32 cranNumber, global::System.String author, global::System.DateTime needDateStart, global::System.String comment, global::System.Boolean allowed, global::System.Boolean denied, global::System.DateTime needDateEnd)
+        /// <param name="manager">Исходное значение свойства Manager.</param>
+        public static CranTask CreateCranTask(global::System.Int32 number, global::System.Int32 cranNumber, global::System.String author, global::System.DateTime needDateStart, global::System.String comment, global::System.Boolean allowed, global::System.Boolean denied, global::System.DateTime needDateEnd, global::System.String manager)
         {
             CranTask cranTask = new CranTask();
             cranTask.Number = number;
@@ -217,6 +218,7 @@ namespace VotGESOrders.Web.ADONETEntities
             cranTask.Allowed = allowed;
             cranTask.Denied = denied;
             cranTask.NeedDateEnd = needDateEnd;
+            cranTask.Manager = manager;
             return cranTask;
         }
 
@@ -490,6 +492,30 @@ namespace VotGESOrders.Web.ADONETEntities
         private global::System.DateTime _NeedDateEnd;
         partial void OnNeedDateEndChanging(global::System.DateTime value);
         partial void OnNeedDateEndChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Manager
+        {
+            get
+            {
+                return _Manager;
+            }
+            set
+            {
+                OnManagerChanging(value);
+                ReportPropertyChanging("Manager");
+                _Manager = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Manager");
+                OnManagerChanged();
+            }
+        }
+        private global::System.String _Manager;
+        partial void OnManagerChanging(global::System.String value);
+        partial void OnManagerChanged();
 
         #endregion
 

@@ -34,6 +34,7 @@ namespace VotGESOrders.Web.Models {
 		public string Comment { get; set; }
 		public string Author { get; set; }
 		public string AuthorAllow { get; set; }
+		public string Manager { get; set; }
 		public DateTime AllowDateStart { get; set; }
 		public DateTime AllowDateEnd { get; set; }
 		public bool Allowed { get; set; }
@@ -64,9 +65,11 @@ namespace VotGESOrders.Web.Models {
 			Denied = tbl.Denied;
 			canChange = (!Allowed) && (!Denied) && tbl.Author.ToLower() == currentUser.Name.ToLower();
 			canCheck = currentUser.AllowReviewOrder;
+			Manager = tbl.Manager;
 			if (Denied) {
 				State = "Отклонена";
 				canChange = false;
+				AuthorAllow = OrdersUser.loadFromCache(tbl.AuthorAllow).FullName;
 			}
 			if (tbl.Allowed) {
 				AuthorAllow = OrdersUser.loadFromCache(tbl.AuthorAllow).FullName;
@@ -124,6 +127,7 @@ namespace VotGESOrders.Web.Models {
 				tbl.NeedDateStart = task.NeedStartDate;
 				tbl.NeedDateEnd = task.NeedEndDate;
 				tbl.Comment = task.Comment;
+				tbl.Manager = task.Manager;
 				tbl.CranNumber = task.CranNumber;
 				if (task.Allowed) {
 					tbl.AllowedDateStart = task.AllowDateStart;

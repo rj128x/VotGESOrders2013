@@ -16,10 +16,28 @@
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" Name="grdLeft">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <sdk:DataGrid Name="grdTasks" AutoGenerateColumns="False" SelectionChanged="grdTasks_SelectionChanged" Grid.Row="0" ColumnHeaderStyle="{StaticResource CenterHeaderText}">
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Name="pnlFilter" Orientation="Horizontal" Grid.Column="0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Фильтр: "/>
+                            <sdk:DatePicker SelectedDate="{Binding DateStart, Mode=TwoWay}" Width="120" HorizontalAlignment="Left"/>
+                        </StackPanel>
+                        <sdk:DatePicker SelectedDate="{Binding DateEnd, Mode=TwoWay}" Width="120" HorizontalAlignment="Right"/>
+                        <Button Content="Обновить" Name="btnRefresh" Click="btnRefresh_Click" Width="100" HorizontalAlignment="Center"
+                                IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"/>
+                    </StackPanel>
+                    <Button Content="Создать заявку" Name="newTask" Click="newTask_Click" Grid.Column="1"
+                        IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"/>
+                </Grid>
+                <sdk:DataGrid Name="grdTasks" AutoGenerateColumns="False" SelectionChanged="grdTasks_SelectionChanged" Grid.Row="1" ColumnHeaderStyle="{StaticResource CenterHeaderText}">
                     <sdk:DataGrid.Columns>
                         <sdk:DataGridTemplateColumn Header="№" SortMemberPath="Number" >
                             <sdk:DataGridTemplateColumn.CellTemplate >
@@ -46,6 +64,13 @@
                             <sdk:DataGridTemplateColumn.CellTemplate >
                                 <DataTemplate>
                                     <ContentControl Content="{Binding Comment}"/>
+                                </DataTemplate>
+                            </sdk:DataGridTemplateColumn.CellTemplate>
+                        </sdk:DataGridTemplateColumn>
+                        <sdk:DataGridTemplateColumn Header="Ответственный" SortMemberPath="Manager" >
+                            <sdk:DataGridTemplateColumn.CellTemplate >
+                                <DataTemplate>
+                                    <ContentControl Content="{Binding Manager}"/>
                                 </DataTemplate>
                             </sdk:DataGridTemplateColumn.CellTemplate>
                         </sdk:DataGridTemplateColumn>
@@ -89,10 +114,10 @@
                         </sdk:DataGridTemplateColumn>
                     </sdk:DataGrid.Columns>
                 </sdk:DataGrid>
-                <Grid Grid.Row="1" Name="grdGraph">                    
+                <Grid Grid.Row="2" Name="grdGraph">
                     <charts:Chart Name="CurrentChart" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-						  LegendVisibility="Collapsed" >             
-                     
+						  LegendVisibility="Collapsed" >
+
 
                     </charts:Chart>
                     <Grid>
@@ -108,109 +133,63 @@
 
             </Grid>
 
-        <Grid Grid.Column="1" Name="grdRight">
-            <StackPanel Orientation="Vertical">
-                    <StackPanel Name="pnlFilter" Margin="0,0,0,20">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Фильтр: "/>
-                            <sdk:DatePicker SelectedDate="{Binding DateStart, Mode=TwoWay}" Width="120" HorizontalAlignment="Left"/>                            
-                        </StackPanel>
-                        <sdk:DatePicker SelectedDate="{Binding DateEnd, Mode=TwoWay}" Width="120" HorizontalAlignment="Right"/>
-                        <Button Content="Обновить" Name="btnRefresh" Click="btnRefresh_Click" Width="100" HorizontalAlignment="Center"
-                                IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"/>
-                    </StackPanel>
-                <Button Content="Создать заявку" Name="newTask" Click="newTask_Click" 
-                        IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"/>
-
-                <StackPanel Visibility="{Binding HasSelectedTask, Converter={StaticResource visibilityConverter}}">
-                    <StackPanel Orientation="Vertical" Name="pnlTask" >
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Номер: " Width="50"/>
-                            <TextBox Text="{Binding Number}" IsEnabled="False" Width="50"/>
-                            <TextBlock Text="Кран: " Width="50"/>
-                            <TextBox Text="{Binding CranNumber,Mode=TwoWay}" Width="50" IsEnabled="{Binding canChange}"/>
-                        </StackPanel>
-
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Автор " Width="50"/>
-                            <TextBox Text="{Binding Author}" IsEnabled="False" Width="200"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Заявка" Width="50"/>
-                            <TextBox Text="{Binding Comment, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" Width="200" Height="50"
-                                     IsEnabled="{Binding canChange}"/>
-                        </StackPanel>
-
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock Text="Запрашиваемое время" HorizontalAlignment="Right"/>
+            <Grid Grid.Column="1" Name="grdRight">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Visibility="{Binding HasSelectedTask, Converter={StaticResource visibilityConverter}}">
+                        <StackPanel Orientation="Vertical" Name="pnlTask" >
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Начало" Width="50"/>
-                                <StackPanel Orientation="Vertical" Width="200">
-                                    <sdk:DatePicker SelectedDate="{Binding NeedStartDate, Mode=TwoWay}" Width="120" HorizontalAlignment="Left"
-                                                    IsEnabled="{Binding canChange}"/>
-                                    <toolkit:TimeUpDown Value="{Binding NeedStartDate, Mode=TwoWay}" HorizontalAlignment="Right"
-                                                        IsEnabled="{Binding canChange}"/>
-                                </StackPanel>
+                                <TextBlock Text="Номер: " Width="50" Style="{StaticResource Label}"/>
+                                <TextBlock Text="{Binding Number}" Style="{StaticResource Value}" Width="50"/>
+                                <TextBlock Text="Кран: " Width="50" Style="{StaticResource Label}"/>
+                                <TextBlock Text="{Binding CranNumber}" Width="50" Style="{StaticResource Value}"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Конец" Width="50"/>
-                                <StackPanel Orientation="Vertical" Width="200">
-                                    <sdk:DatePicker SelectedDate="{Binding NeedEndDate, Mode=TwoWay}" Width="120" HorizontalAlignment="Left"
-                                                    IsEnabled="{Binding canChange}"/>
-                                    <toolkit:TimeUpDown Value="{Binding NeedEndDate, Mode=TwoWay}" HorizontalAlignment="Right"
-                                                     IsEnabled="{Binding canChange}"/>
-                                </StackPanel>
+                                <TextBlock Text="Автор " Width="50" Style="{StaticResource Label}"/>
+                                <TextBlock Text="{Binding Author}" Style="{StaticResource Value}" Width="200"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Заявка" Width="50" Style="{StaticResource Label}" VerticalAlignment="Top"/>
+                                <TextBlock  Text="{Binding Comment}" TextWrapping="Wrap" Width="200" Height="50" Style="{StaticResource Value}"  />
                             </StackPanel>
 
-                        </StackPanel>
-                        <StackPanel Orientation="Vertical" Margin="0,30,0,0">
-                            <StackPanel Orientation="Horizontal" Visibility="{Binding canCheck, Converter={StaticResource visibilityConverter}}">
-                                <TextBlock Text="Команды" Width="50"/>
-                                <Button Name="btnAllow" Content="Разрешить" Margin="20,0,0,0" 
-                                    Click="btnAllow_Click" 
-                                        IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"/>
-                                <Button Name="btnDenie" Content="Отклонить" Margin="20,0,0,0"
-                                    Click="btnDenie_Click" 
-                                        IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"/>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="Запрашиваемое время" HorizontalAlignment="Right" Style="{StaticResource Label}"/>
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{Binding NeedStartDate, StringFormat='dd.MM.yyyy HH:mm'}" Style="{StaticResource Value}" HorizontalAlignment="Left"/>
+                                    <TextBlock Text="{Binding NeedEndDate, StringFormat='dd.MM.yyyy HH:mm'}" Style="{StaticResource Value}"  HorizontalAlignment="Right"/>
+                                </StackPanel>
                             </StackPanel>
-                            <StackPanel>
-                                <TextBlock Text="Заявка отклонена" HorizontalAlignment="Right" Visibility="{Binding Denied, Converter={StaticResource visibilityConverter}}" 
+                            <Button Name="btnChange" Content="Изменить"
+                                    Click="btnChange_Click" IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"
+                                            Visibility="{Binding canChange, Converter={StaticResource visibilityConverter}}"/>
+                            <StackPanel Orientation="Vertical" Margin="0,30,0,0">
+                                <StackPanel>
+                                    <TextBlock Text="Заявка отклонена" HorizontalAlignment="Right" Visibility="{Binding Denied, Converter={StaticResource visibilityConverter}}" 
                                                Foreground="Red" FontWeight="Bold"/>
-                                <TextBlock Text="Заявка разрешена" HorizontalAlignment="Right" Visibility="{Binding Allowed, Converter={StaticResource visibilityConverter}}" 
+                                    <TextBlock Text="Заявка разрешена" HorizontalAlignment="Right" Visibility="{Binding Allowed, Converter={StaticResource visibilityConverter}}" 
                                                Foreground="Green" FontWeight="Bold"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Vertical" Visibility="{Binding Allowed, Converter={StaticResource visibilityConverter}}">
-                                <TextBlock Text="Разрешенное время" HorizontalAlignment="Right"/>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Начало" Width="50"/>
-                                    <StackPanel Orientation="Vertical" Width="200">
-                                        <sdk:DatePicker SelectedDate="{Binding AllowDateStart, Mode=TwoWay}" Width="120" HorizontalAlignment="Left"
-                                                        IsEnabled="{Binding canCheck}" />
-                                        <toolkit:TimeUpDown Value="{Binding AllowDateStart, Mode=TwoWay}" HorizontalAlignment="Right"
-                                                            IsEnabled="{Binding canCheck}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Vertical" Visibility="{Binding Allowed, Converter={StaticResource visibilityConverter}}">
+                                    <TextBlock Text="Разрешенное время" HorizontalAlignment="Right" Style="{StaticResource Label}"/>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="{Binding AllowDateStart, StringFormat='dd.MM.yyyy HH:mm'}" Style="{StaticResource Value}" HorizontalAlignment="Left"/>
+                                        <TextBlock Text="{Binding AllowDateEnd, StringFormat='dd.MM.yyyy HH:mm'}" Style="{StaticResource Value}" HorizontalAlignment="Right"/>
                                     </StackPanel>
                                 </StackPanel>
 
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Конец" Width="50"/>
-                                    <StackPanel Orientation="Vertical" Width="200">
-                                        <sdk:DatePicker SelectedDate="{Binding AllowDateEnd, Mode=TwoWay}" Width="120" HorizontalAlignment="Left"
-                                                        IsEnabled="{Binding canCheck}"/>
-                                        <toolkit:TimeUpDown Value="{Binding AllowDateEnd, Mode=TwoWay}" HorizontalAlignment="Right"
-                                                            IsEnabled="{Binding canCheck}"/>
-                                    </StackPanel>
-                                </StackPanel>
+
+                                <Button Name="btnCheck" Content="Рассмотреть"
+                                    Click="btnCheck_Click" IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"
+                                        Visibility="{Binding canCheck, Converter={StaticResource visibilityConverter}}" />
+
                             </StackPanel>
                         </StackPanel>
-                        <Button Content="Сохранить" Name="btnSendTask" Click="btnSendTask_Click" Margin="0,20,0,0"
-                                IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"/>
-                    </StackPanel>
 
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
+            </Grid>
         </Grid>
-    </Grid>
 
     </Grid>
 </navigation:Page>

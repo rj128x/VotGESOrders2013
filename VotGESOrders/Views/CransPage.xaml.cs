@@ -36,7 +36,6 @@ namespace VotGESOrders.Views {
 				NotifyChanged("CurrentTask");
 			}
 		}
-		public CranTaskInfo TempTask { get; set; }
 
 
 		protected bool _hasSelectedTask;
@@ -79,7 +78,7 @@ namespace VotGESOrders.Views {
 			CransContext.init();
 			grdRight.DataContext = this;
 			CransContext.Single.Client.getCranTasksCompleted += Client_getCranTasksCompleted;
-			CransContext.Single.Client.CreateCranTaskCompleted += Client_CreateCranTaskCompleted;
+			
 			GlobalStatus.Current.IsBusy = true;
 			CransContext.Single.Client.getCranTasksAsync(null);
 			initChart();
@@ -88,24 +87,14 @@ namespace VotGESOrders.Views {
 
 		public void deinit() {
 			CransContext.Single.Client.getCranTasksCompleted -= Client_getCranTasksCompleted;
-			CransContext.Single.Client.CreateCranTaskCompleted -= Client_CreateCranTaskCompleted;
 		}
 
-		void Client_CreateCranTaskCompleted(object sender, CranService.CreateCranTaskCompletedEventArgs e) {
-			GlobalStatus.Current.IsBusy = false;
-			ReturnMessage ret = e.Result as ReturnMessage;
-			MessageBox.Show(ret.Message);
-			if (ret.Result) {
-				CurrentTask = null;
-				TempTask = null;
-				GlobalStatus.Current.IsBusy = true;
-				CransContext.Single.Client.getCranTasksAsync(CurrentFilter);
-			}
-			else {
-				if (CurrentTask != null && TempTask != null)
-					copyTask(CurrentTask, TempTask);
-			}
+		protected override void OnNavigatedFrom(NavigationEventArgs e) {
+			base.OnNavigatedFrom(e);
+			deinit();
 		}
+
+		
 
 		void Client_getCranTasksCompleted(object sender, CranService.getCranTasksCompletedEventArgs e) {
 			GlobalStatus.Current.IsBusy = false;
@@ -114,33 +103,57 @@ namespace VotGESOrders.Views {
 			grdTasks.ItemsSource = CurrentFilter.Data;
 			processCransData();
 			CurrentTask = null;
-			TempTask = null;
 		}
 
-		private void btnAllow_Click(object sender, RoutedEventArgs e) {
-			CurrentTask.Allowed = true;
-			CurrentTask.AllowDateStart = CurrentTask.NeedStartDate;
-			CurrentTask.AllowDateEnd = CurrentTask.NeedEndDate;
-			CurrentTask.Denied = false;
-		}
-
-		private void btnDenie_Click(object sender, RoutedEventArgs e) {
-			CurrentTask.Denied = true;
-			CurrentTask.Allowed = false;
-		}
+		
 
 		private void newTask_Click(object sender, RoutedEventArgs e) {
-			TempTask = null;
-			CurrentTask = new CranTaskInfo();
-			CurrentTask.init = true;
-			CurrentTask.canChange = true;
-			CurrentTask.canCheck = false;
-			CurrentTask.CranNumber = 1;
-			CurrentTask.Comment = " ";
-			CurrentTask.NeedStartDate = DateTime.Now.Date.AddDays(1);
-			CurrentTask.NeedEndDate = DateTime.Now.Date.AddDays(2);
-			pnlTask.DataContext = CurrentTask;
+			CranTaskInfo newTask  = new CranTaskInfo();
+			newTask.init = true;
+			newTask.canChange = true;
+			newTask.canCheck = false;
+			newTask.CranNumber = 1;
+			newTask.Comment = " ";
+			newTask.NeedStartDate = DateTime.Now.Date.AddDays(1);
+			newTask.NeedEndDate = DateTime.Now.Date.AddDays(2);
+			CranWindow taskWindow = new CranWindow();
+			taskWindow.init(newTask);
+			taskWindow.Closed += taskWindow_Closed;
+			taskWindow.Show();
 		}
+		
+		private void btnChange_Click(object sender, RoutedEventArgs e) {
+			if (CurrentTask == null)
+				return;
+			CranWindow taskWindow = new CranWindow();
+			taskWindow.init(CurrentTask);
+			taskWindow.Closed += taskWindow_Closed;
+			taskWindow.Show();
+		}
+
+		void taskWindow_Closed(object sender, EventArgs e) {
+			CranWindow win = sender as CranWindow;
+			GlobalStatus.Current.IsBusy = true;
+			CurrentTask = null;
+			CransContext.Single.Client.getCranTasksAsync(CurrentFilter);
+		}
+
+		private void btnCheck_Click(object sender, RoutedEventArgs e) {
+			if (CurrentTask == null)
+				return;
+			CranReviewWindow reviewWin = new CranReviewWindow();
+			reviewWin.init(CurrentTask);
+			reviewWin.Closed += reviewWin_Closed;
+			reviewWin.Show();
+		}
+
+		void reviewWin_Closed(object sender, EventArgs e) {
+			CranReviewWindow win = sender as CranReviewWindow;
+			GlobalStatus.Current.IsBusy = true;
+			CurrentTask = null;
+			CransContext.Single.Client.getCranTasksAsync(CurrentFilter);
+		}
+
 
 		private void btnSendTask_Click(object sender, RoutedEventArgs e) {
 			if (CurrentTask != null) {
@@ -154,14 +167,9 @@ namespace VotGESOrders.Views {
 		}
 
 		private void SelectTask(CranTaskInfo task) {
-			if (TempTask != null && CurrentTask != null) {
-				copyTask(CurrentTask, TempTask);
-			}
 			CurrentTask = task;
 			if (CurrentTask != null) {
 				pnlTask.DataContext = CurrentTask;
-				TempTask = new CranTaskInfo();
-				copyTask(TempTask, CurrentTask);
 			}
 			try {
 				if (grdTasks.SelectedItem != task)
@@ -181,27 +189,6 @@ namespace VotGESOrders.Views {
 			}
 			catch { }
 		}
-
-		public void copyTask(CranTaskInfo copy, CranTaskInfo tsk) {
-			try {
-				copy.Number = tsk.Number;
-				copy.CranNumber = tsk.CranNumber;
-				copy.NeedStartDate = tsk.NeedStartDate;
-				copy.NeedEndDate = tsk.NeedEndDate;
-				copy.AllowDateStart = tsk.AllowDateStart;
-				copy.AllowDateEnd = tsk.AllowDateEnd;
-				copy.Allowed = tsk.Allowed;
-				copy.Denied = tsk.Denied;
-				copy.State = tsk.State;
-				copy.canChange = tsk.canChange;
-				copy.canCheck = tsk.canCheck;
-				copy.Author = tsk.Author;
-				copy.AuthorAllow = tsk.AuthorAllow;
-				copy.Comment = tsk.Comment;
-			}
-			catch { }
-		}
-
 
 		public void processSingleCran(int cranNumber) {
 			Dictionary<DateTime, CranTaskInfo> crans = new Dictionary<DateTime, CranTaskInfo>();	
@@ -345,10 +332,11 @@ namespace VotGESOrders.Views {
 
 		private void btnRefresh_Click(object sender, RoutedEventArgs e) {
 			GlobalStatus.Current.IsBusy = true;
-			TempTask = null;
 			CurrentTask = null;
 			CransContext.Single.Client.getCranTasksAsync(CurrentFilter);
 		}
+
+		
 
 
 

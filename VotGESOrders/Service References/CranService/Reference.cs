@@ -96,6 +96,8 @@ namespace VotGESOrders.CranService {
         
         private bool DeniedField;
         
+        private string ManagerField;
+        
         private System.DateTime NeedEndDateField;
         
         private System.DateTime NeedStartDateField;
@@ -216,6 +218,19 @@ namespace VotGESOrders.CranService {
                 if ((this.DeniedField.Equals(value) != true)) {
                     this.DeniedField = value;
                     this.RaisePropertyChanged("Denied");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Manager {
+            get {
+                return this.ManagerField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ManagerField, value) != true)) {
+                    this.ManagerField = value;
+                    this.RaisePropertyChanged("Manager");
                 }
             }
         }

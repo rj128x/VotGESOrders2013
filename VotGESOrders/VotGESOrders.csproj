@@ -140,11 +140,14 @@
     <Compile Include="Views\ChooseObjectsWindow.xaml.cs">
       <DependentUpon>ChooseObjectsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CranReviewWindow.xaml.cs">
+      <DependentUpon>CranReviewWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CransPage.xaml.cs">
       <DependentUpon>CransPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CrossKranWindow.xaml.cs">
-      <DependentUpon>CrossKranWindow.xaml</DependentUpon>
+    <Compile Include="Views\CranWindow.xaml.cs">
+      <DependentUpon>CranWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DateTimePicker.xaml.cs">
       <DependentUpon>DateTimePicker.xaml</DependentUpon>
@@ -340,6 +343,14 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\CranReviewWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CranWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <None Include="VotGESOrders_TemporaryKey.pfx" />
     <Page Include="Views\CransPage.xaml">
       <SubType>Designer</SubType>
@@ -379,12 +390,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\OutOfBrowserSettings.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Views\CrossKranWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\CranService\" />

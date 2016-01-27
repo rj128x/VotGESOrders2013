@@ -24,6 +24,7 @@
       <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CranNumber" type="xs:int" />
       <xs:element minOccurs="0" name="Denied" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Manager" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="NeedEndDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="NeedStartDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Number" type="xs:int" />

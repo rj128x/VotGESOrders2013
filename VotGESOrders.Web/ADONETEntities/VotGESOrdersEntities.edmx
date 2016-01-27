@@ -20,6 +20,7 @@
           <Property Name="AllowedDateStart" Type="datetime" />
           <Property Name="AllowedDateEnd" Type="datetime" />
           <Property Name="AuthorAllow" Type="varchar" MaxLength="50" />
+          <Property Name="Manager" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="OrderObjects">
           <Key>
@@ -464,6 +465,7 @@
           <Property Name="AuthorAllow" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Denied" Type="Boolean" Nullable="false" />
           <Property Name="NeedDateEnd" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Manager" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -552,6 +554,7 @@
           <EntitySetMapping Name="CranTask">
             <EntityTypeMapping TypeName="VotGESOrdersModel.CranTask">
               <MappingFragment StoreEntitySet="CranTask">
+                <ScalarProperty Name="Manager" ColumnName="Manager" />
                 <ScalarProperty Name="NeedDateEnd" ColumnName="NeedDateEnd" />
                 <ScalarProperty Name="Denied" ColumnName="Denied" />
                 <ScalarProperty Name="AuthorAllow" ColumnName="AuthorAllow" />
