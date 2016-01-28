@@ -236,7 +236,7 @@ namespace VotGESOrders.Views {
 				}
 
 				else if (task.Denied) {
-					if (prevTaskD != null && task.NeedStartDate > prevTaskA.NeedEndDate) {
+					if (prevTaskD != null && task.NeedStartDate > prevTaskD.NeedEndDate) {
 						diffD = 0.05;
 					}
 					Points.Add(new DataPoint<DateTime, double>(task.NeedStartDate, task.CranNumber - diffD));
@@ -249,7 +249,7 @@ namespace VotGESOrders.Views {
 				}
 
 				else {
-					if (prevTaskD != null && task.NeedStartDate > prevTaskA.NeedEndDate) {
+					if (prevTaskD != null && task.NeedStartDate > prevTaskD.NeedEndDate) {
 						diffD = 0.05;
 					}
 					Points.Add(new DataPoint<DateTime, double>(task.NeedStartDate, task.CranNumber - diffD));
@@ -349,6 +349,12 @@ namespace VotGESOrders.Views {
 			GlobalStatus.Current.IsBusy = true;
 			CurrentTask = null;
 			CransContext.Single.Client.getCranTasksAsync(CurrentFilter);
+		}
+
+		private void CurrentChart_MouseWheel(object sender, MouseWheelEventArgs e) {
+			double newSize = CurrentChart.ActualWidth + e.Delta;
+			if (newSize > scrChart.ActualWidth*0.9 && newSize < scrChart.ActualWidth * 3)
+				CurrentChart.Width = newSize;
 		}
 
 		

@@ -115,11 +115,11 @@
                     </sdk:DataGrid.Columns>
                 </sdk:DataGrid>
                 <Grid Grid.Row="2" Name="grdGraph">
-                    <charts:Chart Name="CurrentChart" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-						  LegendVisibility="Collapsed" >
-
-
-                    </charts:Chart>
+                    <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Visible" Name="scrChart">
+                        <charts:Chart Name="CurrentChart" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MouseWheel="CurrentChart_MouseWheel"
+						      LegendVisibility="Collapsed" >
+                        </charts:Chart>
+                    </ScrollViewer>
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
