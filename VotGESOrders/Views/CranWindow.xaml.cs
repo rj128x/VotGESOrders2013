@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using VotGESOrders.CranService;
+using VotGESOrders.Web.Models;
 
 namespace VotGESOrders.Views {
 	public partial class CranWindow : ChildWindow {
@@ -36,6 +37,7 @@ namespace VotGESOrders.Views {
 		public void init(CranTaskInfo task) {
 			CurrentTask = task;
 			pnlTask.DataContext = CurrentTask;
+			lstUsers.ItemsSource = from OrdersUser u in OrdersContext.Current.Context.OrdersUsers where u.CanAgreeCranTask select u;
 		}
 
 		private void OKButton_Click(object sender, RoutedEventArgs e) {
@@ -45,6 +47,25 @@ namespace VotGESOrders.Views {
 
 		private void CancelButton_Click(object sender, RoutedEventArgs e) {
 			this.DialogResult = false;
+		}
+
+		private void lstUsers_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
+			OrdersUser user = lstUsers.SelectedItem as OrdersUser;
+			if (CurrentTask.AgreeUsersText == null ) {
+				CurrentTask.AgreeUsersText = "";
+				CurrentTask.AgreeUsersIDS = "";
+				CurrentTask.AgreeDict = new Dictionary<int, string>();
+			}
+			if (user != null) {
+				if (CurrentTask.AgreeDict.Keys.Contains(user.UserID)) {
+					CurrentTask.AgreeDict.Remove(user.UserID);
+				}
+				else {
+					CurrentTask.AgreeDict.Add(user.UserID, user.FullName);
+				}
+				CurrentTask.AgreeUsersText = string.Join("; ", from string name in CurrentTask.AgreeDict.Values select name);
+				CurrentTask.AgreeUsersIDS = string.Join(";", from int key in CurrentTask.AgreeDict.Keys select key.ToString());
+			}
 		}
 	}
 }

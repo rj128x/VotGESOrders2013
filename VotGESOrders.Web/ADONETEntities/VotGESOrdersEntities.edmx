@@ -21,6 +21,7 @@
           <Property Name="AllowedDateEnd" Type="datetime" />
           <Property Name="AuthorAllow" Type="varchar" MaxLength="50" />
           <Property Name="Manager" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AgreeUsersIDS" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="OrderObjects">
           <Key>
@@ -108,6 +109,9 @@
           <Property Name="sendAllCreateMail" Type="bit" Nullable="false" />
           <Property Name="sendAllAgreeMail" Type="bit" Nullable="false" />
           <Property Name="allowEditOrders" Type="bit" Nullable="false" />
+          <Property Name="canCreateCranTask" Type="bit" Nullable="false" />
+          <Property Name="canReviewCranTask" Type="bit" Nullable="false" />
+          <Property Name="canAgreeCranTask" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK_Orders_OrderObjects">
           <End Role="OrderObjects" Type="Self.OrderObjects" Multiplicity="1" />
@@ -365,6 +369,9 @@
           <NavigationProperty Name="Orders3" Relationship="VotGESOrdersModel.FK_Orders_UsersCreate" FromRole="Users" ToRole="Orders" />
           <NavigationProperty Name="Orders4" Relationship="VotGESOrdersModel.FK_Orders_UsersOpen" FromRole="Users" ToRole="Orders" />
           <NavigationProperty Name="Orders5" Relationship="VotGESOrdersModel.FK_Orders_UsersReview" FromRole="Users" ToRole="Orders" />
+          <Property Name="canCreateCranTask" Type="Boolean" Nullable="false" />
+          <Property Name="canReviewCranTask" Type="Boolean" Nullable="false" />
+          <Property Name="canAgreeCranTask" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_Orders_OrderObjects">
           <End Role="OrderObjects" Type="VotGESOrdersModel.OrderObjects" Multiplicity="1" />
@@ -466,6 +473,7 @@
           <Property Name="Denied" Type="Boolean" Nullable="false" />
           <Property Name="NeedDateEnd" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Manager" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AgreeUsersIDS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -533,7 +541,10 @@
             <ScalarProperty Name="expiredCompleteHours" ColumnName="expiredCompleteHours" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Users"><EntityTypeMapping TypeName="VotGESOrdersModel.Users"><MappingFragment StoreEntitySet="Users">
-            <ScalarProperty Name="userID" ColumnName="userID" />
+            <ScalarProperty Name="canAgreeCranTask" ColumnName="canAgreeCranTask" />
+                <ScalarProperty Name="canReviewCranTask" ColumnName="canReviewCranTask" />
+                <ScalarProperty Name="canCreateCranTask" ColumnName="canCreateCranTask" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
             <ScalarProperty Name="name" ColumnName="name" />
             <ScalarProperty Name="fullName" ColumnName="fullName" />
             <ScalarProperty Name="mail" ColumnName="mail" />
@@ -554,6 +565,7 @@
           <EntitySetMapping Name="CranTask">
             <EntityTypeMapping TypeName="VotGESOrdersModel.CranTask">
               <MappingFragment StoreEntitySet="CranTask">
+                <ScalarProperty Name="AgreeUsersIDS" ColumnName="AgreeUsersIDS" />
                 <ScalarProperty Name="Manager" ColumnName="Manager" />
                 <ScalarProperty Name="NeedDateEnd" ColumnName="NeedDateEnd" />
                 <ScalarProperty Name="Denied" ColumnName="Denied" />

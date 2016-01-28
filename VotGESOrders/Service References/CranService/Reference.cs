@@ -80,6 +80,12 @@ namespace VotGESOrders.CranService {
     [System.Runtime.Serialization.DataContractAttribute(Name="CranTaskInfo", Namespace="http://schemas.datacontract.org/2004/07/VotGESOrders.Web.Models")]
     public partial class CranTaskInfo : object, System.ComponentModel.INotifyPropertyChanged {
         
+        private System.Collections.Generic.Dictionary<int, string> AgreeDictField;
+        
+        private string AgreeUsersIDSField;
+        
+        private string AgreeUsersTextField;
+        
         private System.DateTime AllowDateEndField;
         
         private System.DateTime AllowDateStartField;
@@ -117,6 +123,45 @@ namespace VotGESOrders.CranService {
         private bool checkField;
         
         private bool initField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.Dictionary<int, string> AgreeDict {
+            get {
+                return this.AgreeDictField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AgreeDictField, value) != true)) {
+                    this.AgreeDictField = value;
+                    this.RaisePropertyChanged("AgreeDict");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string AgreeUsersIDS {
+            get {
+                return this.AgreeUsersIDSField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AgreeUsersIDSField, value) != true)) {
+                    this.AgreeUsersIDSField = value;
+                    this.RaisePropertyChanged("AgreeUsersIDS");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string AgreeUsersText {
+            get {
+                return this.AgreeUsersTextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AgreeUsersTextField, value) != true)) {
+                    this.AgreeUsersTextField = value;
+                    this.RaisePropertyChanged("AgreeUsersText");
+                }
+            }
+        }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public System.DateTime AllowDateEnd {

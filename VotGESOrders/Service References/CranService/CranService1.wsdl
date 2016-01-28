@@ -51,7 +51,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>http://localhost:8090/CranService.svc</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>chekunovamv@corp.gidroogk.com</Upn>
+          <Upn>ChekunovaMV@corp.gidroogk.com</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>

@@ -5,6 +5,7 @@
       <xsd:import schemaLocation="http://localhost:8090/CranService.svc?xsd=xsd0" />
       <xsd:import schemaLocation="http://localhost:8090/CranService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:8090/CranService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/VotGESOrders.Web.Models" />
+      <xsd:import schemaLocation="http://localhost:8090/CranService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="CranService_DoWork_InputMessage">

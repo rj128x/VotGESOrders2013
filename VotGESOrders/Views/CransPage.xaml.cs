@@ -82,7 +82,7 @@ namespace VotGESOrders.Views {
 			GlobalStatus.Current.IsBusy = true;
 			CransContext.Single.Client.getCranTasksAsync(null);
 			initChart();
-			newTask.Visibility = WebContext.Current.User.AllowCreateOrder ? Visibility.Visible : Visibility.Collapsed;
+			newTask.Visibility = WebContext.Current.User.AllowCreateCranTask ? Visibility.Visible : Visibility.Collapsed;
 		}
 
 		public void deinit() {
@@ -194,22 +194,25 @@ namespace VotGESOrders.Views {
 			Dictionary<DateTime, CranTaskInfo> crans = new Dictionary<DateTime, CranTaskInfo>();	
 
 			foreach (CranTaskInfo task in CurrentFilter.Data) {
-				DateTime date = task.NeedStartDate;
+				DateTime date = task.NeedEndDate;
 				if (task.Allowed)
-					date = task.AllowDateStart;
+					date = task.AllowDateEnd;
 				if (task.CranNumber==cranNumber){
 					while (crans.ContainsKey(date))
 						date=date.AddMilliseconds(1);
 					crans.Add(date,task);
 				}
 			}
-			crans.OrderBy(task => task.Key);
+			IEnumerable<KeyValuePair<DateTime,CranTaskInfo>> sorted= crans.OrderBy(task => task.Key);
 					
 
 			double diffA = 0;
 			double diffD = 0.05;
-			
-			foreach (KeyValuePair<DateTime,CranTaskInfo> de in crans) {
+
+			CranTaskInfo prevTaskA = null;
+			CranTaskInfo prevTaskD = null;
+
+			foreach (KeyValuePair<DateTime,CranTaskInfo> de in sorted) {
 				CranTaskInfo task = de.Value;
 				LineSeries serie = new LineSeries();
 				DataSeries<DateTime, double> Points = new DataSeries<DateTime, double>();
@@ -221,29 +224,41 @@ namespace VotGESOrders.Views {
 				serie.ShowPoints = true;
 
 				if (task.Allowed) {
+					if (prevTaskA != null && task.AllowDateStart > prevTaskA.AllowDateEnd) {
+							diffA = 0;
+					}
 					Points.Add(new DataPoint<DateTime, double>(task.AllowDateStart, task.CranNumber+diffA));
 					Points.Add(new DataPoint<DateTime, double>(task.AllowDateEnd, task.CranNumber + diffA));
 					serie.LineStroke = new SolidColorBrush(Colors.Green);
 					serie.PointFill = new SolidColorBrush(Colors.Green);
 					diffA += 0.05;
+					prevTaskA = task;
 				}
 
 				else if (task.Denied) {
+					if (prevTaskD != null && task.NeedStartDate > prevTaskA.NeedEndDate) {
+						diffD = 0.05;
+					}
 					Points.Add(new DataPoint<DateTime, double>(task.NeedStartDate, task.CranNumber - diffD));
 					Points.Add(new DataPoint<DateTime, double>(task.NeedEndDate, task.CranNumber -  diffD));
 
 					serie.LineStroke = new SolidColorBrush(Colors.Red);
 					serie.PointFill = new SolidColorBrush(Colors.Red);
 					diffD += 0.05;
+					prevTaskD = task;
 				}
 
 				else {
+					if (prevTaskD != null && task.NeedStartDate > prevTaskA.NeedEndDate) {
+						diffD = 0.05;
+					}
 					Points.Add(new DataPoint<DateTime, double>(task.NeedStartDate, task.CranNumber - diffD));
 					Points.Add(new DataPoint<DateTime, double>(task.NeedEndDate, task.CranNumber - diffD));
 
 					serie.LineStroke = new SolidColorBrush(Colors.Gray);
 					serie.PointFill = new SolidColorBrush(Colors.Gray);
 					diffD += 0.05;
+					prevTaskD = task;
 				}
 
 				serie.DataSeries = Points;

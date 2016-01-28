@@ -149,8 +149,16 @@
                                 <TextBlock Text="{Binding Author}" Style="{StaticResource Value}" Width="200"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Отв-й " Width="50" Style="{StaticResource Label}"/>
+                                <TextBlock Text="{Binding Manager}" Style="{StaticResource Value}" Width="200"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Заявка" Width="50" Style="{StaticResource Label}" VerticalAlignment="Top"/>
                                 <TextBlock  Text="{Binding Comment}" TextWrapping="Wrap" Width="200" Height="50" Style="{StaticResource Value}"  />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Согл-но" Width="50" Style="{StaticResource Label}" VerticalAlignment="Top"/>
+                                <TextBlock  Text="{Binding AgreeUsersText}" TextWrapping="Wrap" Width="200" Height="50" Style="{StaticResource Value}"  />
                             </StackPanel>
 
                             <StackPanel Orientation="Vertical">

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/VotGESOrders.Web.Models" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/VotGESOrders.Web.Models" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:8090/CranService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:complexType name="CranFilter">
     <xs:sequence>
       <xs:element minOccurs="0" name="Data" nillable="true" type="tns:ArrayOfCranTaskInfo" />
@@ -16,6 +17,9 @@
   <xs:element name="ArrayOfCranTaskInfo" nillable="true" type="tns:ArrayOfCranTaskInfo" />
   <xs:complexType name="CranTaskInfo">
     <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AgreeDict" nillable="true" type="q1:ArrayOfKeyValueOfintstring" />
+      <xs:element minOccurs="0" name="AgreeUsersIDS" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AgreeUsersText" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AllowDateEnd" type="xs:dateTime" />
       <xs:element minOccurs="0" name="AllowDateStart" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Allowed" type="xs:boolean" />

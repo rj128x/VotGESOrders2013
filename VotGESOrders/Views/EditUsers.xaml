@@ -113,7 +113,17 @@
 						<toolkit:DataField Name="AllowAgreeOrders" Label="">
 							<CheckBox Content="Может согласовывать заявки" IsChecked="{Binding AllowAgreeOrders,Mode=TwoWay}"/>
 						</toolkit:DataField>
-					</StackPanel>
+                        <toolkit:DataField Name="CanCreateCranTask" Label="">
+                            <CheckBox Content="Может создавать заявки на работу крана" IsChecked="{Binding CanCreateCranTask,Mode=TwoWay}"/>
+                        </toolkit:DataField>
+                        <toolkit:DataField Name="CanReviewCranTask" Label="">
+                            <CheckBox Content="Может рассматривать заявки на работу крана" IsChecked="{Binding CanReviewCranTask,Mode=TwoWay}"/>
+                        </toolkit:DataField>
+                        <toolkit:DataField Name="CanAgreeCranTask" Label="">
+                            <CheckBox Content="Может согласовывать заявки на работу крана" IsChecked="{Binding CanAgreeCranTask,Mode=TwoWay}"/>
+                        </toolkit:DataField>
+                        
+                    </StackPanel>
 				</toolkit:DataForm>
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="1">
 					<Button Name="btnSave" Content="Сохранить" Click="btnSave_Click"

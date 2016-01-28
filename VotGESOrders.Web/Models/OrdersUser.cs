@@ -32,6 +32,9 @@ namespace VotGESOrders.Web.Models
 		public bool AllowEditUsers { get; set; }
 		public bool AllowEditOrders { get; set; }
 		public bool AllowAgreeOrders { get; set; }
+		public bool CanCreateCranTask { get; set; }
+		public bool CanReviewCranTask { get; set; }
+		public bool CanAgreeCranTask { get; set; }
 
 		protected static VotGESOrdersEntities context;
 		protected static List<OrdersUser> allUsers;
@@ -102,6 +105,9 @@ namespace VotGESOrders.Web.Models
 				user.AllowEditUsers = userDB.allowEditUsers;
 				user.AllowEditOrders = userDB.allowEditOrders;
 				user.AllowAgreeOrders = userDB.allowAgreeOrders;
+				user.CanAgreeCranTask = userDB.canAgreeCranTask;
+				user.CanCreateCranTask = userDB.canCreateCranTask;
+				user.CanReviewCranTask = userDB.canReviewCranTask;
 				try {
 					user.Mails = user.Mail.Split(';').ToList();
 				}catch{

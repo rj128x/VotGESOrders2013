@@ -44,6 +44,9 @@ namespace VotGESOrders.Web.Models {
 		public bool change { get; set; }
 		public bool check { get; set; }
 		public bool changed { get; set; }
+		public string AgreeUsersIDS { get; set; }
+		public string AgreeUsersText { get; set; }
+		public Dictionary<int, string> AgreeDict { get; set; }
 
 		public bool canChange { get; set; }
 		public bool canCheck { get; set; }
@@ -64,7 +67,7 @@ namespace VotGESOrders.Web.Models {
 			Allowed = tbl.Allowed;
 			Denied = tbl.Denied;
 			canChange = (!Allowed) && (!Denied) && tbl.Author.ToLower() == currentUser.Name.ToLower();
-			canCheck = currentUser.AllowReviewOrder;
+			canCheck = currentUser.CanReviewCranTask;
 			Manager = tbl.Manager;
 			if (Denied) {
 				State = "Отклонена";
@@ -78,8 +81,26 @@ namespace VotGESOrders.Web.Models {
 				canChange = false;
 				State = "Разрешена";
 			}
+			AgreeUsersIDS = tbl.AgreeUsersIDS;
+			AgreeDict = getAgreeUsers(AgreeUsersIDS);
+			AgreeUsersText = string.Join(",", AgreeDict.Values);
+		}
 
+		public static Dictionary<int,string> getAgreeUsers(string ids) {
+			Dictionary<int, string> dict = new Dictionary<int, string>();
+			try {
+				string[] idArr = ids.Split(new char[] { ';' });
 
+				foreach (string id in idArr) {
+					try {
+						OrdersUser user = OrdersUser.loadFromCache(Int32.Parse(id));
+						dict.Add(user.UserID, user.FullName);
+					}
+					catch { }
+				}
+			}
+			catch { }
+			return dict;
 		}
 
 		public static ReturnMessage CreateCranTask(CranTaskInfo task) {
@@ -129,6 +150,8 @@ namespace VotGESOrders.Web.Models {
 				tbl.Comment = task.Comment;
 				tbl.Manager = task.Manager;
 				tbl.CranNumber = task.CranNumber;
+				if (task.AgreeDict != null)
+					tbl.AgreeUsersIDS = string.Join(";", task.AgreeDict.Keys);
 				if (task.Allowed) {
 					tbl.AllowedDateStart = task.AllowDateStart;
 					tbl.AllowedDateEnd = task.AllowDateEnd;

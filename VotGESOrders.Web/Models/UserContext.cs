@@ -58,6 +58,9 @@ namespace VotGESOrders.Web.Models
 				user.allowEditTree = newUser.AllowEditTree;
 				user.allowAgreeOrders = newUser.AllowAgreeOrders;
 				user.allowReviewOrder = newUser.AllowReviewOrder;
+				user.canReviewCranTask = newUser.CanReviewCranTask;
+				user.canCreateCranTask = newUser.CanCreateCranTask;
+				user.canAgreeCranTask = newUser.CanAgreeCranTask;
 
 				
 				context.SaveChanges();

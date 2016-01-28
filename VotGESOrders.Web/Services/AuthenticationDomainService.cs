@@ -41,6 +41,7 @@ namespace VotGESOrders.Web.Services
 			AllowCreateCrashOrder = ordersUser.AllowCreateCrashOrder;
 			AllowEditTree = ordersUser.AllowEditTree;
 			AllowEditUsers = ordersUser.AllowEditUsers;
+			AllowCreateCranTask = ordersUser.CanCreateCranTask;
 			UserID = ordersUser.UserID;
 		}
 
@@ -55,6 +56,8 @@ namespace VotGESOrders.Web.Services
 		public bool AllowEditTree { get; set; }
 		[ProfileUsage(IsExcluded = true)]
 		public bool AllowEditUsers { get; set; }
+		[ProfileUsage(IsExcluded = true)]
+		public bool AllowCreateCranTask { get; set; }
 		[ProfileUsage(IsExcluded = true)]
 		public int UserID { get; set; }
 

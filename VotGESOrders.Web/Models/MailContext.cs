@@ -71,14 +71,15 @@ namespace VotGESOrders.Web.Models {
 			try {
 				IQueryable users = OrdersUser.getAllUsers();
 				List<string> mailToList = new List<string>();
-
+				
 				foreach (OrdersUser user in users) {
 					if (
 							!mailToList.Contains(user.Mail) &&
 						(
 						user.SendAllMail ||	
 						user.SendCreateMail && task.Author.ToLower() == user.Name.ToLower()  ||						
-						task.init && user.SendAllCreateMail 
+						task.init && user.SendAllCreateMail ||
+						task.AgreeDict.ContainsKey(user.UserID) && (user.SendAgreeMail||user.SendAllAgreeMail)
 						))		
 					{
 						if (user.Mails.Count > 0) {
@@ -91,8 +92,9 @@ namespace VotGESOrders.Web.Models {
 					}
 				}
 
-				string message = String.Format("<h1>Заявка на работу крана №{0}</h1><br/><h2>Автор: {1}<br/>Текст: {2}<br/>Запрошенное время: {3} - {4} <br/></h2>",
-					task.CranNumber, task.Author, task.Comment, task.NeedStartDate.ToString("dd.MM.yyyy HH:mm"), task.NeedEndDate.ToString("dd.MM.yyyy HH:mm"));
+				string message = String.Format("<h1>Заявка на работу крана №{0}</h1><br/><h2>Автор: {1}<br/>Текст: {2}<br/> Ответственный: {5} <br/> Согласовано: {6} <br/>Запрошенное время: {3} - {4} <br/></h2>",
+					task.CranNumber, task.Author, task.Comment, task.NeedStartDate.ToString("dd.MM.yyyy HH:mm"), task.NeedEndDate.ToString("dd.MM.yyyy HH:mm"),
+					task.Manager,task.AgreeUsersText);
 				if (task.Allowed || task.Denied) {
 					message += String.Format("<h1>{1}</h1><h2> Заявку рассмотрел: {0}", task.AuthorAllow, task.Allowed ? "Заявка разрешена" : "Заявка отклонена");
 				}

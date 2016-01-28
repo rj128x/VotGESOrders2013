@@ -516,6 +516,30 @@ namespace VotGESOrders.Web.ADONETEntities
         private global::System.String _Manager;
         partial void OnManagerChanging(global::System.String value);
         partial void OnManagerChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String AgreeUsersIDS
+        {
+            get
+            {
+                return _AgreeUsersIDS;
+            }
+            set
+            {
+                OnAgreeUsersIDSChanging(value);
+                ReportPropertyChanging("AgreeUsersIDS");
+                _AgreeUsersIDS = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("AgreeUsersIDS");
+                OnAgreeUsersIDSChanged();
+            }
+        }
+        private global::System.String _AgreeUsersIDS;
+        partial void OnAgreeUsersIDSChanging(global::System.String value);
+        partial void OnAgreeUsersIDSChanged();
 
         #endregion
 
@@ -2288,7 +2312,10 @@ namespace VotGESOrders.Web.ADONETEntities
         /// <param name="sendAllCreateMail">Исходное значение свойства sendAllCreateMail.</param>
         /// <param name="sendAllAgreeMail">Исходное значение свойства sendAllAgreeMail.</param>
         /// <param name="allowEditOrders">Исходное значение свойства allowEditOrders.</param>
-        public static Users CreateUsers(global::System.Int32 userID, global::System.String name, global::System.String fullName, global::System.String mail, global::System.Boolean sendAllMail, global::System.Boolean sendAgreeMail, global::System.Boolean sendCreateMail, global::System.Boolean allowCreateOrder, global::System.Boolean allowCreateCrashOrder, global::System.Boolean allowReviewOrder, global::System.Boolean allowChangeOrder, global::System.Boolean allowEditTree, global::System.Boolean allowEditUsers, global::System.Boolean allowAgreeOrders, global::System.Boolean sendAllCreateMail, global::System.Boolean sendAllAgreeMail, global::System.Boolean allowEditOrders)
+        /// <param name="canCreateCranTask">Исходное значение свойства canCreateCranTask.</param>
+        /// <param name="canReviewCranTask">Исходное значение свойства canReviewCranTask.</param>
+        /// <param name="canAgreeCranTask">Исходное значение свойства canAgreeCranTask.</param>
+        public static Users CreateUsers(global::System.Int32 userID, global::System.String name, global::System.String fullName, global::System.String mail, global::System.Boolean sendAllMail, global::System.Boolean sendAgreeMail, global::System.Boolean sendCreateMail, global::System.Boolean allowCreateOrder, global::System.Boolean allowCreateCrashOrder, global::System.Boolean allowReviewOrder, global::System.Boolean allowChangeOrder, global::System.Boolean allowEditTree, global::System.Boolean allowEditUsers, global::System.Boolean allowAgreeOrders, global::System.Boolean sendAllCreateMail, global::System.Boolean sendAllAgreeMail, global::System.Boolean allowEditOrders, global::System.Boolean canCreateCranTask, global::System.Boolean canReviewCranTask, global::System.Boolean canAgreeCranTask)
         {
             Users users = new Users();
             users.userID = userID;
@@ -2308,6 +2335,9 @@ namespace VotGESOrders.Web.ADONETEntities
             users.sendAllCreateMail = sendAllCreateMail;
             users.sendAllAgreeMail = sendAllAgreeMail;
             users.allowEditOrders = allowEditOrders;
+            users.canCreateCranTask = canCreateCranTask;
+            users.canReviewCranTask = canReviewCranTask;
+            users.canAgreeCranTask = canAgreeCranTask;
             return users;
         }
 
@@ -2725,6 +2755,78 @@ namespace VotGESOrders.Web.ADONETEntities
         private global::System.Boolean _allowEditOrders;
         partial void OnallowEditOrdersChanging(global::System.Boolean value);
         partial void OnallowEditOrdersChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean canCreateCranTask
+        {
+            get
+            {
+                return _canCreateCranTask;
+            }
+            set
+            {
+                OncanCreateCranTaskChanging(value);
+                ReportPropertyChanging("canCreateCranTask");
+                _canCreateCranTask = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("canCreateCranTask");
+                OncanCreateCranTaskChanged();
+            }
+        }
+        private global::System.Boolean _canCreateCranTask;
+        partial void OncanCreateCranTaskChanging(global::System.Boolean value);
+        partial void OncanCreateCranTaskChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean canReviewCranTask
+        {
+            get
+            {
+                return _canReviewCranTask;
+            }
+            set
+            {
+                OncanReviewCranTaskChanging(value);
+                ReportPropertyChanging("canReviewCranTask");
+                _canReviewCranTask = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("canReviewCranTask");
+                OncanReviewCranTaskChanged();
+            }
+        }
+        private global::System.Boolean _canReviewCranTask;
+        partial void OncanReviewCranTaskChanging(global::System.Boolean value);
+        partial void OncanReviewCranTaskChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean canAgreeCranTask
+        {
+            get
+            {
+                return _canAgreeCranTask;
+            }
+            set
+            {
+                OncanAgreeCranTaskChanging(value);
+                ReportPropertyChanging("canAgreeCranTask");
+                _canAgreeCranTask = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("canAgreeCranTask");
+                OncanAgreeCranTaskChanged();
+            }
+        }
+        private global::System.Boolean _canAgreeCranTask;
+        partial void OncanAgreeCranTaskChanging(global::System.Boolean value);
+        partial void OncanAgreeCranTaskChanged();
 
         #endregion
 

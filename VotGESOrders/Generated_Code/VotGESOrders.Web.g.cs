@@ -3891,6 +3891,12 @@ namespace VotGESOrders.Web.Models
         
         private bool _allowReviewOrder;
         
+        private bool _canAgreeCranTask;
+        
+        private bool _canCreateCranTask;
+        
+        private bool _canReviewCranTask;
+        
         private string _fullName;
         
         private string _mail;
@@ -3934,6 +3940,12 @@ namespace VotGESOrders.Web.Models
         partial void OnAllowEditUsersChanged();
         partial void OnAllowReviewOrderChanging(bool value);
         partial void OnAllowReviewOrderChanged();
+        partial void OnCanAgreeCranTaskChanging(bool value);
+        partial void OnCanAgreeCranTaskChanged();
+        partial void OnCanCreateCranTaskChanging(bool value);
+        partial void OnCanCreateCranTaskChanged();
+        partial void OnCanReviewCranTaskChanging(bool value);
+        partial void OnCanReviewCranTaskChanged();
         partial void OnFullNameChanging(string value);
         partial void OnFullNameChanged();
         partial void OnMailChanging(string value);
@@ -4158,6 +4170,78 @@ namespace VotGESOrders.Web.Models
                     this._allowReviewOrder = value;
                     this.RaiseDataMemberChanged("AllowReviewOrder");
                     this.OnAllowReviewOrderChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Возвращает или задает значение параметра "CanAgreeCranTask".
+        /// </summary>
+        [DataMember()]
+        public bool CanAgreeCranTask
+        {
+            get
+            {
+                return this._canAgreeCranTask;
+            }
+            set
+            {
+                if ((this._canAgreeCranTask != value))
+                {
+                    this.OnCanAgreeCranTaskChanging(value);
+                    this.RaiseDataMemberChanging("CanAgreeCranTask");
+                    this.ValidateProperty("CanAgreeCranTask", value);
+                    this._canAgreeCranTask = value;
+                    this.RaiseDataMemberChanged("CanAgreeCranTask");
+                    this.OnCanAgreeCranTaskChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Возвращает или задает значение параметра "CanCreateCranTask".
+        /// </summary>
+        [DataMember()]
+        public bool CanCreateCranTask
+        {
+            get
+            {
+                return this._canCreateCranTask;
+            }
+            set
+            {
+                if ((this._canCreateCranTask != value))
+                {
+                    this.OnCanCreateCranTaskChanging(value);
+                    this.RaiseDataMemberChanging("CanCreateCranTask");
+                    this.ValidateProperty("CanCreateCranTask", value);
+                    this._canCreateCranTask = value;
+                    this.RaiseDataMemberChanged("CanCreateCranTask");
+                    this.OnCanCreateCranTaskChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Возвращает или задает значение параметра "CanReviewCranTask".
+        /// </summary>
+        [DataMember()]
+        public bool CanReviewCranTask
+        {
+            get
+            {
+                return this._canReviewCranTask;
+            }
+            set
+            {
+                if ((this._canReviewCranTask != value))
+                {
+                    this.OnCanReviewCranTaskChanging(value);
+                    this.RaiseDataMemberChanging("CanReviewCranTask");
+                    this.ValidateProperty("CanReviewCranTask", value);
+                    this._canReviewCranTask = value;
+                    this.RaiseDataMemberChanged("CanReviewCranTask");
+                    this.OnCanReviewCranTaskChanged();
                 }
             }
         }
@@ -5453,6 +5537,8 @@ namespace VotGESOrders.Web.Services
     public sealed partial class User : Entity, global::System.Security.Principal.IIdentity, global::System.Security.Principal.IPrincipal
     {
         
+        private bool _allowCreateCranTask;
+        
         private bool _allowCreateCrashOrder;
         
         private bool _allowCreateOrder;
@@ -5476,6 +5562,8 @@ namespace VotGESOrders.Web.Services
         /// не может быть использован для последующей настройки объекта.
         /// </summary>
         partial void OnCreated();
+        partial void OnAllowCreateCranTaskChanging(bool value);
+        partial void OnAllowCreateCranTaskChanged();
         partial void OnAllowCreateCrashOrderChanging(bool value);
         partial void OnAllowCreateCrashOrderChanged();
         partial void OnAllowCreateOrderChanging(bool value);
@@ -5502,6 +5590,30 @@ namespace VotGESOrders.Web.Services
         public User()
         {
             this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Возвращает или задает значение параметра "AllowCreateCranTask".
+        /// </summary>
+        [DataMember()]
+        public bool AllowCreateCranTask
+        {
+            get
+            {
+                return this._allowCreateCranTask;
+            }
+            set
+            {
+                if ((this._allowCreateCranTask != value))
+                {
+                    this.OnAllowCreateCranTaskChanging(value);
+                    this.RaiseDataMemberChanging("AllowCreateCranTask");
+                    this.ValidateProperty("AllowCreateCranTask", value);
+                    this._allowCreateCranTask = value;
+                    this.RaiseDataMemberChanged("AllowCreateCranTask");
+                    this.OnAllowCreateCranTaskChanged();
+                }
+            }
         }
         
         /// <summary>

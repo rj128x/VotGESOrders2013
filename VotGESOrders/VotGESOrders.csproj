@@ -351,6 +351,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <None Include="Service References\CranService\CranService3.xsd" />
     <None Include="VotGESOrders_TemporaryKey.pfx" />
     <Page Include="Views\CransPage.xaml">
       <SubType>Designer</SubType>
