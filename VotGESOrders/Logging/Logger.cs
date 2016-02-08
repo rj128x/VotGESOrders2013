@@ -29,12 +29,16 @@ namespace VotGESOrders.Logging
 		}
 
 		public static void info(string message) {
-			logger.loggerContext.info(message,
-				oper => {
-					if (oper.HasError) {
-						oper.MarkErrorAsHandled();
-					}
-				}, null);
+			try {
+				message += "=== " + DateTime.Now.ToLongTimeString() + "." + DateTime.Now.Millisecond.ToString();
+				logger.loggerContext.info(message,
+					oper => {
+						if (oper.HasError) {
+							oper.MarkErrorAsHandled();
+						}
+					}, null);
+			}
+			catch { }
 		}
 
 		public static void showMessage(string message) {

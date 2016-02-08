@@ -15,39 +15,44 @@ using VotGESOrders.Logging;
 using VotGESOrders.Web.Models;
 
 
-namespace VotGESOrders
-{
-	public partial class App : Application
-	{
+namespace VotGESOrders {
+	public partial class App : Application {
+		public bool hasUser;
+		public bool hasRoot;
 		public App() {
 			this.Startup += this.Application_Startup;
 			this.UnhandledException += this.Application_UnhandledException;
 			WebContext webcontext = new WebContext();
 			webcontext.Authentication = new System.ServiceModel.DomainServices.Client.ApplicationServices.WindowsAuthentication();
 
-			LoggerContext context=new LoggerContext();
+			LoggerContext context = new LoggerContext();
 			Logging.Logger.init(context);
-							
-			this.ApplicationLifetimeObjects.Add(webcontext);
 
+			this.ApplicationLifetimeObjects.Add(webcontext);
+			
 			webcontext.Authentication.LoadUser(OnLoadUser_Completed, null);
+			
 			InitializeComponent();
-			this.RootVisual = new MainPage();
 		}
 
 		private void Application_Startup(object sender, StartupEventArgs e) {
-			//this.RootVisual = new MainPage();
-			
+			this.RootVisual = new MainPage();
+			hasRoot = true;
+			if (hasUser) {
+				(this.RootVisual as MainPage).startLoad();
+			}
 		}
 
-		private void OnLoadUser_Completed(LoadUserOperation operation) {			
+		private void OnLoadUser_Completed(LoadUserOperation operation) {
 			Logger.info("Пользователь авторизовался в клиенте");
-			(this.RootVisual as MainPage).startLoad();
-			
+			hasUser = true;
+			if (hasRoot) {
+				(this.RootVisual as MainPage).startLoad();
+			}
 		}
 
-				
-		
+
+
 
 		private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e) {
 			// Если приложение выполняется вне отладчика, воспользуйтесь для сообщения об исключении
@@ -59,11 +64,11 @@ namespace VotGESOrders
 				// оповещающий веб-сайт об ошибке и останавливающий работу приложения.
 
 				e.Handled = true;
-								
+				Logger.info(e.ExceptionObject.StackTrace);
 				ChildWindow errorWin = new ErrorWindow(e.ExceptionObject);
 				Logger.info(e.ExceptionObject.ToString());
-				errorWin.Show();			
-				
+				errorWin.Show();
+
 			}
 		}
 	}

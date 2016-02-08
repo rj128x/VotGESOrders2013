@@ -22,13 +22,13 @@ namespace VotGESOrders
 		public static bool STARTING;
 
 		public MainPage() {
-			STARTING = true;
-			Logger.info("Старт главной страницы");			
-			OrdersContext.init();
+			STARTING = true;		
 			InitializeComponent();	
 		}
 
-		public void startLoad() {
+		public void startLoad() {	
+			Logger.info("Старт главной страницы");			
+			OrdersContext.init();
 			if (Application.Current.IsRunningOutOfBrowser) {
 				// Проверка наличия новых версий
 

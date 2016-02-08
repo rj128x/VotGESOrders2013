@@ -39,6 +39,7 @@ namespace VotGESOrders
 
 
 		public void finish() {
+			Logger.info("Начало загрузки главной страницы");
 			pnlButtons.DataContext = WebContext.Current.User;
 
 			OrdersContext.Current.View.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(View_CollectionChanged);
