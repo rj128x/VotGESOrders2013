@@ -26,6 +26,8 @@ namespace VotGESOrders.CranService {
         
         private System.DateTime DateStartField;
         
+        private System.Collections.ObjectModel.ObservableCollection<string> ManagersField;
+        
         [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Collections.ObjectModel.ObservableCollection<VotGESOrders.CranService.CranTaskInfo> Data {
             get {
@@ -61,6 +63,19 @@ namespace VotGESOrders.CranService {
                 if ((this.DateStartField.Equals(value) != true)) {
                     this.DateStartField = value;
                     this.RaisePropertyChanged("DateStart");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.ObjectModel.ObservableCollection<string> Managers {
+            get {
+                return this.ManagersField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ManagersField, value) != true)) {
+                    this.ManagersField = value;
+                    this.RaisePropertyChanged("Managers");
                 }
             }
         }

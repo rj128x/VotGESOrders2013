@@ -11,6 +11,7 @@ namespace VotGESOrders.Web.Models {
 		public DateTime DateStart { get; set; }
 		public DateTime DateEnd { get; set; }
 		public List<CranTaskInfo> Data { get; set; }
+		public List<String> Managers { get; set; }
 	}
 
 	public class ReturnMessage {
@@ -27,6 +28,7 @@ namespace VotGESOrders.Web.Models {
 	}
 
 	public class CranTaskInfo {
+		public static List<string> Managers;
 		public int CranNumber { get; set; }
 		public int Number { get; set; }
 		public DateTime NeedStartDate { get; set; }
@@ -182,6 +184,13 @@ namespace VotGESOrders.Web.Models {
 
 				eni.SaveChanges();
 				MailContext.sendCranTask(message, task);
+				if (Managers != null) {
+					if (!Managers.Contains(task.Manager)) {
+						Managers.Add(task.Manager);
+					}
+				}
+				else
+					ReadManagers();
 				return new ReturnMessage(true, result);
 			}
 			catch (Exception e) {
@@ -191,11 +200,14 @@ namespace VotGESOrders.Web.Models {
 		}
 
 		public static CranFilter LoadCranTasks(CranFilter Filter = null) {
+			if (Managers == null)
+				ReadManagers();
 			if (Filter == null) {
 				Filter = new CranFilter();
 				Filter.DateStart = DateTime.Now.Date;
 				Filter.DateEnd = DateTime.Now.Date.AddDays(10);
 			}
+			Filter.Managers = Managers;
 			VotGESOrdersEntities eni = new VotGESOrdersEntities();
 			List<CranTaskInfo> result = new List<CranTaskInfo>();
 			IQueryable<CranTask> data = from t in eni.CranTask
@@ -215,6 +227,22 @@ namespace VotGESOrders.Web.Models {
 			return Filter;
 		}
 
+		public static void ReadManagers() {
+			
+			Managers=new List<string>();
+			try {
+				VotGESOrdersEntities eni = new VotGESOrdersEntities();
+				IQueryable<string> data = (from t in eni.CranTask select t.Manager).Distinct();
+				foreach (string name in data) {
+					if (!(Managers.Contains(name))) {
+						Managers.Add(name);
+					}
+				}
+			}
+			catch (Exception e) {
+				Logger.info("Ошибка при чтении доступных ответственных " + e.ToString(),Logger.LoggerSource.server);
+			}
+		}
 
 	}
 }

@@ -25,6 +25,7 @@ namespace VotGESOrders.Views {
 		}
 
 		public CranFilter CurrentFilter { get; set; }
+		public List<String> Managers { get; set; }
 
 
 		protected CranTaskInfo _currentTask;
@@ -99,6 +100,8 @@ namespace VotGESOrders.Views {
 		void Client_getCranTasksCompleted(object sender, CranService.getCranTasksCompletedEventArgs e) {
 			GlobalStatus.Current.IsBusy = false;
 			CurrentFilter = e.Result as CranFilter;
+			Managers = CurrentFilter.Managers.ToList();
+			CurrentFilter.Managers = null;
 			pnlFilter.DataContext = CurrentFilter;
 			grdTasks.ItemsSource = CurrentFilter.Data;
 			processCransData();
@@ -117,7 +120,7 @@ namespace VotGESOrders.Views {
 			newTask.NeedStartDate = DateTime.Now.Date.AddDays(1);
 			newTask.NeedEndDate = DateTime.Now.Date.AddDays(2);
 			CranWindow taskWindow = new CranWindow();
-			taskWindow.init(newTask);
+			taskWindow.init(newTask,Managers);
 			taskWindow.Closed += taskWindow_Closed;
 			taskWindow.Show();
 		}
@@ -126,7 +129,7 @@ namespace VotGESOrders.Views {
 			if (CurrentTask == null)
 				return;
 			CranWindow taskWindow = new CranWindow();
-			taskWindow.init(CurrentTask);
+			taskWindow.init(CurrentTask,Managers);
 			taskWindow.Closed += taskWindow_Closed;
 			taskWindow.Show();
 		}

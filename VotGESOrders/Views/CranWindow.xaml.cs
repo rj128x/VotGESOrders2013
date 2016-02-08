@@ -15,6 +15,7 @@ using VotGESOrders.Web.Models;
 namespace VotGESOrders.Views {
 	public partial class CranWindow : ChildWindow {
 		public CranTaskInfo CurrentTask { get; set; }
+		public List<String> Managers { get; set; }
 		public CranWindow() {
 			InitializeComponent();
 			CransContext.Single.Client.CreateCranTaskCompleted += Client_CreateCranTaskCompleted;
@@ -34,10 +35,12 @@ namespace VotGESOrders.Views {
 			CransContext.Single.Client.CreateCranTaskCompleted -= Client_CreateCranTaskCompleted;
 		}
 
-		public void init(CranTaskInfo task) {
+		public void init(CranTaskInfo task,List<String>Managers) {
+			this.Managers = Managers;
 			CurrentTask = task;
 			pnlTask.DataContext = CurrentTask;
 			lstUsers.ItemsSource = from OrdersUser u in OrdersContext.Current.Context.OrdersUsers where u.CanAgreeCranTask select u;
+			acbManager.ItemsSource = Managers;
 		}
 
 		private void OKButton_Click(object sender, RoutedEventArgs e) {
