@@ -85,7 +85,7 @@ namespace VotGESOrders.Web.Models {
 			}
 			AgreeUsersIDS = tbl.AgreeUsersIDS;
 			AgreeDict = getAgreeUsers(AgreeUsersIDS);
-			AgreeUsersText = string.Join(",", AgreeDict.Values);
+			AgreeUsersText = string.Join(", ", AgreeDict.Values);
 		}
 
 		public static Dictionary<int,string> getAgreeUsers(string ids) {
@@ -200,6 +200,7 @@ namespace VotGESOrders.Web.Models {
 		}
 
 		public static CranFilter LoadCranTasks(CranFilter Filter = null) {
+			Logger.info("Получение списка заявок на кран", Logger.LoggerSource.server);
 			if (Managers == null)
 				ReadManagers();
 			if (Filter == null) {
@@ -228,7 +229,7 @@ namespace VotGESOrders.Web.Models {
 		}
 
 		public static void ReadManagers() {
-			
+			Logger.info("Получение списка ответственных", Logger.LoggerSource.server);
 			Managers=new List<string>();
 			try {
 				VotGESOrdersEntities eni = new VotGESOrdersEntities();

@@ -149,7 +149,7 @@
                                 <TextBlock Text="{Binding Author}" Style="{StaticResource Value}" Width="200"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Отв-й " Width="50" Style="{StaticResource Label}"/>
+                                <TextBlock Text="Ответ-й " Width="50" Style="{StaticResource Label}"/>
                                 <TextBlock Text="{Binding Manager}" Style="{StaticResource Value}" Width="200"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
@@ -172,7 +172,7 @@
                                     Click="btnChange_Click" IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"
                                             Visibility="{Binding canChange, Converter={StaticResource visibilityConverter}}"/>
                             <StackPanel Orientation="Vertical" Margin="0,30,0,0">
-                                <StackPanel>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                     <TextBlock Text="Заявка отклонена" HorizontalAlignment="Right" Visibility="{Binding Denied, Converter={StaticResource visibilityConverter}}" 
                                                Foreground="Red" FontWeight="Bold"/>
                                     <TextBlock Text="Заявка разрешена" HorizontalAlignment="Right" Visibility="{Binding Allowed, Converter={StaticResource visibilityConverter}}" 
