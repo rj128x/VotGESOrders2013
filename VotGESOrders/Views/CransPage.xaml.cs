@@ -60,7 +60,7 @@ namespace VotGESOrders.Views {
 
 		}
 
-		public void initChart() {
+		public void initChart(Chart CurrentChart) {
 			CurrentChart.YAxis = new LinearAxis();
 			CurrentChart.XAxis = new DateTimeAxis();
 			CurrentChart.YAxis.Element.Width = 0;
@@ -83,7 +83,10 @@ namespace VotGESOrders.Views {
 			
 			GlobalStatus.Current.IsBusy = true;
 			CransContext.Single.Client.getCranTasksAsync(null);
-			initChart();
+			initChart(ChartMZ);
+			initChart(ChartSUS);
+			initChart(ChartNBVB);
+			initChart(ChartTransVSP);
 			newTask.Visibility = WebContext.Current.User.AllowCreateCranTask ? Visibility.Visible : Visibility.Collapsed;
 		}
 
@@ -110,7 +113,10 @@ namespace VotGESOrders.Views {
 			CurrentFilter.Managers = null;
 			pnlFilter.DataContext = CurrentFilter;
 			grdTasks.ItemsSource = CurrentFilter.Data;
-			processCransData();
+			processCransData(ChartMZ,(new int[]{1,2}).ToList());
+			processCransData(ChartSUS, (new int[] { 3, 4 }).ToList());
+			processCransData(ChartNBVB, (new int[] { 5, 6 }).ToList());
+			processCransData(ChartTransVSP, (new int[] { 7, 8 }).ToList());
 			CurrentTask = null;
 		}
 
@@ -171,15 +177,44 @@ namespace VotGESOrders.Views {
 			}
 		}
 
-		private void grdTasks_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+		private void grdTasks_SelectionChanged(object sender, SelectionChangedEventArgs e) {			
 			SelectTask(grdTasks.SelectedItem as CranTaskInfo);
 		}
 
 		private void SelectTask(CranTaskInfo task) {
 			CurrentTask = task;
+			if (task == null)
+				return;
 			if (CurrentTask != null) {
 				pnlTask.DataContext = CurrentTask;
 			}
+			Chart CurrentChart = null;
+
+			switch (task.CranNumber){
+				case 1:
+				case 2:
+					CurrentChart = ChartMZ;
+					tCntrl.SelectedIndex = 0;
+					break;
+				case 3:
+				case 4:
+					CurrentChart = ChartSUS;
+					tCntrl.SelectedIndex = 1;
+					break;
+				case 5:
+				case 6:
+					CurrentChart = ChartNBVB;
+					tCntrl.SelectedIndex = 2;
+					break;
+				case 7:
+				case 8:
+					CurrentChart = ChartTransVSP;
+					tCntrl.SelectedIndex = 3;
+					break;
+				default:
+					return;
+			}
+			
 			try {
 				if (grdTasks.SelectedItem != task)
 					grdTasks.SelectedItem = task;
@@ -199,7 +234,7 @@ namespace VotGESOrders.Views {
 			catch { }
 		}
 
-		public void processSingleCran(int cranNumber) {
+		public void processSingleCran(int cranNumber,Chart CurrentChart,int cranVal) {
 			Dictionary<DateTime, CranTaskInfo> crans = new Dictionary<DateTime, CranTaskInfo>();	
 
 			foreach (CranTaskInfo task in CurrentFilter.Data) {
@@ -236,8 +271,8 @@ namespace VotGESOrders.Views {
 					if (prevTaskA != null && task.AllowDateStart > prevTaskA.AllowDateEnd) {
 							diffA = 0;
 					}
-					Points.Add(new DataPoint<DateTime, double>(task.AllowDateStart, task.CranNumber+diffA));
-					Points.Add(new DataPoint<DateTime, double>(task.AllowDateEnd, task.CranNumber + diffA));
+					Points.Add(new DataPoint<DateTime, double>(task.AllowDateStart, cranVal+diffA));
+					Points.Add(new DataPoint<DateTime, double>(task.AllowDateEnd, cranVal + diffA));
 					serie.LineStroke = new SolidColorBrush(Colors.Green);
 					serie.PointFill = new SolidColorBrush(Colors.Green);
 					diffA += 0.05;
@@ -248,8 +283,8 @@ namespace VotGESOrders.Views {
 					if (prevTaskD != null && task.NeedStartDate > prevTaskD.NeedEndDate) {
 						diffD = 0.05;
 					}
-					Points.Add(new DataPoint<DateTime, double>(task.NeedStartDate, task.CranNumber - diffD));
-					Points.Add(new DataPoint<DateTime, double>(task.NeedEndDate, task.CranNumber -  diffD));
+					Points.Add(new DataPoint<DateTime, double>(task.NeedStartDate, cranVal - diffD));
+					Points.Add(new DataPoint<DateTime, double>(task.NeedEndDate, cranVal - diffD));
 
 					serie.LineStroke = new SolidColorBrush(Colors.Red);
 					serie.PointFill = new SolidColorBrush(Colors.Red);
@@ -261,8 +296,8 @@ namespace VotGESOrders.Views {
 					if (prevTaskD != null && task.NeedStartDate > prevTaskD.NeedEndDate) {
 						diffD = 0.05;
 					}
-					Points.Add(new DataPoint<DateTime, double>(task.NeedStartDate, task.CranNumber - diffD));
-					Points.Add(new DataPoint<DateTime, double>(task.NeedEndDate, task.CranNumber - diffD));
+					Points.Add(new DataPoint<DateTime, double>(task.NeedStartDate, cranVal - diffD));
+					Points.Add(new DataPoint<DateTime, double>(task.NeedEndDate, cranVal - diffD));
 
 					serie.LineStroke = new SolidColorBrush(Colors.Gray);
 					serie.PointFill = new SolidColorBrush(Colors.Gray);
@@ -282,7 +317,7 @@ namespace VotGESOrders.Views {
 			SelectTask(task);
 		}
 
-		public void processCransData() {
+		public void processCransData(Chart CurrentChart, List<int>Crans) {
 			CurrentChart.Series.Clear();
 
 			DateTime min = DateTime.MaxValue;
@@ -322,14 +357,15 @@ namespace VotGESOrders.Views {
 			p3.Add(new DataPoint<DateTime, double>(max, 2.5));
 			ser3.DataSeries = p3;
 
-			CurrentChart.Series.Add(nulSer);
+			CurrentChart.Series.Add(nulSer);			
 			CurrentChart.Series.Add(ser15);
 			CurrentChart.Series.Add(ser3);
 
-			processSingleCran(1);
-			processSingleCran(2);
-		
-			grdGraph.InvalidateArrange();
+			int i = 1;
+			foreach (int cran in Crans){
+				processSingleCran(cran,CurrentChart,i++);				
+			}
+					
 		}
 
 		private int getTaskNumber(string name) {
@@ -361,9 +397,13 @@ namespace VotGESOrders.Views {
 		}
 
 		private void CurrentChart_MouseWheel(object sender, MouseWheelEventArgs e) {
-			double newSize = CurrentChart.ActualWidth + e.Delta;
-			if (newSize > scrChart.ActualWidth*0.9 && newSize < scrChart.ActualWidth * 3)
-				CurrentChart.Width = newSize;
+			try {
+				Chart CurrentChart = sender as Chart;
+				ScrollViewer scrChart = CurrentChart.Parent as ScrollViewer;
+				double newSize = CurrentChart.ActualWidth + e.Delta;
+				if (newSize > scrChart.ActualWidth * 0.9 && newSize < scrChart.ActualWidth * 3)
+					CurrentChart.Width = newSize;
+			}catch{}
 		}
 
 		private void btnComment_Click(object sender, RoutedEventArgs e) {
