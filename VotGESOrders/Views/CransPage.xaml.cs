@@ -79,6 +79,7 @@ namespace VotGESOrders.Views {
 			CransContext.init();
 			grdRight.DataContext = this;
 			CransContext.Single.Client.getCranTasksCompleted += Client_getCranTasksCompleted;
+			CransContext.Single.Client.CommentCranTaskCompleted+=Client_CommentCranTaskCompleted;
 			
 			GlobalStatus.Current.IsBusy = true;
 			CransContext.Single.Client.getCranTasksAsync(null);
@@ -86,8 +87,13 @@ namespace VotGESOrders.Views {
 			newTask.Visibility = WebContext.Current.User.AllowCreateCranTask ? Visibility.Visible : Visibility.Collapsed;
 		}
 
+
+
+
+
 		public void deinit() {
 			CransContext.Single.Client.getCranTasksCompleted -= Client_getCranTasksCompleted;
+			CransContext.Single.Client.CommentCranTaskCompleted -= Client_CommentCranTaskCompleted;
 		}
 
 		protected override void OnNavigatedFrom(NavigationEventArgs e) {
@@ -360,9 +366,37 @@ namespace VotGESOrders.Views {
 				CurrentChart.Width = newSize;
 		}
 
-		
+		private void btnComment_Click(object sender, RoutedEventArgs e) {
+			if (CurrentTask == null)
+				return;
+			if (String.IsNullOrEmpty(txtComment.Text)) {
+				MessageBox.Show("Введите комментарий");
+				return;
+			}
+			GlobalStatus.Current.IsBusy = true;
+			CransContext.Single.Client.CommentCranTaskAsync(CurrentTask, txtComment.Text);
+				
+		}
 
 
+		private void btnAgree_Click(object sender, RoutedEventArgs e) {
+			txtComment.Text = "Согласовано";
+		}
+
+		private void btnNotAgree_Click(object sender, RoutedEventArgs e) {
+			txtComment.Text = "Не согласовано";
+		}
+
+		private void Client_CommentCranTaskCompleted(object sender, CommentCranTaskCompletedEventArgs e) {
+			GlobalStatus.Current.IsBusy = false;
+			if (e.Result.Result) {
+				GlobalStatus.Current.IsBusy = true;
+				CransContext.Single.Client.getCranTasksAsync(CurrentFilter);
+			}
+			else {
+				MessageBox.Show(e.Result.Message);
+			}
+		}
 
 	}
 

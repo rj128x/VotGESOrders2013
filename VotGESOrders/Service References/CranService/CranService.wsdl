@@ -26,6 +26,12 @@
   <wsdl:message name="CranService_CreateCranTask_OutputMessage">
     <wsdl:part name="parameters" element="CreateCranTaskResponse" />
   </wsdl:message>
+  <wsdl:message name="CranService_CommentCranTask_InputMessage">
+    <wsdl:part name="parameters" element="CommentCranTask" />
+  </wsdl:message>
+  <wsdl:message name="CranService_CommentCranTask_OutputMessage">
+    <wsdl:part name="parameters" element="CommentCranTaskResponse" />
+  </wsdl:message>
   <wsdl:portType name="CranService">
     <wsdl:operation name="DoWork">
       <wsdl:input wsaw:Action="urn:CranService/DoWork" message="CranService_DoWork_InputMessage" />
@@ -38,6 +44,10 @@
     <wsdl:operation name="CreateCranTask">
       <wsdl:input wsaw:Action="urn:CranService/CreateCranTask" message="CranService_CreateCranTask_InputMessage" />
       <wsdl:output wsaw:Action="urn:CranService/CreateCranTaskResponse" message="CranService_CreateCranTask_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CommentCranTask">
+      <wsdl:input wsaw:Action="urn:CranService/CommentCranTask" message="CranService_CommentCranTask_InputMessage" />
+      <wsdl:output wsaw:Action="urn:CranService/CommentCranTaskResponse" message="CranService_CommentCranTask_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
 </wsdl:definitions>

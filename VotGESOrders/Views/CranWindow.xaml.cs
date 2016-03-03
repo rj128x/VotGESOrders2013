@@ -16,9 +16,21 @@ namespace VotGESOrders.Views {
 	public partial class CranWindow : ChildWindow {
 		public CranTaskInfo CurrentTask { get; set; }
 		public List<String> Managers { get; set; }
+		public Dictionary<int, string> Crans;
 		public CranWindow() {
 			InitializeComponent();
 			CransContext.Single.Client.CreateCranTaskCompleted += Client_CreateCranTaskCompleted;
+			Crans = new Dictionary<int, string>();
+			Crans.Add(0, "Выберите кран");
+			Crans.Add(1, "Кран мостовой г/п 350/75/10 ст.№1 МЗ");
+			Crans.Add(2, "Кран мостовой г/п 350/75/10 ст.№2 МЗ");
+			Crans.Add(3, "Кран козловой 2х125 ВСП");
+			Crans.Add(4, "Кран козловой г/п 2х20 ст.№1 СУС");
+			Crans.Add(5, "Кран козловой г/п 2х20 ст.№2 СУС");
+			Crans.Add(6, "Кран козловой г/п 2х63/2х5+16 ЩО НБ");
+			Crans.Add(7, "Кран мостовой г/п 50/10 Транс Башни");
+			Crans.Add(8, "Кран полукозловой г/п 2х150 ЩО ВБ");
+			Crans.Add(9, "Кран козловой г/п 63/10т Произ площ");
 		}
 
 		void Client_CreateCranTaskCompleted(object sender, CranService.CreateCranTaskCompletedEventArgs e) {
@@ -41,14 +53,24 @@ namespace VotGESOrders.Views {
 			pnlTask.DataContext = CurrentTask;
 			lstUsers.ItemsSource = from OrdersUser u in OrdersContext.Current.Context.OrdersUsers where u.CanAgreeCranTask select u;
 			acbManager.ItemsSource = Managers;
+			cmbCranName.ItemsSource = Crans;
 		}
 
 		private void OKButton_Click(object sender, RoutedEventArgs e) {
+			if (GlobalStatus.Current.IsBusy)
+				return;
+			if (CurrentTask.CranNumber == 0) {
+				MessageBox.Show("Выберите кран");
+				return;
+			}
+			CurrentTask.CranName = Crans[CurrentTask.CranNumber];
 			GlobalStatus.Current.IsBusy = true;
 			CransContext.Single.Client.CreateCranTaskAsync(CurrentTask);
 		}
 
 		private void CancelButton_Click(object sender, RoutedEventArgs e) {
+			if (GlobalStatus.Current.IsBusy)
+				return;
 			this.DialogResult = false;
 		}
 

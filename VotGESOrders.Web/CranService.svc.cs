@@ -25,6 +25,12 @@ namespace VotGESOrders.Web {
 			return CranTaskInfo.CreateCranTask(task);
 		}
 
+
+		[OperationContract]
+		public ReturnMessage CommentCranTask(CranTaskInfo task,string comment) {
+			return CranTaskInfo.AddComment(task, comment);
+		}
+
 		// Добавьте здесь дополнительные операции и отметьте их атрибутом [OperationContract]
 	}
 }

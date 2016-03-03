@@ -207,7 +207,8 @@ namespace VotGESOrders.Web.ADONETEntities
         /// <param name="denied">Исходное значение свойства Denied.</param>
         /// <param name="needDateEnd">Исходное значение свойства NeedDateEnd.</param>
         /// <param name="manager">Исходное значение свойства Manager.</param>
-        public static CranTask CreateCranTask(global::System.Int32 number, global::System.Int32 cranNumber, global::System.String author, global::System.DateTime needDateStart, global::System.String comment, global::System.Boolean allowed, global::System.Boolean denied, global::System.DateTime needDateEnd, global::System.String manager)
+        /// <param name="cranName">Исходное значение свойства CranName.</param>
+        public static CranTask CreateCranTask(global::System.Int32 number, global::System.Int32 cranNumber, global::System.String author, global::System.DateTime needDateStart, global::System.String comment, global::System.Boolean allowed, global::System.Boolean denied, global::System.DateTime needDateEnd, global::System.String manager, global::System.String cranName)
         {
             CranTask cranTask = new CranTask();
             cranTask.Number = number;
@@ -219,6 +220,7 @@ namespace VotGESOrders.Web.ADONETEntities
             cranTask.Denied = denied;
             cranTask.NeedDateEnd = needDateEnd;
             cranTask.Manager = manager;
+            cranTask.CranName = cranName;
             return cranTask;
         }
 
@@ -540,6 +542,54 @@ namespace VotGESOrders.Web.ADONETEntities
         private global::System.String _AgreeUsersIDS;
         partial void OnAgreeUsersIDSChanging(global::System.String value);
         partial void OnAgreeUsersIDSChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String CranName
+        {
+            get
+            {
+                return _CranName;
+            }
+            set
+            {
+                OnCranNameChanging(value);
+                ReportPropertyChanging("CranName");
+                _CranName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("CranName");
+                OnCranNameChanged();
+            }
+        }
+        private global::System.String _CranName;
+        partial void OnCranNameChanging(global::System.String value);
+        partial void OnCranNameChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String AgreeComment
+        {
+            get
+            {
+                return _AgreeComment;
+            }
+            set
+            {
+                OnAgreeCommentChanging(value);
+                ReportPropertyChanging("AgreeComment");
+                _AgreeComment = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("AgreeComment");
+                OnAgreeCommentChanged();
+            }
+        }
+        private global::System.String _AgreeComment;
+        partial void OnAgreeCommentChanging(global::System.String value);
+        partial void OnAgreeCommentChanged();
 
         #endregion
 

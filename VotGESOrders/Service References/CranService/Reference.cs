@@ -95,6 +95,8 @@ namespace VotGESOrders.CranService {
     [System.Runtime.Serialization.DataContractAttribute(Name="CranTaskInfo", Namespace="http://schemas.datacontract.org/2004/07/VotGESOrders.Web.Models")]
     public partial class CranTaskInfo : object, System.ComponentModel.INotifyPropertyChanged {
         
+        private string AgreeCommentsField;
+        
         private System.Collections.Generic.Dictionary<int, string> AgreeDictField;
         
         private string AgreeUsersIDSField;
@@ -112,6 +114,8 @@ namespace VotGESOrders.CranService {
         private string AuthorAllowField;
         
         private string CommentField;
+        
+        private string CranNameField;
         
         private int CranNumberField;
         
@@ -138,6 +142,19 @@ namespace VotGESOrders.CranService {
         private bool checkField;
         
         private bool initField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string AgreeComments {
+            get {
+                return this.AgreeCommentsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AgreeCommentsField, value) != true)) {
+                    this.AgreeCommentsField = value;
+                    this.RaisePropertyChanged("AgreeComments");
+                }
+            }
+        }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Collections.Generic.Dictionary<int, string> AgreeDict {
@@ -252,6 +269,19 @@ namespace VotGESOrders.CranService {
                 if ((object.ReferenceEquals(this.CommentField, value) != true)) {
                     this.CommentField = value;
                     this.RaisePropertyChanged("Comment");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CranName {
+            get {
+                return this.CranNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CranNameField, value) != true)) {
+                    this.CranNameField = value;
+                    this.RaisePropertyChanged("CranName");
                 }
             }
         }
@@ -498,6 +528,11 @@ namespace VotGESOrders.CranService {
         System.IAsyncResult BeginCreateCranTask(VotGESOrders.CranService.CranTaskInfo task, System.AsyncCallback callback, object asyncState);
         
         VotGESOrders.CranService.ReturnMessage EndCreateCranTask(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:CranService/CommentCranTask", ReplyAction="urn:CranService/CommentCranTaskResponse")]
+        System.IAsyncResult BeginCommentCranTask(VotGESOrders.CranService.CranTaskInfo task, string comment, System.AsyncCallback callback, object asyncState);
+        
+        VotGESOrders.CranService.ReturnMessage EndCommentCranTask(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -544,6 +579,25 @@ namespace VotGESOrders.CranService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class CommentCranTaskCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public CommentCranTaskCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public VotGESOrders.CranService.ReturnMessage Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((VotGESOrders.CranService.ReturnMessage)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class CranServiceClient : System.ServiceModel.ClientBase<VotGESOrders.CranService.CranService>, VotGESOrders.CranService.CranService {
         
         private BeginOperationDelegate onBeginDoWorkDelegate;
@@ -563,6 +617,12 @@ namespace VotGESOrders.CranService {
         private EndOperationDelegate onEndCreateCranTaskDelegate;
         
         private System.Threading.SendOrPostCallback onCreateCranTaskCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginCommentCranTaskDelegate;
+        
+        private EndOperationDelegate onEndCommentCranTaskDelegate;
+        
+        private System.Threading.SendOrPostCallback onCommentCranTaskCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -622,6 +682,8 @@ namespace VotGESOrders.CranService {
         public event System.EventHandler<getCranTasksCompletedEventArgs> getCranTasksCompleted;
         
         public event System.EventHandler<CreateCranTaskCompletedEventArgs> CreateCranTaskCompleted;
+        
+        public event System.EventHandler<CommentCranTaskCompletedEventArgs> CommentCranTaskCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -762,6 +824,54 @@ namespace VotGESOrders.CranService {
                         task}, this.onEndCreateCranTaskDelegate, this.onCreateCranTaskCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult VotGESOrders.CranService.CranService.BeginCommentCranTask(VotGESOrders.CranService.CranTaskInfo task, string comment, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginCommentCranTask(task, comment, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        VotGESOrders.CranService.ReturnMessage VotGESOrders.CranService.CranService.EndCommentCranTask(System.IAsyncResult result) {
+            return base.Channel.EndCommentCranTask(result);
+        }
+        
+        private System.IAsyncResult OnBeginCommentCranTask(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            VotGESOrders.CranService.CranTaskInfo task = ((VotGESOrders.CranService.CranTaskInfo)(inValues[0]));
+            string comment = ((string)(inValues[1]));
+            return ((VotGESOrders.CranService.CranService)(this)).BeginCommentCranTask(task, comment, callback, asyncState);
+        }
+        
+        private object[] OnEndCommentCranTask(System.IAsyncResult result) {
+            VotGESOrders.CranService.ReturnMessage retVal = ((VotGESOrders.CranService.CranService)(this)).EndCommentCranTask(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnCommentCranTaskCompleted(object state) {
+            if ((this.CommentCranTaskCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.CommentCranTaskCompleted(this, new CommentCranTaskCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void CommentCranTaskAsync(VotGESOrders.CranService.CranTaskInfo task, string comment) {
+            this.CommentCranTaskAsync(task, comment, null);
+        }
+        
+        public void CommentCranTaskAsync(VotGESOrders.CranService.CranTaskInfo task, string comment, object userState) {
+            if ((this.onBeginCommentCranTaskDelegate == null)) {
+                this.onBeginCommentCranTaskDelegate = new BeginOperationDelegate(this.OnBeginCommentCranTask);
+            }
+            if ((this.onEndCommentCranTaskDelegate == null)) {
+                this.onEndCommentCranTaskDelegate = new EndOperationDelegate(this.OnEndCommentCranTask);
+            }
+            if ((this.onCommentCranTaskCompletedDelegate == null)) {
+                this.onCommentCranTaskCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnCommentCranTaskCompleted);
+            }
+            base.InvokeAsync(this.onBeginCommentCranTaskDelegate, new object[] {
+                        task,
+                        comment}, this.onEndCommentCranTaskDelegate, this.onCommentCranTaskCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -872,6 +982,20 @@ namespace VotGESOrders.CranService {
             public VotGESOrders.CranService.ReturnMessage EndCreateCranTask(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 VotGESOrders.CranService.ReturnMessage _result = ((VotGESOrders.CranService.ReturnMessage)(base.EndInvoke("CreateCranTask", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginCommentCranTask(VotGESOrders.CranService.CranTaskInfo task, string comment, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = task;
+                _args[1] = comment;
+                System.IAsyncResult _result = base.BeginInvoke("CommentCranTask", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public VotGESOrders.CranService.ReturnMessage EndCommentCranTask(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                VotGESOrders.CranService.ReturnMessage _result = ((VotGESOrders.CranService.ReturnMessage)(base.EndInvoke("CommentCranTask", _args, result)));
                 return _result;
             }
         }

@@ -39,4 +39,19 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="CommentCranTask">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/VotGESOrders.Web.Models" minOccurs="0" name="task" nillable="true" type="q5:CranTaskInfo" />
+        <xs:element minOccurs="0" name="comment" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CommentCranTaskResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/VotGESOrders.Web.Models" minOccurs="0" name="CommentCranTaskResult" nillable="true" type="q6:ReturnMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

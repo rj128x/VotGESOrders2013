@@ -92,9 +92,9 @@ namespace VotGESOrders.Web.Models {
 					}
 				}
 
-				string message = String.Format("<h1>Заявка на работу крана №{0}</h1><br/><h2>Автор: {1}<br/>Текст: {2}<br/> Ответственный: {5} <br/> Согласовано: {6} <br/>Запрошенное время: {3} - {4} <br/></h2>",
-					task.CranNumber, task.Author, task.Comment, task.NeedStartDate.ToString("dd.MM.yyyy HH:mm"), task.NeedEndDate.ToString("dd.MM.yyyy HH:mm"),
-					task.Manager,task.AgreeUsersText);
+				string message = String.Format("<h1>Заявка на работу крана \"{0}\"</h1><br/><h2>Автор: {1}<br/>Текст: {2}<br/> Ответственный: {5} <br/> Согласовано: {6} <br/> Запрошенное время: {3} - {4} <br/> Комментарии: <br/>{7}</h2>",
+					task.CranName, task.Author, task.Comment, task.NeedStartDate.ToString("dd.MM.yyyy HH:mm"), task.NeedEndDate.ToString("dd.MM.yyyy HH:mm"),
+					task.Manager,task.AgreeUsersText,task.AgreeComments);
 				if (task.Allowed || task.Denied) {
 					message += String.Format("<h1>{1}</h1><h2> Заявку рассмотрел: {0}", task.AuthorAllow, task.Allowed ? "Заявка разрешена" : "Заявка отклонена");
 				}

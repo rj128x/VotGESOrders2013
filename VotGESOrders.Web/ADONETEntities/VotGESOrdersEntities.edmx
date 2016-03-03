@@ -11,6 +11,7 @@
           </Key>
           <Property Name="Number" Type="int" Nullable="false" />
           <Property Name="CranNumber" Type="int" Nullable="false" />
+          <Property Name="CranName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Author" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="NeedDateStart" Type="datetime" Nullable="false" />
           <Property Name="NeedDateEnd" Type="datetime" Nullable="false" />
@@ -22,6 +23,7 @@
           <Property Name="AuthorAllow" Type="varchar" MaxLength="50" />
           <Property Name="Manager" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="AgreeUsersIDS" Type="varchar" MaxLength="50" />
+          <Property Name="AgreeComment" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="OrderObjects">
           <Key>
@@ -109,9 +111,9 @@
           <Property Name="sendAllCreateMail" Type="bit" Nullable="false" />
           <Property Name="sendAllAgreeMail" Type="bit" Nullable="false" />
           <Property Name="allowEditOrders" Type="bit" Nullable="false" />
+          <Property Name="canAgreeCranTask" Type="bit" Nullable="false" />
           <Property Name="canCreateCranTask" Type="bit" Nullable="false" />
           <Property Name="canReviewCranTask" Type="bit" Nullable="false" />
-          <Property Name="canAgreeCranTask" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK_Orders_OrderObjects">
           <End Role="OrderObjects" Type="Self.OrderObjects" Multiplicity="1" />
@@ -474,6 +476,8 @@
           <Property Name="NeedDateEnd" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Manager" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="AgreeUsersIDS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CranName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AgreeComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -565,6 +569,8 @@
           <EntitySetMapping Name="CranTask">
             <EntityTypeMapping TypeName="VotGESOrdersModel.CranTask">
               <MappingFragment StoreEntitySet="CranTask">
+                <ScalarProperty Name="AgreeComment" ColumnName="AgreeComment" />
+                <ScalarProperty Name="CranName" ColumnName="CranName" />
                 <ScalarProperty Name="AgreeUsersIDS" ColumnName="AgreeUsersIDS" />
                 <ScalarProperty Name="Manager" ColumnName="Manager" />
                 <ScalarProperty Name="NeedDateEnd" ColumnName="NeedDateEnd" />

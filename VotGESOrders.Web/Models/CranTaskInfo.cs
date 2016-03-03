@@ -30,6 +30,7 @@ namespace VotGESOrders.Web.Models {
 	public class CranTaskInfo {
 		public static List<string> Managers;
 		public int CranNumber { get; set; }
+		public string CranName { get; set; }
 		public int Number { get; set; }
 		public DateTime NeedStartDate { get; set; }
 		public DateTime NeedEndDate { get; set; }
@@ -37,6 +38,7 @@ namespace VotGESOrders.Web.Models {
 		public string Author { get; set; }
 		public string AuthorAllow { get; set; }
 		public string Manager { get; set; }
+		public string AgreeComments { get; set; }
 		public DateTime AllowDateStart { get; set; }
 		public DateTime AllowDateEnd { get; set; }
 		public bool Allowed { get; set; }
@@ -52,6 +54,7 @@ namespace VotGESOrders.Web.Models {
 
 		public bool canChange { get; set; }
 		public bool canCheck { get; set; }
+		public bool canComment { get; set; }
 
 		public CranTaskInfo() {
 
@@ -64,12 +67,15 @@ namespace VotGESOrders.Web.Models {
 			NeedStartDate = tbl.NeedDateStart;
 			NeedEndDate = tbl.NeedDateEnd;
 			Comment = tbl.Comment;
+			CranName = tbl.CranName;
 			Author = OrdersUser.loadFromCache(tbl.Author).FullName;
 			State = "Новая";
 			Allowed = tbl.Allowed;
 			Denied = tbl.Denied;
+			AgreeComments = tbl.AgreeComment;
 			canChange = (!Allowed) && (!Denied) && tbl.Author.ToLower() == currentUser.Name.ToLower();
 			canCheck = currentUser.CanReviewCranTask;
+			canComment = currentUser.CanAgreeCranTask;
 			Manager = tbl.Manager;
 			if (Denied) {
 				State = "Отклонена";
@@ -88,7 +94,7 @@ namespace VotGESOrders.Web.Models {
 			AgreeUsersText = string.Join(", ", AgreeDict.Values);
 		}
 
-		public static Dictionary<int,string> getAgreeUsers(string ids) {
+		public static Dictionary<int, string> getAgreeUsers(string ids) {
 			Dictionary<int, string> dict = new Dictionary<int, string>();
 			try {
 				string[] idArr = ids.Split(new char[] { ';' });
@@ -109,7 +115,7 @@ namespace VotGESOrders.Web.Models {
 			Logger.info("Создание/изменение заявки на работу крана", Logger.LoggerSource.server);
 			try {
 				string result = "";
-				string message = String.Format("Заявка на работу крана {0} №", task.CranNumber);
+				string message = String.Format("Заявка на работу крана \"{0}\" №", task.CranName);
 				OrdersUser currentUser = OrdersUser.loadFromCache(HttpContext.Current.User.Identity.Name);
 				VotGESOrdersEntities eni = new VotGESOrdersEntities();
 				CranTask tbl = new CranTask();
@@ -142,11 +148,13 @@ namespace VotGESOrders.Web.Models {
 				if ((task.NeedEndDate <= task.NeedStartDate) || (task.Allowed && (task.AllowDateEnd <= task.AllowDateStart))) {
 					return new ReturnMessage(false, "Дата окончания заявки больше чем дата начала");
 				}
-				if (task.CranNumber < 1 || task.CranNumber > 2) {
+				/*if (task.CranNumber < 1 || task.CranNumber > 2) {
 					return new ReturnMessage(false, "Проверьте номер крана");
-				}
+				}*/
 
 				tbl.Number = task.Number;
+				tbl.CranName = task.CranName;
+				tbl.AgreeComment = "";
 				tbl.NeedDateStart = task.NeedStartDate;
 				tbl.NeedDateEnd = task.NeedEndDate;
 				tbl.Comment = task.Comment;
@@ -199,6 +207,44 @@ namespace VotGESOrders.Web.Models {
 			}
 		}
 
+		public static ReturnMessage AddComment(CranTaskInfo task, string comment) {
+			Logger.info("Добавление комментария к заявке на работу крана", Logger.LoggerSource.server);
+			try {
+				string result = "";
+				OrdersUser currentUser = OrdersUser.loadFromCache(HttpContext.Current.User.Identity.Name);
+				VotGESOrdersEntities eni = new VotGESOrdersEntities();
+				CranTask tbl = new CranTask();
+
+				CranTask tsk = (from t in eni.CranTask where t.Number == task.Number select t).FirstOrDefault();
+				if (tsk == null) {
+					return new ReturnMessage(false, "Заявка не найдена");
+				}
+				tbl = tsk;
+
+				if (!string.IsNullOrEmpty(task.AgreeComments))
+					task.AgreeComments += "\r\n";
+				task.AgreeComments += String.Format("{2} {0}:\r\n   {1}", currentUser.FullName, comment, DateTime.Now.ToString("dd.MM.yyyy HH:mm"));
+				tbl.AgreeComment = task.AgreeComments;
+
+
+				eni.SaveChanges();
+				string message = String.Format("Заявка на работу крана \"{0}\" №{1}. Комментарий", task.CranName, task.CranNumber);
+				MailContext.sendCranTask(message, task);
+				if (Managers != null) {
+					if (!Managers.Contains(task.Manager)) {
+						Managers.Add(task.Manager);
+					}
+				}
+				else
+					ReadManagers();
+				return new ReturnMessage(true, "Комментарий добавлен");
+			}
+			catch (Exception e) {
+				Logger.info("Ошибка при создании/изменении заявки на работу крана " + e.ToString(), Logger.LoggerSource.server);
+				return new ReturnMessage(false, "ошибка при добавлении комментария");
+			}
+		}
+
 		public static CranFilter LoadCranTasks(CranFilter Filter = null) {
 			Logger.info("Получение списка заявок на кран", Logger.LoggerSource.server);
 			if (Managers == null)
@@ -230,7 +276,7 @@ namespace VotGESOrders.Web.Models {
 
 		public static void ReadManagers() {
 			Logger.info("Получение списка ответственных", Logger.LoggerSource.server);
-			Managers=new List<string>();
+			Managers = new List<string>();
 			try {
 				VotGESOrdersEntities eni = new VotGESOrdersEntities();
 				IQueryable<string> data = (from t in eni.CranTask select t.Manager).Distinct();
@@ -241,7 +287,7 @@ namespace VotGESOrders.Web.Models {
 				}
 			}
 			catch (Exception e) {
-				Logger.info("Ошибка при чтении доступных ответственных " + e.ToString(),Logger.LoggerSource.server);
+				Logger.info("Ошибка при чтении доступных ответственных " + e.ToString(), Logger.LoggerSource.server);
 			}
 		}
 

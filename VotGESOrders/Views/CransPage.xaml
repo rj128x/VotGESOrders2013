@@ -12,7 +12,7 @@
         <Grid Name="dataGrid">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="300"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" Name="grdLeft">
                 <Grid.RowDefinitions>
@@ -39,42 +39,42 @@
                 </Grid>
                 <sdk:DataGrid Name="grdTasks" AutoGenerateColumns="False" SelectionChanged="grdTasks_SelectionChanged" Grid.Row="1" ColumnHeaderStyle="{StaticResource CenterHeaderText}">
                     <sdk:DataGrid.Columns>
-                        <sdk:DataGridTemplateColumn Header="№" SortMemberPath="Number" >
+                        <sdk:DataGridTemplateColumn Header="№" SortMemberPath="Number" Width="40">
                             <sdk:DataGridTemplateColumn.CellTemplate >
                                 <DataTemplate>
-                                    <ContentControl Content="{Binding Number}" />
+                                    <TextBlock Text="{Binding Number}"  TextWrapping="Wrap"/>
                                 </DataTemplate>
                             </sdk:DataGridTemplateColumn.CellTemplate>
                         </sdk:DataGridTemplateColumn>
-                        <sdk:DataGridTemplateColumn Header="Кран" SortMemberPath="CranNumber" >
+                        <sdk:DataGridTemplateColumn Header="Кран" SortMemberPath="CranNumber" Width="2*">
                             <sdk:DataGridTemplateColumn.CellTemplate >
                                 <DataTemplate>
-                                    <ContentControl Content="{Binding CranNumber}"/>
+                                    <TextBlock Text="{Binding CranName}" TextWrapping="Wrap"/>
                                 </DataTemplate>
                             </sdk:DataGridTemplateColumn.CellTemplate>
                         </sdk:DataGridTemplateColumn>
-                        <sdk:DataGridTemplateColumn Header="Автор" SortMemberPath="Author" >
+                        <sdk:DataGridTemplateColumn Header="Автор" SortMemberPath="Author" Width="1*">
                             <sdk:DataGridTemplateColumn.CellTemplate >
                                 <DataTemplate>
-                                    <ContentControl Content="{Binding Author}"/>
+                                    <TextBlock Text="{Binding Author}" TextWrapping="Wrap"/>
                                 </DataTemplate>
                             </sdk:DataGridTemplateColumn.CellTemplate>
                         </sdk:DataGridTemplateColumn>
-                        <sdk:DataGridTemplateColumn Header="Текст" SortMemberPath="Comment" >
+                        <sdk:DataGridTemplateColumn Header="Текст" SortMemberPath="Comment" Width="2*">
                             <sdk:DataGridTemplateColumn.CellTemplate >
                                 <DataTemplate>
-                                    <ContentControl Content="{Binding Comment}"/>
+                                    <TextBlock Text="{Binding Comment}" TextWrapping="Wrap"/>
                                 </DataTemplate>
                             </sdk:DataGridTemplateColumn.CellTemplate>
                         </sdk:DataGridTemplateColumn>
-                        <sdk:DataGridTemplateColumn Header="Ответственный" SortMemberPath="Manager" >
+                        <sdk:DataGridTemplateColumn Header="Ответственный" SortMemberPath="Manager" Width="1*">
                             <sdk:DataGridTemplateColumn.CellTemplate >
                                 <DataTemplate>
-                                    <ContentControl Content="{Binding Manager}"/>
+                                    <TextBlock Text="{Binding Manager}" TextWrapping="Wrap"/>
                                 </DataTemplate>
                             </sdk:DataGridTemplateColumn.CellTemplate>
                         </sdk:DataGridTemplateColumn>
-                        <sdk:DataGridTemplateColumn Header="Запрошенное время" SortMemberPath="NeedStartDate" >
+                        <sdk:DataGridTemplateColumn Header="Запрошенное время" SortMemberPath="NeedStartDate" Width="120" >
                             <sdk:DataGridTemplateColumn.CellTemplate >
                                 <DataTemplate>
                                     <StackPanel Orientation="Vertical">
@@ -84,7 +84,7 @@
                                 </DataTemplate>
                             </sdk:DataGridTemplateColumn.CellTemplate>
                         </sdk:DataGridTemplateColumn>
-                        <sdk:DataGridTemplateColumn Header="Разрешенное время" SortMemberPath="AllowDateStart" >
+                        <sdk:DataGridTemplateColumn Header="Разрешенное время" SortMemberPath="AllowDateStart" Width="120" >
                             <sdk:DataGridTemplateColumn.CellTemplate >
                                 <DataTemplate>
                                     <StackPanel Orientation="Vertical" Visibility="{Binding Allowed, Converter={StaticResource visibilityConverter}}">
@@ -94,7 +94,7 @@
                                 </DataTemplate>
                             </sdk:DataGridTemplateColumn.CellTemplate>
                         </sdk:DataGridTemplateColumn>
-                        <sdk:DataGridTemplateColumn Header="Состояние" SortMemberPath="State" >
+                        <sdk:DataGridTemplateColumn Header="Состояние" SortMemberPath="State" Width="1*" >
                             <sdk:DataGridTemplateColumn.CellTemplate >
                                 <DataTemplate>
                                     <StackPanel Orientation="Vertical">
@@ -103,7 +103,7 @@
                                 </DataTemplate>
                             </sdk:DataGridTemplateColumn.CellTemplate>
                         </sdk:DataGridTemplateColumn>
-                        <sdk:DataGridTemplateColumn Header="Рассмотрел" SortMemberPath="AuthorAllow" >
+                        <sdk:DataGridTemplateColumn Header="Рассмотрел" SortMemberPath="AuthorAllow" Width="1*" >
                             <sdk:DataGridTemplateColumn.CellTemplate >
                                 <DataTemplate>
                                     <StackPanel Orientation="Vertical">
@@ -140,8 +140,10 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Номер: " Width="50" Style="{StaticResource Label}"/>
                                 <TextBlock Text="{Binding Number}" Style="{StaticResource Value}" Width="50"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Кран: " Width="50" Style="{StaticResource Label}"/>
-                                <TextBlock Text="{Binding CranNumber}" Width="50" Style="{StaticResource Value}"/>
+                                <TextBlock Text="{Binding CranName}" Style="{StaticResource ValueText}" TextWrapping="Wrap" Height="30"  Width="250" TextAlignment="Left"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal">
@@ -154,23 +156,39 @@
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Заявка" Width="50" Style="{StaticResource Label}" VerticalAlignment="Top"/>
-                                <TextBlock  Text="{Binding Comment}" TextWrapping="Wrap" Width="200" Height="50" Style="{StaticResource Value}"  />
+                                <TextBlock  Text="{Binding Comment}" TextWrapping="Wrap" Width="250" Height="50" Style="{StaticResource ValueText}" FontSize="12" TextAlignment="Left"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Согл-но" Width="50" Style="{StaticResource Label}" VerticalAlignment="Top"/>
-                                <TextBlock  Text="{Binding AgreeUsersText}" TextWrapping="Wrap" Width="200" Height="50" Style="{StaticResource Value}"  />
+                                <TextBlock  Text="{Binding AgreeUsersText}" TextWrapping="Wrap" Width="250" Height="30" Style="{StaticResource ValueText}" FontSize="12" TextAlignment="Left"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="***" Width="20" Style="{StaticResource Label}" VerticalAlignment="Top"/>
+                                <TextBox  Text="{Binding AgreeComments}" TextWrapping="Wrap" Height="70" Width="270" IsReadOnly="True" TextAlignment="Left"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Vertical">
                                 <TextBlock Text="Запрашиваемое время" HorizontalAlignment="Right" Style="{StaticResource Label}"/>
-                                <StackPanel Orientation="Vertical">
-                                    <TextBlock Text="{Binding NeedStartDate, StringFormat='dd.MM.yyyy HH:mm'}" Style="{StaticResource Value}" HorizontalAlignment="Left"/>
-                                    <TextBlock Text="{Binding NeedEndDate, StringFormat='dd.MM.yyyy HH:mm'}" Style="{StaticResource Value}"  HorizontalAlignment="Right"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding NeedStartDate, StringFormat='dd.MM.yyyy HH:mm'}" Style="{StaticResource Value}" />
+                                    <TextBlock Text=" - " Style="{StaticResource Label}"/>
+                                    <TextBlock Text="{Binding NeedEndDate, StringFormat='dd.MM.yyyy HH:mm'}" Style="{StaticResource Value}"  />
                                 </StackPanel>
                             </StackPanel>
                             <Button Name="btnChange" Content="Изменить"
                                     Click="btnChange_Click" IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"
                                             Visibility="{Binding canChange, Converter={StaticResource visibilityConverter}}"/>
+                            <StackPanel Visibility="{Binding canComment, Converter={StaticResource visibilityConverter}}" Margin="0,20,0,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBox Name="txtComment"  TextWrapping="Wrap" Height="30" Width="250"/>
+                                    <Button Width="25" Content="V" Foreground="Green" FontWeight="Bold" FontFamily="Courier New" FontSize="18" Height="23" Name="btnAgree"  Click="btnAgree_Click"/>
+                                    <Button Width="25" Content="X" Foreground="Red" FontWeight="Bold" FontFamily="Courier New" FontSize="18" Height="23" Name="btnNotAgree" Click="btnNotAgree_Click"/>
+                                </StackPanel>
+                                <Button Name="btnComment" Content="Комментировать"
+                                    Click="btnComment_Click"  IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"
+                                            Visibility="{Binding canComment, Converter={StaticResource visibilityConverter}}"/>
+                            </StackPanel>
+                            
                             <StackPanel Orientation="Vertical" Margin="0,30,0,0">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                     <TextBlock Text="Заявка отклонена" HorizontalAlignment="Right" Visibility="{Binding Denied, Converter={StaticResource visibilityConverter}}" 
@@ -180,8 +198,9 @@
                                 </StackPanel>
                                 <StackPanel Orientation="Vertical" Visibility="{Binding Allowed, Converter={StaticResource visibilityConverter}}">
                                     <TextBlock Text="Разрешенное время" HorizontalAlignment="Right" Style="{StaticResource Label}"/>
-                                    <StackPanel Orientation="Vertical">
+                                    <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="{Binding AllowDateStart, StringFormat='dd.MM.yyyy HH:mm'}" Style="{StaticResource Value}" HorizontalAlignment="Left"/>
+                                        <TextBlock Text=" - " Style="{StaticResource Label}"/>
                                         <TextBlock Text="{Binding AllowDateEnd, StringFormat='dd.MM.yyyy HH:mm'}" Style="{StaticResource Value}" HorizontalAlignment="Right"/>
                                     </StackPanel>
                                 </StackPanel>

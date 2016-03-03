@@ -44,6 +44,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="CommentCranTask">
+      <soap12:operation soapAction="urn:CranService/CommentCranTask" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="CranService">
     <wsdl:port name="CustomBinding_CranService" binding="tns:CustomBinding_CranService">
@@ -51,7 +60,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>http://localhost:8090/CranService.svc</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>ChekunovaMV@corp.gidroogk.com</Upn>
+          <Upn>chekunovamv@corp.gidroogk.com</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
