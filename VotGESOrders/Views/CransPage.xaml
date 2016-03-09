@@ -128,8 +128,8 @@
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <TextBlock Text="Кран мостовой г/п 350/75/10 ст.№2 МЗ" Grid.Row="0" HorizontalAlignment="Right"/>
-                                    <TextBlock Text="Кран мостовой г/п 350/75/10 ст.№1 МЗ" Grid.Row="1" HorizontalAlignment="Right"/>
+                                    <TextBlock Text="Кран мостовой г/п 350/75/10 ст.№2 МЗ" Grid.Row="0" HorizontalAlignment="Right" Height="17" VerticalAlignment="Top"/>
+                                    <TextBlock Text="Кран мостовой г/п 350/75/10 ст.№1 МЗ" Grid.Row="1" HorizontalAlignment="Right" Height="17" VerticalAlignment="top" Margin="0,-20,0,0"/>
                                 </Grid>
                             </Grid>
                         </sdk:TabItem>
@@ -145,8 +145,8 @@
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <TextBlock Text="Кран козловой г/п 2х20 ст.№2 СУС" Grid.Row="0" HorizontalAlignment="Right"/>
-                                    <TextBlock Text="Кран козловой г/п 2х20 ст.№1 СУС" Grid.Row="1" HorizontalAlignment="Right"/>
+                                    <TextBlock Text="Кран козловой г/п 2х20 ст.№2 СУС" Grid.Row="0" HorizontalAlignment="Right" Height="17" VerticalAlignment="Top"/>
+                                    <TextBlock Text="Кран козловой г/п 2х20 ст.№1 СУС" Grid.Row="1" HorizontalAlignment="Right" Height="17" VerticalAlignment="Top" Margin="0,-20,0,0"/>
                                 </Grid>
                             </Grid>
                         </sdk:TabItem>
@@ -162,8 +162,8 @@
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <TextBlock Text="Кран полукозловой г/п 2х150 ЩО ВБ" Grid.Row="0" HorizontalAlignment="Right"/>
-                                    <TextBlock Text="Кран козловой г/п 2х63/2х5+16 ЩО НБ" Grid.Row="1" HorizontalAlignment="Right"/>
+                                    <TextBlock Text="Кран полукозловой г/п 2х150 ЩО ВБ" Grid.Row="0" HorizontalAlignment="Right" Height="17" VerticalAlignment="Top"/>
+                                    <TextBlock Text="Кран козловой г/п 2х63/2х5+16 ЩО НБ" Grid.Row="1" HorizontalAlignment="Right" Height="17" VerticalAlignment="Top" Margin="0,-20,0,0"/>
                                 </Grid>
                             </Grid>
                         </sdk:TabItem>
@@ -179,8 +179,8 @@
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <TextBlock Text="Кран козловой 2х125 ВСП" Grid.Row="0" HorizontalAlignment="Right"/>
-                                    <TextBlock Text="Кран мостовой г/п 50/10 Транс Башни" Grid.Row="1" HorizontalAlignment="Right"/>
+                                    <TextBlock Text="Кран козловой 2х125 ВСП" Grid.Row="0" HorizontalAlignment="Right" Height="17" VerticalAlignment="Top"/>
+                                    <TextBlock Text="Кран мостовой г/п 50/10 Транс Башни" Grid.Row="1" HorizontalAlignment="Right" Height="17" VerticalAlignment="Top" Margin="0,-20,0,0"/>
                                 </Grid>
                             </Grid>
                         </sdk:TabItem>
@@ -194,80 +194,87 @@
                 <StackPanel Orientation="Vertical">
                     <StackPanel Visibility="{Binding HasSelectedTask, Converter={StaticResource visibilityConverter}}">
                         <StackPanel Orientation="Vertical" Name="pnlTask" >
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Номер: " Width="50" Style="{StaticResource Label}"/>
-                                <TextBlock Text="{Binding Number}" Style="{StaticResource Value}" Width="50"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Кран: " Width="50" Style="{StaticResource Label}"/>
-                                <TextBlock Text="{Binding CranName}" Style="{StaticResource ValueText}" TextWrapping="Wrap" Height="30"  Width="250" TextAlignment="Left"/>
-                            </StackPanel>
+                            <Border Style="{StaticResource borderFilterControl}" Grid.Column="2" Grid.Row="2">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Номер: " Width="50" Style="{StaticResource Label}"/>
+                                        <TextBlock Text="{Binding Number}" Style="{StaticResource Value}" Width="50"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Кран: " Width="50" Style="{StaticResource Label}"/>
+                                        <TextBlock Text="{Binding CranName}" Style="{StaticResource ValueText}" TextWrapping="Wrap" Height="30"  Width="250" TextAlignment="Left"/>
+                                    </StackPanel>
 
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Автор " Width="50" Style="{StaticResource Label}"/>
-                                <TextBlock Text="{Binding Author}" Style="{StaticResource Value}" Width="200"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Ответ-й " Width="50" Style="{StaticResource Label}"/>
-                                <TextBlock Text="{Binding Manager}" Style="{StaticResource Value}" Width="200"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Заявка" Width="50" Style="{StaticResource Label}" VerticalAlignment="Top"/>
-                                <TextBlock  Text="{Binding Comment}" TextWrapping="Wrap" Width="250" Height="50" Style="{StaticResource ValueText}" FontSize="12" TextAlignment="Left"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Согл-но" Width="50" Style="{StaticResource Label}" VerticalAlignment="Top"/>
-                                <TextBlock  Text="{Binding AgreeUsersText}" TextWrapping="Wrap" Width="250" Height="30" Style="{StaticResource ValueText}" FontSize="12" TextAlignment="Left"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="***" Width="20" Style="{StaticResource Label}" VerticalAlignment="Top"/>
-                                <TextBox  Text="{Binding AgreeComments}" TextWrapping="Wrap" Height="70" Width="270" IsReadOnly="True" TextAlignment="Left"/>
-                            </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Автор " Width="50" Style="{StaticResource Label}"/>
+                                        <TextBlock Text="{Binding Author}" Style="{StaticResource Value}" Width="200"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Ответ-й " Width="50" Style="{StaticResource Label}"/>
+                                        <TextBlock Text="{Binding Manager}" Style="{StaticResource Value}" Width="200"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Заявка" Width="50" Style="{StaticResource Label}" VerticalAlignment="Top"/>
+                                        <TextBlock  Text="{Binding Comment}" TextWrapping="Wrap" Width="250" Height="50" Style="{StaticResource ValueText}" FontSize="12" TextAlignment="Left"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Согл-но" Width="50" Style="{StaticResource Label}" VerticalAlignment="Top"/>
+                                        <TextBlock  Text="{Binding AgreeUsersText}" TextWrapping="Wrap" Width="250" Height="30" Style="{StaticResource ValueText}" FontSize="12" TextAlignment="Left"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="***" Width="20" Style="{StaticResource Label}" VerticalAlignment="Top"/>
+                                        <TextBox  Text="{Binding AgreeComments}" TextWrapping="Wrap" Height="70" Width="270" IsReadOnly="True" TextAlignment="Left"/>
+                                    </StackPanel>
 
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock Text="Запрашиваемое время" HorizontalAlignment="Right" Style="{StaticResource Label}"/>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding NeedStartDate, StringFormat='dd.MM.yyyy HH:mm'}" Style="{StaticResource Value}" />
-                                    <TextBlock Text=" - " Style="{StaticResource Label}"/>
-                                    <TextBlock Text="{Binding NeedEndDate, StringFormat='dd.MM.yyyy HH:mm'}" Style="{StaticResource Value}"  />
-                                </StackPanel>
-                            </StackPanel>
-                            <Button Name="btnChange" Content="Изменить"
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Запрашиваемое время" HorizontalAlignment="Right" Style="{StaticResource Label}"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding NeedStartDate, StringFormat='dd.MM.yyyy HH:mm'}" Style="{StaticResource Value}" />
+                                            <TextBlock Text=" - " Style="{StaticResource Label}"/>
+                                            <TextBlock Text="{Binding NeedEndDate, StringFormat='dd.MM.yyyy HH:mm'}" Style="{StaticResource Value}"  />
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <Button Name="btnChange" Content="Изменить"
                                     Click="btnChange_Click" IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"
                                             Visibility="{Binding canChange, Converter={StaticResource visibilityConverter}}"/>
-                            <StackPanel Visibility="{Binding canComment, Converter={StaticResource visibilityConverter}}" Margin="0,20,0,0">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBox Name="txtComment"  TextWrapping="Wrap" Height="30" Width="250"/>
-                                    <Button Width="25" Content="V" Foreground="Green" FontWeight="Bold" FontFamily="Courier New" FontSize="18" Height="23" Name="btnAgree"  Click="btnAgree_Click"/>
-                                    <Button Width="25" Content="X" Foreground="Red" FontWeight="Bold" FontFamily="Courier New" FontSize="18" Height="23" Name="btnNotAgree" Click="btnNotAgree_Click"/>
                                 </StackPanel>
-                                <Button Name="btnComment" Content="Комментировать"
+                            </Border>
+                            <Border Style="{StaticResource borderFilterControl}" Grid.Column="2" Grid.Row="2" Margin="0,10,0,0">
+                                <StackPanel Visibility="{Binding canComment, Converter={StaticResource visibilityConverter}}" Margin="0,0,0,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBox Name="txtComment"  TextWrapping="Wrap" Width="250" Height="37" AcceptsReturn="True"/>
+                                        <Button Width="25" Content="V" Foreground="Green" FontWeight="Bold" FontFamily="Courier New" FontSize="18" Height="23" Name="btnAgree"  Click="btnAgree_Click"/>
+                                        <Button Width="25" Content="X" Foreground="Red" FontWeight="Bold" FontFamily="Courier New" FontSize="18" Height="23" Name="btnNotAgree" Click="btnNotAgree_Click"/>
+                                    </StackPanel>
+                                    <Button Name="btnComment" Content="Комментировать"
                                     Click="btnComment_Click"  IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"
                                             Visibility="{Binding canComment, Converter={StaticResource visibilityConverter}}"/>
-                            </StackPanel>
+                                </StackPanel>
+                            </Border>
 
-                            <StackPanel Orientation="Vertical" Margin="0,30,0,0">
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                    <TextBlock Text="Заявка отклонена" HorizontalAlignment="Right" Visibility="{Binding Denied, Converter={StaticResource visibilityConverter}}" 
+                            <Border Style="{StaticResource borderFilterControl}" Grid.Column="2" Grid.Row="2" Margin="0,10,0,0">
+                                <StackPanel Orientation="Vertical" Margin="0,0,0,0">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <TextBlock Text="Заявка отклонена" HorizontalAlignment="Right" Visibility="{Binding Denied, Converter={StaticResource visibilityConverter}}" 
                                                Foreground="Red" FontWeight="Bold"/>
-                                    <TextBlock Text="Заявка разрешена" HorizontalAlignment="Right" Visibility="{Binding Allowed, Converter={StaticResource visibilityConverter}}" 
+                                        <TextBlock Text="Заявка разрешена" HorizontalAlignment="Right" Visibility="{Binding Allowed, Converter={StaticResource visibilityConverter}}" 
                                                Foreground="Green" FontWeight="Bold"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Vertical" Visibility="{Binding Allowed, Converter={StaticResource visibilityConverter}}">
-                                    <TextBlock Text="Разрешенное время" HorizontalAlignment="Right" Style="{StaticResource Label}"/>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding AllowDateStart, StringFormat='dd.MM.yyyy HH:mm'}" Style="{StaticResource Value}" HorizontalAlignment="Left"/>
-                                        <TextBlock Text=" - " Style="{StaticResource Label}"/>
-                                        <TextBlock Text="{Binding AllowDateEnd, StringFormat='dd.MM.yyyy HH:mm'}" Style="{StaticResource Value}" HorizontalAlignment="Right"/>
                                     </StackPanel>
-                                </StackPanel>
+                                    <StackPanel Orientation="Vertical" Visibility="{Binding Allowed, Converter={StaticResource visibilityConverter}}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding AllowDateStart, StringFormat='dd.MM.yyyy HH:mm'}" Style="{StaticResource Value}" HorizontalAlignment="Left"/>
+                                            <TextBlock Text=" - " Style="{StaticResource Label}"/>
+                                            <TextBlock Text="{Binding AllowDateEnd, StringFormat='dd.MM.yyyy HH:mm'}" Style="{StaticResource Value}" HorizontalAlignment="Right"/>
+                                        </StackPanel>
+                                    </StackPanel>
 
 
-                                <Button Name="btnCheck" Content="Рассмотреть"
+                                    <Button Name="btnCheck" Content="Рассмотреть"
                                     Click="btnCheck_Click" IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"
                                         Visibility="{Binding canCheck, Converter={StaticResource visibilityConverter}}" />
 
-                            </StackPanel>
+                                </StackPanel>
+                            </Border>
                         </StackPanel>
 
                     </StackPanel>

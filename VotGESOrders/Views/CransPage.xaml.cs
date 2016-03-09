@@ -72,6 +72,12 @@ namespace VotGESOrders.Views {
 			range.Maximum = 3;
 			CurrentChart.YAxis.SetActualRange(range);
 			CurrentChart.XAxis.IsAutoMarginEnabled = false;
+			CurrentChart.XAxis.LabelFormatString = "dd.MM HH";
+			CurrentChart.XAxis.Element.Height = 20;
+			CurrentChart.XAxis.Element.MaxHeight = 20;
+			(CurrentChart.XAxis as DateTimeAxis).ShowMinorTicks = false;
+			
+
 		}
 
 

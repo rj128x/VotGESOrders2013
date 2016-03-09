@@ -291,5 +291,27 @@ namespace VotGESOrders.Web.Models {
 			}
 		}
 
+		public static string getTashHTML(CranTaskInfo order, bool showStyle = true) {
+			string style = showStyle ? "<Style>table {border-collapse: collapse;} td{text-align:center;} td.comments{text-align:left;} td, th {border-width: 1px;	border-style: solid;	border-color: #BBBBFF;	padding-left: 3px;	padding-right: 3px;}</Style>" : "";
+			string htmlNumber = String.Format("Заявка на работу крана №{0} ", order.Number);
+			string htmlState = String.Format("Состояние: {0}", order.Allowed?"Разрешена":order.Denied?"Отклонена":"Новая заявка");
+			string htmlFirstTRTable = String.Format("<table width='100%'><tr><th>{0}</th><th>{1}</th></tr></table>", htmlNumber, htmlState);
+			string htmlInfoTable = String.Format("<table width='100%'><tr><th colspan='3'>Информация о заявке</th></tr><tr><th width='30%'>Оборудование</th><th  width='30%'>Текст заявки</th><th width='30%'>Согласовано</th></tr><tr><td width='30%'>{0}</td><td width='30%'>{1}</td><td width='30%'>{2}</td></tr></table>",
+				order.CranName, String.Format("{0}<br/><b>Ответственный: </b>{1}",order.Comment,order.Manager), order.AgreeUsersText);
+
+
+			string htmlDatesTable =
+				String.Format("<table width='100%'><tr><th colspan='4'>Сроки заявки</th></tr><tr><th>&nbsp;</th><th>Начало</th><th>Окончание</th><th>&nbsp;</th></tr><tr><th>Заявка</th><td>{0}</td><td>{1}</td><td>{2}</td></tr><tr><th>Разрешение</th><td>{3}</td><td>{4}</td><td>{5}</td></table>",
+				order.NeedStartDate.ToString("dd.MM.yy HH:mm"), order.NeedEndDate.ToString("dd.MM.yy HH:mm"), order.Author,
+				order.Allowed ? order.AllowDateStart.ToString("dd.MM.yy HH:mm") : order.Denied?"Отклонено": "&nbsp;",
+				order.Allowed ? order.AllowDateEnd.ToString("dd.MM.yy HH:mm") : order.Denied ? "Отклонено" : "&nbsp;", 
+				order.Allowed||order.Denied?order.AuthorAllow:"-");
+
+
+			string fullTable = String.Format("<table width='100%'><tr><td colspan='2'>{0}</td></tr><tr><td colspan='2'>{1}</td></tr><tr><td width='50%'>{2}</td><td width='50%'>{3}</td></tr></table>",
+				htmlFirstTRTable, htmlInfoTable, htmlDatesTable, order.AgreeComments.Replace("\r\n","<br/>"));
+			return style + fullTable;
+		}
+
 	}
 }
