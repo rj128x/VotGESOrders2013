@@ -66,8 +66,6 @@ namespace VotGESOrders.Web.Models {
 		}
 
 		public static void sendCranTask(string header, CranTaskInfo task) {
-			/*if (HttpContext.Current.Request.Url.Port == 8071 || HttpContext.Current.Request.Url.Port == 8090)
-				return;*/
 			try {
 				IQueryable users = OrdersUser.getAllUsers();
 				List<string> mailToList = new List<string>();
@@ -90,21 +88,11 @@ namespace VotGESOrders.Web.Models {
 					}
 				}
 
-				/*string message = String.Format("<h1>Заявка на работу крана \"{0}\"</h1><br/><h2>Автор: {1}<br/>Текст: {2}<br/> Ответственный: {5} <br/> Согласовано: {6} <br/> Запрошенное время: {3} - {4} <br/> Комментарии: <br/>{7}</h2>",
-					task.CranName, task.Author, task.Comment, task.NeedStartDate.ToString("dd.MM.yyyy HH:mm"), task.NeedEndDate.ToString("dd.MM.yyyy HH:mm"),
-					task.Manager,task.AgreeUsersText,task.AgreeComments);
-				if (task.Allowed || task.Denied) {
-					message += String.Format("<h1>{1}</h1><h2> Заявку рассмотрел: {0}", task.AuthorAllow, task.Allowed ? "Заявка разрешена" : "Заявка отклонена");
-				}
-				if (task.Allowed)
-					message += string.Format("<h2>Разрешенное время: {0} - {1}</h2>", task.AllowDateStart.ToString("dd.MM.yyyy HH:mm"), task.AllowDateEnd.ToString("dd.MM.yyyy HH:mm"));*/
-
 				string message = CranTaskInfo.getTashHTML(task);
 
 				message += String.Format("<h3><a href='{0}'>Перейти к списку заявок</a></h3>", String.Format("http://{0}:{1}", HttpContext.Current.Request.Url.Host, HttpContext.Current.Request.Url.Port));
 
 				if (mailToList.Count > 0) {
-					//SendMailLocal("mx-votges-021.corp.gidroogk.com", 25, "", "", "", "SR-VOTGES-INT@votges.rushydro.ru", mailToList, header, message, true);
 					SendMailLocal(smtpServer, smtpPort, smtpUser, smtpPassword, smtpDomain, smtpFrom, mailToList, header, message, true);
 				}
 			}

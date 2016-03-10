@@ -42,35 +42,42 @@
                         <sdk:DataGridTemplateColumn Header="№" SortMemberPath="Number" Width="40">
                             <sdk:DataGridTemplateColumn.CellTemplate >
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Number}"  TextWrapping="Wrap"/>
+                                    <TextBlock Text="{Binding Number}"  FontSize="11"/>
+                                </DataTemplate>
+                            </sdk:DataGridTemplateColumn.CellTemplate>
+                        </sdk:DataGridTemplateColumn>
+                        <sdk:DataGridTemplateColumn Header="Состояние" SortMemberPath="State" Width="80" >
+                            <sdk:DataGridTemplateColumn.CellTemplate >
+                                <DataTemplate>
+                                    <Grid>                                        
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock Text="{Binding State}" FontSize="11"/>
+                                        </StackPanel>
+                                        <StackPanel Background="Green" Visibility="{Binding Allowed, Converter={StaticResource visibilityConverter}}" Opacity="0.6" />
+                                        <StackPanel Background="Red" Visibility="{Binding Denied, Converter={StaticResource visibilityConverter}}" Opacity="0.6" />
+                                    </Grid>
+
                                 </DataTemplate>
                             </sdk:DataGridTemplateColumn.CellTemplate>
                         </sdk:DataGridTemplateColumn>
                         <sdk:DataGridTemplateColumn Header="Кран" SortMemberPath="CranNumber" Width="2*">
                             <sdk:DataGridTemplateColumn.CellTemplate >
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding CranName}" TextWrapping="Wrap"/>
+                                    <TextBlock Text="{Binding CranName}" TextWrapping="Wrap" FontSize="11"/>
                                 </DataTemplate>
                             </sdk:DataGridTemplateColumn.CellTemplate>
                         </sdk:DataGridTemplateColumn>
                         <sdk:DataGridTemplateColumn Header="Автор" SortMemberPath="Author" Width="1*">
                             <sdk:DataGridTemplateColumn.CellTemplate >
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Author}" TextWrapping="Wrap"/>
+                                    <TextBlock Text="{Binding Author}" TextWrapping="Wrap" FontSize="11"/>
                                 </DataTemplate>
                             </sdk:DataGridTemplateColumn.CellTemplate>
                         </sdk:DataGridTemplateColumn>
                         <sdk:DataGridTemplateColumn Header="Текст" SortMemberPath="Comment" Width="2*">
                             <sdk:DataGridTemplateColumn.CellTemplate >
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Comment}" TextWrapping="Wrap"/>
-                                </DataTemplate>
-                            </sdk:DataGridTemplateColumn.CellTemplate>
-                        </sdk:DataGridTemplateColumn>
-                        <sdk:DataGridTemplateColumn Header="Ответственный" SortMemberPath="Manager" Width="1*">
-                            <sdk:DataGridTemplateColumn.CellTemplate >
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Manager}" TextWrapping="Wrap"/>
+                                    <TextBlock Text="{Binding Comment}" TextWrapping="Wrap" FontSize="11"/>
                                 </DataTemplate>
                             </sdk:DataGridTemplateColumn.CellTemplate>
                         </sdk:DataGridTemplateColumn>
@@ -78,8 +85,8 @@
                             <sdk:DataGridTemplateColumn.CellTemplate >
                                 <DataTemplate>
                                     <StackPanel Orientation="Vertical">
-                                        <TextBlock Text="{Binding NeedStartDate, StringFormat='dd.MM.yyyy HH:mm'}"/>
-                                        <TextBlock Text="{Binding NeedEndDate, StringFormat='dd.MM.yyyy HH:mm'}" HorizontalAlignment="Right"/>
+                                        <TextBlock Text="{Binding NeedStartDate, StringFormat='dd.MM.yyyy HH:mm'}" FontSize="11"/>
+                                        <TextBlock Text="{Binding NeedEndDate, StringFormat='dd.MM.yyyy HH:mm'}" HorizontalAlignment="Right" FontSize="11"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </sdk:DataGridTemplateColumn.CellTemplate>
@@ -88,30 +95,13 @@
                             <sdk:DataGridTemplateColumn.CellTemplate >
                                 <DataTemplate>
                                     <StackPanel Orientation="Vertical" Visibility="{Binding Allowed, Converter={StaticResource visibilityConverter}}">
-                                        <TextBlock Text="{Binding AllowDateStart, StringFormat='dd.MM.yyyy HH:mm'}"/>
-                                        <TextBlock Text="{Binding AllowDateEnd, StringFormat='dd.MM.yyyy HH:mm'}" HorizontalAlignment="Right"/>
+                                        <TextBlock Text="{Binding AllowDateStart, StringFormat='dd.MM.yyyy HH:mm'}" FontSize="11"/>
+                                        <TextBlock Text="{Binding AllowDateEnd, StringFormat='dd.MM.yyyy HH:mm'}" HorizontalAlignment="Right" FontSize="11"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </sdk:DataGridTemplateColumn.CellTemplate>
                         </sdk:DataGridTemplateColumn>
-                        <sdk:DataGridTemplateColumn Header="Состояние" SortMemberPath="State" Width="1*" >
-                            <sdk:DataGridTemplateColumn.CellTemplate >
-                                <DataTemplate>
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBlock Text="{Binding State}"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </sdk:DataGridTemplateColumn.CellTemplate>
-                        </sdk:DataGridTemplateColumn>
-                        <sdk:DataGridTemplateColumn Header="Рассмотрел" SortMemberPath="AuthorAllow" Width="1*" >
-                            <sdk:DataGridTemplateColumn.CellTemplate >
-                                <DataTemplate>
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBlock Text="{Binding AuthorAllow}"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </sdk:DataGridTemplateColumn.CellTemplate>
-                        </sdk:DataGridTemplateColumn>
+
                     </sdk:DataGrid.Columns>
                 </sdk:DataGrid>
                 <Grid Grid.Row="2">
@@ -184,7 +174,25 @@
                                 </Grid>
                             </Grid>
                         </sdk:TabItem>
+                        <sdk:TabItem Header="Кран пром площ" Name="tabPromPlosh">
+                            <Grid>
+                                <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Visible" Name="scrPromPlosh">
+                                    <charts:Chart Name="ChartPromPlosh" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MouseWheel="CurrentChart_MouseWheel"
+						      LegendVisibility="Collapsed" >
+                                    </charts:Chart>
+                                </ScrollViewer>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="Кран козловой г/п 63/10т Произ площ" Grid.Row="0" HorizontalAlignment="Right" Height="17" VerticalAlignment="Top"/>
+                                    <TextBlock Text="-" Grid.Row="1" HorizontalAlignment="Right" Height="17" VerticalAlignment="Top" Margin="0,-20,0,0"/>
+                                </Grid>
+                            </Grid>
+                        </sdk:TabItem>
                     </sdk:TabControl>
+                    
                 </Grid>
 
 
@@ -202,36 +210,33 @@
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="Кран: " Width="50" Style="{StaticResource Label}"/>
-                                        <TextBlock Text="{Binding CranName}" Style="{StaticResource ValueText}" TextWrapping="Wrap" Height="30"  Width="250" TextAlignment="Left"/>
+                                        <TextBlock Text="{Binding CranName}" Style="{StaticResource ValueText}" 
+                                                   TextWrapping="Wrap"  Width="250" TextAlignment="Left" FontSize="11"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Автор " Width="50" Style="{StaticResource Label}"/>
-                                        <TextBlock Text="{Binding Author}" Style="{StaticResource Value}" Width="200"/>
+                                        <TextBlock Text="Автор:" Width="50" Style="{StaticResource Label}"/>
+                                        <TextBlock Text="{Binding Author}" Style="{StaticResource Value}" Width="200" FontSize="11"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Ответ-й " Width="50" Style="{StaticResource Label}"/>
-                                        <TextBlock Text="{Binding Manager}" Style="{StaticResource Value}" Width="200"/>
+                                        <TextBlock Text="Ответ-й:" Width="50" Style="{StaticResource Label}"/>
+                                        <TextBlock Text="{Binding Manager}" Style="{StaticResource Value}" Width="200" FontSize="11"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Заявка" Width="50" Style="{StaticResource Label}" VerticalAlignment="Top"/>
-                                        <TextBlock  Text="{Binding Comment}" TextWrapping="Wrap" Width="250" Height="50" Style="{StaticResource ValueText}" FontSize="12" TextAlignment="Left"/>
+                                        <TextBlock Text="Заявка:" Width="50" Style="{StaticResource Label}" VerticalAlignment="Top"/>
+                                        <TextBlock  Text="{Binding Comment}" TextWrapping="Wrap" Width="250" Height="30" Style="{StaticResource ValueText}" FontSize="11" TextAlignment="Left"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Согл-но" Width="50" Style="{StaticResource Label}" VerticalAlignment="Top"/>
-                                        <TextBlock  Text="{Binding AgreeUsersText}" TextWrapping="Wrap" Width="250" Height="30" Style="{StaticResource ValueText}" FontSize="12" TextAlignment="Left"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="***" Width="20" Style="{StaticResource Label}" VerticalAlignment="Top"/>
-                                        <TextBox  Text="{Binding AgreeComments}" TextWrapping="Wrap" Height="70" Width="270" IsReadOnly="True" TextAlignment="Left"/>
+                                        <TextBlock Text="Согл-но:" Width="50" Style="{StaticResource Label}" VerticalAlignment="Top"/>
+                                        <TextBlock  Text="{Binding AgreeUsersText}" TextWrapping="Wrap" Width="250" Height="30" Style="{StaticResource ValueText}" FontSize="11" TextAlignment="Left"/>
                                     </StackPanel>
 
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBlock Text="Запрашиваемое время" HorizontalAlignment="Right" Style="{StaticResource Label}"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Время:"  Style="{StaticResource Label}" Width="50"/>
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding NeedStartDate, StringFormat='dd.MM.yyyy HH:mm'}" Style="{StaticResource Value}" />
+                                            <TextBlock Text="{Binding NeedStartDate, StringFormat='dd.MM.yy HH:mm'}" Style="{StaticResource Value}" FontSize="11" />
                                             <TextBlock Text=" - " Style="{StaticResource Label}"/>
-                                            <TextBlock Text="{Binding NeedEndDate, StringFormat='dd.MM.yyyy HH:mm'}" Style="{StaticResource Value}"  />
+                                            <TextBlock Text="{Binding NeedEndDate, StringFormat='dd.MM.yy HH:mm'}" Style="{StaticResource Value}" FontSize="11" />
                                         </StackPanel>
                                     </StackPanel>
                                     <Button Name="btnChange" Content="Изменить"
@@ -240,15 +245,18 @@
                                 </StackPanel>
                             </Border>
                             <Border Style="{StaticResource borderFilterControl}" Grid.Column="2" Grid.Row="2" Margin="0,10,0,0">
-                                <StackPanel Visibility="{Binding canComment, Converter={StaticResource visibilityConverter}}" Margin="0,0,0,0">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBox Name="txtComment"  TextWrapping="Wrap" Width="250" Height="37" AcceptsReturn="True"/>
-                                        <Button Width="25" Content="V" Foreground="Green" FontWeight="Bold" FontFamily="Courier New" FontSize="18" Height="23" Name="btnAgree"  Click="btnAgree_Click"/>
-                                        <Button Width="25" Content="X" Foreground="Red" FontWeight="Bold" FontFamily="Courier New" FontSize="18" Height="23" Name="btnNotAgree" Click="btnNotAgree_Click"/>
-                                    </StackPanel>
-                                    <Button Name="btnComment" Content="Комментировать"
+                                <StackPanel>
+                                    <TextBox  Text="{Binding AgreeComments}" TextWrapping="Wrap" Height="70" IsReadOnly="True" TextAlignment="Left"/>
+                                    <StackPanel Visibility="{Binding canComment, Converter={StaticResource visibilityConverter}}" Margin="0,0,0,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBox Name="txtComment"  TextWrapping="Wrap" Width="250" Height="37" AcceptsReturn="True"/>
+                                            <Button Width="25" Content="V" Foreground="Green" FontWeight="Bold" FontFamily="Courier New" FontSize="18" Height="23" Name="btnAgree"  Click="btnAgree_Click"/>
+                                            <Button Width="25" Content="X" Foreground="Red" FontWeight="Bold" FontFamily="Courier New" FontSize="18" Height="23" Name="btnNotAgree" Click="btnNotAgree_Click"/>
+                                        </StackPanel>
+                                        <Button Name="btnComment" Content="Комментировать"
                                     Click="btnComment_Click"  IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"
                                             Visibility="{Binding canComment, Converter={StaticResource visibilityConverter}}"/>
+                                    </StackPanel>
                                 </StackPanel>
                             </Border>
 

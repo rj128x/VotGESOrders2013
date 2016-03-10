@@ -93,6 +93,7 @@ namespace VotGESOrders.Views {
 			initChart(ChartSUS);
 			initChart(ChartNBVB);
 			initChart(ChartTransVSP);
+			initChart(ChartPromPlosh);
 			newTask.Visibility = WebContext.Current.User.AllowCreateCranTask ? Visibility.Visible : Visibility.Collapsed;
 		}
 
@@ -123,6 +124,7 @@ namespace VotGESOrders.Views {
 			processCransData(ChartSUS, (new int[] { 3, 4 }).ToList());
 			processCransData(ChartNBVB, (new int[] { 5, 6 }).ToList());
 			processCransData(ChartTransVSP, (new int[] { 7, 8 }).ToList());
+			processCransData(ChartPromPlosh, (new int[] { -1, 9 }).ToList());
 			CurrentTask = null;
 		}
 
@@ -216,6 +218,10 @@ namespace VotGESOrders.Views {
 				case 8:
 					CurrentChart = ChartTransVSP;
 					tCntrl.SelectedIndex = 3;
+					break;
+				case 9:
+					CurrentChart = ChartPromPlosh;
+					tCntrl.SelectedIndex = 4;
 					break;
 				default:
 					return;
