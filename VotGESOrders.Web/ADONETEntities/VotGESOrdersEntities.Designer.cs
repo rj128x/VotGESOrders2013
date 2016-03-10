@@ -2365,7 +2365,11 @@ namespace VotGESOrders.Web.ADONETEntities
         /// <param name="canCreateCranTask">Исходное значение свойства canCreateCranTask.</param>
         /// <param name="canReviewCranTask">Исходное значение свойства canReviewCranTask.</param>
         /// <param name="canAgreeCranTask">Исходное значение свойства canAgreeCranTask.</param>
-        public static Users CreateUsers(global::System.Int32 userID, global::System.String name, global::System.String fullName, global::System.String mail, global::System.Boolean sendAllMail, global::System.Boolean sendAgreeMail, global::System.Boolean sendCreateMail, global::System.Boolean allowCreateOrder, global::System.Boolean allowCreateCrashOrder, global::System.Boolean allowReviewOrder, global::System.Boolean allowChangeOrder, global::System.Boolean allowEditTree, global::System.Boolean allowEditUsers, global::System.Boolean allowAgreeOrders, global::System.Boolean sendAllCreateMail, global::System.Boolean sendAllAgreeMail, global::System.Boolean allowEditOrders, global::System.Boolean canCreateCranTask, global::System.Boolean canReviewCranTask, global::System.Boolean canAgreeCranTask)
+        /// <param name="sendAllCreateCranTask">Исходное значение свойства sendAllCreateCranTask.</param>
+        /// <param name="sendAllCranTask">Исходное значение свойства sendAllCranTask.</param>
+        /// <param name="sendAgreeCranTask">Исходное значение свойства sendAgreeCranTask.</param>
+        /// <param name="sendAllAgreeCranTask">Исходное значение свойства sendAllAgreeCranTask.</param>
+        public static Users CreateUsers(global::System.Int32 userID, global::System.String name, global::System.String fullName, global::System.String mail, global::System.Boolean sendAllMail, global::System.Boolean sendAgreeMail, global::System.Boolean sendCreateMail, global::System.Boolean allowCreateOrder, global::System.Boolean allowCreateCrashOrder, global::System.Boolean allowReviewOrder, global::System.Boolean allowChangeOrder, global::System.Boolean allowEditTree, global::System.Boolean allowEditUsers, global::System.Boolean allowAgreeOrders, global::System.Boolean sendAllCreateMail, global::System.Boolean sendAllAgreeMail, global::System.Boolean allowEditOrders, global::System.Boolean canCreateCranTask, global::System.Boolean canReviewCranTask, global::System.Boolean canAgreeCranTask, global::System.Boolean sendAllCreateCranTask, global::System.Boolean sendAllCranTask, global::System.Boolean sendAgreeCranTask, global::System.Boolean sendAllAgreeCranTask)
         {
             Users users = new Users();
             users.userID = userID;
@@ -2388,6 +2392,10 @@ namespace VotGESOrders.Web.ADONETEntities
             users.canCreateCranTask = canCreateCranTask;
             users.canReviewCranTask = canReviewCranTask;
             users.canAgreeCranTask = canAgreeCranTask;
+            users.sendAllCreateCranTask = sendAllCreateCranTask;
+            users.sendAllCranTask = sendAllCranTask;
+            users.sendAgreeCranTask = sendAgreeCranTask;
+            users.sendAllAgreeCranTask = sendAllAgreeCranTask;
             return users;
         }
 
@@ -2877,6 +2885,102 @@ namespace VotGESOrders.Web.ADONETEntities
         private global::System.Boolean _canAgreeCranTask;
         partial void OncanAgreeCranTaskChanging(global::System.Boolean value);
         partial void OncanAgreeCranTaskChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean sendAllCreateCranTask
+        {
+            get
+            {
+                return _sendAllCreateCranTask;
+            }
+            set
+            {
+                OnsendAllCreateCranTaskChanging(value);
+                ReportPropertyChanging("sendAllCreateCranTask");
+                _sendAllCreateCranTask = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("sendAllCreateCranTask");
+                OnsendAllCreateCranTaskChanged();
+            }
+        }
+        private global::System.Boolean _sendAllCreateCranTask;
+        partial void OnsendAllCreateCranTaskChanging(global::System.Boolean value);
+        partial void OnsendAllCreateCranTaskChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean sendAllCranTask
+        {
+            get
+            {
+                return _sendAllCranTask;
+            }
+            set
+            {
+                OnsendAllCranTaskChanging(value);
+                ReportPropertyChanging("sendAllCranTask");
+                _sendAllCranTask = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("sendAllCranTask");
+                OnsendAllCranTaskChanged();
+            }
+        }
+        private global::System.Boolean _sendAllCranTask;
+        partial void OnsendAllCranTaskChanging(global::System.Boolean value);
+        partial void OnsendAllCranTaskChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean sendAgreeCranTask
+        {
+            get
+            {
+                return _sendAgreeCranTask;
+            }
+            set
+            {
+                OnsendAgreeCranTaskChanging(value);
+                ReportPropertyChanging("sendAgreeCranTask");
+                _sendAgreeCranTask = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("sendAgreeCranTask");
+                OnsendAgreeCranTaskChanged();
+            }
+        }
+        private global::System.Boolean _sendAgreeCranTask;
+        partial void OnsendAgreeCranTaskChanging(global::System.Boolean value);
+        partial void OnsendAgreeCranTaskChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean sendAllAgreeCranTask
+        {
+            get
+            {
+                return _sendAllAgreeCranTask;
+            }
+            set
+            {
+                OnsendAllAgreeCranTaskChanging(value);
+                ReportPropertyChanging("sendAllAgreeCranTask");
+                _sendAllAgreeCranTask = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("sendAllAgreeCranTask");
+                OnsendAllAgreeCranTaskChanged();
+            }
+        }
+        private global::System.Boolean _sendAllAgreeCranTask;
+        partial void OnsendAllAgreeCranTaskChanging(global::System.Boolean value);
+        partial void OnsendAllAgreeCranTaskChanged();
 
         #endregion
 

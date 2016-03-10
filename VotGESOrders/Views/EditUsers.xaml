@@ -122,6 +122,18 @@
                         <toolkit:DataField Name="CanAgreeCranTask" Label="">
                             <CheckBox Content="Может согласовывать заявки на работу крана" IsChecked="{Binding CanAgreeCranTask,Mode=TwoWay}"/>
                         </toolkit:DataField>
+                        <toolkit:DataField Name="SendAllCranTask" Label="">
+                            <CheckBox Content="Оповещать о движении всех заявок на кран" IsChecked="{Binding SendAllCranTask,Mode=TwoWay}"/>
+                        </toolkit:DataField>
+                        <toolkit:DataField Name="SendAllCreateCranTask" Label="">
+                            <CheckBox Content="Оповещать о создании всех заявок на кран" IsChecked="{Binding SendAllCreateCranTask,Mode=TwoWay}"/>
+                        </toolkit:DataField>
+                        <toolkit:DataField Name="SendAllAgreeCranTask" Label="">
+                            <CheckBox Content="Оповещать о движении согласованных заявок на кран" IsChecked="{Binding SendAllAgreeCranTask,Mode=TwoWay}"/>
+                        </toolkit:DataField>
+                        <toolkit:DataField Name="SendAgreeCranTask" Label="">
+                            <CheckBox Content="Оповещать о создании согласованных заявок на кран" IsChecked="{Binding SendAgreeCranTask,Mode=TwoWay}"/>
+                        </toolkit:DataField>
                         
                     </StackPanel>
 				</toolkit:DataForm>

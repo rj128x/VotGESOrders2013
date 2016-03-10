@@ -61,7 +61,10 @@ namespace VotGESOrders.Web.Models
 				user.canReviewCranTask = newUser.CanReviewCranTask;
 				user.canCreateCranTask = newUser.CanCreateCranTask;
 				user.canAgreeCranTask = newUser.CanAgreeCranTask;
-
+				user.sendAgreeCranTask = newUser.SendAgreeCranTask;
+				user.sendAllCreateCranTask = newUser.SendAllCreateCranTask;
+				user.sendAllAgreeCranTask = newUser.SendAllAgreeCranTask;
+				user.sendAllCranTask = newUser.SendAllCranTask;
 				
 				context.SaveChanges();
 

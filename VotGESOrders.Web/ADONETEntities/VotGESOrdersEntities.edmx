@@ -114,6 +114,10 @@
           <Property Name="canAgreeCranTask" Type="bit" Nullable="false" />
           <Property Name="canCreateCranTask" Type="bit" Nullable="false" />
           <Property Name="canReviewCranTask" Type="bit" Nullable="false" />
+          <Property Name="sendAllCreateCranTask" Type="bit" Nullable="false" />
+          <Property Name="sendAllCranTask" Type="bit" Nullable="false" />
+          <Property Name="sendAgreeCranTask" Type="bit" Nullable="false" />
+          <Property Name="sendAllAgreeCranTask" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK_Orders_OrderObjects">
           <End Role="OrderObjects" Type="Self.OrderObjects" Multiplicity="1" />
@@ -374,6 +378,10 @@
           <Property Name="canCreateCranTask" Type="Boolean" Nullable="false" />
           <Property Name="canReviewCranTask" Type="Boolean" Nullable="false" />
           <Property Name="canAgreeCranTask" Type="Boolean" Nullable="false" />
+          <Property Name="sendAllCreateCranTask" Type="Boolean" Nullable="false" />
+          <Property Name="sendAllCranTask" Type="Boolean" Nullable="false" />
+          <Property Name="sendAgreeCranTask" Type="Boolean" Nullable="false" />
+          <Property Name="sendAllAgreeCranTask" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_Orders_OrderObjects">
           <End Role="OrderObjects" Type="VotGESOrdersModel.OrderObjects" Multiplicity="1" />
@@ -545,7 +553,11 @@
             <ScalarProperty Name="expiredCompleteHours" ColumnName="expiredCompleteHours" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Users"><EntityTypeMapping TypeName="VotGESOrdersModel.Users"><MappingFragment StoreEntitySet="Users">
-            <ScalarProperty Name="canAgreeCranTask" ColumnName="canAgreeCranTask" />
+            <ScalarProperty Name="sendAllAgreeCranTask" ColumnName="sendAllAgreeCranTask" />
+                <ScalarProperty Name="sendAgreeCranTask" ColumnName="sendAgreeCranTask" />
+                <ScalarProperty Name="sendAllCranTask" ColumnName="sendAllCranTask" />
+                <ScalarProperty Name="sendAllCreateCranTask" ColumnName="sendAllCreateCranTask" />
+                <ScalarProperty Name="canAgreeCranTask" ColumnName="canAgreeCranTask" />
                 <ScalarProperty Name="canReviewCranTask" ColumnName="canReviewCranTask" />
                 <ScalarProperty Name="canCreateCranTask" ColumnName="canCreateCranTask" />
                 <ScalarProperty Name="userID" ColumnName="userID" />

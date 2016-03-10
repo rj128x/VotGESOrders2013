@@ -141,7 +141,7 @@ namespace VotGESOrders.Web.Models {
 						return new ReturnMessage(false, "Заявка не найдена");
 					}
 					tbl = tsk;
-					result = "Заявка на кран успешно создана";
+					result = "Заявка на кран успешно изменена";
 				}
 				message += task.Number + ". ";
 
