@@ -64,6 +64,19 @@ namespace VotGESOrders.Views {
 				MessageBox.Show("Выберите кран");
 				return;
 			}
+			if (string.IsNullOrEmpty(CurrentTask.Manager)) {
+				MessageBox.Show("Введите ответственного");
+				return;
+			}
+			if (string.IsNullOrEmpty(CurrentTask.Comment)) {
+				MessageBox.Show("Введите текст заявки");
+				return;
+			}
+			if (CurrentTask.NeedEndDate <= CurrentTask.NeedStartDate) {
+				MessageBox.Show("Время окончания меньше времени начала");
+				return;
+			}
+
 			CurrentTask.CranName = Crans[CurrentTask.CranNumber];
 			GlobalStatus.Current.IsBusy = true;
 			CransContext.Single.Client.CreateCranTaskAsync(CurrentTask);

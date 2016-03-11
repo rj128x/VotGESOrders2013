@@ -135,8 +135,8 @@ namespace VotGESOrders.Views {
 			newTask.init = true;
 			newTask.canChange = true;
 			newTask.canCheck = false;
-			newTask.CranNumber = 1;
-			newTask.Comment = " ";
+			newTask.CranNumber = 0;
+			newTask.Comment = "";
 			newTask.NeedStartDate = DateTime.Now.Date.AddDays(1);
 			newTask.NeedEndDate = DateTime.Now.Date.AddDays(2);
 			CranWindow taskWindow = new CranWindow();

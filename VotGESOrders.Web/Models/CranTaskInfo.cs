@@ -75,7 +75,7 @@ namespace VotGESOrders.Web.Models {
 			AgreeComments = tbl.AgreeComment;
 			canChange = (!Allowed) && (!Denied) && tbl.Author.ToLower() == currentUser.Name.ToLower();
 			canCheck = currentUser.CanReviewCranTask;
-			canComment = currentUser.CanAgreeCranTask;
+			canComment = true;
 			Manager = tbl.Manager;
 			if (Denied) {
 				State = "Отклонена";
