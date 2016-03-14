@@ -23,7 +23,7 @@ namespace VotGESOrders
 		}
 
 		public GlobalStatus() {
-			
+			IsBusy = false;
 		}
 
 		public void init() {

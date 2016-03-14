@@ -94,6 +94,12 @@
 			</Grid>
 
 		</Border>
+        <Grid Name="grdLoading" Visibility="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource visibilityConverter}}"
+              OpacityMask="Aqua" Background="LightBlue" Opacity="0.7" >
+
+            <TextBlock Text="Загрузка данных. подождите" 
+                       HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontStyle="Italic" FontWeight="Bold"/>
+        </Grid>
 
 
 	</Grid>

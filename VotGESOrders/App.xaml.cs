@@ -35,7 +35,7 @@ namespace VotGESOrders {
 			InitializeComponent();
 		}
 
-		private void Application_Startup(object sender, StartupEventArgs e) {
+		private void Application_Startup(object sender, StartupEventArgs e) {			
 			this.RootVisual = new MainPage();
 			hasRoot = true;
 			if (hasUser) {
@@ -65,6 +65,7 @@ namespace VotGESOrders {
 
 				e.Handled = true;
 				Logger.info(e.ExceptionObject.StackTrace);
+				MessageBox.Show(e.ExceptionObject.ToString());
 				ChildWindow errorWin = new ErrorWindow(e.ExceptionObject);
 				Logger.info(e.ExceptionObject.ToString());
 				errorWin.Show();

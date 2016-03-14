@@ -19,10 +19,9 @@ namespace VotGESOrders
 {
 	public partial class MainPage : UserControl
 	{
-		public static bool STARTING;
+		public static bool STARTING=true;
 
 		public MainPage() {
-			STARTING = true;		
 			InitializeComponent();	
 		}
 
@@ -57,13 +56,22 @@ namespace VotGESOrders
 		}
 
 		public void finish() {
+			Logger.info("Main page finish "+ (ContentFrame.Content).ToString());
+			
 			if (ContentFrame.Content is Home){
 				(ContentFrame.Content as Home).finish();
 			}
 			else if (ContentFrame.Content is CransPage) {
 				(ContentFrame.Content as CransPage).init();
 			}
+			else {
+				Logger.info("Ручное перенапавление");
+				STARTING = false;
+				ContentFrame.Navigate(new Uri("/Home", UriKind.Relative));
+			}
 			STARTING = false;
+
+			
 		}
 
 		// После перехода в фрейме убедиться, что выбрана кнопка HyperlinkButton, представляющая текущую страницу
