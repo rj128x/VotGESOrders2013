@@ -450,6 +450,12 @@ namespace VotGESOrders.Views {
 			}
 		}
 
+		private void btnPrint_Click(object sender, RoutedEventArgs e) {
+			FloatWindow.OpenWindow(String.Format("/Home/PrintCranTasks?year1={0}&month1={1}&day1={2}&year2={3}&month2={4}&day2={5}",
+				CurrentFilter.DateStart.Year, CurrentFilter.DateStart.Month, CurrentFilter.DateStart.Day,
+				CurrentFilter.DateEnd.Year, CurrentFilter.DateEnd.Month, CurrentFilter.DateEnd.Day));
+		}
+
 	}
 
 }

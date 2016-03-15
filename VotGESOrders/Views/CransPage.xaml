@@ -5,7 +5,7 @@
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            mc:Ignorable="d"
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
-           d:DesignWidth="800" d:DesignHeight="600"
+           d:DesignWidth="1100" d:DesignHeight="600"
             xmlns:charts="clr-namespace:Visiblox.Charts;assembly=Visiblox.Charts"
            Title="CransPage Page">
     <Grid x:Name="LayoutRoot">
@@ -32,6 +32,8 @@
                         </StackPanel>
                         <sdk:DatePicker SelectedDate="{Binding DateEnd, Mode=TwoWay}" Width="120" HorizontalAlignment="Right"/>
                         <Button Content="Обновить" Name="btnRefresh" Click="btnRefresh_Click" Width="100" HorizontalAlignment="Center"
+                                IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"/>
+                        <Button Content="Печать" Name="btnPrint" Click="btnPrint_Click" Width="100" HorizontalAlignment="Center"
                                 IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"/>
                     </StackPanel>
                     <Button Content="Создать заявку" Name="newTask" Click="newTask_Click" Grid.Column="1"
@@ -204,41 +206,63 @@
                         <StackPanel Orientation="Vertical" Name="pnlTask" >
                             <Border Style="{StaticResource borderFilterControl}" Grid.Column="2" Grid.Row="2">
                                 <StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Номер: " Width="50" Style="{StaticResource Label}"/>
-                                        <TextBlock Text="{Binding Number}" Style="{StaticResource Value}" Width="50"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Кран: " Width="50" Style="{StaticResource Label}"/>
-                                        <TextBlock Text="{Binding CranName}" Style="{StaticResource ValueText}" 
-                                                   TextWrapping="Wrap"  Width="250" TextAlignment="Left" FontSize="11"/>
-                                    </StackPanel>
-
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Автор:" Width="50" Style="{StaticResource Label}"/>
-                                        <TextBlock Text="{Binding Author}" Style="{StaticResource Value}" Width="200" FontSize="11"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Ответ-й:" Width="50" Style="{StaticResource Label}"/>
-                                        <TextBlock Text="{Binding Manager}" Style="{StaticResource Value}" Width="200" FontSize="11"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Заявка:" Width="50" Style="{StaticResource Label}" VerticalAlignment="Top"/>
-                                        <TextBlock  Text="{Binding Comment}" TextWrapping="Wrap" Width="250" Height="30" Style="{StaticResource ValueText}" FontSize="11" TextAlignment="Left"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Согл-но:" Width="50" Style="{StaticResource Label}" VerticalAlignment="Top"/>
-                                        <TextBlock  Text="{Binding AgreeUsersText}" TextWrapping="Wrap" Width="250" Height="30" Style="{StaticResource ValueText}" FontSize="11" TextAlignment="Left"/>
-                                    </StackPanel>
-
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Время:"  Style="{StaticResource Label}" Width="50"/>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding NeedStartDate, StringFormat='dd.MM.yy HH:mm'}" Style="{StaticResource Value}" FontSize="11" />
-                                            <TextBlock Text=" - " Style="{StaticResource Label}"/>
-                                            <TextBlock Text="{Binding NeedEndDate, StringFormat='dd.MM.yy HH:mm'}" Style="{StaticResource Value}" FontSize="11" />
+                                    <Border Style="{StaticResource borderFilterControl}">
+                                        <StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="Номер: " Width="50" Style="{StaticResource Label}"/>
+                                                    <TextBlock Text="{Binding Number}" Style="{StaticResource Value}" Width="50"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="Автор:" Width="50" Style="{StaticResource Label}"/>
+                                                    <TextBlock Text="{Binding Author}" Style="{StaticResource Value}" Width="130" FontSize="11"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Vertical">
+                                                <TextBlock Text="Кран: " Width="50" Style="{StaticResource Label}" HorizontalAlignment="Left"/>
+                                                <TextBlock Text="{Binding CranName}" Style="{StaticResource ValueText}" HorizontalAlignment="Center" TextAlignment="Center"
+                                                   TextWrapping="Wrap"   FontSize="11"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Vertical">
+                                            <TextBlock Text="Текст заявки:"  Style="{StaticResource Label}" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                                            <TextBlock  Text="{Binding Comment}" TextWrapping="Wrap"  Height="30" Style="{StaticResource ValueText}" FontSize="11" 
+                                                        HorizontalAlignment="Center" TextAlignment="Center"/>
                                         </StackPanel>
-                                    </StackPanel>
+                                            <StackPanel Orientation="Vertical">
+                                                <TextBlock Text="Время:"  Style="{StaticResource Label}" Width="50" HorizontalAlignment="Left"/>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                    <TextBlock Text="{Binding NeedStartDate, StringFormat='dd.MM.yy HH:mm'}" Style="{StaticResource Value}" FontSize="11" />
+                                                    <TextBlock Text=" - " Style="{StaticResource Label}"/>
+                                                    <TextBlock Text="{Binding NeedEndDate, StringFormat='dd.MM.yy HH:mm'}" Style="{StaticResource Value}" FontSize="11" />
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </StackPanel>
+                                        
+                                    </Border>
+                                    
+                                    
+
+
+
+                                    <Border Style="{StaticResource borderFilterControl}">
+                                        <StackPanel>
+                                            <StackPanel Orientation="Vertical">
+                                                <TextBlock Text="Ответственный:" Style="{StaticResource Label}" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+                                                <TextBlock Text="{Binding Manager}" Style="{StaticResource Value}"  FontSize="11"
+                                                           HorizontalAlignment="Center" TextAlignment="Center"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Vertical">
+                                                <TextBlock Text="Согласовано:"  Style="{StaticResource Label}" VerticalAlignment="Top" TextWrapping="Wrap"/>
+                                                <TextBlock  Text="{Binding AgreeUsersText}" TextWrapping="Wrap" Height="30" Style="{StaticResource ValueText}" FontSize="11" 
+                                                            HorizontalAlignment="Center" TextAlignment="Center"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+
+
+                                    
+
+                                    
                                     <Button Name="btnChange" Content="Изменить" Width="100" HorizontalAlignment="Right"
                                     Click="btnChange_Click" IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"
                                             Visibility="{Binding canChange, Converter={StaticResource visibilityConverter}}"/>
@@ -247,9 +271,9 @@
                                         <StackPanel>
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="20">
                                                 <TextBlock Text="Заявка отклонена" HorizontalAlignment="Right" Visibility="{Binding Denied, Converter={StaticResource visibilityConverter}}" 
-                                               Foreground="Red" FontWeight="Bold" />
+                                               Foreground="Red"  Style="{StaticResource ValueText}"/>
                                                 <TextBlock Text="Заявка разрешена" HorizontalAlignment="Right" Visibility="{Binding Allowed, Converter={StaticResource visibilityConverter}}" 
-                                               Foreground="Green" FontWeight="Bold"/>
+                                               Foreground="Green" Style="{StaticResource ValueText}"/>
                                                 <TextBlock Style="{StaticResource Value}" Text="{Binding AuthorAllow}" Margin="10,0,0,0" FontSize="11"/>
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Visibility="{Binding Allowed, Converter={StaticResource visibilityConverter}}">
@@ -262,7 +286,7 @@
                                         Visibility="{Binding canCheck, Converter={StaticResource visibilityConverter}}" Width="100"/>
                                         </StackPanel>
                                     </Border>
-                                        
+
 
                                 </StackPanel>
                             </Border>

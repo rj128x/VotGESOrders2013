@@ -80,5 +80,18 @@ namespace VotGESOrders.Web.Controllers
 		public ActionResult About() {
 			return View();
 		}
+
+		public ActionResult PrintCranTasks(int year1, int month1, int day1, int year2, int month2, int day2) {
+			Logging.Logger.info("Печать списка заявок на кран",Logging.Logger.LoggerSource.server);
+			DateTime Date1 = new DateTime(year1, month1, day1);
+			DateTime Date2 = new DateTime(year2, month2, day2);
+			CranFilter filter = new CranFilter();
+			filter.DateStart = Date1;
+			filter.DateEnd = Date2;
+			CranFilter Result = CranTaskInfo.LoadCranTasks(filter);
+			ViewResult view = View("PrintCranTasks", Result);
+			return view;
+
+		}
 	}
 }

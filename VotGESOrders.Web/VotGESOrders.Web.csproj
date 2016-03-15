@@ -224,6 +224,7 @@
     <Content Include="SQL\users.sql" />
     <Content Include="SQL\users_PI.sql" />
     <Content Include="Views\Home\GetAllObjects.aspx" />
+    <Content Include="Views\Home\PrintCranTasks.aspx" />
     <Content Include="Views\Home\ProcessExpiredOrders.aspx" />
     <Content Include="Views\Home\TestMail.aspx" />
     <Content Include="Views\Home\VotGESOrders.aspx" />
@@ -282,6 +283,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="logs\" />
+    <Folder Include="Views\Cran\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
