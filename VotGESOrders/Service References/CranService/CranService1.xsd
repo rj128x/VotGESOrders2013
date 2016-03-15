@@ -38,9 +38,12 @@
       <xs:element minOccurs="0" name="State" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="canChange" type="xs:boolean" />
       <xs:element minOccurs="0" name="canCheck" type="xs:boolean" />
+      <xs:element minOccurs="0" name="canComment" type="xs:boolean" />
       <xs:element minOccurs="0" name="change" type="xs:boolean" />
       <xs:element minOccurs="0" name="changed" type="xs:boolean" />
       <xs:element minOccurs="0" name="check" type="xs:boolean" />
+      <xs:element minOccurs="0" name="crossTasks" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="hasCrossTasks" type="xs:boolean" />
       <xs:element minOccurs="0" name="init" type="xs:boolean" />
     </xs:sequence>
   </xs:complexType>

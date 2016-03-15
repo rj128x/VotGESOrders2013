@@ -56,6 +56,9 @@ namespace VotGESOrders.Web.Models {
 		public bool canCheck { get; set; }
 		public bool canComment { get; set; }
 
+		public bool hasCrossTasks { get; set; }
+		public string crossTasks { get; set; }
+
 		public CranTaskInfo() {
 
 		}
@@ -242,6 +245,20 @@ namespace VotGESOrders.Web.Models {
 			}
 		}
 
+		protected static bool DatesCross(DateTime start1, DateTime end1, DateTime start2, DateTime end2, bool first = true) {
+			//Logger.info(String.Format("DatesCross {0} {1} {2} {3} {4}", start1, end1, start2, end2, first), Logger.LoggerSource.server);
+			bool cross =
+					(start1 >= start2 && start1 < end2 ||
+					end1 > start2 && end1 <= end2 ||
+					start1 >= start2 && end1 <= end2 ||
+					start1 <= start2 && end1 >= end2);
+			if (!cross && first) {
+				cross = DatesCross(start2, end2, start1, end1, false);
+			}
+			return cross;
+
+		}
+
 		public static CranFilter LoadCranTasks(CranFilter Filter = null) {
 			Logger.info("Получение списка заявок на кран", Logger.LoggerSource.server);
 			if (Managers == null)
@@ -266,6 +283,46 @@ namespace VotGESOrders.Web.Models {
 																	select t;
 			foreach (CranTask tbl in data) {
 				result.Add(new CranTaskInfo(tbl));
+			}
+			foreach (CranTaskInfo task in result) {
+				task.hasCrossTasks = false;
+				task.crossTasks = "-";
+				foreach (CranTaskInfo crossTask in result) {
+					if (crossTask.Number == task.Number)
+						continue;
+					if (crossTask.CranNumber != task.CranNumber)
+						continue;
+					if (task.Denied || crossTask.Denied)
+						continue;
+					bool crossed = false;
+
+					//Logger.info(String.Format("{0} - {1}",task.Number,crossTask.Number), Logger.LoggerSource.server);
+					if (task.Allowed && crossTask.Allowed) {
+						if (DatesCross(task.AllowDateStart, task.AllowDateEnd, crossTask.AllowDateStart, crossTask.AllowDateEnd)) {
+							crossed = true;
+						}
+
+					}
+					if (!task.Allowed && crossTask.Allowed) {
+						if (DatesCross(task.NeedStartDate, task.NeedEndDate, crossTask.AllowDateStart, crossTask.AllowDateEnd)) {
+							crossed = true;
+						}
+					}
+					if (task.Allowed && !crossTask.Allowed) {
+						if (DatesCross(task.AllowDateStart, task.AllowDateEnd, crossTask.NeedStartDate, crossTask.NeedEndDate)) {
+							crossed = true;
+						}
+					}
+					if (!task.Allowed && !crossTask.Allowed) {
+						if (DatesCross(task.NeedStartDate, task.NeedEndDate, crossTask.NeedStartDate, crossTask.NeedEndDate)) {
+							crossed = true;
+						}
+					}
+					if (crossed) {
+						task.hasCrossTasks = true;
+						task.crossTasks = !string.IsNullOrEmpty(task.crossTasks) ? crossTask.Number.ToString() : "," + crossTask.Number.ToString();
+					}
+				}
 			}
 			Filter.Data = result;
 			return Filter;
@@ -306,13 +363,13 @@ namespace VotGESOrders.Web.Models {
 					order.Allowed || order.Denied ? order.AuthorAllow : "-");
 
 
-				string aComments=string.IsNullOrEmpty(order.AgreeComments)?"":order.AgreeComments.Replace("\r\n", "<br/>");
+				string aComments = string.IsNullOrEmpty(order.AgreeComments) ? "" : order.AgreeComments.Replace("\r\n", "<br/>");
 				string fullTable = String.Format("<table width='100%'><tr><td colspan='2'>{0}</td></tr><tr><td colspan='2'>{1}</td></tr><tr><td width='50%'>{2}</td><td width='50%'>{3}</td></tr></table>",
 					htmlFirstTRTable, htmlInfoTable, htmlDatesTable, aComments);
 				return style + fullTable;
 			}
 			catch (Exception e) {
-				Logger.info("Ошибка при формировании html представления " + e.ToString(),Logger.LoggerSource.server);
+				Logger.info("Ошибка при формировании html представления " + e.ToString(), Logger.LoggerSource.server);
 				return "";
 			}
 		}

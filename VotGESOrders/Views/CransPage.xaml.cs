@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using VotGESOrders.CranService;
 using System.ComponentModel;
 using Visiblox.Charts;
+using System.Windows.Data;
 
 namespace VotGESOrders.Views {
 
@@ -119,7 +120,10 @@ namespace VotGESOrders.Views {
 			Managers = CurrentFilter.Managers.ToList();
 			CurrentFilter.Managers = null;
 			pnlFilter.DataContext = CurrentFilter;
-			grdTasks.ItemsSource = CurrentFilter.Data;
+			//grdTasks.ItemsSource = CurrentFilter.Data;
+			PagedCollectionView pcv = new PagedCollectionView(CurrentFilter.Data);
+			pcv.GroupDescriptions.Add(new PropertyGroupDescription("CranName"));
+			grdTasks.ItemsSource = pcv;
 			processCransData(ChartMZ,(new int[]{1,2}).ToList());
 			processCransData(ChartSUS, (new int[] { 3, 4 }).ToList());
 			processCransData(ChartNBVB, (new int[] { 5, 6 }).ToList());

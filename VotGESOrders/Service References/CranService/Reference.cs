@@ -135,11 +135,17 @@ namespace VotGESOrders.CranService {
         
         private bool canCheckField;
         
+        private bool canCommentField;
+        
         private bool changeField;
         
         private bool changedField;
         
         private bool checkField;
+        
+        private string crossTasksField;
+        
+        private bool hasCrossTasksField;
         
         private bool initField;
         
@@ -404,6 +410,19 @@ namespace VotGESOrders.CranService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool canComment {
+            get {
+                return this.canCommentField;
+            }
+            set {
+                if ((this.canCommentField.Equals(value) != true)) {
+                    this.canCommentField = value;
+                    this.RaisePropertyChanged("canComment");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool change {
             get {
                 return this.changeField;
@@ -438,6 +457,32 @@ namespace VotGESOrders.CranService {
                 if ((this.checkField.Equals(value) != true)) {
                     this.checkField = value;
                     this.RaisePropertyChanged("check");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string crossTasks {
+            get {
+                return this.crossTasksField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.crossTasksField, value) != true)) {
+                    this.crossTasksField = value;
+                    this.RaisePropertyChanged("crossTasks");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool hasCrossTasks {
+            get {
+                return this.hasCrossTasksField;
+            }
+            set {
+                if ((this.hasCrossTasksField.Equals(value) != true)) {
+                    this.hasCrossTasksField = value;
+                    this.RaisePropertyChanged("hasCrossTasks");
                 }
             }
         }
