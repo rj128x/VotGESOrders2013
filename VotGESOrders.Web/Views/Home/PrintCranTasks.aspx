@@ -85,7 +85,7 @@
                   List<CranTaskInfo> data = answer.Data.FindAll(cran => cran.CranNumber == cranN);
                   if (data.Count > 0) {%>
             <tr>
-                <th colspan="7"><%=data.First().CranName%></th>
+                <th colspan="7" ><%=data.First().CranName%></th>
             </tr>
             <%foreach (CranTaskInfo rec in data) { %>
             <tr>

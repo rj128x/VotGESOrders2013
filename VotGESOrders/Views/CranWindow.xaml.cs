@@ -77,6 +77,11 @@ namespace VotGESOrders.Views {
 				return;
 			}
 
+			if (CurrentTask.NeedStartDate <= DateTime.Now) {
+				MessageBox.Show("Время заявки меньше текущего");
+				return;
+			}
+
 			CurrentTask.CranName = Crans[CurrentTask.CranNumber];
 			GlobalStatus.Current.IsBusy = true;
 			CransContext.Single.Client.CreateCranTaskAsync(CurrentTask);

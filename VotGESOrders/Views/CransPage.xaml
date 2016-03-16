@@ -47,12 +47,7 @@
                                     <Grid>
                                         <StackPanel>
                                             <TextBlock Text="{Binding Number}"  FontSize="11"/>
-                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding hasCrossTasks, Converter={StaticResource visibilityConverter}}">
-                                                <TextBlock Text="*" HorizontalAlignment="Right" FontSize="9" FontStyle="Italic"/>
-                                                <TextBlock Text="{Binding crossTasks}"  FontSize="9" FontStyle="Italic"/>
-                                            </StackPanel>
                                         </StackPanel>
-                                        <StackPanel Background="Red" Visibility="{Binding hasCrossTasks, Converter={StaticResource visibilityConverter}}" Opacity="0.3" />
                                     </Grid>
 
                                 </DataTemplate>
@@ -72,24 +67,41 @@
                                 </DataTemplate>
                             </sdk:DataGridTemplateColumn.CellTemplate>
                         </sdk:DataGridTemplateColumn>
-                        <sdk:DataGridTemplateColumn Header="Кран" SortMemberPath="CranNumber" Width="2*">
+                        <!--<sdk:DataGridTemplateColumn Header="Кран" SortMemberPath="CranNumber" Width="2*">
                             <sdk:DataGridTemplateColumn.CellTemplate >
                                 <DataTemplate>
                                     <TextBlock Text="{Binding CranName}" TextWrapping="Wrap" FontSize="11"/>
                                 </DataTemplate>
                             </sdk:DataGridTemplateColumn.CellTemplate>
-                        </sdk:DataGridTemplateColumn>
-                        <sdk:DataGridTemplateColumn Header="Автор" SortMemberPath="Author" Width="1*">
+                        </sdk:DataGridTemplateColumn>-->
+                        <sdk:DataGridTemplateColumn Header="Автор" SortMemberPath="Author" Width="120">
                             <sdk:DataGridTemplateColumn.CellTemplate >
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Author}" TextWrapping="Wrap" FontSize="11"/>
                                 </DataTemplate>
                             </sdk:DataGridTemplateColumn.CellTemplate>
                         </sdk:DataGridTemplateColumn>
-                        <sdk:DataGridTemplateColumn Header="Текст" SortMemberPath="Comment" Width="2*">
+                        <sdk:DataGridTemplateColumn Header="Текст" SortMemberPath="Comment" Width="3*">
                             <sdk:DataGridTemplateColumn.CellTemplate >
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Comment}" TextWrapping="Wrap" FontSize="11"/>
+                                    <Grid>
+                                        <StackPanel>
+                                        <TextBlock Text="{Binding Comment}" TextWrapping="Wrap" FontSize="11"/>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding hasCrossTasks, Converter={StaticResource visibilityConverter}}">
+                                                <TextBlock Text="Конфликт: " HorizontalAlignment="Right" FontSize="9" FontStyle="Italic"/>
+                                                <TextBlock Text="{Binding crossTasks}"  FontSize="9" FontStyle="Italic"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <StackPanel Background="Red" Visibility="{Binding hasCrossTasks, Converter={StaticResource visibilityConverter}}" Opacity="0.3" />
+                                    </Grid>
+                                </DataTemplate>
+                            </sdk:DataGridTemplateColumn.CellTemplate>
+                        </sdk:DataGridTemplateColumn>
+                        <sdk:DataGridTemplateColumn Header="Комментарии" SortMemberPath="AgreeComments" Width="2*">
+                            <sdk:DataGridTemplateColumn.CellTemplate >
+                                <DataTemplate>
+                                   <TextBlock Text="{Binding AgreeComments}" TextWrapping="Wrap" FontSize="11"/>
+                                            
                                 </DataTemplate>
                             </sdk:DataGridTemplateColumn.CellTemplate>
                         </sdk:DataGridTemplateColumn>

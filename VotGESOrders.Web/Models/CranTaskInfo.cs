@@ -286,7 +286,7 @@ namespace VotGESOrders.Web.Models {
 			}
 			foreach (CranTaskInfo task in result) {
 				task.hasCrossTasks = false;
-				task.crossTasks = "-";
+				task.crossTasks = "";
 				foreach (CranTaskInfo crossTask in result) {
 					if (crossTask.Number == task.Number)
 						continue;
@@ -320,7 +320,7 @@ namespace VotGESOrders.Web.Models {
 					}
 					if (crossed) {
 						task.hasCrossTasks = true;
-						task.crossTasks = !string.IsNullOrEmpty(task.crossTasks) ? crossTask.Number.ToString() : "," + crossTask.Number.ToString();
+						task.crossTasks += string.IsNullOrEmpty(task.crossTasks) ? crossTask.Number.ToString() : "," + crossTask.Number.ToString();
 					}
 				}
 			}
