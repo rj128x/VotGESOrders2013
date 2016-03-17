@@ -90,12 +90,15 @@
             <%foreach (CranTaskInfo rec in data) { %>
             <tr>
                 <td><%=rec.Number%></td>
-                <td><%=rec.Author%></td>
-                <td><%=rec.Comment%>
+                <td><%=rec.Author%>
                     <%=!string.IsNullOrEmpty(rec.Manager) ? "<p align='right'><b>Отв. </b>" + rec.Manager + "</p>" : ""%>
+                </td>
+                <td><%=rec.Comment%>                    
+                    <%=!string.IsNullOrEmpty(rec.crossTasks)?"<p align='right'><b>Конфликт: </b>"+rec.crossTasks+"</p>":"" %>
                 </td>
                 <td><%=rec.Allowed ? "<b>Разрешена</b>" : rec.Denied ? "<u>Отклонена</u>" : "Новая"%>
                     <%=!string.IsNullOrEmpty(rec.AuthorAllow) ? "<p align='right'><i>" + rec.AuthorAllow + "</i></p>" : ""%>
+                    
                 </td>
                 <td><%=rec.NeedStartDate.ToString("dd.MM.yy HH:mm") + "<p align='right'>" + rec.NeedEndDate.ToString("dd.MM.yy HH:mm") + "</p>"%></td>
                 <td><%=rec.Allowed ? "<b>" + rec.AllowDateStart.ToString("dd.MM.yy HH:mm") + "<p align='right'>" + rec.AllowDateEnd.ToString("dd.MM.yy HH:mm") + "</p></b>" : "-"%></td>
