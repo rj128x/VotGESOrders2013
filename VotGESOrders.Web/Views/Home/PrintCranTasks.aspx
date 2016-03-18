@@ -53,7 +53,7 @@
         }
 
         td.center {
-            text-align =center;
+            text-align: center;
         }
 
 
