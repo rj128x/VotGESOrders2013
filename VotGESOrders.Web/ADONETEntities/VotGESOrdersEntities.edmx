@@ -10,6 +10,7 @@
             <PropertyRef Name="Number" />
           </Key>
           <Property Name="Number" Type="int" Nullable="false" />
+          <Property Name="DateCreate" Type="datetime" Nullable="false" />
           <Property Name="CranNumber" Type="int" Nullable="false" />
           <Property Name="CranName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Author" Type="varchar" MaxLength="50" Nullable="false" />
@@ -18,12 +19,18 @@
           <Property Name="Comment" Type="varchar(max)" Nullable="false" />
           <Property Name="Allowed" Type="bit" Nullable="false" />
           <Property Name="Denied" Type="bit" Nullable="false" />
+          <Property Name="Cancelled" Type="bit" Nullable="false" />
+          <Property Name="Finished" Type="bit" Nullable="false" />
           <Property Name="AllowedDateStart" Type="datetime" />
           <Property Name="AllowedDateEnd" Type="datetime" />
           <Property Name="AuthorAllow" Type="varchar" MaxLength="50" />
           <Property Name="Manager" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="AgreeUsersIDS" Type="varchar" MaxLength="50" />
           <Property Name="AgreeComment" Type="varchar(max)" />
+          <Property Name="State" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RealDateStart" Type="datetime" />
+          <Property Name="RealDateEnd" Type="datetime" />
+          <Property Name="AuthorFinish" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="OrderObjects">
           <Key>
@@ -486,6 +493,13 @@
           <Property Name="AgreeUsersIDS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CranName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="AgreeComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="State" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Cancelled" Type="Boolean" Nullable="false" />
+          <Property Name="Finished" Type="Boolean" Nullable="false" />
+          <Property Name="RealDateStart" Type="DateTime" Precision="3" />
+          <Property Name="RealDateEnd" Type="DateTime" Precision="3" />
+          <Property Name="AuthorFinish" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -581,6 +595,13 @@
           <EntitySetMapping Name="CranTask">
             <EntityTypeMapping TypeName="VotGESOrdersModel.CranTask">
               <MappingFragment StoreEntitySet="CranTask">
+                <ScalarProperty Name="AuthorFinish" ColumnName="AuthorFinish" />
+                <ScalarProperty Name="RealDateEnd" ColumnName="RealDateEnd" />
+                <ScalarProperty Name="RealDateStart" ColumnName="RealDateStart" />
+                <ScalarProperty Name="Finished" ColumnName="Finished" />
+                <ScalarProperty Name="Cancelled" ColumnName="Cancelled" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
                 <ScalarProperty Name="AgreeComment" ColumnName="AgreeComment" />
                 <ScalarProperty Name="CranName" ColumnName="CranName" />
                 <ScalarProperty Name="AgreeUsersIDS" ColumnName="AgreeUsersIDS" />

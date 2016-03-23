@@ -79,6 +79,7 @@
                 <th style="width: 100px;">Состояние</th>
                 <th style="width: 100px;">Запр. время</th>
                 <th style="width: 100px;">Разр. время</th>
+                <th style="width: 100px;">Факт. время</th>
                 <th>Комментарии</th>
             </tr>
             <%for (int cranN = 1; cranN <= 9; cranN++) {
@@ -96,12 +97,13 @@
                 <td><%=rec.Comment%>                    
                     <%=!string.IsNullOrEmpty(rec.crossTasks)?"<p align='right'><b>Конфликт: </b>"+rec.crossTasks+"</p>":"" %>
                 </td>
-                <td><%=rec.Allowed ? "<b>Разрешена</b>" : rec.Denied ? "<u>Отклонена</u>" : "Новая"%>
+                <td><%=rec.State%>
                     <%=!string.IsNullOrEmpty(rec.AuthorAllow) ? "<p align='right'><i>" + rec.AuthorAllow + "</i></p>" : ""%>
                     
                 </td>
                 <td><%=rec.NeedStartDate.ToString("dd.MM.yy HH:mm") + "<p align='right'>" + rec.NeedEndDate.ToString("dd.MM.yy HH:mm") + "</p>"%></td>
                 <td><%=rec.Allowed ? "<b>" + rec.AllowDateStart.ToString("dd.MM.yy HH:mm") + "<p align='right'>" + rec.AllowDateEnd.ToString("dd.MM.yy HH:mm") + "</p></b>" : "-"%></td>
+                <td><%=rec.Finished ? "<b>" + rec.RealDateStart.ToString("dd.MM.yy HH:mm") + "<p align='right'>" + rec.RealDateEnd.ToString("dd.MM.yy HH:mm") + "</p></b>" : "-"%></td>
                 <td><%=!string.IsNullOrEmpty(rec.AgreeComments) ? rec.AgreeComments.Replace("\r\n", "<br/>") : ""%></td>
             </tr>
             <%}

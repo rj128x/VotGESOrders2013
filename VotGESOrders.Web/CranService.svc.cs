@@ -31,6 +31,17 @@ namespace VotGESOrders.Web {
 			return CranTaskInfo.AddComment(task, comment);
 		}
 
+		[OperationContract]
+		public ReturnMessage CancelCranTask(CranTaskInfo task) {
+			return CranTaskInfo.CreateCranTask(task);
+		}
+
+		[OperationContract]
+		public ReturnMessage FinishCranTask(CranTaskInfo task) {
+			return CranTaskInfo.CreateCranTask(task);
+		}
+
+
 		// Добавьте здесь дополнительные операции и отметьте их атрибутом [OperationContract]
 	}
 }

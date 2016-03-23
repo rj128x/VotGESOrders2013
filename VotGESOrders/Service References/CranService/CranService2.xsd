@@ -54,4 +54,32 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="CancelCranTask">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/VotGESOrders.Web.Models" minOccurs="0" name="task" nillable="true" type="q7:CranTaskInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelCranTaskResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/VotGESOrders.Web.Models" minOccurs="0" name="CancelCranTaskResult" nillable="true" type="q8:ReturnMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FinishCranTask">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/VotGESOrders.Web.Models" minOccurs="0" name="task" nillable="true" type="q9:CranTaskInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FinishCranTaskResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/VotGESOrders.Web.Models" minOccurs="0" name="FinishCranTaskResult" nillable="true" type="q10:ReturnMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

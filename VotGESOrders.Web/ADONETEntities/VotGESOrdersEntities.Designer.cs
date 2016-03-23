@@ -208,7 +208,11 @@ namespace VotGESOrders.Web.ADONETEntities
         /// <param name="needDateEnd">Исходное значение свойства NeedDateEnd.</param>
         /// <param name="manager">Исходное значение свойства Manager.</param>
         /// <param name="cranName">Исходное значение свойства CranName.</param>
-        public static CranTask CreateCranTask(global::System.Int32 number, global::System.Int32 cranNumber, global::System.String author, global::System.DateTime needDateStart, global::System.String comment, global::System.Boolean allowed, global::System.Boolean denied, global::System.DateTime needDateEnd, global::System.String manager, global::System.String cranName)
+        /// <param name="dateCreate">Исходное значение свойства DateCreate.</param>
+        /// <param name="state">Исходное значение свойства State.</param>
+        /// <param name="cancelled">Исходное значение свойства Cancelled.</param>
+        /// <param name="finished">Исходное значение свойства Finished.</param>
+        public static CranTask CreateCranTask(global::System.Int32 number, global::System.Int32 cranNumber, global::System.String author, global::System.DateTime needDateStart, global::System.String comment, global::System.Boolean allowed, global::System.Boolean denied, global::System.DateTime needDateEnd, global::System.String manager, global::System.String cranName, global::System.DateTime dateCreate, global::System.String state, global::System.Boolean cancelled, global::System.Boolean finished)
         {
             CranTask cranTask = new CranTask();
             cranTask.Number = number;
@@ -221,6 +225,10 @@ namespace VotGESOrders.Web.ADONETEntities
             cranTask.NeedDateEnd = needDateEnd;
             cranTask.Manager = manager;
             cranTask.CranName = cranName;
+            cranTask.DateCreate = dateCreate;
+            cranTask.State = state;
+            cranTask.Cancelled = cancelled;
+            cranTask.Finished = finished;
             return cranTask;
         }
 
@@ -590,6 +598,174 @@ namespace VotGESOrders.Web.ADONETEntities
         private global::System.String _AgreeComment;
         partial void OnAgreeCommentChanging(global::System.String value);
         partial void OnAgreeCommentChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime DateCreate
+        {
+            get
+            {
+                return _DateCreate;
+            }
+            set
+            {
+                OnDateCreateChanging(value);
+                ReportPropertyChanging("DateCreate");
+                _DateCreate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DateCreate");
+                OnDateCreateChanged();
+            }
+        }
+        private global::System.DateTime _DateCreate;
+        partial void OnDateCreateChanging(global::System.DateTime value);
+        partial void OnDateCreateChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String State
+        {
+            get
+            {
+                return _State;
+            }
+            set
+            {
+                OnStateChanging(value);
+                ReportPropertyChanging("State");
+                _State = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("State");
+                OnStateChanged();
+            }
+        }
+        private global::System.String _State;
+        partial void OnStateChanging(global::System.String value);
+        partial void OnStateChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean Cancelled
+        {
+            get
+            {
+                return _Cancelled;
+            }
+            set
+            {
+                OnCancelledChanging(value);
+                ReportPropertyChanging("Cancelled");
+                _Cancelled = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Cancelled");
+                OnCancelledChanged();
+            }
+        }
+        private global::System.Boolean _Cancelled;
+        partial void OnCancelledChanging(global::System.Boolean value);
+        partial void OnCancelledChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean Finished
+        {
+            get
+            {
+                return _Finished;
+            }
+            set
+            {
+                OnFinishedChanging(value);
+                ReportPropertyChanging("Finished");
+                _Finished = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Finished");
+                OnFinishedChanged();
+            }
+        }
+        private global::System.Boolean _Finished;
+        partial void OnFinishedChanging(global::System.Boolean value);
+        partial void OnFinishedChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> RealDateStart
+        {
+            get
+            {
+                return _RealDateStart;
+            }
+            set
+            {
+                OnRealDateStartChanging(value);
+                ReportPropertyChanging("RealDateStart");
+                _RealDateStart = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("RealDateStart");
+                OnRealDateStartChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _RealDateStart;
+        partial void OnRealDateStartChanging(Nullable<global::System.DateTime> value);
+        partial void OnRealDateStartChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> RealDateEnd
+        {
+            get
+            {
+                return _RealDateEnd;
+            }
+            set
+            {
+                OnRealDateEndChanging(value);
+                ReportPropertyChanging("RealDateEnd");
+                _RealDateEnd = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("RealDateEnd");
+                OnRealDateEndChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _RealDateEnd;
+        partial void OnRealDateEndChanging(Nullable<global::System.DateTime> value);
+        partial void OnRealDateEndChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String AuthorFinish
+        {
+            get
+            {
+                return _AuthorFinish;
+            }
+            set
+            {
+                OnAuthorFinishChanging(value);
+                ReportPropertyChanging("AuthorFinish");
+                _AuthorFinish = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("AuthorFinish");
+                OnAuthorFinishChanged();
+            }
+        }
+        private global::System.String _AuthorFinish;
+        partial void OnAuthorFinishChanging(global::System.String value);
+        partial void OnAuthorFinishChanged();
 
         #endregion
 

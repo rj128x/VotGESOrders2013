@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using VotGESOrders.Web.Logging;
 using System.Net.Mail;
+using System.IO;
 
 namespace VotGESOrders.Web.Models {
 	public class MailContext {
@@ -70,7 +71,8 @@ namespace VotGESOrders.Web.Models {
 				IQueryable users = OrdersUser.getAllUsers();
 				List<string> mailToList = new List<string>();
 
-				foreach (OrdersUser user in users) {
+
+				/*foreach (OrdersUser user in users) {
 					if (!mailToList.Contains(user.Mail) &&
 						(
 						user.SendAllCranTask ||
@@ -86,14 +88,32 @@ namespace VotGESOrders.Web.Models {
 							}
 						}
 					}
+				}*/
+
+				mailToList.Add("chekunovamv@votges.rushydro.ru");
+
+				Attachment attach = null;
+
+				try {
+					MemoryStream stream = new MemoryStream();
+					StreamWriter writer = new StreamWriter(stream);
+					writer.Write(CranTaskInfo.getTaskPrintHTML(task));
+					writer.Flush();
+					stream.Position = 0;
+
+					attach = new Attachment(stream,String.Format("Заявка{0}.xls",task.Number),"application/vnd.ms-excel");
 				}
+				catch (Exception e) {
+					Logger.info(e.ToString(),Logger.LoggerSource.server);
+				}
+
 
 				string message = CranTaskInfo.getTashHTML(task);
 
 				message += String.Format("<h3><a href='{0}'>Перейти к списку заявок</a></h3>", String.Format("http://{0}:{1}/#/CransPage", HttpContext.Current.Request.Url.Host, HttpContext.Current.Request.Url.Port));
 
 				if (mailToList.Count > 0) {
-					SendMailLocal(smtpServer, smtpPort, smtpUser, smtpPassword, smtpDomain, smtpFrom, mailToList, header, message, true);
+					SendMailLocal(smtpServer, smtpPort, smtpUser, smtpPassword, smtpDomain, smtpFrom, mailToList, header, message, true,attach);
 				}
 			}
 			catch (Exception e) {
@@ -133,7 +153,7 @@ namespace VotGESOrders.Web.Models {
 		}
 
 
-		private static bool SendMailLocal(string smtp_server, int port, string mail_user, string mail_password, string domain, string mail_from, List<string> mailToList, string subject, string message, bool is_html) {
+		private static bool SendMailLocal(string smtp_server, int port, string mail_user, string mail_password, string domain, string mail_from, List<string> mailToList, string subject, string message, bool is_html,Attachment attach=null) {
 
 			System.Net.Mail.MailMessage mess = new System.Net.Mail.MailMessage();
 
@@ -146,6 +166,11 @@ namespace VotGESOrders.Web.Models {
 			mess.SubjectEncoding = System.Text.Encoding.UTF8;
 			mess.BodyEncoding = System.Text.Encoding.UTF8;
 			mess.IsBodyHtml = is_html;
+
+			if (attach != null) {
+				mess.Attachments.Add(attach);
+			}
+			
 			System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient(smtp_server, port);
 			client.EnableSsl = true;
 			if (string.IsNullOrEmpty(mail_user)) {

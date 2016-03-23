@@ -87,7 +87,9 @@ namespace VotGESOrders.Views {
 			grdRight.DataContext = this;
 			CransContext.Single.Client.getCranTasksCompleted += Client_getCranTasksCompleted;
 			CransContext.Single.Client.CommentCranTaskCompleted+=Client_CommentCranTaskCompleted;
-			
+			CransContext.Single.Client.CancelCranTaskCompleted += Client_CancelCranTaskCompleted;
+			CransContext.Single.Client.FinishCranTaskCompleted += Client_FinishCranTaskCompleted;
+
 			GlobalStatus.Current.IsBusy = true;
 			CransContext.Single.Client.getCranTasksAsync(null);
 			initChart(ChartMZ);
@@ -98,6 +100,8 @@ namespace VotGESOrders.Views {
 			newTask.Visibility = WebContext.Current.User.AllowCreateCranTask ? Visibility.Visible : Visibility.Collapsed;
 		}
 
+		
+
 
 
 
@@ -105,6 +109,8 @@ namespace VotGESOrders.Views {
 		public void deinit() {
 			CransContext.Single.Client.getCranTasksCompleted -= Client_getCranTasksCompleted;
 			CransContext.Single.Client.CommentCranTaskCompleted -= Client_CommentCranTaskCompleted;
+			CransContext.Single.Client.CancelCranTaskCompleted -= Client_CancelCranTaskCompleted;
+			CransContext.Single.Client.FinishCranTaskCompleted -= Client_FinishCranTaskCompleted;
 		}
 
 		protected override void OnNavigatedFrom(NavigationEventArgs e) {
@@ -287,10 +293,16 @@ namespace VotGESOrders.Views {
 					if (prevTaskA != null && task.AllowDateStart > prevTaskA.AllowDateEnd) {
 							diffA = 0;
 					}
-					Points.Add(new DataPoint<DateTime, double>(task.AllowDateStart, cranVal+diffA));
-					Points.Add(new DataPoint<DateTime, double>(task.AllowDateEnd, cranVal + diffA));
-					serie.LineStroke = new SolidColorBrush(Colors.Green);
-					serie.PointFill = new SolidColorBrush(Colors.Green);
+					if (!task.Finished) {
+						Points.Add(new DataPoint<DateTime, double>(task.AllowDateStart, cranVal + diffA));
+						Points.Add(new DataPoint<DateTime, double>(task.AllowDateEnd, cranVal + diffA));
+					}
+					else {
+						Points.Add(new DataPoint<DateTime, double>(task.RealDateStart, cranVal + diffA));
+						Points.Add(new DataPoint<DateTime, double>(task.RealDateEnd, cranVal + diffA));
+					}
+					serie.LineStroke = new SolidColorBrush(!task.Finished?Colors.Green:Colors.Blue);
+					serie.PointFill = new SolidColorBrush(!task.Finished ? Colors.Green : Colors.Blue);
 					diffA += 0.05;
 					prevTaskA = task;
 				}
@@ -308,7 +320,32 @@ namespace VotGESOrders.Views {
 					prevTaskD = task;
 				}
 
-				else {
+				else if (task.Cancelled) {
+					if (prevTaskD != null && task.NeedStartDate > prevTaskD.NeedEndDate) {
+						diffD = 0.05;
+					}
+					Points.Add(new DataPoint<DateTime, double>(task.NeedStartDate, cranVal - diffD));
+					Points.Add(new DataPoint<DateTime, double>(task.NeedEndDate, cranVal - diffD));
+
+					serie.LineStroke = new SolidColorBrush(Color.FromArgb(150,200,200,200));
+					serie.PointFill = new SolidColorBrush(Color.FromArgb(150, 200, 200, 200));
+					diffD += 0.05;
+					prevTaskD = task;
+				}
+
+				else if (task.Finished) {
+					if (prevTaskA != null && task.AllowDateStart > prevTaskA.AllowDateEnd) {
+						diffA = 0;
+					}
+					Points.Add(new DataPoint<DateTime, double>(task.AllowDateStart, cranVal + diffA));
+					Points.Add(new DataPoint<DateTime, double>(task.AllowDateEnd, cranVal + diffA));
+					serie.LineStroke = new SolidColorBrush(Colors.Blue);
+					serie.PointFill = new SolidColorBrush(Colors.Blue);
+					diffA += 0.05;
+					prevTaskA = task;
+				}
+
+				else  {
 					if (prevTaskD != null && task.NeedStartDate > prevTaskD.NeedEndDate) {
 						diffD = 0.05;
 					}
@@ -458,6 +495,45 @@ namespace VotGESOrders.Views {
 			FloatWindow.OpenWindow(String.Format("/Home/PrintCranTasks?year1={0}&month1={1}&day1={2}&year2={3}&month2={4}&day2={5}",
 				CurrentFilter.DateStart.Year, CurrentFilter.DateStart.Month, CurrentFilter.DateStart.Day,
 				CurrentFilter.DateEnd.Year, CurrentFilter.DateEnd.Month, CurrentFilter.DateEnd.Day));
+		}
+
+		private void btnCancel_Click(object sender, RoutedEventArgs e) {
+			if (CurrentTask == null)
+				return;
+			if (MessageBox.Show("Вы уверены что хотите снять заявку?", "Отмена заявки", MessageBoxButton.OKCancel) == MessageBoxResult.OK) {
+				GlobalStatus.Current.IsBusy = true;
+				CurrentTask.Cancelled = true;
+				CurrentTask.Allowed = false;
+				CurrentTask.Denied = false;
+				CransContext.Single.Client.CancelCranTaskAsync(CurrentTask);
+			}
+		}
+
+		void Client_CancelCranTaskCompleted(object sender, CranService.CancelCranTaskCompletedEventArgs e) {
+			GlobalStatus.Current.IsBusy = false;
+			ReturnMessage ret = e.Result as ReturnMessage;
+			MessageBox.Show(ret.Message);
+			GlobalStatus.Current.IsBusy = true;
+			CransContext.Single.Client.getCranTasksAsync(CurrentFilter);
+		}
+
+		private void btnFinish_Click(object sender, RoutedEventArgs e) {
+			if (CurrentTask == null)
+				return;
+			if (MessageBox.Show("Вы уверены что хотите закрыть заявку?", "Закрытие заявки", MessageBoxButton.OKCancel) == MessageBoxResult.OK) {
+				GlobalStatus.Current.IsBusy = true;
+				CurrentTask.Finished = true;
+				CransContext.Single.Client.FinishCranTaskAsync(CurrentTask);
+			}
+		}
+
+		void Client_FinishCranTaskCompleted(object sender, FinishCranTaskCompletedEventArgs e) {
+
+			GlobalStatus.Current.IsBusy = false;
+			ReturnMessage ret = e.Result as ReturnMessage;
+			MessageBox.Show(ret.Message);
+			GlobalStatus.Current.IsBusy = true;
+			CransContext.Single.Client.getCranTasksAsync(CurrentFilter);
 		}
 
 	}
