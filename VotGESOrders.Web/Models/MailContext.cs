@@ -72,7 +72,7 @@ namespace VotGESOrders.Web.Models {
 				List<string> mailToList = new List<string>();
 
 
-				/*foreach (OrdersUser user in users) {
+				foreach (OrdersUser user in users) {
 					if (!mailToList.Contains(user.Mail) &&
 						(
 						user.SendAllCranTask ||
@@ -88,9 +88,9 @@ namespace VotGESOrders.Web.Models {
 							}
 						}
 					}
-				}*/
+				}
 
-				mailToList.Add("chekunovamv@votges.rushydro.ru");
+				//mailToList.Add("chekunovamv@votges.rushydro.ru");
 
 				Attachment attach = null;
 

@@ -98,7 +98,7 @@
                     <%=!string.IsNullOrEmpty(rec.crossTasks)?"<p align='right'><b>Конфликт: </b>"+rec.crossTasks+"</p>":"" %>
                 </td>
                 <td><%=rec.State%>
-                    <%=!string.IsNullOrEmpty(rec.AuthorAllow) ? "<p align='right'><i>" + rec.AuthorAllow + "</i></p>" : ""%>
+                    <%=(!rec.Finished &&!string.IsNullOrEmpty(rec.AuthorAllow)) ? "<p align='right'><i>" + rec.AuthorAllow + "</i></p>" : !string.IsNullOrEmpty(rec.AuthorFinish)?"<p align='right'><i>" + rec.AuthorFinish + "</i></p>":""%>
                     
                 </td>
                 <td><%=rec.NeedStartDate.ToString("dd.MM.yy HH:mm") + "<p align='right'>" + rec.NeedEndDate.ToString("dd.MM.yy HH:mm") + "</p>"%></td>

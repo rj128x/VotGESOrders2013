@@ -90,8 +90,8 @@ namespace VotGESOrders.Web.Models {
 			Finished = tbl.Finished;
 			AgreeComments = tbl.AgreeComment;
 			
-			canChange = (!Cancelled)&&(!Allowed) && (!Denied) && tbl.Author.ToLower() == currentUser.Name.ToLower();
-			canCancel = (!Cancelled) && (!Denied) && tbl.Author.ToLower() == currentUser.Name.ToLower();
+			canChange = (!Cancelled)&&(!Allowed) && (!Denied) && (!Finished) && tbl.Author.ToLower() == currentUser.Name.ToLower();
+			canCancel = (!Cancelled) && (!Denied) && (!Finished) && tbl.Author.ToLower() == currentUser.Name.ToLower();
 			canFinish = Allowed && (tbl.Author.ToLower() == currentUser.Name.ToLower() || currentUser.CanReviewCranTask);
 
 			canCheck = currentUser.CanReviewCranTask && (!Finished) &&(!Cancelled);
@@ -340,6 +340,7 @@ namespace VotGESOrders.Web.Models {
 																		t.AllowedDateStart > Filter.DateStart && t.AllowedDateStart < Filter.DateEnd ||
 																		t.AllowedDateEnd > Filter.DateStart && t.AllowedDateEnd < Filter.DateEnd ||
 																		t.AllowedDateStart < Filter.DateStart && t.AllowedDateEnd > Filter.DateEnd)
+																		orderby t.CranNumber,t.NeedDateStart
 																	select t;
 			foreach (CranTask tbl in data) {
 				result.Add(new CranTaskInfo(tbl));
