@@ -243,7 +243,7 @@ namespace VotGESOrders.Views {
 				foreach (LineSeries serie in CurrentChart.Series) {
 					try {
 						if (serie.Name == String.Format("order_{0}", task.Number)) {
-							serie.LineStrokeThickness = 10;
+							serie.LineStrokeThickness = 10;							
 						}
 						else {
 							int num = getTaskNumber(serie.Name);
@@ -327,8 +327,8 @@ namespace VotGESOrders.Views {
 					Points.Add(new DataPoint<DateTime, double>(task.NeedStartDate, cranVal - diffD));
 					Points.Add(new DataPoint<DateTime, double>(task.NeedEndDate, cranVal - diffD));
 
-					serie.LineStroke = new SolidColorBrush(Color.FromArgb(150,200,200,200));
-					serie.PointFill = new SolidColorBrush(Color.FromArgb(150, 200, 200, 200));
+					serie.LineStroke = new SolidColorBrush(Colors.LightGray);
+					serie.PointFill = new SolidColorBrush(Colors.LightGray);
 					diffD += 0.05;
 					prevTaskD = task;
 				}
@@ -453,8 +453,8 @@ namespace VotGESOrders.Views {
 			try {
 				Chart CurrentChart = sender as Chart;
 				ScrollViewer scrChart = CurrentChart.Parent as ScrollViewer;
-				double newSize = CurrentChart.ActualWidth + e.Delta;
-				if (newSize > scrChart.ActualWidth * 0.9 && newSize < scrChart.ActualWidth * 3)
+				double newSize = CurrentChart.ActualWidth + e.Delta/3;
+				if (newSize > scrChart.ActualWidth * 0.98 && newSize < scrChart.ActualWidth * 3)
 					CurrentChart.Width = newSize;
 			}catch{}
 		}

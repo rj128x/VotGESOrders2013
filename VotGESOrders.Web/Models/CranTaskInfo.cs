@@ -443,10 +443,13 @@ namespace VotGESOrders.Web.Models {
 				string body = String.Format(@"
 <table >
 	<tr >
-		<th  colspan='6' align='right'>Приложение 1 к порядку предоставления ПС<br/>Филиала ПАО «РусГидро»-«Воткинская ГЭС»<br/>Для статистического учета работ ПС ГЭС.</th>	
+		<th  colspan='7' align='right'>Приложение 1 <br/>к Регламенту по предоставлению подъемных сооружений Воткинской ГЭС<br/>(Для статистического учета работ ПС ГЭС)</th>	
 	</tr>
 	<tr>	
-		<th  colspan='6' align='center'>ЗАЯВКА №{0} от {1}</th>
+		<th  colspan='7' align='center'><h2>ЗАЯВКА №{0}</h2></th>
+	</tr>	
+	<tr>	
+		<th  colspan='7' align='center'><h3>{1}</h3></th>
 	</tr>	
 	<tr><td  bordercolor='white' colspan='6' >&nbsp;</td></tr>
 	<tr>	
@@ -456,21 +459,23 @@ namespace VotGESOrders.Web.Models {
 		<th/>
 	</tr>
 	<tr>	
-		<td colspan='6' align='center'><i>Наименование организации</i></td>
+		<td colspan='7' align='center'><i>Наименование организации</i></td>
 	</tr>
 	<tr><td  bordercolor='white' colspan='6' >&nbsp;</td></tr>
 	<tr >
 		<th align='center' valign='top' width='50' class='solid' rowspan='2' >№ п/п</th>
-		<th align='center' valign='top' width='150' class='solid' rowspan='2' >Кран № г/п</th>
+		<th align='center' valign='top' width='150' class='solid' rowspan='2' >Наименование ПС</th>
 		<th align='center' valign='top' width='250' class='solid' rowspan='2' >Краткое содержание работ</th>
 
 		<th align='center' valign='top' width='300' class='solid' colspan='2' >Ответственный стропальщик</th>
-		<th align='center' valign='top' width='200' class='solid' rowspan='2'>Период использования</th>
+		<th align='center' valign='top' width='220' class='solid' colspan='2'>Период использования</th>
 		</tr>
 	<tr>	
 		
 		<th align='center' valign='center' width='230' class='solid' >Ф.И.О.</th>
-		<th align='center' valign='center' width='70' class='solid' >Удостоверение</th>
+		<th align='center' valign='center' width='70' class='solid' >№ удостоверения</th>
+		<th align='center' valign='center' width='110' class='solid' >Начало</th>
+		<th align='center' valign='center' width='110' class='solid' >Окончание</th>
 		
 	</tr>
 	<tr>
@@ -479,7 +484,8 @@ namespace VotGESOrders.Web.Models {
 		<td align='center' valign='top' class='solid' >{4}</td>
 		<td align='center' valign='top' class='solid' >&nbsp;</td>
 		<td align='center' valign='top' class='solid' >&nbsp;</td>
-		<td align='center' valign='top' class='solid' >{5}-{6}</td>
+		<td align='center' valign='top' class='solid' >{5}</td>
+		<td align='center' valign='top' class='solid' >{6}</td>
 	</tr>
 
 	<tr>
@@ -489,14 +495,6 @@ namespace VotGESOrders.Web.Models {
 		<td align='center' valign='top' class='solid' >&nbsp;</td>
 		<td align='center' valign='top' class='solid' >&nbsp;</td>
 		<td align='center' valign='top' class='solid' >&nbsp;</td>
-	</tr>
-
-	<tr>
-		<td align='center' valign='top' class='solid' >&nbsp;</td>
-		<td align='center' valign='top' class='solid' >&nbsp;</td>
-		<td align='center' valign='top' class='solid' >&nbsp;</td>
-		<td align='center' valign='top' class='solid' >&nbsp;</td>
-		<td align='center' valign='top' class='solid' >&nbsp;</td>
 		<td align='center' valign='top' class='solid' >&nbsp;</td>
 	</tr>
 
@@ -507,9 +505,21 @@ namespace VotGESOrders.Web.Models {
 		<td align='center' valign='top' class='solid' >&nbsp;</td>
 		<td align='center' valign='top' class='solid' >&nbsp;</td>
 		<td align='center' valign='top' class='solid' >&nbsp;</td>
+		<td align='center' valign='top' class='solid' >&nbsp;</td>
 	</tr>
 
 	<tr>
+		<td align='center' valign='top' class='solid' >&nbsp;</td>
+		<td align='center' valign='top' class='solid' >&nbsp;</td>
+		<td align='center' valign='top' class='solid' >&nbsp;</td>
+		<td align='center' valign='top' class='solid' >&nbsp;</td>
+		<td align='center' valign='top' class='solid' >&nbsp;</td>
+		<td align='center' valign='top' class='solid' >&nbsp;</td>
+		<td align='center' valign='top' class='solid' >&nbsp;</td>
+	</tr>
+
+	<tr>
+		<td align='center' valign='top' class='solid' >&nbsp;</td>
 		<td align='center' valign='top' class='solid' >&nbsp;</td>
 		<td align='center' valign='top' class='solid' >&nbsp;</td>
 		<td align='center' valign='top' class='solid' >&nbsp;</td>
@@ -523,27 +533,43 @@ namespace VotGESOrders.Web.Models {
 	<tr>
 		<td bordercolor='white'  colspan='4'>Специалист, ответственный за безопасное производство работ с применением ПС «Заказчика»</td>
 		<td bordercolor='white' class='under' align='right'>/</td>
-		<td  bordercolor='white' class='under' >{7}</td>
+		<td  bordercolor='white' class='under' colspan='2' >{7}</td>
 	</tr>
+
+
+	<tr><td  bordercolor='white' colspan='6' >&nbsp;</td></tr>
+	<tr><th colspan='7' bordercolor='white' colspan='2'>СОГЛАСОВАНО </th></tr>
 
 	<tr><td  bordercolor='white' colspan='6' >&nbsp;</td></tr>
 	<tr>
-		<td  bordercolor='white' colspan='4'>Специалист, ответственный за содержание ПС в работоспособном состоянии организации подрядчика </td>
+		<td  bordercolor='white' colspan='4'>Представитель Дирекции по реализации ПКМ (только для кранов МЗ) </td>
 		<td  bordercolor='white' class='under' align='right'>/</td>
-		<td  bordercolor='white' class='under'>&nbsp;</td>
+		<td  bordercolor='white' class='under' colspan='2'>&nbsp;</td>
 	</tr>
 
-	<tr><td  bordercolor='white' colspan='6' >&nbsp;</td></tr>
+	<tr><td  bordercolor='white' colspan='7' >&nbsp;</td></tr>
 	<tr>
 		<td  bordercolor='white' colspan='4'>Специалист, ответственный за осуществление производственного контроля при эксплуатации ПС (при необходимости)</td>
 		<td  bordercolor='white' class='under' align='right'>/</td>
-		<td  bordercolor='white' class='under'>&nbsp;</td>
+		<td  bordercolor='white' class='under' colspan='2'>&nbsp;</td>
 	</tr>	
+
+	<tr><td  bordercolor='white' colspan='7' >&nbsp;</td></tr>
+	<tr><th colspan='6' bordercolor='white' colspan='2'>УТВЕРЖДЕНО </th></tr>
+
+	<tr><td  bordercolor='white' colspan='7' >&nbsp;</td></tr>
+	<tr>
+		<td  bordercolor='white' colspan='4'>Представитель группы ТиГМО ПТС (только для кранов МЗ)</td>
+		<td  bordercolor='white' class='under' align='right'>/</td>
+		<td  bordercolor='white' class='under' colspan='2'>{8}</td>
+	</tr>	
+
+
 </table>
-", order.Number, order.NeedStartDate.ToString("dd.MM.yyyy"), 1, order.CranName, order.Comment,
+", order.Number, order.DateCreate.ToString("dd.MM.yyyy"), 1, order.CranName, order.Comment,
 	order.Allowed ? order.AllowDateStart.ToString("dd.MM.yy HH:mm") : order.NeedStartDate.ToString("dd.MM.yy HH:mm"),
 	order.Allowed ? order.AllowDateEnd.ToString("dd.MM.yy HH:mm") : order.NeedEndDate.ToString("dd.MM.yy HH:mm"),
-	order.Manager);
+	order.Manager,!String.IsNullOrEmpty(order.AuthorAllow)?order.AuthorAllow:" ");
 				return style + body;
 			}
 			catch (Exception e) {
