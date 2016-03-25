@@ -92,7 +92,7 @@ namespace VotGESOrders.Web.Models {
 			
 			canChange = (!Cancelled)&&(!Allowed) && (!Denied) && (!Finished) && tbl.Author.ToLower() == currentUser.Name.ToLower();
 			canCancel = (!Cancelled) && (!Denied) && (!Finished) && tbl.Author.ToLower() == currentUser.Name.ToLower();
-			canFinish = Allowed && (tbl.Author.ToLower() == currentUser.Name.ToLower() || currentUser.CanReviewCranTask);
+			canFinish = Allowed && (tbl.Author.ToLower() == currentUser.Name.ToLower() || currentUser.CanReviewCranTask || currentUser.CanReviewCranMZTask);
 
 			canCheck = (currentUser.CanReviewCranTask && CranNumber>2 || currentUser.CanReviewCranMZTask && CranNumber<=2) && (!Finished) &&(!Cancelled);
 			canComment = true;
@@ -559,9 +559,9 @@ namespace VotGESOrders.Web.Models {
 
 	<tr><td  bordercolor='white' colspan='7' >&nbsp;</td></tr>
 	<tr>
-		<td  bordercolor='white' colspan='4'>Представитель группы ТиГМО ПТС (только для кранов МЗ)</td>
+		<td  bordercolor='white' colspan='4'>{8}</td>
 		<td  bordercolor='white' class='under' align='right'>/</td>
-		<td  bordercolor='white' class='under' colspan='2'>{8}</td>
+		<td  bordercolor='white' class='under' colspan='2'>{9}</td>
 	</tr>	
 
 
@@ -569,7 +569,7 @@ namespace VotGESOrders.Web.Models {
 ", order.Number, order.DateCreate.ToString("dd.MM.yyyy"), 1, order.CranName, order.Comment,
 	order.Allowed ? order.AllowDateStart.ToString("dd.MM.yy HH:mm") : order.NeedStartDate.ToString("dd.MM.yy HH:mm"),
 	order.Allowed ? order.AllowDateEnd.ToString("dd.MM.yy HH:mm") : order.NeedEndDate.ToString("dd.MM.yy HH:mm"),
-	order.Manager,!String.IsNullOrEmpty(order.AuthorAllow)?order.AuthorAllow:" ");
+	order.CranNumber<=2?"Представитель группы ТиГМО ПТС (только для кранов МЗ)":"Исполнитель заявки",order.Manager,!String.IsNullOrEmpty(order.AuthorAllow)?order.AuthorAllow:" ");
 				return style + body;
 			}
 			catch (Exception e) {
