@@ -73,17 +73,16 @@ namespace VotGESOrders.Web.Models {
 
 
 				foreach (OrdersUser user in users) {
-					if (!mailToList.Contains(user.Mail) &&
-						(
-						user.SendAllCranTask ||
-						user.SendCreateMail&&task.Author.ToLower() == user.Name.ToLower() ||
-						!task.Allowed && !task.Denied && user.SendAllCreateCranTask ||
-						task.AgreeDict.ContainsKey(user.UserID) && (user.SendAllAgreeCranTask || user.SendAgreeCranTask && !task.Allowed && !task.Denied)
-						)) {
+					if (
+						( user.SendAllCranTask && (user.SendOnlyMZCranTask&& task.CranNumber<=2 ||!user.SendOnlyMZCranTask) ) ||
+						( user.SendCreateMail && task.Author.ToLower() == user.Name.ToLower() )||
+						( task.State=="new" && user.SendAllCreateCranTask && (user.SendOnlyMZCranTask&& task.CranNumber<=2 ||!user.SendOnlyMZCranTask) )||
+						( task.AgreeDict.ContainsKey(user.UserID) && (user.SendAgreeMail || user.SendAllAgreeMail|| user.SendAllCranTask || user.SendAllCreateCranTask ||user.SendAllAgreeCranTask || user.SendAgreeCranTask && task.StateDB=="new") ) 
+						){						
 						if (user.Mails.Count > 0) {
 							foreach (string mail in user.Mails) {
-								if (!String.IsNullOrEmpty(mail)) {
-									mailToList.Add(mail);
+								if (!String.IsNullOrEmpty(mail) && !mailToList.Contains(mail.ToLower())) {
+									mailToList.Add(mail.ToLower());
 								}
 							}
 						}
@@ -101,10 +100,10 @@ namespace VotGESOrders.Web.Models {
 					writer.Flush();
 					stream.Position = 0;
 
-					attach = new Attachment(stream,String.Format("Заявка{0}.xls",task.Number),"application/vnd.ms-excel");
+					attach = new Attachment(stream, String.Format("Заявка{0}.xls", task.Number), "application/vnd.ms-excel");
 				}
 				catch (Exception e) {
-					Logger.info(e.ToString(),Logger.LoggerSource.server);
+					Logger.info(e.ToString(), Logger.LoggerSource.server);
 				}
 
 
@@ -113,7 +112,7 @@ namespace VotGESOrders.Web.Models {
 				message += String.Format("<h3><a href='{0}'>Перейти к списку заявок</a></h3>", String.Format("http://{0}:{1}/#/CransPage", HttpContext.Current.Request.Url.Host, HttpContext.Current.Request.Url.Port));
 
 				if (mailToList.Count > 0) {
-					SendMailLocal(smtpServer, smtpPort, smtpUser, smtpPassword, smtpDomain, smtpFrom, mailToList, header, message, true,attach);
+					SendMailLocal(smtpServer, smtpPort, smtpUser, smtpPassword, smtpDomain, smtpFrom, mailToList, header, message, true, attach);
 				}
 			}
 			catch (Exception e) {
@@ -153,7 +152,7 @@ namespace VotGESOrders.Web.Models {
 		}
 
 
-		private static bool SendMailLocal(string smtp_server, int port, string mail_user, string mail_password, string domain, string mail_from, List<string> mailToList, string subject, string message, bool is_html,Attachment attach=null) {
+		private static bool SendMailLocal(string smtp_server, int port, string mail_user, string mail_password, string domain, string mail_from, List<string> mailToList, string subject, string message, bool is_html, Attachment attach = null) {
 
 			System.Net.Mail.MailMessage mess = new System.Net.Mail.MailMessage();
 
@@ -170,7 +169,7 @@ namespace VotGESOrders.Web.Models {
 			if (attach != null) {
 				mess.Attachments.Add(attach);
 			}
-			
+
 			System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient(smtp_server, port);
 			client.EnableSsl = true;
 			if (string.IsNullOrEmpty(mail_user)) {

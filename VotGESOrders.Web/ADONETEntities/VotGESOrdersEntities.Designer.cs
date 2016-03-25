@@ -2545,7 +2545,9 @@ namespace VotGESOrders.Web.ADONETEntities
         /// <param name="sendAllCranTask">Исходное значение свойства sendAllCranTask.</param>
         /// <param name="sendAgreeCranTask">Исходное значение свойства sendAgreeCranTask.</param>
         /// <param name="sendAllAgreeCranTask">Исходное значение свойства sendAllAgreeCranTask.</param>
-        public static Users CreateUsers(global::System.Int32 userID, global::System.String name, global::System.String fullName, global::System.String mail, global::System.Boolean sendAllMail, global::System.Boolean sendAgreeMail, global::System.Boolean sendCreateMail, global::System.Boolean allowCreateOrder, global::System.Boolean allowCreateCrashOrder, global::System.Boolean allowReviewOrder, global::System.Boolean allowChangeOrder, global::System.Boolean allowEditTree, global::System.Boolean allowEditUsers, global::System.Boolean allowAgreeOrders, global::System.Boolean sendAllCreateMail, global::System.Boolean sendAllAgreeMail, global::System.Boolean allowEditOrders, global::System.Boolean canCreateCranTask, global::System.Boolean canReviewCranTask, global::System.Boolean canAgreeCranTask, global::System.Boolean sendAllCreateCranTask, global::System.Boolean sendAllCranTask, global::System.Boolean sendAgreeCranTask, global::System.Boolean sendAllAgreeCranTask)
+        /// <param name="canReviewCranMZTask">Исходное значение свойства canReviewCranMZTask.</param>
+        /// <param name="sendOnlyMZCranTask">Исходное значение свойства sendOnlyMZCranTask.</param>
+        public static Users CreateUsers(global::System.Int32 userID, global::System.String name, global::System.String fullName, global::System.String mail, global::System.Boolean sendAllMail, global::System.Boolean sendAgreeMail, global::System.Boolean sendCreateMail, global::System.Boolean allowCreateOrder, global::System.Boolean allowCreateCrashOrder, global::System.Boolean allowReviewOrder, global::System.Boolean allowChangeOrder, global::System.Boolean allowEditTree, global::System.Boolean allowEditUsers, global::System.Boolean allowAgreeOrders, global::System.Boolean sendAllCreateMail, global::System.Boolean sendAllAgreeMail, global::System.Boolean allowEditOrders, global::System.Boolean canCreateCranTask, global::System.Boolean canReviewCranTask, global::System.Boolean canAgreeCranTask, global::System.Boolean sendAllCreateCranTask, global::System.Boolean sendAllCranTask, global::System.Boolean sendAgreeCranTask, global::System.Boolean sendAllAgreeCranTask, global::System.Boolean canReviewCranMZTask, global::System.Boolean sendOnlyMZCranTask)
         {
             Users users = new Users();
             users.userID = userID;
@@ -2572,6 +2574,8 @@ namespace VotGESOrders.Web.ADONETEntities
             users.sendAllCranTask = sendAllCranTask;
             users.sendAgreeCranTask = sendAgreeCranTask;
             users.sendAllAgreeCranTask = sendAllAgreeCranTask;
+            users.canReviewCranMZTask = canReviewCranMZTask;
+            users.sendOnlyMZCranTask = sendOnlyMZCranTask;
             return users;
         }
 
@@ -3157,6 +3161,54 @@ namespace VotGESOrders.Web.ADONETEntities
         private global::System.Boolean _sendAllAgreeCranTask;
         partial void OnsendAllAgreeCranTaskChanging(global::System.Boolean value);
         partial void OnsendAllAgreeCranTaskChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean canReviewCranMZTask
+        {
+            get
+            {
+                return _canReviewCranMZTask;
+            }
+            set
+            {
+                OncanReviewCranMZTaskChanging(value);
+                ReportPropertyChanging("canReviewCranMZTask");
+                _canReviewCranMZTask = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("canReviewCranMZTask");
+                OncanReviewCranMZTaskChanged();
+            }
+        }
+        private global::System.Boolean _canReviewCranMZTask;
+        partial void OncanReviewCranMZTaskChanging(global::System.Boolean value);
+        partial void OncanReviewCranMZTaskChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean sendOnlyMZCranTask
+        {
+            get
+            {
+                return _sendOnlyMZCranTask;
+            }
+            set
+            {
+                OnsendOnlyMZCranTaskChanging(value);
+                ReportPropertyChanging("sendOnlyMZCranTask");
+                _sendOnlyMZCranTask = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("sendOnlyMZCranTask");
+                OnsendOnlyMZCranTaskChanged();
+            }
+        }
+        private global::System.Boolean _sendOnlyMZCranTask;
+        partial void OnsendOnlyMZCranTaskChanging(global::System.Boolean value);
+        partial void OnsendOnlyMZCranTaskChanged();
 
         #endregion
 

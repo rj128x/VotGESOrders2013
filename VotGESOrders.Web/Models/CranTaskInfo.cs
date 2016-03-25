@@ -94,7 +94,7 @@ namespace VotGESOrders.Web.Models {
 			canCancel = (!Cancelled) && (!Denied) && (!Finished) && tbl.Author.ToLower() == currentUser.Name.ToLower();
 			canFinish = Allowed && (tbl.Author.ToLower() == currentUser.Name.ToLower() || currentUser.CanReviewCranTask);
 
-			canCheck = currentUser.CanReviewCranTask && (!Finished) &&(!Cancelled);
+			canCheck = (currentUser.CanReviewCranTask && CranNumber>2 || currentUser.CanReviewCranMZTask && CranNumber<=2) && (!Finished) &&(!Cancelled);
 			canComment = true;
 			Manager = tbl.Manager;
 			if (Denied) {

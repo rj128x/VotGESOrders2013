@@ -3895,6 +3895,8 @@ namespace VotGESOrders.Web.Models
         
         private bool _canCreateCranTask;
         
+        private bool _canReviewCranMZTask;
+        
         private bool _canReviewCranTask;
         
         private string _fullName;
@@ -3922,6 +3924,8 @@ namespace VotGESOrders.Web.Models
         private bool _sendAllMail;
         
         private bool _sendCreateMail;
+        
+        private bool _sendOnlyMZCranTask;
         
         private int _userID;
         
@@ -3952,6 +3956,8 @@ namespace VotGESOrders.Web.Models
         partial void OnCanAgreeCranTaskChanged();
         partial void OnCanCreateCranTaskChanging(bool value);
         partial void OnCanCreateCranTaskChanged();
+        partial void OnCanReviewCranMZTaskChanging(bool value);
+        partial void OnCanReviewCranMZTaskChanged();
         partial void OnCanReviewCranTaskChanging(bool value);
         partial void OnCanReviewCranTaskChanged();
         partial void OnFullNameChanging(string value);
@@ -3980,6 +3986,8 @@ namespace VotGESOrders.Web.Models
         partial void OnSendAllMailChanged();
         partial void OnSendCreateMailChanging(bool value);
         partial void OnSendCreateMailChanged();
+        partial void OnSendOnlyMZCranTaskChanging(bool value);
+        partial void OnSendOnlyMZCranTaskChanged();
         partial void OnUserIDChanging(int value);
         partial void OnUserIDChanged();
         partial void OnRegisterChangeUserInvoking();
@@ -4234,6 +4242,30 @@ namespace VotGESOrders.Web.Models
                     this._canCreateCranTask = value;
                     this.RaiseDataMemberChanged("CanCreateCranTask");
                     this.OnCanCreateCranTaskChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Возвращает или задает значение параметра "CanReviewCranMZTask".
+        /// </summary>
+        [DataMember()]
+        public bool CanReviewCranMZTask
+        {
+            get
+            {
+                return this._canReviewCranMZTask;
+            }
+            set
+            {
+                if ((this._canReviewCranMZTask != value))
+                {
+                    this.OnCanReviewCranMZTaskChanging(value);
+                    this.RaiseDataMemberChanging("CanReviewCranMZTask");
+                    this.ValidateProperty("CanReviewCranMZTask", value);
+                    this._canReviewCranMZTask = value;
+                    this.RaiseDataMemberChanged("CanReviewCranMZTask");
+                    this.OnCanReviewCranMZTaskChanged();
                 }
             }
         }
@@ -4570,6 +4602,30 @@ namespace VotGESOrders.Web.Models
                     this._sendCreateMail = value;
                     this.RaiseDataMemberChanged("SendCreateMail");
                     this.OnSendCreateMailChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Возвращает или задает значение параметра "SendOnlyMZCranTask".
+        /// </summary>
+        [DataMember()]
+        public bool SendOnlyMZCranTask
+        {
+            get
+            {
+                return this._sendOnlyMZCranTask;
+            }
+            set
+            {
+                if ((this._sendOnlyMZCranTask != value))
+                {
+                    this.OnSendOnlyMZCranTaskChanging(value);
+                    this.RaiseDataMemberChanging("SendOnlyMZCranTask");
+                    this.ValidateProperty("SendOnlyMZCranTask", value);
+                    this._sendOnlyMZCranTask = value;
+                    this.RaiseDataMemberChanged("SendOnlyMZCranTask");
+                    this.OnSendOnlyMZCranTaskChanged();
                 }
             }
         }

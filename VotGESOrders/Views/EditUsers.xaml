@@ -119,6 +119,9 @@
                         <toolkit:DataField Name="CanReviewCranTask" Label="">
                             <CheckBox Content="Может рассматривать заявки на работу крана" IsChecked="{Binding CanReviewCranTask,Mode=TwoWay}"/>
                         </toolkit:DataField>
+                        <toolkit:DataField Name="CanReviewCranMZTask" Label="">
+                            <CheckBox Content="Может рассматривать заявки на работу крана МЗ" IsChecked="{Binding CanReviewCranMZTask,Mode=TwoWay}"/>
+                        </toolkit:DataField>
                         <toolkit:DataField Name="CanAgreeCranTask" Label="">
                             <CheckBox Content="Может согласовывать заявки на работу крана" IsChecked="{Binding CanAgreeCranTask,Mode=TwoWay}"/>
                         </toolkit:DataField>
@@ -133,6 +136,9 @@
                         </toolkit:DataField>
                         <toolkit:DataField Name="SendAgreeCranTask" Label="">
                             <CheckBox Content="Оповещать о создании согласованных заявок на кран" IsChecked="{Binding SendAgreeCranTask,Mode=TwoWay}"/>
+                        </toolkit:DataField>
+                        <toolkit:DataField Name="SendOnlyMZCranTask" Label="">
+                            <CheckBox Content="Оповещать только о заявках на краны МЗ" IsChecked="{Binding SendOnlyMZCranTask,Mode=TwoWay}"/>
                         </toolkit:DataField>
                         
                     </StackPanel>
