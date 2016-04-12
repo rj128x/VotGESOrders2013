@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="VotGESOrdersModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="VotGESOrdersModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityType Name="CranTask">
           <Key>
             <PropertyRef Name="Number" />
@@ -213,10 +213,10 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="VotGESOrdersModelStoreContainer">
-          <EntitySet Name="CranTask" EntityType="Self.CranTask" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="OrderObjects" EntityType="Self.OrderObjects" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CranTask" EntityType="Self.CranTask" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="OrderObjects" EntityType="Self.OrderObjects" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
           <AssociationSet Name="FK_Orders_OrderObjects" Association="Self.FK_Orders_OrderObjects">
             <End Role="OrderObjects" EntitySet="OrderObjects" />
             <End Role="Orders" EntitySet="Orders" />
@@ -249,7 +249,7 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="VotGESOrdersModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+      <Schema Namespace="VotGESOrdersModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
         <EntityContainer Name="VotGESOrdersEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="OrderObjects" EntityType="VotGESOrdersModel.OrderObjects" />
           <EntitySet Name="Orders" EntityType="VotGESOrdersModel.Orders" />

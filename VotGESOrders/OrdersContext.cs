@@ -124,14 +124,19 @@ namespace VotGESOrders
 			Logger.info(String.Format("readyObjects:{0} readyUsers:{1} readyOrders:{2} readyAll:{3}", readyObjects, readyUsers, readyOrders, readyAll));
 			if (readyUsers && readyObjects&&readyOrders&&!readyAll) {
 				Logger.info("Данные загружены ");
-				OrderOperations.Current.CreateWindows();
-				readyAll = true;
-				view = new PagedCollectionView(context.Orders);
-				view.SortDescriptions.Add(new System.ComponentModel.SortDescription("OrderState", System.ComponentModel.ListSortDirection.Ascending));
-				view.SortDescriptions.Add(new System.ComponentModel.SortDescription("OrderNumber", System.ComponentModel.ListSortDirection.Descending));
-				LastUpdate = DateTime.Now;
-				if (FinishLoadingOrdersEvent != null) {
-					FinishLoadingOrdersEvent();
+				try {
+					OrderOperations.Current.CreateWindows();
+					readyAll = true;
+					view = new PagedCollectionView(context.Orders);
+					view.SortDescriptions.Add(new System.ComponentModel.SortDescription("OrderState", System.ComponentModel.ListSortDirection.Ascending));
+					view.SortDescriptions.Add(new System.ComponentModel.SortDescription("OrderNumber", System.ComponentModel.ListSortDirection.Descending));
+					LastUpdate = DateTime.Now;
+					if (FinishLoadingOrdersEvent != null) {
+						FinishLoadingOrdersEvent();
+					}
+				}
+				catch (Exception e) {
+					Logger.info(e.ToString());
 				}
 			}
 		}
