@@ -234,7 +234,7 @@ namespace VotGESOrders.Web.ADONETEntities
 
         #endregion
 
-        #region Свойства-примитивы
+        #region Простые свойства
     
         /// <summary>
         /// Нет доступной документации по метаданным.
@@ -253,7 +253,7 @@ namespace VotGESOrders.Web.ADONETEntities
                 {
                     OnNumberChanging(value);
                     ReportPropertyChanging("Number");
-                    _Number = StructuralObject.SetValidValue(value);
+                    _Number = StructuralObject.SetValidValue(value, "Number");
                     ReportPropertyChanged("Number");
                     OnNumberChanged();
                 }
@@ -278,7 +278,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnCranNumberChanging(value);
                 ReportPropertyChanging("CranNumber");
-                _CranNumber = StructuralObject.SetValidValue(value);
+                _CranNumber = StructuralObject.SetValidValue(value, "CranNumber");
                 ReportPropertyChanged("CranNumber");
                 OnCranNumberChanged();
             }
@@ -302,7 +302,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnAuthorChanging(value);
                 ReportPropertyChanging("Author");
-                _Author = StructuralObject.SetValidValue(value, false);
+                _Author = StructuralObject.SetValidValue(value, false, "Author");
                 ReportPropertyChanged("Author");
                 OnAuthorChanged();
             }
@@ -326,7 +326,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnNeedDateStartChanging(value);
                 ReportPropertyChanging("NeedDateStart");
-                _NeedDateStart = StructuralObject.SetValidValue(value);
+                _NeedDateStart = StructuralObject.SetValidValue(value, "NeedDateStart");
                 ReportPropertyChanged("NeedDateStart");
                 OnNeedDateStartChanged();
             }
@@ -350,7 +350,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnCommentChanging(value);
                 ReportPropertyChanging("Comment");
-                _Comment = StructuralObject.SetValidValue(value, false);
+                _Comment = StructuralObject.SetValidValue(value, false, "Comment");
                 ReportPropertyChanged("Comment");
                 OnCommentChanged();
             }
@@ -374,7 +374,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnAllowedChanging(value);
                 ReportPropertyChanging("Allowed");
-                _Allowed = StructuralObject.SetValidValue(value);
+                _Allowed = StructuralObject.SetValidValue(value, "Allowed");
                 ReportPropertyChanged("Allowed");
                 OnAllowedChanged();
             }
@@ -398,7 +398,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnAllowedDateStartChanging(value);
                 ReportPropertyChanging("AllowedDateStart");
-                _AllowedDateStart = StructuralObject.SetValidValue(value);
+                _AllowedDateStart = StructuralObject.SetValidValue(value, "AllowedDateStart");
                 ReportPropertyChanged("AllowedDateStart");
                 OnAllowedDateStartChanged();
             }
@@ -422,7 +422,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnAllowedDateEndChanging(value);
                 ReportPropertyChanging("AllowedDateEnd");
-                _AllowedDateEnd = StructuralObject.SetValidValue(value);
+                _AllowedDateEnd = StructuralObject.SetValidValue(value, "AllowedDateEnd");
                 ReportPropertyChanged("AllowedDateEnd");
                 OnAllowedDateEndChanged();
             }
@@ -446,7 +446,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnAuthorAllowChanging(value);
                 ReportPropertyChanging("AuthorAllow");
-                _AuthorAllow = StructuralObject.SetValidValue(value, true);
+                _AuthorAllow = StructuralObject.SetValidValue(value, true, "AuthorAllow");
                 ReportPropertyChanged("AuthorAllow");
                 OnAuthorAllowChanged();
             }
@@ -470,7 +470,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnDeniedChanging(value);
                 ReportPropertyChanging("Denied");
-                _Denied = StructuralObject.SetValidValue(value);
+                _Denied = StructuralObject.SetValidValue(value, "Denied");
                 ReportPropertyChanged("Denied");
                 OnDeniedChanged();
             }
@@ -494,7 +494,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnNeedDateEndChanging(value);
                 ReportPropertyChanging("NeedDateEnd");
-                _NeedDateEnd = StructuralObject.SetValidValue(value);
+                _NeedDateEnd = StructuralObject.SetValidValue(value, "NeedDateEnd");
                 ReportPropertyChanged("NeedDateEnd");
                 OnNeedDateEndChanged();
             }
@@ -518,7 +518,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnManagerChanging(value);
                 ReportPropertyChanging("Manager");
-                _Manager = StructuralObject.SetValidValue(value, false);
+                _Manager = StructuralObject.SetValidValue(value, false, "Manager");
                 ReportPropertyChanged("Manager");
                 OnManagerChanged();
             }
@@ -542,7 +542,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnAgreeUsersIDSChanging(value);
                 ReportPropertyChanging("AgreeUsersIDS");
-                _AgreeUsersIDS = StructuralObject.SetValidValue(value, true);
+                _AgreeUsersIDS = StructuralObject.SetValidValue(value, true, "AgreeUsersIDS");
                 ReportPropertyChanged("AgreeUsersIDS");
                 OnAgreeUsersIDSChanged();
             }
@@ -566,7 +566,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnCranNameChanging(value);
                 ReportPropertyChanging("CranName");
-                _CranName = StructuralObject.SetValidValue(value, false);
+                _CranName = StructuralObject.SetValidValue(value, false, "CranName");
                 ReportPropertyChanged("CranName");
                 OnCranNameChanged();
             }
@@ -590,7 +590,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnAgreeCommentChanging(value);
                 ReportPropertyChanging("AgreeComment");
-                _AgreeComment = StructuralObject.SetValidValue(value, true);
+                _AgreeComment = StructuralObject.SetValidValue(value, true, "AgreeComment");
                 ReportPropertyChanged("AgreeComment");
                 OnAgreeCommentChanged();
             }
@@ -614,7 +614,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnDateCreateChanging(value);
                 ReportPropertyChanging("DateCreate");
-                _DateCreate = StructuralObject.SetValidValue(value);
+                _DateCreate = StructuralObject.SetValidValue(value, "DateCreate");
                 ReportPropertyChanged("DateCreate");
                 OnDateCreateChanged();
             }
@@ -638,7 +638,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnStateChanging(value);
                 ReportPropertyChanging("State");
-                _State = StructuralObject.SetValidValue(value, false);
+                _State = StructuralObject.SetValidValue(value, false, "State");
                 ReportPropertyChanged("State");
                 OnStateChanged();
             }
@@ -662,7 +662,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnCancelledChanging(value);
                 ReportPropertyChanging("Cancelled");
-                _Cancelled = StructuralObject.SetValidValue(value);
+                _Cancelled = StructuralObject.SetValidValue(value, "Cancelled");
                 ReportPropertyChanged("Cancelled");
                 OnCancelledChanged();
             }
@@ -686,7 +686,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnFinishedChanging(value);
                 ReportPropertyChanging("Finished");
-                _Finished = StructuralObject.SetValidValue(value);
+                _Finished = StructuralObject.SetValidValue(value, "Finished");
                 ReportPropertyChanged("Finished");
                 OnFinishedChanged();
             }
@@ -710,7 +710,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnRealDateStartChanging(value);
                 ReportPropertyChanging("RealDateStart");
-                _RealDateStart = StructuralObject.SetValidValue(value);
+                _RealDateStart = StructuralObject.SetValidValue(value, "RealDateStart");
                 ReportPropertyChanged("RealDateStart");
                 OnRealDateStartChanged();
             }
@@ -734,7 +734,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnRealDateEndChanging(value);
                 ReportPropertyChanging("RealDateEnd");
-                _RealDateEnd = StructuralObject.SetValidValue(value);
+                _RealDateEnd = StructuralObject.SetValidValue(value, "RealDateEnd");
                 ReportPropertyChanged("RealDateEnd");
                 OnRealDateEndChanged();
             }
@@ -758,7 +758,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnAuthorFinishChanging(value);
                 ReportPropertyChanging("AuthorFinish");
-                _AuthorFinish = StructuralObject.SetValidValue(value, true);
+                _AuthorFinish = StructuralObject.SetValidValue(value, true, "AuthorFinish");
                 ReportPropertyChanged("AuthorFinish");
                 OnAuthorFinishChanged();
             }
@@ -769,7 +769,6 @@ namespace VotGESOrders.Web.ADONETEntities
 
         #endregion
 
-    
     }
     
     /// <summary>
@@ -801,7 +800,7 @@ namespace VotGESOrders.Web.ADONETEntities
 
         #endregion
 
-        #region Свойства-примитивы
+        #region Простые свойства
     
         /// <summary>
         /// Нет доступной документации по метаданным.
@@ -820,7 +819,7 @@ namespace VotGESOrders.Web.ADONETEntities
                 {
                     OnobjectIDChanging(value);
                     ReportPropertyChanging("objectID");
-                    _objectID = StructuralObject.SetValidValue(value);
+                    _objectID = StructuralObject.SetValidValue(value, "objectID");
                     ReportPropertyChanged("objectID");
                     OnobjectIDChanged();
                 }
@@ -845,7 +844,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnparentIDChanging(value);
                 ReportPropertyChanging("parentID");
-                _parentID = StructuralObject.SetValidValue(value);
+                _parentID = StructuralObject.SetValidValue(value, "parentID");
                 ReportPropertyChanged("parentID");
                 OnparentIDChanged();
             }
@@ -869,7 +868,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnobjectNameChanging(value);
                 ReportPropertyChanging("objectName");
-                _objectName = StructuralObject.SetValidValue(value, false);
+                _objectName = StructuralObject.SetValidValue(value, false, "objectName");
                 ReportPropertyChanged("objectName");
                 OnobjectNameChanged();
             }
@@ -893,7 +892,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnshowInFullNameChanging(value);
                 ReportPropertyChanging("showInFullName");
-                _showInFullName = StructuralObject.SetValidValue(value);
+                _showInFullName = StructuralObject.SetValidValue(value, "showInFullName");
                 ReportPropertyChanged("showInFullName");
                 OnshowInFullNameChanged();
             }
@@ -904,7 +903,6 @@ namespace VotGESOrders.Web.ADONETEntities
 
         #endregion
 
-    
         #region Свойства навигации
     
         /// <summary>
@@ -1004,7 +1002,7 @@ namespace VotGESOrders.Web.ADONETEntities
 
         #endregion
 
-        #region Свойства-примитивы
+        #region Простые свойства
     
         /// <summary>
         /// Нет доступной документации по метаданным.
@@ -1021,7 +1019,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnparentOrderNumberChanging(value);
                 ReportPropertyChanging("parentOrderNumber");
-                _parentOrderNumber = StructuralObject.SetValidValue(value);
+                _parentOrderNumber = StructuralObject.SetValidValue(value, "parentOrderNumber");
                 ReportPropertyChanged("parentOrderNumber");
                 OnparentOrderNumberChanged();
             }
@@ -1045,7 +1043,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnchildOrderNumberChanging(value);
                 ReportPropertyChanging("childOrderNumber");
-                _childOrderNumber = StructuralObject.SetValidValue(value);
+                _childOrderNumber = StructuralObject.SetValidValue(value, "childOrderNumber");
                 ReportPropertyChanged("childOrderNumber");
                 OnchildOrderNumberChanged();
             }
@@ -1071,7 +1069,7 @@ namespace VotGESOrders.Web.ADONETEntities
                 {
                     OnorderNumberChanging(value);
                     ReportPropertyChanging("orderNumber");
-                    _orderNumber = StructuralObject.SetValidValue(value);
+                    _orderNumber = StructuralObject.SetValidValue(value, "orderNumber");
                     ReportPropertyChanged("orderNumber");
                     OnorderNumberChanged();
                 }
@@ -1096,7 +1094,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnuserCreateOrderIDChanging(value);
                 ReportPropertyChanging("userCreateOrderID");
-                _userCreateOrderID = StructuralObject.SetValidValue(value);
+                _userCreateOrderID = StructuralObject.SetValidValue(value, "userCreateOrderID");
                 ReportPropertyChanged("userCreateOrderID");
                 OnuserCreateOrderIDChanged();
             }
@@ -1120,7 +1118,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnuserReviewOrderIDChanging(value);
                 ReportPropertyChanging("userReviewOrderID");
-                _userReviewOrderID = StructuralObject.SetValidValue(value);
+                _userReviewOrderID = StructuralObject.SetValidValue(value, "userReviewOrderID");
                 ReportPropertyChanged("userReviewOrderID");
                 OnuserReviewOrderIDChanged();
             }
@@ -1144,7 +1142,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnuserCloseOrderIDChanging(value);
                 ReportPropertyChanging("userCloseOrderID");
-                _userCloseOrderID = StructuralObject.SetValidValue(value);
+                _userCloseOrderID = StructuralObject.SetValidValue(value, "userCloseOrderID");
                 ReportPropertyChanged("userCloseOrderID");
                 OnuserCloseOrderIDChanged();
             }
@@ -1168,7 +1166,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnuserCompleteOrderIDChanging(value);
                 ReportPropertyChanging("userCompleteOrderID");
-                _userCompleteOrderID = StructuralObject.SetValidValue(value);
+                _userCompleteOrderID = StructuralObject.SetValidValue(value, "userCompleteOrderID");
                 ReportPropertyChanged("userCompleteOrderID");
                 OnuserCompleteOrderIDChanged();
             }
@@ -1192,7 +1190,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnuserOpenOrderIDChanging(value);
                 ReportPropertyChanging("userOpenOrderID");
-                _userOpenOrderID = StructuralObject.SetValidValue(value);
+                _userOpenOrderID = StructuralObject.SetValidValue(value, "userOpenOrderID");
                 ReportPropertyChanged("userOpenOrderID");
                 OnuserOpenOrderIDChanged();
             }
@@ -1216,7 +1214,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnuserCancelOrderIDChanging(value);
                 ReportPropertyChanging("userCancelOrderID");
-                _userCancelOrderID = StructuralObject.SetValidValue(value);
+                _userCancelOrderID = StructuralObject.SetValidValue(value, "userCancelOrderID");
                 ReportPropertyChanged("userCancelOrderID");
                 OnuserCancelOrderIDChanged();
             }
@@ -1240,7 +1238,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnorderDateCreateChanging(value);
                 ReportPropertyChanging("orderDateCreate");
-                _orderDateCreate = StructuralObject.SetValidValue(value);
+                _orderDateCreate = StructuralObject.SetValidValue(value, "orderDateCreate");
                 ReportPropertyChanged("orderDateCreate");
                 OnorderDateCreateChanged();
             }
@@ -1264,7 +1262,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnorderDateReviewChanging(value);
                 ReportPropertyChanging("orderDateReview");
-                _orderDateReview = StructuralObject.SetValidValue(value);
+                _orderDateReview = StructuralObject.SetValidValue(value, "orderDateReview");
                 ReportPropertyChanged("orderDateReview");
                 OnorderDateReviewChanged();
             }
@@ -1288,7 +1286,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnorderDateCloseChanging(value);
                 ReportPropertyChanging("orderDateClose");
-                _orderDateClose = StructuralObject.SetValidValue(value);
+                _orderDateClose = StructuralObject.SetValidValue(value, "orderDateClose");
                 ReportPropertyChanged("orderDateClose");
                 OnorderDateCloseChanged();
             }
@@ -1312,7 +1310,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnorderDateOpenChanging(value);
                 ReportPropertyChanging("orderDateOpen");
-                _orderDateOpen = StructuralObject.SetValidValue(value);
+                _orderDateOpen = StructuralObject.SetValidValue(value, "orderDateOpen");
                 ReportPropertyChanged("orderDateOpen");
                 OnorderDateOpenChanged();
             }
@@ -1336,7 +1334,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnorderDateCompleteChanging(value);
                 ReportPropertyChanging("orderDateComplete");
-                _orderDateComplete = StructuralObject.SetValidValue(value);
+                _orderDateComplete = StructuralObject.SetValidValue(value, "orderDateComplete");
                 ReportPropertyChanged("orderDateComplete");
                 OnorderDateCompleteChanged();
             }
@@ -1360,7 +1358,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnorderDateCancelChanging(value);
                 ReportPropertyChanging("orderDateCancel");
-                _orderDateCancel = StructuralObject.SetValidValue(value);
+                _orderDateCancel = StructuralObject.SetValidValue(value, "orderDateCancel");
                 ReportPropertyChanged("orderDateCancel");
                 OnorderDateCancelChanged();
             }
@@ -1384,7 +1382,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnorderLastUpdateChanging(value);
                 ReportPropertyChanging("orderLastUpdate");
-                _orderLastUpdate = StructuralObject.SetValidValue(value);
+                _orderLastUpdate = StructuralObject.SetValidValue(value, "orderLastUpdate");
                 ReportPropertyChanged("orderLastUpdate");
                 OnorderLastUpdateChanged();
             }
@@ -1408,7 +1406,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnreviewTextChanging(value);
                 ReportPropertyChanging("reviewText");
-                _reviewText = StructuralObject.SetValidValue(value, true);
+                _reviewText = StructuralObject.SetValidValue(value, true, "reviewText");
                 ReportPropertyChanged("reviewText");
                 OnreviewTextChanged();
             }
@@ -1432,7 +1430,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnopenTextChanging(value);
                 ReportPropertyChanging("openText");
-                _openText = StructuralObject.SetValidValue(value, true);
+                _openText = StructuralObject.SetValidValue(value, true, "openText");
                 ReportPropertyChanged("openText");
                 OnopenTextChanged();
             }
@@ -1456,7 +1454,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OncloseTextChanging(value);
                 ReportPropertyChanging("closeText");
-                _closeText = StructuralObject.SetValidValue(value, true);
+                _closeText = StructuralObject.SetValidValue(value, true, "closeText");
                 ReportPropertyChanged("closeText");
                 OncloseTextChanged();
             }
@@ -1480,7 +1478,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OncompleteTextChanging(value);
                 ReportPropertyChanging("completeText");
-                _completeText = StructuralObject.SetValidValue(value, true);
+                _completeText = StructuralObject.SetValidValue(value, true, "completeText");
                 ReportPropertyChanged("completeText");
                 OncompleteTextChanged();
             }
@@ -1504,7 +1502,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OncancelTextChanging(value);
                 ReportPropertyChanging("cancelText");
-                _cancelText = StructuralObject.SetValidValue(value, true);
+                _cancelText = StructuralObject.SetValidValue(value, true, "cancelText");
                 ReportPropertyChanged("cancelText");
                 OncancelTextChanged();
             }
@@ -1528,7 +1526,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OncreateTextChanging(value);
                 ReportPropertyChanging("createText");
-                _createText = StructuralObject.SetValidValue(value, true);
+                _createText = StructuralObject.SetValidValue(value, true, "createText");
                 ReportPropertyChanged("createText");
                 OncreateTextChanged();
             }
@@ -1552,7 +1550,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnplanStartDateChanging(value);
                 ReportPropertyChanging("planStartDate");
-                _planStartDate = StructuralObject.SetValidValue(value);
+                _planStartDate = StructuralObject.SetValidValue(value, "planStartDate");
                 ReportPropertyChanged("planStartDate");
                 OnplanStartDateChanged();
             }
@@ -1576,7 +1574,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnplanStopDateChanging(value);
                 ReportPropertyChanging("planStopDate");
-                _planStopDate = StructuralObject.SetValidValue(value);
+                _planStopDate = StructuralObject.SetValidValue(value, "planStopDate");
                 ReportPropertyChanged("planStopDate");
                 OnplanStopDateChanged();
             }
@@ -1600,7 +1598,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnfaktStartDateChanging(value);
                 ReportPropertyChanging("faktStartDate");
-                _faktStartDate = StructuralObject.SetValidValue(value);
+                _faktStartDate = StructuralObject.SetValidValue(value, "faktStartDate");
                 ReportPropertyChanged("faktStartDate");
                 OnfaktStartDateChanged();
             }
@@ -1624,7 +1622,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnfaktStopDateChanging(value);
                 ReportPropertyChanging("faktStopDate");
-                _faktStopDate = StructuralObject.SetValidValue(value);
+                _faktStopDate = StructuralObject.SetValidValue(value, "faktStopDate");
                 ReportPropertyChanged("faktStopDate");
                 OnfaktStopDateChanged();
             }
@@ -1648,7 +1646,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnfaktCompleteDateChanging(value);
                 ReportPropertyChanging("faktCompleteDate");
-                _faktCompleteDate = StructuralObject.SetValidValue(value);
+                _faktCompleteDate = StructuralObject.SetValidValue(value, "faktCompleteDate");
                 ReportPropertyChanged("faktCompleteDate");
                 OnfaktCompleteDateChanged();
             }
@@ -1672,7 +1670,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnorderTextChanging(value);
                 ReportPropertyChanging("orderText");
-                _orderText = StructuralObject.SetValidValue(value, false);
+                _orderText = StructuralObject.SetValidValue(value, false, "orderText");
                 ReportPropertyChanged("orderText");
                 OnorderTextChanged();
             }
@@ -1696,7 +1694,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnorderTypeChanging(value);
                 ReportPropertyChanging("orderType");
-                _orderType = StructuralObject.SetValidValue(value, false);
+                _orderType = StructuralObject.SetValidValue(value, false, "orderType");
                 ReportPropertyChanged("orderType");
                 OnorderTypeChanged();
             }
@@ -1720,7 +1718,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnagreeTextChanging(value);
                 ReportPropertyChanging("agreeText");
-                _agreeText = StructuralObject.SetValidValue(value, false);
+                _agreeText = StructuralObject.SetValidValue(value, false, "agreeText");
                 ReportPropertyChanged("agreeText");
                 OnagreeTextChanged();
             }
@@ -1744,7 +1742,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnagreeUsersIDSChanging(value);
                 ReportPropertyChanging("agreeUsersIDS");
-                _agreeUsersIDS = StructuralObject.SetValidValue(value, false);
+                _agreeUsersIDS = StructuralObject.SetValidValue(value, false, "agreeUsersIDS");
                 ReportPropertyChanged("agreeUsersIDS");
                 OnagreeUsersIDSChanged();
             }
@@ -1768,7 +1766,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnreadyTimeChanging(value);
                 ReportPropertyChanging("readyTime");
-                _readyTime = StructuralObject.SetValidValue(value, false);
+                _readyTime = StructuralObject.SetValidValue(value, false, "readyTime");
                 ReportPropertyChanged("readyTime");
                 OnreadyTimeChanged();
             }
@@ -1792,7 +1790,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnorderObjectIDChanging(value);
                 ReportPropertyChanging("orderObjectID");
-                _orderObjectID = StructuralObject.SetValidValue(value);
+                _orderObjectID = StructuralObject.SetValidValue(value, "orderObjectID");
                 ReportPropertyChanged("orderObjectID");
                 OnorderObjectIDChanged();
             }
@@ -1816,7 +1814,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnorderObjectAddInfoChanging(value);
                 ReportPropertyChanging("orderObjectAddInfo");
-                _orderObjectAddInfo = StructuralObject.SetValidValue(value, false);
+                _orderObjectAddInfo = StructuralObject.SetValidValue(value, false, "orderObjectAddInfo");
                 ReportPropertyChanged("orderObjectAddInfo");
                 OnorderObjectAddInfoChanged();
             }
@@ -1840,7 +1838,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnorderCreatedChanging(value);
                 ReportPropertyChanging("orderCreated");
-                _orderCreated = StructuralObject.SetValidValue(value);
+                _orderCreated = StructuralObject.SetValidValue(value, "orderCreated");
                 ReportPropertyChanged("orderCreated");
                 OnorderCreatedChanged();
             }
@@ -1864,7 +1862,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnorderReviewedChanging(value);
                 ReportPropertyChanging("orderReviewed");
-                _orderReviewed = StructuralObject.SetValidValue(value);
+                _orderReviewed = StructuralObject.SetValidValue(value, "orderReviewed");
                 ReportPropertyChanged("orderReviewed");
                 OnorderReviewedChanged();
             }
@@ -1888,7 +1886,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnorderOpenedChanging(value);
                 ReportPropertyChanging("orderOpened");
-                _orderOpened = StructuralObject.SetValidValue(value);
+                _orderOpened = StructuralObject.SetValidValue(value, "orderOpened");
                 ReportPropertyChanged("orderOpened");
                 OnorderOpenedChanged();
             }
@@ -1912,7 +1910,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnorderClosedChanging(value);
                 ReportPropertyChanging("orderClosed");
-                _orderClosed = StructuralObject.SetValidValue(value);
+                _orderClosed = StructuralObject.SetValidValue(value, "orderClosed");
                 ReportPropertyChanged("orderClosed");
                 OnorderClosedChanged();
             }
@@ -1936,7 +1934,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnorderCanceledChanging(value);
                 ReportPropertyChanging("orderCanceled");
-                _orderCanceled = StructuralObject.SetValidValue(value);
+                _orderCanceled = StructuralObject.SetValidValue(value, "orderCanceled");
                 ReportPropertyChanged("orderCanceled");
                 OnorderCanceledChanged();
             }
@@ -1960,7 +1958,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnorderCompletedChanging(value);
                 ReportPropertyChanging("orderCompleted");
-                _orderCompleted = StructuralObject.SetValidValue(value);
+                _orderCompleted = StructuralObject.SetValidValue(value, "orderCompleted");
                 ReportPropertyChanged("orderCompleted");
                 OnorderCompletedChanged();
             }
@@ -1984,7 +1982,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnorderCompletedWithoutEnterChanging(value);
                 ReportPropertyChanging("orderCompletedWithoutEnter");
-                _orderCompletedWithoutEnter = StructuralObject.SetValidValue(value);
+                _orderCompletedWithoutEnter = StructuralObject.SetValidValue(value, "orderCompletedWithoutEnter");
                 ReportPropertyChanged("orderCompletedWithoutEnter");
                 OnorderCompletedWithoutEnterChanged();
             }
@@ -2008,7 +2006,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnorderExtendedChanging(value);
                 ReportPropertyChanging("orderExtended");
-                _orderExtended = StructuralObject.SetValidValue(value);
+                _orderExtended = StructuralObject.SetValidValue(value, "orderExtended");
                 ReportPropertyChanged("orderExtended");
                 OnorderExtendedChanged();
             }
@@ -2032,7 +2030,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnorderAskExtendedChanging(value);
                 ReportPropertyChanging("orderAskExtended");
-                _orderAskExtended = StructuralObject.SetValidValue(value);
+                _orderAskExtended = StructuralObject.SetValidValue(value, "orderAskExtended");
                 ReportPropertyChanged("orderAskExtended");
                 OnorderAskExtendedChanged();
             }
@@ -2056,7 +2054,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnorderIsExtendChanging(value);
                 ReportPropertyChanging("orderIsExtend");
-                _orderIsExtend = StructuralObject.SetValidValue(value);
+                _orderIsExtend = StructuralObject.SetValidValue(value, "orderIsExtend");
                 ReportPropertyChanged("orderIsExtend");
                 OnorderIsExtendChanged();
             }
@@ -2080,7 +2078,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnorderIsFixErrorEnterChanging(value);
                 ReportPropertyChanging("orderIsFixErrorEnter");
-                _orderIsFixErrorEnter = StructuralObject.SetValidValue(value);
+                _orderIsFixErrorEnter = StructuralObject.SetValidValue(value, "orderIsFixErrorEnter");
                 ReportPropertyChanged("orderIsFixErrorEnter");
                 OnorderIsFixErrorEnterChanged();
             }
@@ -2104,7 +2102,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnorderStateChanging(value);
                 ReportPropertyChanging("orderState");
-                _orderState = StructuralObject.SetValidValue(value, false);
+                _orderState = StructuralObject.SetValidValue(value, false, "orderState");
                 ReportPropertyChanged("orderState");
                 OnorderStateChanged();
             }
@@ -2128,7 +2126,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OncommentsTextChanging(value);
                 ReportPropertyChanging("commentsText");
-                _commentsText = StructuralObject.SetValidValue(value, true);
+                _commentsText = StructuralObject.SetValidValue(value, true, "commentsText");
                 ReportPropertyChanged("commentsText");
                 OncommentsTextChanged();
             }
@@ -2152,7 +2150,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnexpiredReglamentHoursChanging(value);
                 ReportPropertyChanging("expiredReglamentHours");
-                _expiredReglamentHours = StructuralObject.SetValidValue(value);
+                _expiredReglamentHours = StructuralObject.SetValidValue(value, "expiredReglamentHours");
                 ReportPropertyChanged("expiredReglamentHours");
                 OnexpiredReglamentHoursChanged();
             }
@@ -2176,7 +2174,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnexpiredOpenHoursChanging(value);
                 ReportPropertyChanging("expiredOpenHours");
-                _expiredOpenHours = StructuralObject.SetValidValue(value);
+                _expiredOpenHours = StructuralObject.SetValidValue(value, "expiredOpenHours");
                 ReportPropertyChanged("expiredOpenHours");
                 OnexpiredOpenHoursChanged();
             }
@@ -2200,7 +2198,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnexpiredCloseHoursChanging(value);
                 ReportPropertyChanging("expiredCloseHours");
-                _expiredCloseHours = StructuralObject.SetValidValue(value);
+                _expiredCloseHours = StructuralObject.SetValidValue(value, "expiredCloseHours");
                 ReportPropertyChanged("expiredCloseHours");
                 OnexpiredCloseHoursChanged();
             }
@@ -2224,7 +2222,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnexpiredCompleteHoursChanging(value);
                 ReportPropertyChanging("expiredCompleteHours");
-                _expiredCompleteHours = StructuralObject.SetValidValue(value);
+                _expiredCompleteHours = StructuralObject.SetValidValue(value, "expiredCompleteHours");
                 ReportPropertyChanged("expiredCompleteHours");
                 OnexpiredCompleteHoursChanged();
             }
@@ -2235,7 +2233,6 @@ namespace VotGESOrders.Web.ADONETEntities
 
         #endregion
 
-    
         #region Свойства навигации
     
         /// <summary>
@@ -2581,7 +2578,7 @@ namespace VotGESOrders.Web.ADONETEntities
 
         #endregion
 
-        #region Свойства-примитивы
+        #region Простые свойства
     
         /// <summary>
         /// Нет доступной документации по метаданным.
@@ -2600,7 +2597,7 @@ namespace VotGESOrders.Web.ADONETEntities
                 {
                     OnuserIDChanging(value);
                     ReportPropertyChanging("userID");
-                    _userID = StructuralObject.SetValidValue(value);
+                    _userID = StructuralObject.SetValidValue(value, "userID");
                     ReportPropertyChanged("userID");
                     OnuserIDChanged();
                 }
@@ -2625,7 +2622,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnnameChanging(value);
                 ReportPropertyChanging("name");
-                _name = StructuralObject.SetValidValue(value, false);
+                _name = StructuralObject.SetValidValue(value, false, "name");
                 ReportPropertyChanged("name");
                 OnnameChanged();
             }
@@ -2649,7 +2646,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnfullNameChanging(value);
                 ReportPropertyChanging("fullName");
-                _fullName = StructuralObject.SetValidValue(value, false);
+                _fullName = StructuralObject.SetValidValue(value, false, "fullName");
                 ReportPropertyChanged("fullName");
                 OnfullNameChanged();
             }
@@ -2673,7 +2670,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnmailChanging(value);
                 ReportPropertyChanging("mail");
-                _mail = StructuralObject.SetValidValue(value, false);
+                _mail = StructuralObject.SetValidValue(value, false, "mail");
                 ReportPropertyChanged("mail");
                 OnmailChanged();
             }
@@ -2697,7 +2694,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnsendAllMailChanging(value);
                 ReportPropertyChanging("sendAllMail");
-                _sendAllMail = StructuralObject.SetValidValue(value);
+                _sendAllMail = StructuralObject.SetValidValue(value, "sendAllMail");
                 ReportPropertyChanged("sendAllMail");
                 OnsendAllMailChanged();
             }
@@ -2721,7 +2718,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnsendAgreeMailChanging(value);
                 ReportPropertyChanging("sendAgreeMail");
-                _sendAgreeMail = StructuralObject.SetValidValue(value);
+                _sendAgreeMail = StructuralObject.SetValidValue(value, "sendAgreeMail");
                 ReportPropertyChanged("sendAgreeMail");
                 OnsendAgreeMailChanged();
             }
@@ -2745,7 +2742,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnsendCreateMailChanging(value);
                 ReportPropertyChanging("sendCreateMail");
-                _sendCreateMail = StructuralObject.SetValidValue(value);
+                _sendCreateMail = StructuralObject.SetValidValue(value, "sendCreateMail");
                 ReportPropertyChanged("sendCreateMail");
                 OnsendCreateMailChanged();
             }
@@ -2769,7 +2766,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnallowCreateOrderChanging(value);
                 ReportPropertyChanging("allowCreateOrder");
-                _allowCreateOrder = StructuralObject.SetValidValue(value);
+                _allowCreateOrder = StructuralObject.SetValidValue(value, "allowCreateOrder");
                 ReportPropertyChanged("allowCreateOrder");
                 OnallowCreateOrderChanged();
             }
@@ -2793,7 +2790,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnallowCreateCrashOrderChanging(value);
                 ReportPropertyChanging("allowCreateCrashOrder");
-                _allowCreateCrashOrder = StructuralObject.SetValidValue(value);
+                _allowCreateCrashOrder = StructuralObject.SetValidValue(value, "allowCreateCrashOrder");
                 ReportPropertyChanged("allowCreateCrashOrder");
                 OnallowCreateCrashOrderChanged();
             }
@@ -2817,7 +2814,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnallowReviewOrderChanging(value);
                 ReportPropertyChanging("allowReviewOrder");
-                _allowReviewOrder = StructuralObject.SetValidValue(value);
+                _allowReviewOrder = StructuralObject.SetValidValue(value, "allowReviewOrder");
                 ReportPropertyChanged("allowReviewOrder");
                 OnallowReviewOrderChanged();
             }
@@ -2841,7 +2838,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnallowChangeOrderChanging(value);
                 ReportPropertyChanging("allowChangeOrder");
-                _allowChangeOrder = StructuralObject.SetValidValue(value);
+                _allowChangeOrder = StructuralObject.SetValidValue(value, "allowChangeOrder");
                 ReportPropertyChanged("allowChangeOrder");
                 OnallowChangeOrderChanged();
             }
@@ -2865,7 +2862,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnallowEditTreeChanging(value);
                 ReportPropertyChanging("allowEditTree");
-                _allowEditTree = StructuralObject.SetValidValue(value);
+                _allowEditTree = StructuralObject.SetValidValue(value, "allowEditTree");
                 ReportPropertyChanged("allowEditTree");
                 OnallowEditTreeChanged();
             }
@@ -2889,7 +2886,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnallowEditUsersChanging(value);
                 ReportPropertyChanging("allowEditUsers");
-                _allowEditUsers = StructuralObject.SetValidValue(value);
+                _allowEditUsers = StructuralObject.SetValidValue(value, "allowEditUsers");
                 ReportPropertyChanged("allowEditUsers");
                 OnallowEditUsersChanged();
             }
@@ -2913,7 +2910,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnallowAgreeOrdersChanging(value);
                 ReportPropertyChanging("allowAgreeOrders");
-                _allowAgreeOrders = StructuralObject.SetValidValue(value);
+                _allowAgreeOrders = StructuralObject.SetValidValue(value, "allowAgreeOrders");
                 ReportPropertyChanged("allowAgreeOrders");
                 OnallowAgreeOrdersChanged();
             }
@@ -2937,7 +2934,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnsendAllCreateMailChanging(value);
                 ReportPropertyChanging("sendAllCreateMail");
-                _sendAllCreateMail = StructuralObject.SetValidValue(value);
+                _sendAllCreateMail = StructuralObject.SetValidValue(value, "sendAllCreateMail");
                 ReportPropertyChanged("sendAllCreateMail");
                 OnsendAllCreateMailChanged();
             }
@@ -2961,7 +2958,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnsendAllAgreeMailChanging(value);
                 ReportPropertyChanging("sendAllAgreeMail");
-                _sendAllAgreeMail = StructuralObject.SetValidValue(value);
+                _sendAllAgreeMail = StructuralObject.SetValidValue(value, "sendAllAgreeMail");
                 ReportPropertyChanged("sendAllAgreeMail");
                 OnsendAllAgreeMailChanged();
             }
@@ -2985,7 +2982,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnallowEditOrdersChanging(value);
                 ReportPropertyChanging("allowEditOrders");
-                _allowEditOrders = StructuralObject.SetValidValue(value);
+                _allowEditOrders = StructuralObject.SetValidValue(value, "allowEditOrders");
                 ReportPropertyChanged("allowEditOrders");
                 OnallowEditOrdersChanged();
             }
@@ -3009,7 +3006,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OncanCreateCranTaskChanging(value);
                 ReportPropertyChanging("canCreateCranTask");
-                _canCreateCranTask = StructuralObject.SetValidValue(value);
+                _canCreateCranTask = StructuralObject.SetValidValue(value, "canCreateCranTask");
                 ReportPropertyChanged("canCreateCranTask");
                 OncanCreateCranTaskChanged();
             }
@@ -3033,7 +3030,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OncanReviewCranTaskChanging(value);
                 ReportPropertyChanging("canReviewCranTask");
-                _canReviewCranTask = StructuralObject.SetValidValue(value);
+                _canReviewCranTask = StructuralObject.SetValidValue(value, "canReviewCranTask");
                 ReportPropertyChanged("canReviewCranTask");
                 OncanReviewCranTaskChanged();
             }
@@ -3057,7 +3054,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OncanAgreeCranTaskChanging(value);
                 ReportPropertyChanging("canAgreeCranTask");
-                _canAgreeCranTask = StructuralObject.SetValidValue(value);
+                _canAgreeCranTask = StructuralObject.SetValidValue(value, "canAgreeCranTask");
                 ReportPropertyChanged("canAgreeCranTask");
                 OncanAgreeCranTaskChanged();
             }
@@ -3081,7 +3078,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnsendAllCreateCranTaskChanging(value);
                 ReportPropertyChanging("sendAllCreateCranTask");
-                _sendAllCreateCranTask = StructuralObject.SetValidValue(value);
+                _sendAllCreateCranTask = StructuralObject.SetValidValue(value, "sendAllCreateCranTask");
                 ReportPropertyChanged("sendAllCreateCranTask");
                 OnsendAllCreateCranTaskChanged();
             }
@@ -3105,7 +3102,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnsendAllCranTaskChanging(value);
                 ReportPropertyChanging("sendAllCranTask");
-                _sendAllCranTask = StructuralObject.SetValidValue(value);
+                _sendAllCranTask = StructuralObject.SetValidValue(value, "sendAllCranTask");
                 ReportPropertyChanged("sendAllCranTask");
                 OnsendAllCranTaskChanged();
             }
@@ -3129,7 +3126,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnsendAgreeCranTaskChanging(value);
                 ReportPropertyChanging("sendAgreeCranTask");
-                _sendAgreeCranTask = StructuralObject.SetValidValue(value);
+                _sendAgreeCranTask = StructuralObject.SetValidValue(value, "sendAgreeCranTask");
                 ReportPropertyChanged("sendAgreeCranTask");
                 OnsendAgreeCranTaskChanged();
             }
@@ -3153,7 +3150,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnsendAllAgreeCranTaskChanging(value);
                 ReportPropertyChanging("sendAllAgreeCranTask");
-                _sendAllAgreeCranTask = StructuralObject.SetValidValue(value);
+                _sendAllAgreeCranTask = StructuralObject.SetValidValue(value, "sendAllAgreeCranTask");
                 ReportPropertyChanged("sendAllAgreeCranTask");
                 OnsendAllAgreeCranTaskChanged();
             }
@@ -3177,7 +3174,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OncanReviewCranMZTaskChanging(value);
                 ReportPropertyChanging("canReviewCranMZTask");
-                _canReviewCranMZTask = StructuralObject.SetValidValue(value);
+                _canReviewCranMZTask = StructuralObject.SetValidValue(value, "canReviewCranMZTask");
                 ReportPropertyChanged("canReviewCranMZTask");
                 OncanReviewCranMZTaskChanged();
             }
@@ -3201,7 +3198,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnsendOnlyMZCranTaskChanging(value);
                 ReportPropertyChanging("sendOnlyMZCranTask");
-                _sendOnlyMZCranTask = StructuralObject.SetValidValue(value);
+                _sendOnlyMZCranTask = StructuralObject.SetValidValue(value, "sendOnlyMZCranTask");
                 ReportPropertyChanged("sendOnlyMZCranTask");
                 OnsendOnlyMZCranTaskChanged();
             }
@@ -3212,7 +3209,6 @@ namespace VotGESOrders.Web.ADONETEntities
 
         #endregion
 
-    
         #region Свойства навигации
     
         /// <summary>
@@ -3353,5 +3349,4 @@ namespace VotGESOrders.Web.ADONETEntities
 
     #endregion
 
-    
 }
