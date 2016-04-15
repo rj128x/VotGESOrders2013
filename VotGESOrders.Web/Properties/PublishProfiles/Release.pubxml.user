@@ -1,0 +1,463 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+Этот файл используется в процессе публикации или упаковки вашего веб-проекта. Вы можете настроить поведение процесса,
+изменив этот файл MSBuild. Дополнительные сведения см. по адресу http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile>2014-09-16T08:27:38.4264270+06:00</TimeStampOfAssociatedLegacyPublishXmlFile>
+    <_PublishTargetUrl>X:\OrdersTest</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="ADONETEntities/VotGESOrdersEntities.Designer.cs">
+      <publishTime>01/01/0001 00:00:00</publishTime>
+    </File>
+    <File Include="bin/de/System.ServiceModel.DomainServices.Hosting.resources.dll">
+      <publishTime>04/12/2013 02:58:10</publishTime>
+    </File>
+    <File Include="bin/de/System.ServiceModel.DomainServices.Server.resources.dll">
+      <publishTime>04/12/2013 02:58:10</publishTime>
+    </File>
+    <File Include="bin/es/System.ServiceModel.DomainServices.Hosting.resources.dll">
+      <publishTime>04/12/2013 02:58:10</publishTime>
+    </File>
+    <File Include="bin/es/System.ServiceModel.DomainServices.Server.resources.dll">
+      <publishTime>04/12/2013 02:58:10</publishTime>
+    </File>
+    <File Include="bin/fr/System.ServiceModel.DomainServices.Hosting.resources.dll">
+      <publishTime>04/12/2013 02:58:10</publishTime>
+    </File>
+    <File Include="bin/fr/System.ServiceModel.DomainServices.Server.resources.dll">
+      <publishTime>04/12/2013 02:58:10</publishTime>
+    </File>
+    <File Include="bin/it/System.ServiceModel.DomainServices.Hosting.resources.dll">
+      <publishTime>04/12/2013 02:58:10</publishTime>
+    </File>
+    <File Include="bin/it/System.ServiceModel.DomainServices.Server.resources.dll">
+      <publishTime>04/12/2013 02:58:10</publishTime>
+    </File>
+    <File Include="bin/ja/System.ServiceModel.DomainServices.Hosting.resources.dll">
+      <publishTime>04/12/2013 02:58:10</publishTime>
+    </File>
+    <File Include="bin/ja/System.ServiceModel.DomainServices.Server.resources.dll">
+      <publishTime>04/12/2013 02:58:10</publishTime>
+    </File>
+    <File Include="bin/ko/System.ServiceModel.DomainServices.Hosting.resources.dll">
+      <publishTime>04/12/2013 02:58:10</publishTime>
+    </File>
+    <File Include="bin/ko/System.ServiceModel.DomainServices.Server.resources.dll">
+      <publishTime>04/12/2013 02:58:10</publishTime>
+    </File>
+    <File Include="bin/log4net.dll">
+      <publishTime>11/18/2013 05:51:44</publishTime>
+    </File>
+    <File Include="bin/Microsoft.CSharp.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Web.Infrastructure.dll">
+      <publishTime>04/14/2016 15:13:03</publishTime>
+    </File>
+    <File Include="bin/ru/System.ServiceModel.DomainServices.Hosting.resources.dll">
+      <publishTime>04/12/2013 02:58:18</publishTime>
+    </File>
+    <File Include="bin/ru/System.ServiceModel.DomainServices.Server.resources.dll">
+      <publishTime>04/12/2013 02:58:18</publishTime>
+    </File>
+    <File Include="bin/ru/System.Web.Helpers.resources.dll">
+      <publishTime>09/07/2013 10:36:08</publishTime>
+    </File>
+    <File Include="bin/ru/System.Web.Mvc.resources.dll">
+      <publishTime>09/07/2013 10:34:04</publishTime>
+    </File>
+    <File Include="bin/ru/System.Web.WebPages.Deployment.resources.dll">
+      <publishTime>09/07/2013 10:36:02</publishTime>
+    </File>
+    <File Include="bin/ru/System.Web.WebPages.Razor.resources.dll">
+      <publishTime>09/07/2013 10:36:04</publishTime>
+    </File>
+    <File Include="bin/ru/System.Web.WebPages.resources.dll">
+      <publishTime>09/07/2013 10:35:56</publishTime>
+    </File>
+    <File Include="bin/System.ComponentModel.DataAnnotations.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.Configuration.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.Data.DataSetExtensions.dll">
+      <publishTime>03/14/2016 20:06:40</publishTime>
+    </File>
+    <File Include="bin/System.Data.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.Data.Entity.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.Drawing.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.EnterpriseServices.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.Extensions.dll">
+      <publishTime>04/14/2016 15:19:26</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.Primitives.dll">
+      <publishTime>04/14/2016 15:19:26</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.WebRequest.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.Runtime.Serialization.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.Security.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.ServiceModel.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.ServiceModel.DomainServices.Hosting.dll">
+      <publishTime>04/12/2013 02:58:10</publishTime>
+    </File>
+    <File Include="bin/System.ServiceModel.DomainServices.Server.dll">
+      <publishTime>04/12/2013 02:58:10</publishTime>
+    </File>
+    <File Include="bin/System.Web.Abstractions.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.Web.ApplicationServices.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.Web.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.Web.DynamicData.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.Web.Entity.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.Web.Extensions.dll">
+      <publishTime>03/14/2016 20:06:40</publishTime>
+    </File>
+    <File Include="bin/System.Web.Helpers.dll">
+      <publishTime>04/14/2016 15:13:04</publishTime>
+    </File>
+    <File Include="bin/System.Web.Mvc.dll">
+      <publishTime>04/14/2016 15:13:08</publishTime>
+    </File>
+    <File Include="bin/System.Web.Razor.dll">
+      <publishTime>04/14/2016 15:13:01</publishTime>
+    </File>
+    <File Include="bin/System.Web.Routing.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.Web.Services.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Deployment.dll">
+      <publishTime>04/14/2016 15:13:04</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.dll">
+      <publishTime>04/14/2016 15:13:04</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Razor.dll">
+      <publishTime>04/14/2016 15:13:04</publishTime>
+    </File>
+    <File Include="bin/System.Xml.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.Xml.Linq.dll">
+      <publishTime>03/14/2016 20:06:40</publishTime>
+    </File>
+    <File Include="bin/VotGESOrders.Web.dll">
+      <publishTime>04/14/2016 16:42:32</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.ServiceModel.DomainServices.Hosting.resources.dll">
+      <publishTime>04/12/2013 02:58:20</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.ServiceModel.DomainServices.Server.resources.dll">
+      <publishTime>04/12/2013 02:58:20</publishTime>
+    </File>
+    <File Include="bin/zh-Hant/System.ServiceModel.DomainServices.Hosting.resources.dll">
+      <publishTime>04/12/2013 02:58:20</publishTime>
+    </File>
+    <File Include="bin/zh-Hant/System.ServiceModel.DomainServices.Server.resources.dll">
+      <publishTime>04/12/2013 02:58:20</publishTime>
+    </File>
+    <File Include="ClientBin/VotGESOrders.xap">
+      <publishTime>04/14/2016 16:42:40</publishTime>
+    </File>
+    <File Include="Content/Site.css">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-bg_flat_75_ffffff_40x100.png">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-bg_glass_55_fbf9ee_1x400.png">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-bg_glass_65_ffffff_1x400.png">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-bg_glass_75_dadada_1x400.png">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-bg_glass_95_fef1ec_1x400.png">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-bg_highlight-soft_75_cccccc_1x100.png">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-icons_222222_256x240.png">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-icons_2e83ff_256x240.png">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-icons_454545_256x240.png">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-icons_888888_256x240.png">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-icons_cd0a0a_256x240.png">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery-ui.css">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Controllers/CranController.cs">
+      <publishTime>03/15/2016 11:12:17</publishTime>
+    </File>
+    <File Include="Controllers/HomeController.cs">
+      <publishTime>03/15/2016 12:56:16</publishTime>
+    </File>
+    <File Include="CranService.svc">
+      <publishTime>01/18/2016 10:42:13</publishTime>
+    </File>
+    <File Include="CranService.svc.cs">
+      <publishTime>03/23/2016 14:07:32</publishTime>
+    </File>
+    <File Include="Global.asax">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Global.asax.cs">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Logging/Logger.cs">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Models/AccountModels.cs">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Models/CranTaskInfo.cs">
+      <publishTime>03/25/2016 13:08:41</publishTime>
+    </File>
+    <File Include="Models/LastUpdate.cs">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Models/MailContext.cs">
+      <publishTime>03/25/2016 09:57:40</publishTime>
+    </File>
+    <File Include="Models/Order.cs">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Models/OrderFilter.shared.cs">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Models/OrderInfo.shared.cs">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Models/OrderObject.cs">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Models/OrderObjectContext.cs">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Models/OrdersContext.cs">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Models/OrdersUser.cs">
+      <publishTime>03/25/2016 08:54:51</publishTime>
+    </File>
+    <File Include="Models/OrderValidator.shared.cs">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Models/OrderView.cs">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Models/UserContext.cs">
+      <publishTime>03/25/2016 08:55:04</publishTime>
+    </File>
+    <File Include="Models/XMLStringSerializer.shared.cs">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="packages.config">
+      <publishTime>04/14/2016 16:40:54</publishTime>
+    </File>
+    <File Include="Properties/AssemblyInfo.cs">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Properties/PublishProfiles/Release.pubxml">
+      <publishTime>04/14/2016 16:13:15</publishTime>
+    </File>
+    <File Include="Properties/PublishProfiles/Test.pubxml">
+      <publishTime>11/16/2015 12:45:42</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.4.1-vsdoc.js">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.4.1.js">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.4.1.min.js">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.4.4-vsdoc.js">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.4.4.js">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.4.4.min.js">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Scripts/jquery-ui.js">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Scripts/jquery-ui.min.js">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Scripts/jquery.unobtrusive-ajax.js">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Scripts/jquery.unobtrusive-ajax.min.js">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate-vsdoc.js">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.js">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.min.js">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.unobtrusive.js">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.unobtrusive.min.js">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Scripts/MicrosoftAjax.debug.js">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Scripts/MicrosoftAjax.js">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Scripts/MicrosoftMvcAjax.debug.js">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Scripts/MicrosoftMvcAjax.js">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Scripts/MicrosoftMvcValidation.debug.js">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Scripts/MicrosoftMvcValidation.js">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Services/AuthenticationDomainService.cs">
+      <publishTime>01/28/2016 10:12:41</publishTime>
+    </File>
+    <File Include="Services/LoggerService.cs">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Services/OrdersDomainService.cs">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Silverlight.js">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="SQL/1.xml">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="SQL/objects.sql">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="SQL/Orders.sql">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="SQL/temp.sql">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="SQL/users.sql">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="SQL/users_PI.sql">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Views/Home/About.aspx">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Views/Home/GetAllObjects.aspx">
+      <publishTime>09/17/2015 13:28:28</publishTime>
+    </File>
+    <File Include="Views/Home/Index.aspx">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Views/Home/PrintCranTasks.aspx">
+      <publishTime>03/23/2016 15:38:24</publishTime>
+    </File>
+    <File Include="Views/Home/ProcessExpiredOrders.aspx">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Views/Home/TestMail.aspx">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Views/Home/VotGESOrders.aspx">
+      <publishTime>01/25/2016 12:43:18</publishTime>
+    </File>
+    <File Include="Views/Shared/Error.aspx">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Views/Shared/LogOnUserControl.ascx">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Views/Shared/Site.Master">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Views/Web.config">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="VotGESOrders.Web.csproj">
+      <publishTime>04/14/2016 16:41:10</publishTime>
+    </File>
+    <File Include="VotGESOrders.Web.csproj.user">
+      <publishTime>04/14/2016 16:41:10</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>04/14/2016 16:47:01</publishTime>
+    </File>
+    <File Include="Web.Debug.config">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+    <File Include="Web.Release.config">
+      <publishTime>09/16/2014 08:27:38</publishTime>
+    </File>
+  </ItemGroup>
+</Project>
