@@ -7,7 +7,7 @@
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="1100" d:DesignHeight="600"
             xmlns:charts="clr-namespace:Visiblox.Charts;assembly=Visiblox.Charts"
-           Title="CransPage Page">
+           Title="Заявки на кран">
     <Grid x:Name="LayoutRoot">
         <Grid Name="dataGrid">
             <Grid.ColumnDefinitions>

@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Net;
 using System.Runtime.InteropServices.Automation;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 
-namespace VotGESOrders {
+namespace VotGESOrders
+{
 	public class WebBrowserBridge {
 		private class HyperlinkButtonWrapper : HyperlinkButton {
 			public void OpenURL(String navigateUri, String target = "_blank") {
