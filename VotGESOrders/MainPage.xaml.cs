@@ -46,21 +46,24 @@ namespace VotGESOrders
 		}
 
 		public void finish() {
-			Logger.info("Main page finish "+ (ContentFrame.Content).ToString());
-			
-			if (ContentFrame.Content is Home){
-				(ContentFrame.Content as Home).finish();
-			}
-			else if (ContentFrame.Content is CransPage) {
-				(ContentFrame.Content as CransPage).init();
-			}
-			else {
-				Logger.info("Ручное перенапавление");
-				STARTING = false;
-				ContentFrame.Navigate(new Uri("/Home", UriKind.Relative));
-			}
-			STARTING = false;
+			try {
+				Logger.info("Main page finish " + (ContentFrame.Content).ToString());
 
+
+				if (ContentFrame.Content is Home) {
+					(ContentFrame.Content as Home).finish();
+				} else if (ContentFrame.Content is CransPage) {
+					(ContentFrame.Content as CransPage).init();
+				} else {
+					Logger.info("Ручное перенапавление");
+					STARTING = false;
+					ContentFrame.Navigate(new Uri("/Home", UriKind.Relative));
+				}
+				STARTING = false;
+			}catch (Exception e) {
+				Logger.info("Ошибка в MainPage.finish");
+				Logger.info(e.ToString());
+			}
 			
 		}
 
