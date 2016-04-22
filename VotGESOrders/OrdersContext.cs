@@ -127,8 +127,7 @@ namespace VotGESOrders
 					}
 				}
 				catch (Exception e) {
-					Logger.info("ошибка в loadOrders");
-					Logger.info(e.ToString());
+					Logger.info("ошибка в loadOrders "+ e.ToString());
 				}
 			}
 		}

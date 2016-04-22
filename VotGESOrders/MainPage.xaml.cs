@@ -9,14 +9,14 @@ namespace VotGESOrders
 {
 	public partial class MainPage : UserControl
 	{
-		public static bool STARTING=true;
+		public static bool STARTING = true;
 
 		public MainPage() {
-			InitializeComponent();	
+			InitializeComponent();
 		}
 
-		public void startLoad() {	
-			Logger.info("Старт главной страницы");			
+		public void startLoad() {
+			Logger.info("Старт главной страницы");
 			OrdersContext.init();
 			if (Application.Current.IsRunningOutOfBrowser) {
 				// Проверка наличия новых версий
@@ -36,8 +36,7 @@ namespace VotGESOrders
 			if (e.UpdateAvailable) {
 				MessageBox.Show("Установлена новая версия. Перезапустите приложение.");
 				App.Current.MainWindow.Close();
-			}
-			else if (e.Error != null && e.Error is PlatformNotSupportedException) {
+			} else if (e.Error != null && e.Error is PlatformNotSupportedException) {
 				MessageBox.Show("Есть новые версии приложения"
 					 + "однако для их применения необходима новая версия Silverlight. " +
 					 "Посетите сайт http://silverlight.net для обновления Silverlight.");
@@ -60,11 +59,17 @@ namespace VotGESOrders
 					ContentFrame.Navigate(new Uri("/Home", UriKind.Relative));
 				}
 				STARTING = false;
-			}catch (Exception e) {
-				Logger.info("Ошибка в MainPage.finish");
-				Logger.info(e.ToString());
+			} catch (Exception e) {
+				Logger.info("Ошибка в MainPage.finish "+ e.ToString());
+				try {
+					Logger.info("Ручное перенапавление");
+					STARTING = false;
+					ContentFrame.Navigate(new Uri("/Home", UriKind.Relative));
+				} catch (Exception ex) {
+					Logger.info("Ошибка при перенаправлении " + ex.ToString());
+				}
 			}
-			
+
 		}
 
 		// После перехода в фрейме убедиться, что выбрана кнопка HyperlinkButton, представляющая текущую страницу
