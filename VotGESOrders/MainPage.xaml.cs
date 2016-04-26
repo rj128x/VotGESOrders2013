@@ -46,25 +46,42 @@ namespace VotGESOrders
 
 		public void finish() {
 			try {
-				Logger.info("Main page finish " + (ContentFrame.Content).ToString());
+				Logger.info("Main page finish "+ ContentFrame == null ? "ContentFrame is null" : ContentFrame.ToString());
+				//throw new Exception();
+				if (ContentFrame != null) {
+					Logger.info(ContentFrame.Content == null ? "ContentFrame.content is null" : ContentFrame.Content.ToString());
 
-
-				if (ContentFrame.Content is Home) {
-					(ContentFrame.Content as Home).finish();
-				} else if (ContentFrame.Content is CransPage) {
-					(ContentFrame.Content as CransPage).init();
+					if (ContentFrame.Content == null) {
+						Logger.info("Ручное перенаправление (contentframe=null)");
+						STARTING = false;
+						ContentFrame.Content = null;
+						Home home = new Home();
+						ContentFrame.Content = home;
+					}
+					else if (ContentFrame.Content is Home) {
+						(ContentFrame.Content as Home).finish();
+					} else if (ContentFrame.Content is CransPage) {
+						(ContentFrame.Content as CransPage).init();
+					}else  {
+						Logger.info("Ручное перенаправление");
+						STARTING = false;
+						ContentFrame.Navigate(new Uri("/Home", UriKind.Relative));
+					}
 				} else {
-					Logger.info("Ручное перенапавление");
-					STARTING = false;
-					ContentFrame.Navigate(new Uri("/Home", UriKind.Relative));
+					Logger.info("ContentFrame null ???");
+					//throw new Exception("ContentFrame null ??? ");
 				}
 				STARTING = false;
 			} catch (Exception e) {
-				Logger.info("Ошибка в MainPage.finish "+ e.ToString());
+				Logger.info("Ошибка в MainPage.finish " + e.ToString() + " " + e.StackTrace);
 				try {
-					Logger.info("Ручное перенапавление");
+					Logger.info("Ручное перенаправление");
+
 					STARTING = false;
-					ContentFrame.Navigate(new Uri("/Home", UriKind.Relative));
+					ContentFrame.Content = null;
+					Home home = new Home();
+					ContentFrame.Content = home;
+					//ContentFrame.Navigate(new Uri("/Home", UriKind.Relative));
 				} catch (Exception ex) {
 					Logger.info("Ошибка при перенаправлении " + ex.ToString());
 				}
@@ -89,8 +106,8 @@ namespace VotGESOrders
 		// Если во время навигации возникает ошибка, отобразить окно ошибки
 		private void ContentFrame_NavigationFailed(object sender, NavigationFailedEventArgs e) {
 			e.Handled = true;
-			ChildWindow errorWin = new ErrorWindow(e.Uri);
-			errorWin.Show();
+			/*ChildWindow errorWin = new ErrorWindow(e.Uri);
+			errorWin.Show();*/
 		}
 	}
 }
