@@ -74,7 +74,10 @@
 						<toolkit:DataField Name="Mail" Label="Почта">
 							<TextBox Name="txtMail" Text="{Binding Mail, Mode=TwoWay}"/>
 						</toolkit:DataField>
-						<toolkit:DataField Name="SendAllMail" Label="">
+                        <toolkit:DataField Name="AddLogins" Label="Псевдо">
+                            <TextBox Name="txtAddLogins" Text="{Binding AddLogins, Mode=TwoWay}"/>
+                        </toolkit:DataField>
+                        <toolkit:DataField Name="SendAllMail" Label="">
 							<CheckBox Content="Оповещать о всех событиях" IsChecked="{Binding SendAllMail,Mode=TwoWay}"/>
 						</toolkit:DataField>
 						<toolkit:DataField Name="SendCreateMail" Label="">

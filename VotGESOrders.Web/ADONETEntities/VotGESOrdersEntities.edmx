@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="VotGESOrdersModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="VotGESOrdersModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CranTask">
           <Key>
             <PropertyRef Name="Number" />
@@ -97,6 +97,16 @@
           <Property Name="expiredCloseHours" Type="float" />
           <Property Name="expiredCompleteHours" Type="float" />
         </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="userID" />
@@ -127,6 +137,7 @@
           <Property Name="sendAgreeCranTask" Type="bit" Nullable="false" />
           <Property Name="sendAllAgreeCranTask" Type="bit" Nullable="false" />
           <Property Name="sendOnlyMZCranTask" Type="bit" Nullable="false" />
+          <Property Name="AddLogins" Type="varchar" MaxLength="250" />
         </EntityType>
         <Association Name="FK_Orders_OrderObjects">
           <End Role="OrderObjects" Type="Self.OrderObjects" Multiplicity="1" />
@@ -213,10 +224,11 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="VotGESOrdersModelStoreContainer">
-          <EntitySet Name="CranTask" EntityType="Self.CranTask" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="OrderObjects" EntityType="Self.OrderObjects" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="CranTask" EntityType="Self.CranTask" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderObjects" EntityType="Self.OrderObjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Orders_OrderObjects" Association="Self.FK_Orders_OrderObjects">
             <End Role="OrderObjects" EntitySet="OrderObjects" />
             <End Role="Orders" EntitySet="Orders" />
@@ -283,6 +295,7 @@
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
           <EntitySet Name="CranTask" EntityType="VotGESOrdersModel.CranTask" />
+          <EntitySet Name="sysdiagrams" EntityType="VotGESOrdersModel.sysdiagrams" />
         </EntityContainer>
         <EntityType Name="OrderObjects">
           <Key>
@@ -393,6 +406,7 @@
           <Property Name="sendAllAgreeCranTask" Type="Boolean" Nullable="false" />
           <Property Name="canReviewCranMZTask" Type="Boolean" Nullable="false" />
           <Property Name="sendOnlyMZCranTask" Type="Boolean" Nullable="false" />
+          <Property Name="AddLogins" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_Orders_OrderObjects">
           <End Role="OrderObjects" Type="VotGESOrdersModel.OrderObjects" Multiplicity="1" />
@@ -505,6 +519,16 @@
           <Property Name="RealDateEnd" Type="DateTime" Precision="3" />
           <Property Name="AuthorFinish" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -571,7 +595,8 @@
             <ScalarProperty Name="expiredCompleteHours" ColumnName="expiredCompleteHours" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Users"><EntityTypeMapping TypeName="VotGESOrdersModel.Users"><MappingFragment StoreEntitySet="Users">
-            <ScalarProperty Name="sendOnlyMZCranTask" ColumnName="sendOnlyMZCranTask" />
+            <ScalarProperty Name="AddLogins" ColumnName="AddLogins" />
+                <ScalarProperty Name="sendOnlyMZCranTask" ColumnName="sendOnlyMZCranTask" />
                 <ScalarProperty Name="canReviewCranMZTask" ColumnName="canReviewCranMZTask" />
                 <ScalarProperty Name="sendAllAgreeCranTask" ColumnName="sendAllAgreeCranTask" />
                 <ScalarProperty Name="sendAgreeCranTask" ColumnName="sendAgreeCranTask" />
@@ -623,6 +648,17 @@
                 <ScalarProperty Name="Author" ColumnName="Author" />
                 <ScalarProperty Name="CranNumber" ColumnName="CranNumber" />
                 <ScalarProperty Name="Number" ColumnName="Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="VotGESOrdersModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -680,6 +716,7 @@
           <ConnectorPoint PointX="3" PointY="4.7456131998697915" />
         </AssociationConnector>
         <EntityTypeShape EntityType="VotGESOrdersModel.CranTask" Width="1.5" PointX="4.875" PointY="1.125" />
+        <EntityTypeShape EntityType="VotGESOrdersModel.sysdiagrams" Width="1.5" PointX="7.375" PointY="0.75" />
       </Diagram>
     </Diagrams>
   </Designer>

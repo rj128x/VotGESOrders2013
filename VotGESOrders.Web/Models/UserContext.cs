@@ -32,7 +32,7 @@ namespace VotGESOrders.Web.Models
 				}
 				VotGESOrdersEntities context=new VotGESOrdersEntities();
 
-				IQueryable<Users> users=(from u in context.Users where u.userID == newUser.UserID select u);
+				IQueryable<Users> users=(from u in context.Users where u.userID == newUser.UserID  select u);
 				Users user=null;
 				if (users.Count()==0) {
 					Logger.info("===Новый пользователь", Logger.LoggerSource.usersContext);
@@ -67,6 +67,7 @@ namespace VotGESOrders.Web.Models
 				user.sendAllAgreeCranTask = newUser.SendAllAgreeCranTask;
 				user.sendAllCranTask = newUser.SendAllCranTask;
 				user.sendOnlyMZCranTask = newUser.SendOnlyMZCranTask;
+				user.AddLogins = newUser.AddLogins;
 				
 				context.SaveChanges();
 

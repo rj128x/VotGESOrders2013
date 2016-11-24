@@ -41,6 +41,7 @@ namespace VotGESOrders.Web.Models
 		public bool SendAgreeCranTask { get; set; }
 		public bool SendAllAgreeCranTask { get; set; }
 		public bool SendOnlyMZCranTask { get; set; }
+		public string AddLogins { get; set; }
 
 
 		protected static VotGESOrdersEntities context;
@@ -66,7 +67,7 @@ namespace VotGESOrders.Web.Models
 
 		public static OrdersUser loadFromCache(string userName) {
 			try {
-				OrdersUser user=allUsers.AsQueryable().First(u => u.Name.ToLower() == userName.ToLower());
+				OrdersUser user = allUsers.AsQueryable().First(u => u.Name.ToLower() == userName.ToLower() || (u.AddLogins.ToLower() + ";").Contains(userName.ToLower() + ";"));
 				return user;
 			} catch (Exception e) {
 				OrdersUser user=new OrdersUser();
@@ -121,6 +122,7 @@ namespace VotGESOrders.Web.Models
 				user.SendAllAgreeCranTask = userDB.sendAllAgreeCranTask;
 				user.SendAllCranTask = userDB.sendAllCranTask;
 				user.SendOnlyMZCranTask = userDB.sendOnlyMZCranTask;
+				user.AddLogins = userDB.AddLogins;
 				
 				try {
 					user.Mails = user.Mail.Split(';').ToList();

@@ -3875,6 +3875,8 @@ namespace VotGESOrders.Web.Models
     public sealed partial class OrdersUser : Entity
     {
         
+        private string _addLogins;
+        
         private bool _allowAgreeOrders;
         
         private bool _allowChangeOrder;
@@ -3936,6 +3938,8 @@ namespace VotGESOrders.Web.Models
         /// не может быть использован для последующей настройки объекта.
         /// </summary>
         partial void OnCreated();
+        partial void OnAddLoginsChanging(string value);
+        partial void OnAddLoginsChanged();
         partial void OnAllowAgreeOrdersChanging(bool value);
         partial void OnAllowAgreeOrdersChanged();
         partial void OnAllowChangeOrderChanging(bool value);
@@ -4004,6 +4008,30 @@ namespace VotGESOrders.Web.Models
         public OrdersUser()
         {
             this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Возвращает или задает значение параметра "AddLogins".
+        /// </summary>
+        [DataMember()]
+        public string AddLogins
+        {
+            get
+            {
+                return this._addLogins;
+            }
+            set
+            {
+                if ((this._addLogins != value))
+                {
+                    this.OnAddLoginsChanging(value);
+                    this.RaiseDataMemberChanging("AddLogins");
+                    this.ValidateProperty("AddLogins", value);
+                    this._addLogins = value;
+                    this.RaiseDataMemberChanged("AddLogins");
+                    this.OnAddLoginsChanged();
+                }
+            }
         }
         
         /// <summary>

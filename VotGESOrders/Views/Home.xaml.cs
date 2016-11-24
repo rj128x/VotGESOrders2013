@@ -98,28 +98,18 @@ namespace VotGESOrders
 			}
 
 		}
-
 		void context_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
 			OrdersContext.Current.View.Refresh();
 			//ordersGrid.UpdateLayout();
 		}
-
-
-
-
-
-
 		private void btnCreateOrder_Click(object sender, RoutedEventArgs e) {
 			OrderOperations.Current.initCreate();
 		}
-
 		private void btnRefresh_Click(object sender, RoutedEventArgs e) {
 			//OrdersContext.Context.Load(OrdersContext.Context.LoadOrdersQuery(), System.ServiceModel.DomainServices.Client.LoadBehavior.RefreshCurrent, false);
 			OrdersContext.Current.RefreshOrders(true);
 			OrdersContext.Current.View.Refresh();
 		}
-
-
 		private void btnVisFilter_Click(object sender, RoutedEventArgs e) {
 			if (cntrlFilter.Visibility == System.Windows.Visibility.Visible) {
 				cntrlFilter.Visibility = System.Windows.Visibility.Collapsed;
@@ -127,7 +117,6 @@ namespace VotGESOrders
 				cntrlFilter.Visibility = System.Windows.Visibility.Visible;
 			}
 		}
-
 		private void ordersGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
 			Order order=ordersGridControl.ordersGrid.SelectedItem as Order;
 			if (order != null) {
