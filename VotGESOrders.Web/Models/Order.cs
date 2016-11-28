@@ -63,6 +63,16 @@ namespace VotGESOrders.Web.Models
 			}
 		}
 
+		private int orderYear;
+		public int OrderYear {
+			get { return orderYear; }
+			set {
+				orderYear = value;
+			}
+		}
+
+		public bool IsCurrentYear { get; set; }
+
 		public static double MaxYearPrevNumber;
 
 		public static void init() {
@@ -782,6 +792,17 @@ namespace VotGESOrders.Web.Models
 				ParentOrderNumber = 0;
 				ParentOrderYearNumber = 0;
 			}
+
+			if (OrderIsExtend || OrderIsFixErrorEnter) {
+				try {
+					OrderYear = GetOrder(Math.Floor(OrderNumber), currentUser, false, null).OrderDateCreate.Year;
+				} catch (Exception e) {
+					OrderYear = OrderDateCreate.Year;
+				}
+			} else {
+				OrderYear = OrderDateCreate.Year;
+			}
+			IsCurrentYear = OrderYear == DateTime.Now.Year;
 			OrderHasChildOrder = ChildOrderNumber > 0;
 			OrderHasParentOrder = ParentOrderNumber > 0;
 			checkTimeToOpen();

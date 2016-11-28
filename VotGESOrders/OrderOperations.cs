@@ -195,6 +195,41 @@ namespace VotGESOrders
 			newOrderWindow.Show();
 		}
 
+		public void initCreateBase(Order order) {
+			GlobalStatus.Current.IsChangingOrder = true;
+			Order newOrder = new Order();
+			newOrder.OrderOperation = OrderOperationEnum.create;
+			newOrder.OrderNumber = OrderNumber--;
+			newOrder.UserCreateOrderID = WebContext.Current.User.UserID;
+			newOrder.OrderDateCreate = DateTime.Now;
+			newOrder.OrderIsExtend = false;
+			newOrder.OrderIsFixErrorEnter = false;
+			newOrder.OrderType = order.OrderType;
+			newOrder.OrderTypeName = order.OrderTypeName;
+			newOrder.OrderTypeShortName = order.OrderTypeShortName;
+			newOrder.ReadyTime = order.ReadyTime;
+			newOrder.SelOrderObject = order.SelOrderObject;
+			newOrder.SelOrderObjectID = order.SelOrderObjectID;
+			newOrder.SelOrderObjectText = order.SelOrderObjectText;
+			newOrder.AgreeUsersIDSText = order.AgreeUsersIDSText;
+			newOrder.AgreeUsersDict = new Dictionary<int, string>();
+			try {
+				foreach (KeyValuePair<int, string> de in order.AgreeUsersDict) {
+					newOrder.AgreeUsersDict.Add(de.Key, de.Value);
+				}
+			} catch { }
+			newOrder.FullOrderObjectInfo = order.FullOrderObjectInfo;
+			newOrder.OrderObjectAddInfo = order.OrderObjectAddInfo;
+			newOrder.CreateText = order.CreateText;
+			newOrder.OrderText = order.OrderText;
+			newOrder.AgreeText = order.AgreeText;
+
+			newOrderWindow.CurrentOrder = newOrder;
+			newOrderWindow.IsNewOrder = true;
+
+			newOrderWindow.Show();
+		}
+
 		public void initChange() {
 			GlobalStatus.Current.IsChangingOrder = true;
 			newOrderWindow.CurrentOrder = CurrentOrder;

@@ -169,6 +169,8 @@ namespace VotGESOrders.Web.Models
         
         private bool _hasComments;
         
+        private bool _isCurrentYear;
+        
         private string _newComment;
         
         private string _openText;
@@ -240,6 +242,8 @@ namespace VotGESOrders.Web.Models
         private string _orderTypeName;
         
         private string _orderTypeShortName;
+        
+        private int _orderYear;
         
         private double _orderYearNumber;
         
@@ -370,6 +374,8 @@ namespace VotGESOrders.Web.Models
         partial void OnFullOrderObjectInfoChanged();
         partial void OnHasCommentsChanging(bool value);
         partial void OnHasCommentsChanged();
+        partial void OnIsCurrentYearChanging(bool value);
+        partial void OnIsCurrentYearChanged();
         partial void OnNewCommentChanging(string value);
         partial void OnNewCommentChanged();
         partial void OnOpenTextChanging(string value);
@@ -442,6 +448,8 @@ namespace VotGESOrders.Web.Models
         partial void OnOrderTypeNameChanged();
         partial void OnOrderTypeShortNameChanging(string value);
         partial void OnOrderTypeShortNameChanged();
+        partial void OnOrderYearChanging(int value);
+        partial void OnOrderYearChanged();
         partial void OnOrderYearNumberChanging(double value);
         partial void OnOrderYearNumberChanged();
         partial void OnParentOrderNumberChanging(double value);
@@ -1422,6 +1430,30 @@ namespace VotGESOrders.Web.Models
         }
         
         /// <summary>
+        /// Возвращает или задает значение параметра "IsCurrentYear".
+        /// </summary>
+        [DataMember()]
+        public bool IsCurrentYear
+        {
+            get
+            {
+                return this._isCurrentYear;
+            }
+            set
+            {
+                if ((this._isCurrentYear != value))
+                {
+                    this.OnIsCurrentYearChanging(value);
+                    this.RaiseDataMemberChanging("IsCurrentYear");
+                    this.ValidateProperty("IsCurrentYear", value);
+                    this._isCurrentYear = value;
+                    this.RaiseDataMemberChanged("IsCurrentYear");
+                    this.OnIsCurrentYearChanged();
+                }
+            }
+        }
+        
+        /// <summary>
         /// Возвращает или задает значение параметра "NewComment".
         /// </summary>
         [CustomValidation(typeof(OrderValidator), "ValidateNewComment", ErrorMessage="Ошибка")]
@@ -2297,6 +2329,30 @@ namespace VotGESOrders.Web.Models
                     this._orderTypeShortName = value;
                     this.RaiseDataMemberChanged("OrderTypeShortName");
                     this.OnOrderTypeShortNameChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Возвращает или задает значение параметра "OrderYear".
+        /// </summary>
+        [DataMember()]
+        public int OrderYear
+        {
+            get
+            {
+                return this._orderYear;
+            }
+            set
+            {
+                if ((this._orderYear != value))
+                {
+                    this.OnOrderYearChanging(value);
+                    this.RaiseDataMemberChanging("OrderYear");
+                    this.ValidateProperty("OrderYear", value);
+                    this._orderYear = value;
+                    this.RaiseDataMemberChanged("OrderYear");
+                    this.OnOrderYearChanged();
                 }
             }
         }

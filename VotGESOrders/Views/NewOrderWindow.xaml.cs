@@ -72,8 +72,8 @@ namespace VotGESOrders.Views
 				if (IsNewOrder && !CurrentOrder.OrderIsExtend && !CurrentOrder.OrderIsFixErrorEnter) {
 					CurrentOrder.PlanStartDate = DateTime.Now.Date.AddDays(1).AddHours(8);
 					CurrentOrder.PlanStopDate = DateTime.Now.Date.AddDays(1).AddHours(17);
-					CurrentOrder.AgreeUsersDict = new Dictionary<int, string>();
-
+					if (CurrentOrder.AgreeUsersDict==null)
+						CurrentOrder.AgreeUsersDict = new Dictionary<int, string>();
 				}
 				if (CurrentOrder.OrderIsExtend || CurrentOrder.OrderIsFixErrorEnter) {
 					treeObjects.Visibility = System.Windows.Visibility.Collapsed;

@@ -350,10 +350,10 @@ namespace VotGESOrders
 			OrdersContext.Current.SendMail(true);
 		}
 
-		
-
-		
-
-
+		private void btnCreateBaseOrder_Click(object sender, RoutedEventArgs e) {
+			if (OrderOperations.Current.CurrentOrder != null) {
+				OrderOperations.Current.initCreateBase(OrderOperations.Current.CurrentOrder);
+			}
+		}
 	}
 }

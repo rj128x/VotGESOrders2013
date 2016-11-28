@@ -20,9 +20,12 @@
 		<TextBlock x:Name="HeaderText" Style="{StaticResource HeaderTextStyle}" 
 					  Text="{Binding HomeHeader, Source={StaticResource globalStatus}}" VerticalAlignment="Center"/>
 		<StackPanel Height="25" Orientation="Horizontal" FlowDirection="RightToLeft" Margin="0,0,0,0" Name="pnlButtons">
-			<Button x:Name="btnCreateOrder" Click="btnCreateOrder_Click" Content="Подать заявку" 
+            <Button x:Name="btnCreateBaseOrder" Click="btnCreateBaseOrder_Click" Content="Создать на основе" 
 							  Visibility="{Binding AllowCreateOrder, Converter={StaticResource visibilityConverter} }"
 							IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"/>
+            <Button x:Name="btnCreateOrder" Click="btnCreateOrder_Click" Content="Подать заявку" 
+							  Visibility="{Binding AllowCreateOrder, Converter={StaticResource visibilityConverter} }"
+							IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"/>            
 			
 			<StackPanel Orientation="Horizontal" Margin="10,0,10,0" FlowDirection="LeftToRight">
 				<ComboBox Name="cmbFilterType"
