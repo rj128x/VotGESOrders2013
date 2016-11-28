@@ -2254,6 +2254,30 @@ namespace VotGESOrders.Web.ADONETEntities
         private Nullable<global::System.Double> _expiredCompleteHours;
         partial void OnexpiredCompleteHoursChanging(Nullable<global::System.Double> value);
         partial void OnexpiredCompleteHoursChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Double> orderYearNumber
+        {
+            get
+            {
+                return _orderYearNumber;
+            }
+            set
+            {
+                OnorderYearNumberChanging(value);
+                ReportPropertyChanging("orderYearNumber");
+                _orderYearNumber = StructuralObject.SetValidValue(value, "orderYearNumber");
+                ReportPropertyChanged("orderYearNumber");
+                OnorderYearNumberChanged();
+            }
+        }
+        private Nullable<global::System.Double> _orderYearNumber;
+        partial void OnorderYearNumberChanging(Nullable<global::System.Double> value);
+        partial void OnorderYearNumberChanged();
 
         #endregion
 
@@ -2724,7 +2748,8 @@ namespace VotGESOrders.Web.ADONETEntities
         /// <param name="sendAllAgreeCranTask">Исходное значение свойства sendAllAgreeCranTask.</param>
         /// <param name="canReviewCranMZTask">Исходное значение свойства canReviewCranMZTask.</param>
         /// <param name="sendOnlyMZCranTask">Исходное значение свойства sendOnlyMZCranTask.</param>
-        public static Users CreateUsers(global::System.Int32 userID, global::System.String name, global::System.String fullName, global::System.String mail, global::System.Boolean sendAllMail, global::System.Boolean sendAgreeMail, global::System.Boolean sendCreateMail, global::System.Boolean allowCreateOrder, global::System.Boolean allowCreateCrashOrder, global::System.Boolean allowReviewOrder, global::System.Boolean allowChangeOrder, global::System.Boolean allowEditTree, global::System.Boolean allowEditUsers, global::System.Boolean allowAgreeOrders, global::System.Boolean sendAllCreateMail, global::System.Boolean sendAllAgreeMail, global::System.Boolean allowEditOrders, global::System.Boolean canCreateCranTask, global::System.Boolean canReviewCranTask, global::System.Boolean canAgreeCranTask, global::System.Boolean sendAllCreateCranTask, global::System.Boolean sendAllCranTask, global::System.Boolean sendAgreeCranTask, global::System.Boolean sendAllAgreeCranTask, global::System.Boolean canReviewCranMZTask, global::System.Boolean sendOnlyMZCranTask)
+        /// <param name="addLogins">Исходное значение свойства AddLogins.</param>
+        public static Users CreateUsers(global::System.Int32 userID, global::System.String name, global::System.String fullName, global::System.String mail, global::System.Boolean sendAllMail, global::System.Boolean sendAgreeMail, global::System.Boolean sendCreateMail, global::System.Boolean allowCreateOrder, global::System.Boolean allowCreateCrashOrder, global::System.Boolean allowReviewOrder, global::System.Boolean allowChangeOrder, global::System.Boolean allowEditTree, global::System.Boolean allowEditUsers, global::System.Boolean allowAgreeOrders, global::System.Boolean sendAllCreateMail, global::System.Boolean sendAllAgreeMail, global::System.Boolean allowEditOrders, global::System.Boolean canCreateCranTask, global::System.Boolean canReviewCranTask, global::System.Boolean canAgreeCranTask, global::System.Boolean sendAllCreateCranTask, global::System.Boolean sendAllCranTask, global::System.Boolean sendAgreeCranTask, global::System.Boolean sendAllAgreeCranTask, global::System.Boolean canReviewCranMZTask, global::System.Boolean sendOnlyMZCranTask, global::System.String addLogins)
         {
             Users users = new Users();
             users.userID = userID;
@@ -2753,6 +2778,7 @@ namespace VotGESOrders.Web.ADONETEntities
             users.sendAllAgreeCranTask = sendAllAgreeCranTask;
             users.canReviewCranMZTask = canReviewCranMZTask;
             users.sendOnlyMZCranTask = sendOnlyMZCranTask;
+            users.AddLogins = addLogins;
             return users;
         }
 
@@ -3390,7 +3416,7 @@ namespace VotGESOrders.Web.ADONETEntities
         /// <summary>
         /// Нет доступной документации по метаданным.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.String AddLogins
         {
@@ -3402,7 +3428,7 @@ namespace VotGESOrders.Web.ADONETEntities
             {
                 OnAddLoginsChanging(value);
                 ReportPropertyChanging("AddLogins");
-                _AddLogins = StructuralObject.SetValidValue(value, true, "AddLogins");
+                _AddLogins = StructuralObject.SetValidValue(value, false, "AddLogins");
                 ReportPropertyChanged("AddLogins");
                 OnAddLoginsChanged();
             }

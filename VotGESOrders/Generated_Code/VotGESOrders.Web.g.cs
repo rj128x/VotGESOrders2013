@@ -139,6 +139,8 @@ namespace VotGESOrders.Web.Models
         
         private double _childOrderNumber;
         
+        private double _childOrderYearNumber;
+        
         private string _closeText;
         
         private string _commentsText;
@@ -239,9 +241,13 @@ namespace VotGESOrders.Web.Models
         
         private string _orderTypeShortName;
         
+        private double _orderYearNumber;
+        
         private EntityRef<Order> _parentOrder;
         
         private double _parentOrderNumber;
+        
+        private double _parentOrderYearNumber;
         
         private DateTime _planStartDate;
         
@@ -334,6 +340,8 @@ namespace VotGESOrders.Web.Models
         partial void OnCancelTextChanged();
         partial void OnChildOrderNumberChanging(double value);
         partial void OnChildOrderNumberChanged();
+        partial void OnChildOrderYearNumberChanging(double value);
+        partial void OnChildOrderYearNumberChanged();
         partial void OnCloseTextChanging(string value);
         partial void OnCloseTextChanged();
         partial void OnCommentsTextChanging(string value);
@@ -434,8 +442,12 @@ namespace VotGESOrders.Web.Models
         partial void OnOrderTypeNameChanged();
         partial void OnOrderTypeShortNameChanging(string value);
         partial void OnOrderTypeShortNameChanged();
+        partial void OnOrderYearNumberChanging(double value);
+        partial void OnOrderYearNumberChanged();
         partial void OnParentOrderNumberChanging(double value);
         partial void OnParentOrderNumberChanged();
+        partial void OnParentOrderYearNumberChanging(double value);
+        partial void OnParentOrderYearNumberChanged();
         partial void OnPlanStartDateChanging(DateTime value);
         partial void OnPlanStartDateChanged();
         partial void OnPlanStopDateChanging(DateTime value);
@@ -1033,6 +1045,30 @@ namespace VotGESOrders.Web.Models
                     this._childOrderNumber = value;
                     this.RaiseDataMemberChanged("ChildOrderNumber");
                     this.OnChildOrderNumberChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Возвращает или задает значение параметра "ChildOrderYearNumber".
+        /// </summary>
+        [DataMember()]
+        public double ChildOrderYearNumber
+        {
+            get
+            {
+                return this._childOrderYearNumber;
+            }
+            set
+            {
+                if ((this._childOrderYearNumber != value))
+                {
+                    this.OnChildOrderYearNumberChanging(value);
+                    this.RaiseDataMemberChanging("ChildOrderYearNumber");
+                    this.ValidateProperty("ChildOrderYearNumber", value);
+                    this._childOrderYearNumber = value;
+                    this.RaiseDataMemberChanged("ChildOrderYearNumber");
+                    this.OnChildOrderYearNumberChanged();
                 }
             }
         }
@@ -2266,6 +2302,30 @@ namespace VotGESOrders.Web.Models
         }
         
         /// <summary>
+        /// Возвращает или задает значение параметра "OrderYearNumber".
+        /// </summary>
+        [DataMember()]
+        public double OrderYearNumber
+        {
+            get
+            {
+                return this._orderYearNumber;
+            }
+            set
+            {
+                if ((this._orderYearNumber != value))
+                {
+                    this.OnOrderYearNumberChanging(value);
+                    this.RaiseDataMemberChanging("OrderYearNumber");
+                    this.ValidateProperty("OrderYearNumber", value);
+                    this._orderYearNumber = value;
+                    this.RaiseDataMemberChanged("OrderYearNumber");
+                    this.OnOrderYearNumberChanged();
+                }
+            }
+        }
+        
+        /// <summary>
         /// Возвращает или задает связанную сущность <see cref="Order"/>.
         /// </summary>
         [Association("Order_ParentOrder", "ParentOrderNumber", "OrderNumber")]
@@ -2311,6 +2371,30 @@ namespace VotGESOrders.Web.Models
                     this._parentOrderNumber = value;
                     this.RaiseDataMemberChanged("ParentOrderNumber");
                     this.OnParentOrderNumberChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Возвращает или задает значение параметра "ParentOrderYearNumber".
+        /// </summary>
+        [DataMember()]
+        public double ParentOrderYearNumber
+        {
+            get
+            {
+                return this._parentOrderYearNumber;
+            }
+            set
+            {
+                if ((this._parentOrderYearNumber != value))
+                {
+                    this.OnParentOrderYearNumberChanging(value);
+                    this.RaiseDataMemberChanging("ParentOrderYearNumber");
+                    this.ValidateProperty("ParentOrderYearNumber", value);
+                    this._parentOrderYearNumber = value;
+                    this.RaiseDataMemberChanged("ParentOrderYearNumber");
+                    this.OnParentOrderYearNumberChanged();
                 }
             }
         }

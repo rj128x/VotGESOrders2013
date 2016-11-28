@@ -16,7 +16,7 @@
 				<sdk:DataGridTemplateColumn Header="№ заявки" SortMemberPath="OrderNumber" Width="70" >
 					<sdk:DataGridTemplateColumn.CellTemplate >
 						<DataTemplate>
-							<ContentControl Content="{Binding OrderNumber, Converter={StaticResource orderNumberConverter}}" Template="{StaticResource OrderCellNumber}"/>
+							<ContentControl Content="{Binding OrderYearNumber, Converter={StaticResource orderNumberConverter}}" Template="{StaticResource OrderCellNumber}"/>
 						</DataTemplate>
 					</sdk:DataGridTemplateColumn.CellTemplate>
 				</sdk:DataGridTemplateColumn>				

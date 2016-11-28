@@ -30,6 +30,7 @@ namespace VotGESOrders.Web
 		protected void Application_Start() {
 			Logger.init(Server.MapPath("/logs/"), "orders");
 			OrderObject.init();
+			Order.init();
 			AreaRegistration.RegisterAllAreas();
 
 			Logger.info(System.Configuration.ConfigurationManager.AppSettings["smtpServer"], Logger.LoggerSource.client);

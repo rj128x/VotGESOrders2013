@@ -48,6 +48,7 @@
           <Property Name="parentOrderNumber" Type="float" />
           <Property Name="childOrderNumber" Type="float" />
           <Property Name="orderNumber" Type="float" Nullable="false" />
+          <Property Name="orderYearNumber" Type="float" />
           <Property Name="userCreateOrderID" Type="int" Nullable="false" />
           <Property Name="userReviewOrderID" Type="int" />
           <Property Name="userCloseOrderID" Type="int" />
@@ -137,7 +138,7 @@
           <Property Name="sendAgreeCranTask" Type="bit" Nullable="false" />
           <Property Name="sendAllAgreeCranTask" Type="bit" Nullable="false" />
           <Property Name="sendOnlyMZCranTask" Type="bit" Nullable="false" />
-          <Property Name="AddLogins" Type="varchar" MaxLength="250" />
+          <Property Name="AddLogins" Type="varchar" MaxLength="250" Nullable="false" />
         </EntityType>
         <Association Name="FK_Orders_OrderObjects">
           <End Role="OrderObjects" Type="Self.OrderObjects" Multiplicity="1" />
@@ -369,6 +370,7 @@
           <NavigationProperty Name="Users3" Relationship="VotGESOrdersModel.FK_Orders_UsersCreate" FromRole="Orders" ToRole="Users" />
           <NavigationProperty Name="Users4" Relationship="VotGESOrdersModel.FK_Orders_UsersOpen" FromRole="Orders" ToRole="Users" />
           <NavigationProperty Name="Users5" Relationship="VotGESOrdersModel.FK_Orders_UsersReview" FromRole="Orders" ToRole="Users" />
+          <Property Name="orderYearNumber" Type="Double" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -406,7 +408,7 @@
           <Property Name="sendAllAgreeCranTask" Type="Boolean" Nullable="false" />
           <Property Name="canReviewCranMZTask" Type="Boolean" Nullable="false" />
           <Property Name="sendOnlyMZCranTask" Type="Boolean" Nullable="false" />
-          <Property Name="AddLogins" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="AddLogins" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <Association Name="FK_Orders_OrderObjects">
           <End Role="OrderObjects" Type="VotGESOrdersModel.OrderObjects" Multiplicity="1" />
@@ -542,7 +544,8 @@
             <ScalarProperty Name="showInFullName" ColumnName="showInFullName" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Orders"><EntityTypeMapping TypeName="VotGESOrdersModel.Orders"><MappingFragment StoreEntitySet="Orders">
-            <ScalarProperty Name="parentOrderNumber" ColumnName="parentOrderNumber" />
+            <ScalarProperty Name="orderYearNumber" ColumnName="orderYearNumber" />
+                <ScalarProperty Name="parentOrderNumber" ColumnName="parentOrderNumber" />
             <ScalarProperty Name="childOrderNumber" ColumnName="childOrderNumber" />
             <ScalarProperty Name="orderNumber" ColumnName="orderNumber" />
             <ScalarProperty Name="userCreateOrderID" ColumnName="userCreateOrderID" />

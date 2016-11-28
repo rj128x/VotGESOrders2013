@@ -15,14 +15,14 @@ using System.ComponentModel;
 namespace VotGESOrders.Web.Models
 {
 	public enum OrderStateEnum { created, accepted, opened, closed, banned, canceled, completed, completedWithoutEnter, extended, askExtended }
-	public enum OrderOperationEnum { none, create, review, open, close, complete,edit,comment,cancel}
+	public enum OrderOperationEnum { none, create, review, open, close, complete, edit, comment, cancel }
 	public enum OrderTypeEnum { pl, npl, no, crash }
-	
+
 
 	/*[CustomValidation(typeof(OrderValidator), "Validate")]*/
 	public class Order : INotifyPropertyChanged
 	{
-		public static string OrderCommentsDelim="=======================================";
+		public static string OrderCommentsDelim = "=======================================";
 		public event PropertyChangedEventHandler PropertyChanged;
 		public void NotifyChanged(string propName) {
 			if (PropertyChanged != null)
@@ -34,11 +34,50 @@ namespace VotGESOrders.Web.Models
 		private double parentOrderNumber;
 		public double ParentOrderNumber {
 			get { return parentOrderNumber; }
-			set { 
+			set {
 				parentOrderNumber = value;
 			}
 		}
-		
+
+		private double parentOrderYearNumber;
+		public double ParentOrderYearNumber {
+			get { return parentOrderYearNumber; }
+			set {
+				parentOrderYearNumber = value;
+			}
+		}
+
+		private double childOrderYearNumber;
+		public double ChildOrderYearNumber {
+			get { return childOrderYearNumber; }
+			set {
+				childOrderYearNumber = value;
+			}
+		}
+
+		private double orderYearNumber;
+		public double OrderYearNumber {
+			get { return orderYearNumber; }
+			set {
+				orderYearNumber = value;
+			}
+		}
+
+		public static double MaxYearPrevNumber;
+
+		public static void init() {
+			Logger.info("Чтение номера последней заявки в прошлом году", Logger.LoggerSource.server);
+			try {
+				VotGESOrdersEntities ctx = new VotGESOrdersEntities();
+				double max = (from o in ctx.Orders where o.orderDateCreate.Year == DateTime.Now.Year - 1 && Math.Floor(o.orderNumber) == o.orderNumber select o.orderNumber).Max();
+				MaxYearPrevNumber = max;
+				Logger.info("Присвоен номер " + max, Logger.LoggerSource.server);
+			} catch (Exception e) {
+				Logger.info("Ошибка при получении номера " + e.ToString(), Logger.LoggerSource.server);
+				MaxYearPrevNumber = 0;
+			}
+		}
+
 		private Order parentOrder;
 		[Include]
 		[Association("Order_ParentOrder", "ParentOrderNumber", "OrderNumber")]
@@ -55,11 +94,11 @@ namespace VotGESOrders.Web.Models
 		private double childOrderNumber;
 		public double ChildOrderNumber {
 			get { return childOrderNumber; }
-			set { 
+			set {
 				childOrderNumber = value;
 			}
 		}
-		
+
 		private Order childOrder;
 		[Include]
 		[Association("Order_ChildOrder", "ChildOrderNumber", "OrderNumber")]
@@ -69,7 +108,7 @@ namespace VotGESOrders.Web.Models
 			}
 			set {
 				childOrder = value;
-				ChildOrderNumber = value.OrderNumber;				
+				ChildOrderNumber = value.OrderNumber;
 			}
 		}
 
@@ -78,18 +117,18 @@ namespace VotGESOrders.Web.Models
 		[Key]
 		public double OrderNumber {
 			get { return orderNumber; }
-			set { 
+			set {
 				orderNumber = value;
 			}
 		}
 
-		
+
 
 
 		private OrderTypeEnum orderType;
 		public OrderTypeEnum OrderType {
 			get { return orderType; }
-			set { 
+			set {
 				orderType = value;
 				OrderTypeShortName = OrderInfo.OrderTypesShort[orderType];
 				OrderTypeName = OrderInfo.OrderTypes[orderType];
@@ -132,7 +171,7 @@ namespace VotGESOrders.Web.Models
 				UserReviewOrderID = value.UserID;
 			}
 		}
-				
+
 
 		public int UserCloseOrderID { get; set; }
 		private OrdersUser userCloseOrder;
@@ -220,9 +259,9 @@ namespace VotGESOrders.Web.Models
 		}
 
 
-		private DateTime planStartDate;		
+		private DateTime planStartDate;
 		[CustomValidation(typeof(OrderValidator), "ValidatePlanStartDate", ErrorMessage = "Ошибка")]
-		[Display(ShortName="Плановое начало")]
+		[Display(ShortName = "Плановое начало")]
 		public DateTime PlanStartDate {
 			get { return planStartDate; }
 			set { planStartDate = value; }
@@ -266,7 +305,7 @@ namespace VotGESOrders.Web.Models
 
 		private string orderText;
 		[RegularExpression(".{5,}", ErrorMessage = "Текст заявки - Минимум 5 символов")]
-		[Display(Description = "Введите текст заявки (минимум 5 символов)",ShortName="Текст заявки")]
+		[Display(Description = "Введите текст заявки (минимум 5 символов)", ShortName = "Текст заявки")]
 		[StringLength(250, ErrorMessage = "Текст заявки - Максимум 250 символов")]
 		[Required(ErrorMessage = "Текст заявки - обязательное поле")]
 		public string OrderText {
@@ -284,14 +323,14 @@ namespace VotGESOrders.Web.Models
 			set { agreeText = value; }
 		}
 
-		
+
 		private List<OrdersUser> agreeUsers;
 		public List<OrdersUser> AgreeUsers {
 			get { return agreeUsers; }
 			set { agreeUsers = value; }
 		}
 
-		private Dictionary<int,string>agreeUsersDict;
+		private Dictionary<int, string> agreeUsersDict;
 		[DataMember]
 		public Dictionary<int, string> AgreeUsersDict {
 			get { return agreeUsersDict; }
@@ -308,10 +347,10 @@ namespace VotGESOrders.Web.Models
 			AgreeUsers = new List<OrdersUser>();
 			AgreeUsersDict = new Dictionary<int, string>();
 			try {
-				string[] ids=AgreeUsersIDSText.Split(';');
+				string[] ids = AgreeUsersIDSText.Split(';');
 				foreach (string id in ids) {
 					try {
-						OrdersUser user=OrdersUser.loadFromCache(Int32.Parse(id));
+						OrdersUser user = OrdersUser.loadFromCache(Int32.Parse(id));
 						AgreeUsers.Add(user);
 						AgreeUsersDict.Add(user.UserID, user.FullName);
 					} catch { }
@@ -337,7 +376,7 @@ namespace VotGESOrders.Web.Models
 			get { return reviewText; }
 			set { reviewText = value; }
 		}
-		
+
 
 		private string openText;
 		[Display(Description = "Комментарий к выводу оборудования (не обязательно)", ShortName = "Комментарий")]
@@ -371,7 +410,7 @@ namespace VotGESOrders.Web.Models
 			get { return completeText; }
 			set { completeText = value; }
 		}
-		
+
 		public string FullOrderObjectInfo { get; set; }
 
 
@@ -425,7 +464,7 @@ namespace VotGESOrders.Web.Models
 		[Required(ErrorMessage = "Аварийная готовность - Обязательное поле")]
 		public string ReadyTime {
 			get { return readyTime; }
-			set {	readyTime = value;}
+			set { readyTime = value; }
 		}
 
 		private bool orderCreated;
@@ -499,7 +538,7 @@ namespace VotGESOrders.Web.Models
 			get { return orderCanceledWithoutReview; }
 			set { orderCanceledWithoutReview = value; }
 		}
-		
+
 
 		private bool orderIsFixErrorEnter;
 		public bool OrderIsFixErrorEnter {
@@ -523,7 +562,7 @@ namespace VotGESOrders.Web.Models
 		private OrderStateEnum orderState;
 		public OrderStateEnum OrderState {
 			get { return orderState; }
-			set { 
+			set {
 				orderState = value;
 				orderStateStr = OrderInfo.OrderStates[orderState];
 			}
@@ -604,27 +643,27 @@ namespace VotGESOrders.Web.Models
 		private String commentsText;
 		public String CommentsText {
 			get { return commentsText; }
-			set { 
+			set {
 				commentsText = value;
 				CommentsTextBrief = commentsText;
-				
+
 			}
 		}
 
 		private String commentsTextBrief;
 		public String CommentsTextBrief {
 			get { return commentsTextBrief; }
-			set { 
+			set {
 				commentsTextBrief = value;
 				if (!String.IsNullOrEmpty(commentsTextBrief)) {
-					commentsTextBrief=commentsTextBrief.Replace(OrderCommentsDelim + "\n", "\n");
+					commentsTextBrief = commentsTextBrief.Replace(OrderCommentsDelim + "\n", "\n");
 					while (commentsTextBrief.IndexOf("=\n") > 1)
-						commentsTextBrief=commentsTextBrief.Replace("=\n", "\n"); 
-					commentsTextBrief=commentsTextBrief.Replace("\n\n", "\n");					
+						commentsTextBrief = commentsTextBrief.Replace("=\n", "\n");
+					commentsTextBrief = commentsTextBrief.Replace("\n\n", "\n");
 				}
 			}
 		}
-				
+
 
 		public Order() {
 			OrderNumber = -1;
@@ -633,7 +672,7 @@ namespace VotGESOrders.Web.Models
 			ParentOrderNumber = 0;
 			ChildOrderNumber = 0;
 			OrderState = OrderStateEnum.created;
-			OrderCreated = true;			
+			OrderCreated = true;
 		}
 
 		public void refreshOrderFromDB(Orders dbOrder, OrdersUser currentUser, bool readRelated, List<Order> listOrders) {
@@ -649,6 +688,12 @@ namespace VotGESOrders.Web.Models
 			SelOrderObject = OrderObject.getByID(dbOrder.orderObjectID);
 
 			OrderNumber = dbOrder.orderNumber;
+			if (dbOrder.orderYearNumber.HasValue) {
+				OrderYearNumber = dbOrder.orderYearNumber.Value;
+			} else {
+				OrderYearNumber = OrderNumber;
+			}
+
 			OrderType = (OrderTypeEnum)Enum.Parse(typeof(OrderTypeEnum), dbOrder.orderType, true);
 			ReadyTime = dbOrder.readyTime;
 
@@ -664,7 +709,7 @@ namespace VotGESOrders.Web.Models
 			AgreeText = dbOrder.agreeText;
 			AgreeUsersIDSText = dbOrder.agreeUsersIDS;
 			refreshAgreeUsers();
-			
+
 			FaktStartDate = dbOrder.faktStartDate;
 			FaktStopDate = dbOrder.faktStopDate;
 			FaktCompleteDate = dbOrder.faktCompleteDate;
@@ -711,31 +756,36 @@ namespace VotGESOrders.Web.Models
 				UserCompleteOrder = OrdersUser.loadFromCache(dbOrder.userCompleteOrderID.Value);
 			}
 
-			if (OrderExtended || OrderAskExtended ||OrderCompletedWithoutEnter) {
+
+
+			if (OrderExtended || OrderAskExtended || OrderCompletedWithoutEnter) {
 				if (readRelated) {
 					ChildOrder = GetOrder(dbOrder.childOrderNumber.Value, currentUser, readRelated, listOrders);
 				} else {
 					ChildOrderNumber = dbOrder.childOrderNumber.Value;
 				}
+				ChildOrderYearNumber = Math.Floor(OrderYearNumber) + ChildOrderNumber - Math.Floor(ChildOrderNumber);
 			} else {
 				ChildOrderNumber = 0;
+				ChildOrderYearNumber = 0;
 			}
 
-			if (OrderIsExtend||OrderIsFixErrorEnter) {
+
+			if (OrderIsExtend || OrderIsFixErrorEnter) {
 				if (readRelated) {
 					ParentOrder = GetOrder(dbOrder.parentOrderNumber.Value, currentUser, readRelated, listOrders);
 				} else {
 					ParentOrderNumber = dbOrder.parentOrderNumber.Value;
 				}
+				ParentOrderYearNumber = Math.Floor(OrderYearNumber) + ParentOrderNumber - Math.Floor(ParentOrderNumber);
 			} else {
 				ParentOrderNumber = 0;
+				ParentOrderYearNumber = 0;
 			}
 			OrderHasChildOrder = ChildOrderNumber > 0;
 			OrderHasParentOrder = ParentOrderNumber > 0;
-			checkTimeToOpen();	
+			checkTimeToOpen();
 		}
-
-
 
 		public void checkPremissions(Orders dbOrder, OrdersUser currentUser) {
 			OrderCreated = dbOrder.orderCreated;
@@ -749,36 +799,36 @@ namespace VotGESOrders.Web.Models
 			OrderAskExtended = dbOrder.orderAskExtended;
 			OrderIsExtend = dbOrder.orderIsExtend;
 			OrderIsFixErrorEnter = dbOrder.orderIsFixErrorEnter;
-									
+
 			OrderState = (OrderStateEnum)Enum.Parse(typeof(OrderStateEnum), dbOrder.orderState, true);
 			OrderType = (OrderTypeEnum)Enum.Parse(typeof(OrderTypeEnum), dbOrder.orderType, true);
 
 			OrderCanceledWithoutReview = OrderCanceled && !OrderReviewed;
 			OrderBanned = OrderState == OrderStateEnum.banned;
 
-			int creator=dbOrder.userCreateOrderID;
+			int creator = dbOrder.userCreateOrderID;
 			AllowReviewOrder = currentUser.AllowReviewOrder && OrderState == OrderStateEnum.created;
 			AllowOpenOrder = currentUser.AllowChangeOrder && OrderState == OrderStateEnum.accepted;
 			AllowCloseOrder = (currentUser.UserID == creator && OrderState == OrderStateEnum.opened) ||
 				currentUser.AllowChangeOrder && OrderState == OrderStateEnum.opened;
 			AllowCompleteWithoutEnterOrder = currentUser.AllowChangeOrder && currentUser.AllowCreateCrashOrder && OrderState == OrderStateEnum.closed;
 			AllowCompleteOrder = currentUser.AllowChangeOrder && OrderState == OrderStateEnum.closed;
-			AllowChangeOrder = (currentUser.UserID == creator || currentUser.AllowChangeOrder) && OrderState == OrderStateEnum.created||
-				(currentUser.AllowChangeOrder && (OrderType==OrderTypeEnum.no||OrderType==OrderTypeEnum.crash)&&OrderState==OrderStateEnum.opened);
+			AllowChangeOrder = (currentUser.UserID == creator || currentUser.AllowChangeOrder) && OrderState == OrderStateEnum.created ||
+				(currentUser.AllowChangeOrder && (OrderType == OrderTypeEnum.no || OrderType == OrderTypeEnum.crash) && OrderState == OrderStateEnum.opened);
 			AllowExtendOrder = (currentUser.AllowChangeOrder || currentUser.UserID == creator) && OrderState == OrderStateEnum.opened;
 			AllowCancelOrder = ((currentUser.UserID == creator || currentUser.AllowChangeOrder) &&
 				(OrderState == OrderStateEnum.created || OrderState == OrderStateEnum.accepted || orderState == OrderStateEnum.opened && OrderIsExtend)) ||
 				currentUser.AllowChangeOrder && OrderState == OrderStateEnum.opened && orderIsFixErrorEnter;
-				
 
 
-			string[] ids= dbOrder.agreeUsersIDS.Split(';');
+
+			string[] ids = dbOrder.agreeUsersIDS.Split(';');
 			AllowCommentOrder = true;
 
-			AllowRejectReviewOrder = (currentUser.AllowEditOrders||currentUser.AllowReviewOrder) && 
-				(OrderState == OrderStateEnum.accepted || OrderState == OrderStateEnum.banned && !OrderIsExtend || 
-				OrderState==OrderStateEnum.opened && OrderIsExtend);
-			AllowRejectOpenOrder = (currentUser.AllowEditOrders || currentUser.AllowChangeOrder) && OrderState == OrderStateEnum.opened && !OrderIsExtend && !OrderIsFixErrorEnter && 
+			AllowRejectReviewOrder = (currentUser.AllowEditOrders || currentUser.AllowReviewOrder) &&
+				(OrderState == OrderStateEnum.accepted || OrderState == OrderStateEnum.banned && !OrderIsExtend ||
+				OrderState == OrderStateEnum.opened && OrderIsExtend);
+			AllowRejectOpenOrder = (currentUser.AllowEditOrders || currentUser.AllowChangeOrder) && OrderState == OrderStateEnum.opened && !OrderIsExtend && !OrderIsFixErrorEnter &&
 				!OrderExtended && !OrderAskExtended &&
 				OrderType != OrderTypeEnum.crash && OrderType != OrderTypeEnum.no;
 			AllowRejectCloseOrder = (currentUser.AllowEditOrders || currentUser.AllowChangeOrder) && OrderState == OrderStateEnum.closed;
@@ -787,8 +837,8 @@ namespace VotGESOrders.Web.Models
 			AllowEditOrder = currentUser.AllowEditOrders;
 		}
 
-		private void checkTimeToOpen(){
-			double koef=10000000.0 * 60.0 * 60.0;
+		private void checkTimeToOpen() {
+			double koef = 10000000.0 * 60.0 * 60.0;
 			timeToOpen = null;
 			timeToClose = null;
 			timeToEnter = null;
@@ -807,13 +857,13 @@ namespace VotGESOrders.Web.Models
 		}
 
 		public static void writeExpired(Orders orderDB) {
-			double koef=10000000.0 * 60.0 * 60.0;
+			double koef = 10000000.0 * 60.0 * 60.0;
 			orderDB.expiredOpenHours = null;
 			orderDB.expiredCloseHours = null;
 			orderDB.expiredCompleteHours = null;
 			orderDB.expiredReglamentHours = null;
 
-			if (orderDB.orderOpened&&orderDB.faktStartDate.HasValue) {
+			if (orderDB.orderOpened && orderDB.faktStartDate.HasValue) {
 				orderDB.expiredOpenHours = (orderDB.planStartDate.Ticks - orderDB.faktStartDate.Value.Ticks) / koef;
 			}
 
@@ -825,7 +875,7 @@ namespace VotGESOrders.Web.Models
 			}
 
 
-			DateTime needCreate=orderDB.orderDateCreate;
+			DateTime needCreate = orderDB.orderDateCreate;
 			if (!orderDB.orderIsExtend) {
 				if (orderDB.orderType == OrderTypeEnum.npl.ToString() || orderDB.orderType == OrderTypeEnum.pl.ToString()) {
 					if (orderDB.planStartDate.DayOfWeek == DayOfWeek.Monday) {
@@ -834,8 +884,7 @@ namespace VotGESOrders.Web.Models
 						needCreate = orderDB.planStartDate.AddDays(-2).Date.AddHours(15);
 					} else if (orderDB.planStartDate.DayOfWeek == DayOfWeek.Saturday) {
 						needCreate = orderDB.planStartDate.AddDays(-1).Date.AddHours(15);
-					} 
-					else {
+					} else {
 						needCreate = orderDB.planStartDate.AddDays(-1).Date.AddHours(15);
 					}
 				} else {
@@ -847,22 +896,21 @@ namespace VotGESOrders.Web.Models
 
 
 		public Order(Orders dbOrder, OrdersUser currentUser, bool readRelated, List<Order> listOrders) {
-			refreshOrderFromDB(dbOrder, currentUser, readRelated,listOrders);			
+			refreshOrderFromDB(dbOrder, currentUser, readRelated, listOrders);
 		}
 
 
-		public static Order GetOrder(double oNumber, OrdersUser currentUser, bool readRelated, List<Order> listOrders){
+		public static Order GetOrder(double oNumber, OrdersUser currentUser, bool readRelated, List<Order> listOrders) {
 			if (listOrders != null) {
-				try{
+				try {
 					return (from Order o in listOrders where o.OrderNumber == oNumber select o).First();
-				}
-				catch{}
-			} 
-			Order newOrder=new Order();
-			VotGESOrdersEntities context=new VotGESOrdersEntities();
-			Orders orderDB=context.Orders.Where(o => o.orderNumber == oNumber).First();
-			newOrder.refreshOrderFromDB(orderDB, currentUser, readRelated, listOrders);			
-			return newOrder;			
+				} catch { }
+			}
+			Order newOrder = new Order();
+			VotGESOrdersEntities context = new VotGESOrdersEntities();
+			Orders orderDB = context.Orders.Where(o => o.orderNumber == oNumber).First();
+			newOrder.refreshOrderFromDB(orderDB, currentUser, readRelated, listOrders);
+			return newOrder;
 		}
 
 		public bool HasComments { get; set; }

@@ -60,17 +60,17 @@
 							<StackPanel Orientation="Horizontal">
 								<TextBlock Text="{Binding OrderTypeShortName}" Style="{StaticResource ValuePrint}"/>
 								<TextBlock Text=" № " Style="{StaticResource LabelPrint}"/>
-								<TextBlock Text="{Binding OrderNumber, Converter={StaticResource orderNumberConverter}}" 
+								<TextBlock Text="{Binding OrderYearNumber, Converter={StaticResource orderNumberConverter}}" 
 												 Style="{StaticResource ValuePrint}"/>								
 							</StackPanel>
 							<StackPanel Orientation="Vertical" HorizontalAlignment="Right">
 								<StackPanel Orientation="Horizontal" Visibility="{Binding OrderHasParentOrder, Converter={StaticResource visibilityConverter}}" HorizontalAlignment="Right">
 									<TextBlock Style="{StaticResource LabelPrint}" Text="№ст="/>
-									<TextBlock Style="{StaticResource LabelPrint}" Text="{Binding ParentOrderNumber, Converter={StaticResource orderNumberConverter}}"/>
+									<TextBlock Style="{StaticResource LabelPrint}" Text="{Binding ParentOrderYearNumber, Converter={StaticResource orderNumberConverter}}"/>
 								</StackPanel>
 								<StackPanel Orientation="Horizontal" Visibility="{Binding OrderHasChildOrder, Converter={StaticResource visibilityConverter}}" HorizontalAlignment="Right">
 									<TextBlock Style="{StaticResource LabelPrint}" Text=" №нов="/>
-									<TextBlock Style="{StaticResource LabelPrint}" Text="{Binding ChildOrderNumber, Converter={StaticResource orderNumberConverter}}"/>
+									<TextBlock Style="{StaticResource LabelPrint}" Text="{Binding ChildOrderYearNumber, Converter={StaticResource orderNumberConverter}}"/>
 								</StackPanel>
 							</StackPanel>
 						</StackPanel>
