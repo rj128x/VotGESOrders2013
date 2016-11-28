@@ -199,8 +199,8 @@ namespace VotGESOrders.Web.Models
 					&& (filter.ShowAllObjects || objectsByName.Contains(o.orderObjectID) || o.orderObjectAddInfo.Contains(filter.OrderObject))
 					&& (filter.ShowAllOrderTexts || o.orderText.Contains(filter.OrderText))
 					&& (filter.ShowAllNumbers ||
-						(o.orderNumber >= filter.StartNumber || filter.StartNumber == 0) &&
-						(o.orderNumber <= filter.StopNumber || filter.StopNumber == 0))
+						(o.orderYearNumber >= filter.StartNumber || filter.StartNumber == 0) &&
+						(o.orderYearNumber <= filter.StopNumber || filter.StopNumber == 0))
 					&& (!filter.ShowExpiredOnly ||
 						 o.orderClosed && o.planStopDate < o.faktStopDate ||
 						 o.orderCompleted && o.planStopDate < o.faktCompleteDate)
