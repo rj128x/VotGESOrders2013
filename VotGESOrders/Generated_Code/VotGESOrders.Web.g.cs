@@ -223,6 +223,10 @@ namespace VotGESOrders.Web.Models
         
         private double _orderNumber;
         
+        private string _orderNumberExp;
+        
+        private string _orderNumberFloor;
+        
         private string _orderObjectAddInfo;
         
         private bool _orderOpened;
@@ -428,6 +432,10 @@ namespace VotGESOrders.Web.Models
         partial void OnOrderIsFixErrorEnterChanged();
         partial void OnOrderNumberChanging(double value);
         partial void OnOrderNumberChanged();
+        partial void OnOrderNumberExpChanging(string value);
+        partial void OnOrderNumberExpChanged();
+        partial void OnOrderNumberFloorChanging(string value);
+        partial void OnOrderNumberFloorChanged();
         partial void OnOrderObjectAddInfoChanging(string value);
         partial void OnOrderObjectAddInfoChanged();
         partial void OnOrderOpenedChanging(bool value);
@@ -2083,6 +2091,54 @@ namespace VotGESOrders.Web.Models
                     this._orderNumber = value;
                     this.RaisePropertyChanged("OrderNumber");
                     this.OnOrderNumberChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Возвращает или задает значение параметра "OrderNumberExp".
+        /// </summary>
+        [DataMember()]
+        public string OrderNumberExp
+        {
+            get
+            {
+                return this._orderNumberExp;
+            }
+            set
+            {
+                if ((this._orderNumberExp != value))
+                {
+                    this.OnOrderNumberExpChanging(value);
+                    this.RaiseDataMemberChanging("OrderNumberExp");
+                    this.ValidateProperty("OrderNumberExp", value);
+                    this._orderNumberExp = value;
+                    this.RaiseDataMemberChanged("OrderNumberExp");
+                    this.OnOrderNumberExpChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Возвращает или задает значение параметра "OrderNumberFloor".
+        /// </summary>
+        [DataMember()]
+        public string OrderNumberFloor
+        {
+            get
+            {
+                return this._orderNumberFloor;
+            }
+            set
+            {
+                if ((this._orderNumberFloor != value))
+                {
+                    this.OnOrderNumberFloorChanging(value);
+                    this.RaiseDataMemberChanging("OrderNumberFloor");
+                    this.ValidateProperty("OrderNumberFloor", value);
+                    this._orderNumberFloor = value;
+                    this.RaiseDataMemberChanged("OrderNumberFloor");
+                    this.OnOrderNumberFloorChanged();
                 }
             }
         }

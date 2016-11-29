@@ -71,6 +71,9 @@ namespace VotGESOrders.Web.Models
 			}
 		}
 
+		public string OrderNumberFloor { get; set; }
+		public string OrderNumberExp { get; set; }
+
 		public bool IsCurrentYear { get; set; }
 
 		public static double MaxYearPrevNumber;
@@ -802,6 +805,10 @@ namespace VotGESOrders.Web.Models
 			} else {
 				OrderYear = OrderDateCreate.Year;
 			}
+			OrderNumberFloor = Math.Floor(OrderNumber).ToString();
+			OrderNumberExp = Math.Round(((OrderNumber - Math.Floor(OrderNumber)) * 100)).ToString();
+			if (OrderNumberExp.Length == 1)
+				OrderNumberExp = "0" + OrderNumberExp;
 			IsCurrentYear = OrderYear == DateTime.Now.Year;
 			OrderHasChildOrder = ChildOrderNumber > 0;
 			OrderHasParentOrder = ParentOrderNumber > 0;
