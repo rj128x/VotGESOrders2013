@@ -2749,7 +2749,8 @@ namespace VotGESOrders.Web.ADONETEntities
         /// <param name="canReviewCranMZTask">Исходное значение свойства canReviewCranMZTask.</param>
         /// <param name="sendOnlyMZCranTask">Исходное значение свойства sendOnlyMZCranTask.</param>
         /// <param name="addLogins">Исходное значение свойства AddLogins.</param>
-        public static Users CreateUsers(global::System.Int32 userID, global::System.String name, global::System.String fullName, global::System.String mail, global::System.Boolean sendAllMail, global::System.Boolean sendAgreeMail, global::System.Boolean sendCreateMail, global::System.Boolean allowCreateOrder, global::System.Boolean allowCreateCrashOrder, global::System.Boolean allowReviewOrder, global::System.Boolean allowChangeOrder, global::System.Boolean allowEditTree, global::System.Boolean allowEditUsers, global::System.Boolean allowAgreeOrders, global::System.Boolean sendAllCreateMail, global::System.Boolean sendAllAgreeMail, global::System.Boolean allowEditOrders, global::System.Boolean canCreateCranTask, global::System.Boolean canReviewCranTask, global::System.Boolean canAgreeCranTask, global::System.Boolean sendAllCreateCranTask, global::System.Boolean sendAllCranTask, global::System.Boolean sendAgreeCranTask, global::System.Boolean sendAllAgreeCranTask, global::System.Boolean canReviewCranMZTask, global::System.Boolean sendOnlyMZCranTask, global::System.String addLogins)
+        /// <param name="addFinishLogins">Исходное значение свойства AddFinishLogins.</param>
+        public static Users CreateUsers(global::System.Int32 userID, global::System.String name, global::System.String fullName, global::System.String mail, global::System.Boolean sendAllMail, global::System.Boolean sendAgreeMail, global::System.Boolean sendCreateMail, global::System.Boolean allowCreateOrder, global::System.Boolean allowCreateCrashOrder, global::System.Boolean allowReviewOrder, global::System.Boolean allowChangeOrder, global::System.Boolean allowEditTree, global::System.Boolean allowEditUsers, global::System.Boolean allowAgreeOrders, global::System.Boolean sendAllCreateMail, global::System.Boolean sendAllAgreeMail, global::System.Boolean allowEditOrders, global::System.Boolean canCreateCranTask, global::System.Boolean canReviewCranTask, global::System.Boolean canAgreeCranTask, global::System.Boolean sendAllCreateCranTask, global::System.Boolean sendAllCranTask, global::System.Boolean sendAgreeCranTask, global::System.Boolean sendAllAgreeCranTask, global::System.Boolean canReviewCranMZTask, global::System.Boolean sendOnlyMZCranTask, global::System.String addLogins, global::System.String addFinishLogins)
         {
             Users users = new Users();
             users.userID = userID;
@@ -2779,6 +2780,7 @@ namespace VotGESOrders.Web.ADONETEntities
             users.canReviewCranMZTask = canReviewCranMZTask;
             users.sendOnlyMZCranTask = sendOnlyMZCranTask;
             users.AddLogins = addLogins;
+            users.AddFinishLogins = addFinishLogins;
             return users;
         }
 
@@ -3436,6 +3438,30 @@ namespace VotGESOrders.Web.ADONETEntities
         private global::System.String _AddLogins;
         partial void OnAddLoginsChanging(global::System.String value);
         partial void OnAddLoginsChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String AddFinishLogins
+        {
+            get
+            {
+                return _AddFinishLogins;
+            }
+            set
+            {
+                OnAddFinishLoginsChanging(value);
+                ReportPropertyChanging("AddFinishLogins");
+                _AddFinishLogins = StructuralObject.SetValidValue(value, false, "AddFinishLogins");
+                ReportPropertyChanged("AddFinishLogins");
+                OnAddFinishLoginsChanged();
+            }
+        }
+        private global::System.String _AddFinishLogins;
+        partial void OnAddFinishLoginsChanging(global::System.String value);
+        partial void OnAddFinishLoginsChanged();
 
         #endregion
 

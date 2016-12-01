@@ -42,7 +42,7 @@ namespace VotGESOrders.Web.Models
 		public bool SendAllAgreeCranTask { get; set; }
 		public bool SendOnlyMZCranTask { get; set; }
 		public string AddLogins { get; set; }
-
+		public string AddFinishLogins { get; set; }
 
 		protected static VotGESOrdersEntities context;
 		protected static List<OrdersUser> allUsers;
@@ -123,6 +123,7 @@ namespace VotGESOrders.Web.Models
 				user.SendAllCranTask = userDB.sendAllCranTask;
 				user.SendOnlyMZCranTask = userDB.sendOnlyMZCranTask;
 				user.AddLogins = userDB.AddLogins;
+				user.AddFinishLogins = userDB.AddFinishLogins;
 				
 				try {
 					user.Mails = user.Mail.Split(';').ToList();

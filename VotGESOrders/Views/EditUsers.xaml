@@ -61,10 +61,16 @@
 		</sdk:DataGrid>
 		<Border Style="{StaticResource borderFilterControl}" Grid.Column="1" Grid.Row="0">
 			<StackPanel>
-				<toolkit:DataForm Grid.Row="0" HorizontalAlignment="Stretch" Name="userForm" 
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="1">
+                    <Button Name="btnSave" Content="Сохранить" Click="btnSave_Click"
+							  IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"/>
+                    <Button Name="btnCancel" Content="Отменить" Click="btnCancel_Click" 
+							  IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"/>
+                </StackPanel>
+                <toolkit:DataForm Grid.Row="0" HorizontalAlignment="Stretch" Name="userForm" 
 								VerticalAlignment="Stretch" AutoGenerateFields="False"
 								CommandButtonsVisibility="None" IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}">
-					<StackPanel>
+                    <StackPanel>
 						<toolkit:DataField Name="Login" Label="Логин">
 							<TextBox Name="txtName" Text="{Binding Name, Mode=TwoWay}"/>
 						</toolkit:DataField>
@@ -74,8 +80,11 @@
 						<toolkit:DataField Name="Mail" Label="Почта">
 							<TextBox Name="txtMail" Text="{Binding Mail, Mode=TwoWay}"/>
 						</toolkit:DataField>
-                        <toolkit:DataField Name="AddLogins" Label="Псевдо">
+                        <toolkit:DataField Name="AddLogins" Label="Псевдонимы" ToolTipService.ToolTip="Логины, которые определяются системой как данный пользователь">
                             <TextBox Name="txtAddLogins" Text="{Binding AddLogins, Mode=TwoWay}"/>
+                        </toolkit:DataField>
+                        <toolkit:DataField Name="AddFinishLogins" Label="Смежные" ToolTipService.ToolTip="Могут закрыть/снять заявку данного пользователя">
+                            <TextBox Name="txtAddFinishLogins" Text="{Binding AddFinishLogins, Mode=TwoWay}"/>
                         </toolkit:DataField>
                         <toolkit:DataField Name="SendAllMail" Label="">
 							<CheckBox Content="Оповещать о всех событиях" IsChecked="{Binding SendAllMail,Mode=TwoWay}"/>
@@ -143,16 +152,14 @@
                         <toolkit:DataField Name="SendOnlyMZCranTask" Label="">
                             <CheckBox Content="Оповещать только о заявках на краны МЗ" IsChecked="{Binding SendOnlyMZCranTask,Mode=TwoWay}"/>
                         </toolkit:DataField>
-                        
                     </StackPanel>
-				</toolkit:DataForm>
-				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="1">
-					<Button Name="btnSave" Content="Сохранить" Click="btnSave_Click"
-							  IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"/>
-					<Button Name="btnCancel" Content="Отменить" Click="btnCancel_Click" 
-							  IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"/>
-				</StackPanel>
-			</StackPanel>
+                </toolkit:DataForm>
+				
+                
+
+            </StackPanel>
+                
+                
 		</Border>
 		
 

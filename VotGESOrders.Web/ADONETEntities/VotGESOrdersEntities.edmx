@@ -139,6 +139,7 @@
           <Property Name="sendAllAgreeCranTask" Type="bit" Nullable="false" />
           <Property Name="sendOnlyMZCranTask" Type="bit" Nullable="false" />
           <Property Name="AddLogins" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="AddFinishLogins" Type="varchar" MaxLength="250" Nullable="false" />
         </EntityType>
         <Association Name="FK_Orders_OrderObjects">
           <End Role="OrderObjects" Type="Self.OrderObjects" Multiplicity="1" />
@@ -409,6 +410,7 @@
           <Property Name="canReviewCranMZTask" Type="Boolean" Nullable="false" />
           <Property Name="sendOnlyMZCranTask" Type="Boolean" Nullable="false" />
           <Property Name="AddLogins" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AddFinishLogins" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_Orders_OrderObjects">
           <End Role="OrderObjects" Type="VotGESOrdersModel.OrderObjects" Multiplicity="1" />
@@ -598,7 +600,8 @@
             <ScalarProperty Name="expiredCompleteHours" ColumnName="expiredCompleteHours" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Users"><EntityTypeMapping TypeName="VotGESOrdersModel.Users"><MappingFragment StoreEntitySet="Users">
-            <ScalarProperty Name="AddLogins" ColumnName="AddLogins" />
+            <ScalarProperty Name="AddFinishLogins" ColumnName="AddFinishLogins" />
+                <ScalarProperty Name="AddLogins" ColumnName="AddLogins" />
                 <ScalarProperty Name="sendOnlyMZCranTask" ColumnName="sendOnlyMZCranTask" />
                 <ScalarProperty Name="canReviewCranMZTask" ColumnName="canReviewCranMZTask" />
                 <ScalarProperty Name="sendAllAgreeCranTask" ColumnName="sendAllAgreeCranTask" />

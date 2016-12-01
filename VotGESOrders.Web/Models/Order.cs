@@ -835,16 +835,18 @@ namespace VotGESOrders.Web.Models
 			OrderBanned = OrderState == OrderStateEnum.banned;
 
 			int creator = dbOrder.userCreateOrderID;
+			OrdersUser CreatorUser = OrdersUser.loadFromCache(creator);
+			bool isCurrentUser = currentUser.UserID == creator || (CreatorUser.AddFinishLogins.ToLower() + ";").Contains(currentUser.Name.ToLower() + ";");
 			AllowReviewOrder = currentUser.AllowReviewOrder && OrderState == OrderStateEnum.created;
 			AllowOpenOrder = currentUser.AllowChangeOrder && OrderState == OrderStateEnum.accepted;
-			AllowCloseOrder = (currentUser.UserID == creator && OrderState == OrderStateEnum.opened) ||
+			AllowCloseOrder = (isCurrentUser && OrderState == OrderStateEnum.opened) ||
 				currentUser.AllowChangeOrder && OrderState == OrderStateEnum.opened;
 			AllowCompleteWithoutEnterOrder = currentUser.AllowChangeOrder && currentUser.AllowCreateCrashOrder && OrderState == OrderStateEnum.closed;
 			AllowCompleteOrder = currentUser.AllowChangeOrder && OrderState == OrderStateEnum.closed;
-			AllowChangeOrder = (currentUser.UserID == creator || currentUser.AllowChangeOrder) && OrderState == OrderStateEnum.created ||
+			AllowChangeOrder = (isCurrentUser || currentUser.AllowChangeOrder) && OrderState == OrderStateEnum.created ||
 				(currentUser.AllowChangeOrder && (OrderType == OrderTypeEnum.no || OrderType == OrderTypeEnum.crash) && OrderState == OrderStateEnum.opened);
 			AllowExtendOrder = (currentUser.AllowChangeOrder || currentUser.UserID == creator) && OrderState == OrderStateEnum.opened;
-			AllowCancelOrder = ((currentUser.UserID == creator || currentUser.AllowChangeOrder) &&
+			AllowCancelOrder = ((isCurrentUser || currentUser.AllowChangeOrder) &&
 				(OrderState == OrderStateEnum.created || OrderState == OrderStateEnum.accepted || orderState == OrderStateEnum.opened && OrderIsExtend)) ||
 				currentUser.AllowChangeOrder && OrderState == OrderStateEnum.opened && orderIsFixErrorEnter;
 

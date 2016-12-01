@@ -68,7 +68,7 @@ namespace VotGESOrders.Web.Models
 				user.sendAllCranTask = newUser.SendAllCranTask;
 				user.sendOnlyMZCranTask = newUser.SendOnlyMZCranTask;
 				user.AddLogins = newUser.AddLogins;
-				
+				user.AddFinishLogins = newUser.AddFinishLogins;
 				context.SaveChanges();
 
 				newUser.UserID = user.userID;
