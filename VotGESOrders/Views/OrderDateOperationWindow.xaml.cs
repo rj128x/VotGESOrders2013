@@ -59,7 +59,7 @@ namespace VotGESOrders.Views
 					CurrentOrder.FaktStopDate = DateTime.Now;
 					CurrentOrder.CloseText = "Работы завершены. Оборудование можно вводить в работу";
 
-					if (WebContext.Current.User.UserID != CurrentOrder.UserCreateOrderID) {
+					if (!CurrentOrder.IsCurrentUser ) {
 						CurrentOrder.CloseText += "\n" + CurrentOrder.UserCreateOrder.FullName + " (по телефону)";
 					}
 					

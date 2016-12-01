@@ -20,38 +20,52 @@
 		</Grid.RowDefinitions>
 		<sdk:DataGrid AutoGenerateColumns="False" Name="gridUsers" HorizontalAlignment="Stretch">
 			<sdk:DataGrid.Columns>
-				<sdk:DataGridTemplateColumn Header="Логин" SortMemberPath="Name" Width="150">
+				<sdk:DataGridTemplateColumn Header="Логин" SortMemberPath="Name" Width="1*">
 					<sdk:DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
 							<TextBlock Text="{Binding Name}"/>
 						</DataTemplate>
 					</sdk:DataGridTemplateColumn.CellTemplate>
 				</sdk:DataGridTemplateColumn>
-				<sdk:DataGridTemplateColumn Header="Имя" SortMemberPath="FullName" Width="150">
+				<sdk:DataGridTemplateColumn Header="Имя" SortMemberPath="FullName" Width="1*">
 					<sdk:DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
 							<TextBlock Text="{Binding FullName}"/>
 						</DataTemplate>
 					</sdk:DataGridTemplateColumn.CellTemplate>
 				</sdk:DataGridTemplateColumn>
-				<sdk:DataGridTemplateColumn Header="Почта" SortMemberPath="Mail" Width="*">
+				<sdk:DataGridTemplateColumn Header="Почта" SortMemberPath="Mail" Width="2*">
 					<sdk:DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
 							<TextBlock Text="{Binding Mail}" TextWrapping="Wrap"/>
 						</DataTemplate>
 					</sdk:DataGridTemplateColumn.CellTemplate>
 				</sdk:DataGridTemplateColumn>
-				<sdk:DataGridTemplateColumn Header="Операции" Width="200">
+                <sdk:DataGridTemplateColumn Header="Псевдоним" SortMemberPath="AddLogins" Width="2*">
+                    <sdk:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding AddLogins}" TextWrapping="Wrap"/>
+                        </DataTemplate>
+                    </sdk:DataGridTemplateColumn.CellTemplate>
+                </sdk:DataGridTemplateColumn>
+                <sdk:DataGridTemplateColumn Header="Смежный пользователь" SortMemberPath="AddFinishLogins" Width="1*">
+                    <sdk:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding AddFinishLogins}" TextWrapping="Wrap"/>
+                        </DataTemplate>
+                    </sdk:DataGridTemplateColumn.CellTemplate>
+                </sdk:DataGridTemplateColumn>               
+                <sdk:DataGridTemplateColumn Header="Операции" Width="130">
 					<sdk:DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
 							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" >
-								<Button Name="btnChangeItem" Content="Изменить"   VerticalAlignment="Center" HorizontalAlignment="Center"  
-									  FontSize="14" Foreground="Blue" Margin="0,0,0,0" Padding="0,0,0,0"
-								  Width="100" Height="20" Click="btnChangeItem_Click"
+								<Button Name="btnChangeItem" Content=" Изменить "   VerticalAlignment="Center" HorizontalAlignment="Center"  
+									  FontSize="12" Foreground="Blue" Margin="0,0,0,0" Padding="0,0,0,0"
+								 Height="20" Click="btnChangeItem_Click"
 										  IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"/>
-								<Button Name="btnDeleteItem" Content="Удалить"   VerticalAlignment="Center" HorizontalAlignment="Center" 
-									  FontSize="14" Foreground="Red" Margin="0,0,0,0" Padding="0,0,0,0"
-								  Width="100" Height="20" Click="btnDeleteItem_Click"
+								<Button Name="btnDeleteItem" Content=" Удалить "   VerticalAlignment="Center" HorizontalAlignment="Center" 
+									  FontSize="12" Foreground="Red" Margin="0,0,0,0" Padding="0,0,0,0"
+								  Height="20" Click="btnDeleteItem_Click"
 										  IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"/>								
 							</StackPanel>
 						</DataTemplate>

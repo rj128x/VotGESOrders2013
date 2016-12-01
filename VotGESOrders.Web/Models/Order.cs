@@ -73,8 +73,8 @@ namespace VotGESOrders.Web.Models
 
 		public string OrderNumberFloor { get; set; }
 		public string OrderNumberExp { get; set; }
-
 		public bool IsCurrentYear { get; set; }
+		public bool IsCurrentUser { get; set; }
 
 		public static double MaxYearPrevNumber;
 
@@ -652,6 +652,7 @@ namespace VotGESOrders.Web.Models
 			get { return expiredReglamentHours; }
 			set { expiredReglamentHours = value; }
 		}
+		
 
 		private String commentsText;
 		public String CommentsText {
@@ -836,17 +837,17 @@ namespace VotGESOrders.Web.Models
 
 			int creator = dbOrder.userCreateOrderID;
 			OrdersUser CreatorUser = OrdersUser.loadFromCache(creator);
-			bool isCurrentUser = currentUser.UserID == creator || (CreatorUser.AddFinishLogins.ToLower() + ";").Contains(currentUser.Name.ToLower() + ";");
+			IsCurrentUser = currentUser.UserID == creator || (CreatorUser.AddFinishLogins.ToLower() + ";").Contains(currentUser.Name.ToLower() + ";");
 			AllowReviewOrder = currentUser.AllowReviewOrder && OrderState == OrderStateEnum.created;
 			AllowOpenOrder = currentUser.AllowChangeOrder && OrderState == OrderStateEnum.accepted;
-			AllowCloseOrder = (isCurrentUser && OrderState == OrderStateEnum.opened) ||
+			AllowCloseOrder = (IsCurrentUser && OrderState == OrderStateEnum.opened) ||
 				currentUser.AllowChangeOrder && OrderState == OrderStateEnum.opened;
 			AllowCompleteWithoutEnterOrder = currentUser.AllowChangeOrder && currentUser.AllowCreateCrashOrder && OrderState == OrderStateEnum.closed;
 			AllowCompleteOrder = currentUser.AllowChangeOrder && OrderState == OrderStateEnum.closed;
-			AllowChangeOrder = (isCurrentUser || currentUser.AllowChangeOrder) && OrderState == OrderStateEnum.created ||
+			AllowChangeOrder = (IsCurrentUser || currentUser.AllowChangeOrder) && OrderState == OrderStateEnum.created ||
 				(currentUser.AllowChangeOrder && (OrderType == OrderTypeEnum.no || OrderType == OrderTypeEnum.crash) && OrderState == OrderStateEnum.opened);
 			AllowExtendOrder = (currentUser.AllowChangeOrder || currentUser.UserID == creator) && OrderState == OrderStateEnum.opened;
-			AllowCancelOrder = ((isCurrentUser || currentUser.AllowChangeOrder) &&
+			AllowCancelOrder = ((IsCurrentUser || currentUser.AllowChangeOrder) &&
 				(OrderState == OrderStateEnum.created || OrderState == OrderStateEnum.accepted || orderState == OrderStateEnum.opened && OrderIsExtend)) ||
 				currentUser.AllowChangeOrder && OrderState == OrderStateEnum.opened && orderIsFixErrorEnter;
 

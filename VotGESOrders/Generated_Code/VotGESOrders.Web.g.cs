@@ -169,6 +169,8 @@ namespace VotGESOrders.Web.Models
         
         private bool _hasComments;
         
+        private bool _isCurrentUser;
+        
         private bool _isCurrentYear;
         
         private string _newComment;
@@ -378,6 +380,8 @@ namespace VotGESOrders.Web.Models
         partial void OnFullOrderObjectInfoChanged();
         partial void OnHasCommentsChanging(bool value);
         partial void OnHasCommentsChanged();
+        partial void OnIsCurrentUserChanging(bool value);
+        partial void OnIsCurrentUserChanged();
         partial void OnIsCurrentYearChanging(bool value);
         partial void OnIsCurrentYearChanged();
         partial void OnNewCommentChanging(string value);
@@ -1433,6 +1437,30 @@ namespace VotGESOrders.Web.Models
                     this._hasComments = value;
                     this.RaiseDataMemberChanged("HasComments");
                     this.OnHasCommentsChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Возвращает или задает значение параметра "IsCurrentUser".
+        /// </summary>
+        [DataMember()]
+        public bool IsCurrentUser
+        {
+            get
+            {
+                return this._isCurrentUser;
+            }
+            set
+            {
+                if ((this._isCurrentUser != value))
+                {
+                    this.OnIsCurrentUserChanging(value);
+                    this.RaiseDataMemberChanging("IsCurrentUser");
+                    this.ValidateProperty("IsCurrentUser", value);
+                    this._isCurrentUser = value;
+                    this.RaiseDataMemberChanged("IsCurrentUser");
+                    this.OnIsCurrentUserChanged();
                 }
             }
         }
