@@ -697,7 +697,10 @@ namespace VotGESOrders.Web.Models
 			}
 
 			OrderOperation = OrderOperationEnum.none;
+			Logger.info("check", Logger.LoggerSource.server);
 			checkPremissions(dbOrder, currentUser);
+			Logger.info("check finish", Logger.LoggerSource.server);
+
 
 			SelOrderObject = OrderObject.getByID(dbOrder.orderObjectID);
 
@@ -852,9 +855,9 @@ namespace VotGESOrders.Web.Models
 				currentUser.AllowChangeOrder && OrderState == OrderStateEnum.opened && orderIsFixErrorEnter;
 
 
-
 			string[] ids = dbOrder.agreeUsersIDS.Split(';');
 			AllowCommentOrder = true;
+			
 
 			AllowRejectReviewOrder = (currentUser.AllowEditOrders || currentUser.AllowReviewOrder) &&
 				(OrderState == OrderStateEnum.accepted || OrderState == OrderStateEnum.banned && !OrderIsExtend ||

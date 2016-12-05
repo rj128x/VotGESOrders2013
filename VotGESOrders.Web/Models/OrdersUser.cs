@@ -11,8 +11,7 @@ using System.Data;
 
 namespace VotGESOrders.Web.Models
 {
-	public class OrdersUser
-	{
+	public class OrdersUser {
 		[Key]
 		public int UserID { get; set; }
 		public string Name { get; set; }
@@ -50,6 +49,13 @@ namespace VotGESOrders.Web.Models
 			init();
 		}
 
+		public OrdersUser() {
+			AddLogins = "";
+			AddFinishLogins = "";
+			Name = "";
+			UserID = -1;
+		}
+
 		public static void init() {
 			allUsers = new List<OrdersUser>();
 			context = new VotGESOrdersEntities();
@@ -59,6 +65,7 @@ namespace VotGESOrders.Web.Models
 			foreach (Users dbUser in dbUsers) {
 				allUsers.Add(getFromDB(dbUser));
 			}
+			
 		}
 
 		public static IQueryable<OrdersUser> getAllUsers() {
@@ -74,6 +81,7 @@ namespace VotGESOrders.Web.Models
 				user.FullName = String.Format("{0}", userName);
 				user.Name = userName;
 				user.UserID = -1;
+				
 				//Logger.error(String.Format("Ошибка при получении краткой информации о пользователе из БД: {0}", userName), Logger.LoggerSource.server);
 				return user;
 			}
