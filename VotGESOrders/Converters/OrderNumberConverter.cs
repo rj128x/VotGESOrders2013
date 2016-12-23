@@ -20,7 +20,7 @@ namespace VotGESOrders.Converters
 		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture) {
 			try {
 				double val=(double)value;
-				return val > 0 ? val.ToString(OrderInfo.NFI) : "";
+				return val > 0 ? string.Format(OrderInfo.NFI,"{0:#.##}",val):"";
 			}catch{
 				return "";
 			}

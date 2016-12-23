@@ -9,15 +9,15 @@ namespace VotGESOrders.Web.Models
 	{
 		public static string getOrderHTML(Order order, bool showStyle=true) {			
 			string style=showStyle?"<Style>table {border-collapse: collapse;} td{text-align:center;} td.comments{text-align:left;} td, th {border-width: 1px;	border-style: solid;	border-color: #BBBBFF;	padding-left: 3px;	padding-right: 3px;}</Style>":"";
-			string htmlNumber = String.Format("Заявка {0} №{1} от {2}", order.OrderTypeShortName, order.OrderYearNumber.ToString(OrderInfo.NFI), order.OrderDateCreate.ToString("dd.MM.yy"));
+			string htmlNumber = String.Format("Заявка {0} №{1} от {2}", order.OrderTypeShortName, order.OrderYearNumber.ToString("#.##",OrderInfo.NFI), order.OrderDateCreate.ToString("dd.MM.yy"));
 			string htmlState=String.Format("Состояние: {0}", order.OrderStateStr);
 			string htmlReady=String.Format("Ав.готовность: {0}", order.ReadyTime);
 			string htmlFirstTRTable=String.Format("<table width='100%'><tr><th>{0}</th><th>{1}</th><th>{2}</th></tr></table>", htmlNumber, htmlReady, htmlState);
 			string htmlInfoTable=String.Format("<table width='100%'><tr><th colspan='3'>Информация о заявке</th></tr><tr><th width='30%'>Оборудование</th><th  width='30%'>Текст заявки</th><th width='30%'>Согласовано</th></tr><tr><td width='30%'>{0}</td><td width='30%'>{1}</td><td width='30%'>{2}</td></tr></table>",
 				order.FullOrderObjectInfo, order.OrderText, order.AgreeText);
 
-			string htmlExtend=order.OrderHasParentOrder ? "СТАРАЯ ЗАЯВКА №" + order.ParentOrderYearNumber.ToString(OrderInfo.NFI) : "";
-			string htmlExtended=order.OrderHasChildOrder ? "НОВАЯ ЗАЯВКА №" + order.ChildOrderYearNumber.ToString(OrderInfo.NFI) : "";			
+			string htmlExtend=order.OrderHasParentOrder ? "СТАРАЯ ЗАЯВКА №" + order.ParentOrderYearNumber.ToString("#.##", OrderInfo.NFI) : "";
+			string htmlExtended=order.OrderHasChildOrder ? "НОВАЯ ЗАЯВКА №" + order.ChildOrderYearNumber.ToString("#.##", OrderInfo.NFI) : "";			
 			htmlExtend += order.OrderExtended ? "<br/>" + htmlExtended : "";
 			if (htmlExtend.Length > 0)
 				htmlExtend += "<br/>";

@@ -370,7 +370,7 @@ namespace VotGESOrders.Web.Models
 
 					Order parentOrderNew=new Order(parentOrderDB, currentUser, false, null);
 					if (isNew) {
-						MailContext.sendMail(String.Format("Заявка №{0}. Продление заявки ({2}) [{1}]", parentOrderNew.OrderYearNumber.ToString(OrderInfo.NFI),
+						MailContext.sendMail(String.Format("Заявка №{0}. Продление заявки ({2}) [{1}]", parentOrderNew.OrderYearNumber.ToString("#.##", OrderInfo.NFI),
 							parentOrderNew.FullOrderObjectInfo, CurrentUser.FullName),
 							parentOrderNew, true, false);
 					}
@@ -408,7 +408,7 @@ namespace VotGESOrders.Web.Models
 					if (isNew) {
 						Order parentOrderNew=new Order(parentOrderDB, currentUser, false, null);
 						MailContext.sendMail(String.Format("Заявка №{0}. Заявка закрыта без ввода оборудования ({2}) [{1}]",
-							parentOrderNew.OrderYearNumber.ToString(OrderInfo.NFI), parentOrderNew.FullOrderObjectInfo, CurrentUser.FullName),
+							parentOrderNew.OrderYearNumber.ToString("#.##", OrderInfo.NFI), parentOrderNew.FullOrderObjectInfo, CurrentUser.FullName),
 							parentOrderNew, true, false);
 					}
 				}
@@ -425,7 +425,7 @@ namespace VotGESOrders.Web.Models
 				order.refreshOrderFromDB(orderDB, currentUser,false,null);
 
 				MailContext.sendMail(String.Format(isNew ? "Заявка №{0}. Создана новая заявка ({2}) [{1}]" : "Заявка №{0}. Заявка изменена ({2}) [{1}]", 
-					order.OrderYearNumber.ToString(OrderInfo.NFI), order.FullOrderObjectInfo, CurrentUser.FullName), 
+					order.OrderYearNumber.ToString("#.##", OrderInfo.NFI), order.FullOrderObjectInfo, CurrentUser.FullName), 
 					order, true, false,prevOrder);
 
 			} catch (Exception e) {
@@ -438,21 +438,21 @@ namespace VotGESOrders.Web.Models
 		}
 
 		public void ChangeOrder(Order order, Guid guid) {
-			Logger.info("Пользователь изменил заявку №" + order.OrderNumber.ToString(OrderInfo.NFI), Logger.LoggerSource.ordersContext);
+			Logger.info("Пользователь изменил заявку №" + order.OrderNumber.ToString("#.##", OrderInfo.NFI), Logger.LoggerSource.ordersContext);
 			try {
 				RegisterOrder(order, guid);
 			} catch (Exception e) {
-				Logger.error(String.Format("===Ошибка при изменении заявки №{1}: {0}", e, order.OrderNumber.ToString(OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
+				Logger.error(String.Format("===Ошибка при изменении заявки №{1}: {0}", e, order.OrderNumber.ToString("#.##", OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
 				if (e is DomainException) {
 					throw e;
 				}
-				throw new DomainException(String.Format("Ошибка при изменении заявки №{0}", order.OrderNumber.ToString(OrderInfo.NFI)));
+				throw new DomainException(String.Format("Ошибка при изменении заявки №{0}", order.OrderNumber.ToString("#.##", OrderInfo.NFI)));
 			}
 		}
 
 
 		public void AcceptOrder(Order order, Guid guid) {
-			Logger.info("Пользователь разрешил заявку №" + order.OrderNumber.ToString(OrderInfo.NFI), Logger.LoggerSource.ordersContext);
+			Logger.info("Пользователь разрешил заявку №" + order.OrderNumber.ToString("#.##", OrderInfo.NFI), Logger.LoggerSource.ordersContext);
 			try {
 				VotGESOrdersEntities context=new VotGESOrdersEntities();
 				Orders orderDB=context.Orders.First(o => o.orderNumber == order.OrderNumber);
@@ -483,31 +483,31 @@ namespace VotGESOrders.Web.Models
 						Order.writeExpired(parentOrderDB);
 						Order parentOrderNew=new Order(parentOrderDB, currentUser, false, null);
 						MailContext.sendMail(String.Format("Заявка №{0}. Заявка продлена ({2}) [{1}]",
-							parentOrderNew.OrderYearNumber.ToString(OrderInfo.NFI), parentOrderNew.FullOrderObjectInfo, CurrentUser.FullName),
+							parentOrderNew.OrderYearNumber.ToString("#.##", OrderInfo.NFI), parentOrderNew.FullOrderObjectInfo, CurrentUser.FullName),
 							parentOrderNew, false, false);
 					}
 					Order.writeExpired(orderDB);
 					context.SaveChanges();
 					LastUpdate.save(guid);
-					Logger.info("===Заявка разрешена. Заявка №" + order.OrderNumber.ToString(OrderInfo.NFI), Logger.LoggerSource.ordersContext);
+					Logger.info("===Заявка разрешена. Заявка №" + order.OrderNumber.ToString("#.##", OrderInfo.NFI), Logger.LoggerSource.ordersContext);
 				} else {
 					throw new DomainException("Нельзя разрешить заявку");
 				}
 				order.refreshOrderFromDB(orderDB, currentUser, false, null);
 				MailContext.sendMail(String.Format("Заявка №{0}. Заявка разрешена ({2}) [{1}]", 
-					orderDB.orderYearNumber.Value.ToString(OrderInfo.NFI), order.FullOrderObjectInfo, CurrentUser.FullName), 
+					orderDB.orderYearNumber.Value.ToString("#.##", OrderInfo.NFI), order.FullOrderObjectInfo, CurrentUser.FullName), 
 					order, false, false);
 			} catch (Exception e) {
-				Logger.error(String.Format("===Ошибка при разрешении заявки №{1}: {0}", e, order.OrderNumber.ToString(OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
+				Logger.error(String.Format("===Ошибка при разрешении заявки №{1}: {0}", e, order.OrderNumber.ToString("#.##", OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
 				if (e is DomainException) {
 					throw e;
 				}
-				throw new DomainException(String.Format("Ошибка при разрешении заявки №{0}", order.OrderNumber.ToString(OrderInfo.NFI)));
+				throw new DomainException(String.Format("Ошибка при разрешении заявки №{0}", order.OrderNumber.ToString("#.##", OrderInfo.NFI)));
 			}
 		}
 
 		public void BanOrder(Order order, Guid guid) {
-			Logger.info("Пользователь запретил заявку  №" + order.OrderNumber.ToString(OrderInfo.NFI), Logger.LoggerSource.ordersContext);
+			Logger.info("Пользователь запретил заявку  №" + order.OrderNumber.ToString("#.##", OrderInfo.NFI), Logger.LoggerSource.ordersContext);
 			try {
 				VotGESOrdersEntities context=new VotGESOrdersEntities();
 				Orders orderDB=context.Orders.First(o => o.orderNumber == order.OrderNumber);
@@ -538,33 +538,33 @@ namespace VotGESOrders.Web.Models
 						Order.writeExpired(parentOrderDB);
 						Order parentOrderNew=new Order(parentOrderDB, currentUser, false, null);
 						MailContext.sendMail(String.Format("Заявка №{0}. Продление заявки отклонено ({2}) [{1}]",
-							parentOrderNew.OrderYearNumber.ToString(OrderInfo.NFI), parentOrderNew.FullOrderObjectInfo, CurrentUser.FullName),
+							parentOrderNew.OrderYearNumber.ToString("#.##", OrderInfo.NFI), parentOrderNew.FullOrderObjectInfo, CurrentUser.FullName),
 							parentOrderNew, false, false);
 					}
 					Order.writeExpired(orderDB);
 					context.SaveChanges();
 					LastUpdate.save(guid);
-					Logger.info("===Заявка запрещена. Заявка №" + order.OrderNumber.ToString(OrderInfo.NFI), Logger.LoggerSource.ordersContext);
+					Logger.info("===Заявка запрещена. Заявка №" + order.OrderNumber.ToString("#.##", OrderInfo.NFI), Logger.LoggerSource.ordersContext);
 
 				} else {
 					throw new DomainException("Нельзя отклонить заявку");
 				}
 				order.refreshOrderFromDB(orderDB, currentUser, false, null);
 				MailContext.sendMail(String.Format("Заявка №{0}. Заявка отклонена ({2}) [{1}]", 
-					orderDB.orderYearNumber.Value.ToString(OrderInfo.NFI), order.FullOrderObjectInfo, CurrentUser.FullName), 
+					orderDB.orderYearNumber.Value.ToString("#.##", OrderInfo.NFI), order.FullOrderObjectInfo, CurrentUser.FullName), 
 					order, false, false);
 			} catch (Exception e) {
-				Logger.error(String.Format("===Ошибка при запрещении заявки №{1}: {0}", e, order.OrderNumber.ToString(OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
+				Logger.error(String.Format("===Ошибка при запрещении заявки №{1}: {0}", e, order.OrderNumber.ToString("#.##", OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
 				if (e is DomainException) {
 					throw e;
 				}
-				throw new DomainException(String.Format("Ошибка при запрете заявки №{0}", order.OrderNumber.ToString(OrderInfo.NFI)));
+				throw new DomainException(String.Format("Ошибка при запрете заявки №{0}", order.OrderNumber.ToString("#.##", OrderInfo.NFI)));
 			}
 		}
 
 
 		public void RejectReviewOrder(Order order, Guid guid) {
-			Logger.info("Пользователь отменил рассмотрение заявки  №" + order.OrderNumber.ToString(OrderInfo.NFI), Logger.LoggerSource.ordersContext);
+			Logger.info("Пользователь отменил рассмотрение заявки  №" + order.OrderNumber.ToString("#.##", OrderInfo.NFI), Logger.LoggerSource.ordersContext);
 			try {
 				VotGESOrdersEntities context=new VotGESOrdersEntities();
 				Orders orderDB=context.Orders.First(o => o.orderNumber == order.OrderNumber);
@@ -591,33 +591,33 @@ namespace VotGESOrders.Web.Models
 						Order.writeExpired(parentOrderDB);
 						Order parentOrderNew=new Order(parentOrderDB, currentUser, false, null);
 						MailContext.sendMail(String.Format("Заявка №{0}. Отмена рассмотрения заявки на продление ({2}) [{1}]",
-							parentOrderNew.OrderYearNumber.ToString(OrderInfo.NFI), parentOrderNew.FullOrderObjectInfo, CurrentUser.FullName),
+							parentOrderNew.OrderYearNumber.ToString("#.##", OrderInfo.NFI), parentOrderNew.FullOrderObjectInfo, CurrentUser.FullName),
 							parentOrderNew, false, false);
 					}
 					Order.writeExpired(orderDB);
 					context.SaveChanges();
 					LastUpdate.save(guid);
-					Logger.info("===Заявка. Отмена рассмотрения. Заявка №" + order.OrderNumber.ToString(OrderInfo.NFI), Logger.LoggerSource.ordersContext);
+					Logger.info("===Заявка. Отмена рассмотрения. Заявка №" + order.OrderNumber.ToString("#.##", OrderInfo.NFI), Logger.LoggerSource.ordersContext);
 
 				} else {
 					throw new DomainException("Нельзя отменить рассмотрение заявки");
 				}
 				order.refreshOrderFromDB(orderDB, currentUser, false, null);
 				MailContext.sendMail(String.Format("Заявка №{0}. Отмена рассмотрения заявки ({2}) [{1}]", 
-					orderDB.orderYearNumber.Value.ToString(OrderInfo.NFI), order.FullOrderObjectInfo, CurrentUser.FullName),
+					orderDB.orderYearNumber.Value.ToString("#.##", OrderInfo.NFI), order.FullOrderObjectInfo, CurrentUser.FullName),
 					order, true, false);
 			} catch (Exception e) {
-				Logger.error(String.Format("===Ошибка при отмене рассмотрения заявки №{1}: {0}", e, order.OrderNumber.ToString(OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
+				Logger.error(String.Format("===Ошибка при отмене рассмотрения заявки №{1}: {0}", e, order.OrderNumber.ToString("#.##", OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
 				if (e is DomainException) {
 					throw e;
 				}
-				throw new DomainException(String.Format("Ошибка при отмене рассмотрения заявки №{0}", order.OrderNumber.ToString(OrderInfo.NFI)));
+				throw new DomainException(String.Format("Ошибка при отмене рассмотрения заявки №{0}", order.OrderNumber.ToString("#.##", OrderInfo.NFI)));
 			}
 		}
 
 
 		public void OpenOrder(Order order, Guid guid) {
-			Logger.info("Пользователь открыл заявку  №" + order.OrderNumber.ToString(OrderInfo.NFI), Logger.LoggerSource.ordersContext);
+			Logger.info("Пользователь открыл заявку  №" + order.OrderNumber.ToString("#.##", OrderInfo.NFI), Logger.LoggerSource.ordersContext);
 			try {
 				VotGESOrdersEntities context=new VotGESOrdersEntities();
 				Orders orderDB=context.Orders.First(o => o.orderNumber == order.OrderNumber);
@@ -633,25 +633,25 @@ namespace VotGESOrders.Web.Models
 					Order.writeExpired(orderDB);
 					context.SaveChanges();
 					LastUpdate.save(guid);
-					Logger.info("===Заявка открыта. Заявка №" + order.OrderNumber.ToString(OrderInfo.NFI), Logger.LoggerSource.ordersContext);
+					Logger.info("===Заявка открыта. Заявка №" + order.OrderNumber.ToString("#.##", OrderInfo.NFI), Logger.LoggerSource.ordersContext);
 				} else {
 					throw new DomainException("Нельзя открыть заявку");
 				}
 				order.refreshOrderFromDB(orderDB, currentUser, false, null);
 				MailContext.sendMail(String.Format("Заявка №{0}. Заявка открыта ({2}) [{1}]", 
-					orderDB.orderYearNumber.Value.ToString(OrderInfo.NFI), order.FullOrderObjectInfo, CurrentUser.FullName), 
+					orderDB.orderYearNumber.Value.ToString("#.##", OrderInfo.NFI), order.FullOrderObjectInfo, CurrentUser.FullName), 
 					order, false, false);
 			} catch (Exception e) {
-				Logger.error(String.Format("===Ошибка при открытии заявки №{1}: {0}", e, order.OrderNumber.ToString(OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
+				Logger.error(String.Format("===Ошибка при открытии заявки №{1}: {0}", e, order.OrderNumber.ToString("#.##", OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
 				if (e is DomainException) {
 					throw e;
 				}
-				throw new DomainException(String.Format("Ошибка при открытии заявки №{0}", order.OrderNumber.ToString(OrderInfo.NFI)));
+				throw new DomainException(String.Format("Ошибка при открытии заявки №{0}", order.OrderNumber.ToString("#.##", OrderInfo.NFI)));
 			}
 		}
 
 		public void RejectOpenOrder(Order order, Guid guid) {
-			Logger.info("Пользователь отменил открытие заявки  №" + order.OrderNumber.ToString(OrderInfo.NFI), Logger.LoggerSource.ordersContext);
+			Logger.info("Пользователь отменил открытие заявки  №" + order.OrderNumber.ToString("#.##", OrderInfo.NFI), Logger.LoggerSource.ordersContext);
 			try {
 				VotGESOrdersEntities context=new VotGESOrdersEntities();
 				Orders orderDB=context.Orders.First(o => o.orderNumber == order.OrderNumber);
@@ -667,25 +667,25 @@ namespace VotGESOrders.Web.Models
 					Order.writeExpired(orderDB);
 					context.SaveChanges();
 					LastUpdate.save(guid);
-					Logger.info("===Заявка. отмена открытия. Заявка №" + order.OrderNumber.ToString(OrderInfo.NFI), Logger.LoggerSource.ordersContext);
+					Logger.info("===Заявка. отмена открытия. Заявка №" + order.OrderNumber.ToString("#.##", OrderInfo.NFI), Logger.LoggerSource.ordersContext);
 				} else {
 					throw new DomainException("Нельзя отменить открытие заявки");
 				}
 				order.refreshOrderFromDB(orderDB, currentUser, false, null);
 				MailContext.sendMail(String.Format("Заявка №{0}. Отмена открытия заявки ({2}) [{1}]", 
-					orderDB.orderYearNumber.Value.ToString(OrderInfo.NFI), order.FullOrderObjectInfo, CurrentUser.FullName),
+					orderDB.orderYearNumber.Value.ToString("#.##", OrderInfo.NFI), order.FullOrderObjectInfo, CurrentUser.FullName),
 					order, false, false);
 			} catch (Exception e) {
-				Logger.error(String.Format("===Ошибка при отмене открытия заявки №{1}: {0}", e, order.OrderNumber.ToString(OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
+				Logger.error(String.Format("===Ошибка при отмене открытия заявки №{1}: {0}", e, order.OrderNumber.ToString("#.##", OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
 				if (e is DomainException) {
 					throw e;
 				}
-				throw new DomainException(String.Format("Ошибка при отмене открытия заявки №{0}", order.OrderNumber.ToString(OrderInfo.NFI)));
+				throw new DomainException(String.Format("Ошибка при отмене открытия заявки №{0}", order.OrderNumber.ToString("#.##", OrderInfo.NFI)));
 			}
 		}
 
 		public void CloseOrder(Order order, Guid guid) {
-			Logger.info("Пользователь разрешил ввод оборудования. Заявка  №" + order.OrderNumber.ToString(OrderInfo.NFI), Logger.LoggerSource.ordersContext);
+			Logger.info("Пользователь разрешил ввод оборудования. Заявка  №" + order.OrderNumber.ToString("#.##", OrderInfo.NFI), Logger.LoggerSource.ordersContext);
 			try {
 				VotGESOrdersEntities context=new VotGESOrdersEntities();
 				Orders orderDB=context.Orders.First(o => o.orderNumber == order.OrderNumber);
@@ -701,25 +701,25 @@ namespace VotGESOrders.Web.Models
 					Order.writeExpired(orderDB);
 					context.SaveChanges();
 					LastUpdate.save(guid);
-					Logger.info("===Разрешен ввод оборудования. Заявка №" + order.OrderNumber.ToString(OrderInfo.NFI), Logger.LoggerSource.ordersContext);
+					Logger.info("===Разрешен ввод оборудования. Заявка №" + order.OrderNumber.ToString("#.##", OrderInfo.NFI), Logger.LoggerSource.ordersContext);
 				} else {
 					throw new DomainException("Нельзя разрешить ввод оборудования");
 				}
 				order.refreshOrderFromDB(orderDB, currentUser, false, null);
 				MailContext.sendMail(String.Format("Заявка №{0}. Разрешен ввод оборудования ({2}) [{1}]", 
-					orderDB.orderYearNumber.Value.ToString(OrderInfo.NFI), order.FullOrderObjectInfo, CurrentUser.FullName), 
+					orderDB.orderYearNumber.Value.ToString("#.##", OrderInfo.NFI), order.FullOrderObjectInfo, CurrentUser.FullName), 
 					order, false, false);
 			} catch (Exception e) {
-				Logger.error(String.Format("===Ошибка при разрешении ввода. Заявка №{1}: {0}", e, order.OrderNumber.ToString(OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
+				Logger.error(String.Format("===Ошибка при разрешении ввода. Заявка №{1}: {0}", e, order.OrderNumber.ToString("#.##", OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
 				if (e is DomainException) {
 					throw e;
 				}
-				throw new DomainException(String.Format("Ошибка при разрешении ввода. Заявка №{0}", order.OrderNumber.ToString(OrderInfo.NFI)));
+				throw new DomainException(String.Format("Ошибка при разрешении ввода. Заявка №{0}", order.OrderNumber.ToString("#.##", OrderInfo.NFI)));
 			}
 		}
 
 		public void RejectCloseOrder(Order order, Guid guid) {
-			Logger.info("Пользователь отменил разрешение на ввод оборудования. Заявка  №" + order.OrderNumber.ToString(OrderInfo.NFI), Logger.LoggerSource.ordersContext);
+			Logger.info("Пользователь отменил разрешение на ввод оборудования. Заявка  №" + order.OrderNumber.ToString("#.##", OrderInfo.NFI), Logger.LoggerSource.ordersContext);
 			try {
 				VotGESOrdersEntities context=new VotGESOrdersEntities();
 				Orders orderDB=context.Orders.First(o => o.orderNumber == order.OrderNumber);
@@ -735,25 +735,25 @@ namespace VotGESOrders.Web.Models
 					Order.writeExpired(orderDB);
 					context.SaveChanges();
 					LastUpdate.save(guid);
-					Logger.info("===Отменено разрешение на ввод оборудования. Заявка №" + order.OrderNumber.ToString(OrderInfo.NFI), Logger.LoggerSource.ordersContext);
+					Logger.info("===Отменено разрешение на ввод оборудования. Заявка №" + order.OrderNumber.ToString("#.##", OrderInfo.NFI), Logger.LoggerSource.ordersContext);
 				} else {
 					throw new DomainException("Нельзя отменить разрешение на ввод оборудования");
 				}
 				order.refreshOrderFromDB(orderDB, currentUser, false, null);
 				MailContext.sendMail(String.Format("Заявка №{0}. Отмена разрешения на ввод оборудования ({2}) [{1}]", 
-					orderDB.orderYearNumber.Value.ToString(OrderInfo.NFI), order.FullOrderObjectInfo, CurrentUser.FullName),
+					orderDB.orderYearNumber.Value.ToString("#.##", OrderInfo.NFI), order.FullOrderObjectInfo, CurrentUser.FullName),
 					order, false, false);
 			} catch (Exception e) {
-				Logger.error(String.Format("===Ошибка при отмне разрешения на ввода. Заявка №{1}: {0}", e, order.OrderNumber.ToString(OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
+				Logger.error(String.Format("===Ошибка при отмне разрешения на ввода. Заявка №{1}: {0}", e, order.OrderNumber.ToString("#.##", OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
 				if (e is DomainException) {
 					throw e;
 				}
-				throw new DomainException(String.Format("Ошибка при отмене разрешения на ввод. Заявка №{0}", order.OrderNumber.ToString(OrderInfo.NFI)));
+				throw new DomainException(String.Format("Ошибка при отмене разрешения на ввод. Заявка №{0}", order.OrderNumber.ToString("#.##", OrderInfo.NFI)));
 			}
 		}
 
 		public void CancelOrder(Order order, Guid guid) {
-			Logger.info("Пользователь снял заявку №" + order.OrderNumber.ToString(OrderInfo.NFI), Logger.LoggerSource.ordersContext);
+			Logger.info("Пользователь снял заявку №" + order.OrderNumber.ToString("#.##", OrderInfo.NFI), Logger.LoggerSource.ordersContext);
 			try {
 				VotGESOrdersEntities context=new VotGESOrdersEntities();
 				Orders orderDB=context.Orders.First(o => o.orderNumber == order.OrderNumber);
@@ -783,7 +783,7 @@ namespace VotGESOrders.Web.Models
 						Order.writeExpired(parentOrderDB);
 						Order parentOrderNew=new Order(parentOrderDB, currentUser, false, null);
 						MailContext.sendMail(String.Format("Заявка №{0}. Снята заявка на продление ({2}) [{1}]",
-							parentOrderNew.OrderYearNumber.ToString(OrderInfo.NFI), parentOrderNew.FullOrderObjectInfo, CurrentUser.FullName),
+							parentOrderNew.OrderYearNumber.ToString("#.##", OrderInfo.NFI), parentOrderNew.FullOrderObjectInfo, CurrentUser.FullName),
 							parentOrderNew, false, false);
 					}
 					if (order.OrderIsFixErrorEnter) {
@@ -802,31 +802,31 @@ namespace VotGESOrders.Web.Models
 						Order.writeExpired(parentOrderDB);
 						Order parentOrderNew=new Order(parentOrderDB, currentUser, false, null);
 						MailContext.sendMail(String.Format("Заявка №{0}. Снята аварийная заявка ({2}) [{1}]",
-							parentOrderNew.OrderYearNumber.ToString(OrderInfo.NFI), parentOrderNew.FullOrderObjectInfo, CurrentUser.FullName),
+							parentOrderNew.OrderYearNumber.ToString("#.##", OrderInfo.NFI), parentOrderNew.FullOrderObjectInfo, CurrentUser.FullName),
 							parentOrderNew, false, false);
 					}
 					Order.writeExpired(orderDB);
 					context.SaveChanges();
 					LastUpdate.save(guid);
-					Logger.info("===Заявка. Снята заявка №" + order.OrderNumber.ToString(OrderInfo.NFI), Logger.LoggerSource.ordersContext);
+					Logger.info("===Заявка. Снята заявка №" + order.OrderNumber.ToString("#.##", OrderInfo.NFI), Logger.LoggerSource.ordersContext);
 				} else {
 					throw new DomainException("Нельзя снять заявку");
 				}
 				order.refreshOrderFromDB(orderDB, currentUser, false, null);
 				MailContext.sendMail(String.Format("Заявка №{0}. Заявка снята ({2}) [{1}]", 
-					orderDB.orderYearNumber.Value.ToString(OrderInfo.NFI), order.FullOrderObjectInfo, CurrentUser.FullName), 
+					orderDB.orderYearNumber.Value.ToString("#.##", OrderInfo.NFI), order.FullOrderObjectInfo, CurrentUser.FullName), 
 					order, false, false);
 			} catch (Exception e) {
-				Logger.error(String.Format("===Ошибка при снятии заявки №{1}: {0}", e, order.OrderNumber.ToString(OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
+				Logger.error(String.Format("===Ошибка при снятии заявки №{1}: {0}", e, order.OrderNumber.ToString("#.##", OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
 				if (e is DomainException) {
 					throw e;
 				}
-				throw new DomainException(String.Format("Ошибка при снятии заявки №{0}", order.OrderNumber.ToString(OrderInfo.NFI)));
+				throw new DomainException(String.Format("Ошибка при снятии заявки №{0}", order.OrderNumber.ToString("#.##", OrderInfo.NFI)));
 			}
 		}
 
 		public void RejectCancelOrder(Order order, Guid guid) {
-			Logger.info("Пользователь отменил снятие заявки №" + order.OrderNumber.ToString(OrderInfo.NFI), Logger.LoggerSource.ordersContext);
+			Logger.info("Пользователь отменил снятие заявки №" + order.OrderNumber.ToString("#.##", OrderInfo.NFI), Logger.LoggerSource.ordersContext);
 			try {
 				VotGESOrdersEntities context=new VotGESOrdersEntities();
 				Orders orderDB=context.Orders.First(o => o.orderNumber == order.OrderNumber);
@@ -841,25 +841,25 @@ namespace VotGESOrders.Web.Models
 					Order.writeExpired(orderDB);
 					context.SaveChanges();
 					LastUpdate.save(guid);
-					Logger.info("===Заявка. Отмена снятия. Заявка №" + order.OrderNumber.ToString(OrderInfo.NFI), Logger.LoggerSource.ordersContext);
+					Logger.info("===Заявка. Отмена снятия. Заявка №" + order.OrderNumber.ToString("#.##", OrderInfo.NFI), Logger.LoggerSource.ordersContext);
 				} else {
 					throw new DomainException("Нельзя отменить снятие заявки");
 				}
 				order.refreshOrderFromDB(orderDB, currentUser, false, null);
 				MailContext.sendMail(String.Format("Заявка №{0}. Отмена снятия ({2}) [{1}]", 
-					orderDB.orderYearNumber.Value.ToString(OrderInfo.NFI),order.FullOrderObjectInfo, CurrentUser.FullName),
+					orderDB.orderYearNumber.Value.ToString("#.##", OrderInfo.NFI),order.FullOrderObjectInfo, CurrentUser.FullName),
 					order, false, false);
 			} catch (Exception e) {
-				Logger.error(String.Format("===Ошибка при отмене снятия заявки №{1}: {0}", e, order.OrderNumber.ToString(OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
+				Logger.error(String.Format("===Ошибка при отмене снятия заявки №{1}: {0}", e, order.OrderNumber.ToString("#.##", OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
 				if (e is DomainException) {
 					throw e;
 				}
-				throw new DomainException(String.Format("Ошибка при отмене снятия заявки №{0}", order.OrderNumber.ToString(OrderInfo.NFI)));
+				throw new DomainException(String.Format("Ошибка при отмене снятия заявки №{0}", order.OrderNumber.ToString("#.##", OrderInfo.NFI)));
 			}
 		}
 
 		public void CompleteOrder(Order order, Guid guid) {
-			Logger.info("Пользователь ввел оборудование. Заявка №" + order.OrderNumber.ToString(OrderInfo.NFI), Logger.LoggerSource.ordersContext);
+			Logger.info("Пользователь ввел оборудование. Заявка №" + order.OrderNumber.ToString("#.##", OrderInfo.NFI), Logger.LoggerSource.ordersContext);
 			try {
 				VotGESOrdersEntities context=new VotGESOrdersEntities();
 				Orders orderDB=context.Orders.First(o => o.orderNumber == order.OrderNumber);
@@ -876,25 +876,25 @@ namespace VotGESOrders.Web.Models
 					Order.writeExpired(orderDB);
 					context.SaveChanges();
 					LastUpdate.save(guid);
-					Logger.info("===Оборудование введено. Заявка №" + order.OrderNumber.ToString(OrderInfo.NFI), Logger.LoggerSource.ordersContext);
+					Logger.info("===Оборудование введено. Заявка №" + order.OrderNumber.ToString("#.##", OrderInfo.NFI), Logger.LoggerSource.ordersContext);
 				} else {
 					throw new DomainException("Нельзя закрыть заявку");
 				}
 				order.refreshOrderFromDB(orderDB, currentUser, false, null);
 				MailContext.sendMail(String.Format("Заявка №{0}. Заявка закрыта ({2}) [{1}]", 
-					orderDB.orderYearNumber.Value.ToString(OrderInfo.NFI),order.FullOrderObjectInfo, CurrentUser.FullName), 
+					orderDB.orderYearNumber.Value.ToString("#.##", OrderInfo.NFI),order.FullOrderObjectInfo, CurrentUser.FullName), 
 					order, false, false);
 			} catch (Exception e) {
-				Logger.error(String.Format("===Ошибка при вводе оборудования №{1}: {0}", e, order.OrderNumber.ToString(OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
+				Logger.error(String.Format("===Ошибка при вводе оборудования №{1}: {0}", e, order.OrderNumber.ToString("#.##", OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
 				if (e is DomainException) {
 					throw e;
 				}
-				throw new DomainException(String.Format("Ошибка при вводе оборудования по заявке №{0}", order.OrderNumber.ToString(OrderInfo.NFI)));
+				throw new DomainException(String.Format("Ошибка при вводе оборудования по заявке №{0}", order.OrderNumber.ToString("#.##", OrderInfo.NFI)));
 			}
 		}
 
 		public void RejectCompleteOrder(Order order, Guid guid) {
-			Logger.info("Пользователь отменил ввод оборудования. Заявка №" + order.OrderNumber.ToString(OrderInfo.NFI), Logger.LoggerSource.ordersContext);
+			Logger.info("Пользователь отменил ввод оборудования. Заявка №" + order.OrderNumber.ToString("#.##", OrderInfo.NFI), Logger.LoggerSource.ordersContext);
 			try {
 				VotGESOrdersEntities context=new VotGESOrdersEntities();
 				Orders orderDB=context.Orders.First(o => o.orderNumber == order.OrderNumber);
@@ -910,25 +910,25 @@ namespace VotGESOrders.Web.Models
 					Order.writeExpired(orderDB);
 					context.SaveChanges();
 					LastUpdate.save(guid);
-					Logger.info("===Отмена ввода оборудования. Заявка №" + order.OrderNumber.ToString(OrderInfo.NFI), Logger.LoggerSource.ordersContext);
+					Logger.info("===Отмена ввода оборудования. Заявка №" + order.OrderNumber.ToString("#.##", OrderInfo.NFI), Logger.LoggerSource.ordersContext);
 				} else {
 					throw new DomainException("Нельзя отменить ввод оборудования");
 				}
 				order.refreshOrderFromDB(orderDB, currentUser, false, null);
 				MailContext.sendMail(String.Format("Заявка №{0}. Отмена ввода оборудования ({2}) [{1}]", 
-					orderDB.orderYearNumber.Value.ToString(OrderInfo.NFI),order.FullOrderObjectInfo, CurrentUser.FullName),
+					orderDB.orderYearNumber.Value.ToString("#.##", OrderInfo.NFI),order.FullOrderObjectInfo, CurrentUser.FullName),
 					order, false, false);
 			} catch (Exception e) {
-				Logger.error(String.Format("===Ошибка при отмене ввода оборудования по заявке №{1}: {0}", e, order.OrderNumber.ToString(OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
+				Logger.error(String.Format("===Ошибка при отмене ввода оборудования по заявке №{1}: {0}", e, order.OrderNumber.ToString("#.##", OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
 				if (e is DomainException) {
 					throw e;
 				}
-				throw new DomainException(String.Format("Ошибка при отмене ввода оборудования по заявке №{0}", order.OrderNumber.ToString(OrderInfo.NFI)));
+				throw new DomainException(String.Format("Ошибка при отмене ввода оборудования по заявке №{0}", order.OrderNumber.ToString("#.##", OrderInfo.NFI)));
 			}
 		}
 
 		public void RegisterEditOrder(Order order, Guid guid) {
-			Logger.info("Пользователь отредактировал заявку. Заявка №" + order.OrderNumber.ToString(OrderInfo.NFI), Logger.LoggerSource.ordersContext);
+			Logger.info("Пользователь отредактировал заявку. Заявка №" + order.OrderNumber.ToString("#.##", OrderInfo.NFI), Logger.LoggerSource.ordersContext);
 			try {
 				OrderTypeEnum type=order.OrderType;
 				VotGESOrdersEntities context=new VotGESOrdersEntities();
@@ -982,25 +982,25 @@ namespace VotGESOrders.Web.Models
 					Order.writeExpired(orderDB);
 					context.SaveChanges();
 					LastUpdate.save(guid);
-					Logger.info("===Заявка отредактирована. Заявка №" + order.OrderNumber.ToString(OrderInfo.NFI), Logger.LoggerSource.ordersContext);
+					Logger.info("===Заявка отредактирована. Заявка №" + order.OrderNumber.ToString("#.##", OrderInfo.NFI), Logger.LoggerSource.ordersContext);
 				} else {
 					throw new DomainException("Нельзя отменить ввод оборудования");
 				}
 				order.refreshOrderFromDB(orderDB, currentUser, false, null);
 				MailContext.sendMail(String.Format("Заявка №{0}. Заявка отредактирована ({2}) [{1}]", 
-					orderDB.orderYearNumber.Value.ToString(OrderInfo.NFI), order.FullOrderObjectInfo, CurrentUser.FullName),
+					orderDB.orderYearNumber.Value.ToString("#.##", OrderInfo.NFI), order.FullOrderObjectInfo, CurrentUser.FullName),
 					order, true, false,prevOrder);
 			} catch (Exception e) {
-				Logger.error(String.Format("===Ошибка при редактировании заявки №{1}: {0}", e, order.OrderNumber.ToString(OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
+				Logger.error(String.Format("===Ошибка при редактировании заявки №{1}: {0}", e, order.OrderNumber.ToString("#.##", OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
 				if (e is DomainException) {
 					throw e;
 				}
-				throw new DomainException(String.Format("Ошибка при редактировании заявки №{0}", order.OrderNumber.ToString(OrderInfo.NFI)));
+				throw new DomainException(String.Format("Ошибка при редактировании заявки №{0}", order.OrderNumber.ToString("#.##", OrderInfo.NFI)));
 			}
 		}
 
 		public void RegisterAddComment(Order order, String commentText, Guid guid) {
-			Logger.info("Пользователь добавил комментарий к заявке. Заявка №" + order.OrderNumber.ToString(OrderInfo.NFI), Logger.LoggerSource.ordersContext);
+			Logger.info("Пользователь добавил комментарий к заявке. Заявка №" + order.OrderNumber.ToString("#.##", OrderInfo.NFI), Logger.LoggerSource.ordersContext);
 			try {
 				VotGESOrdersEntities context=new VotGESOrdersEntities();
 				Orders orderDB=context.Orders.First(o => o.orderNumber == order.OrderNumber);
@@ -1010,18 +1010,18 @@ namespace VotGESOrders.Web.Models
 				Order.writeExpired(orderDB);
 				context.SaveChanges();
 				LastUpdate.save(guid);
-				Logger.info("===Добавлен комментарий. Заявка №" + order.OrderNumber.ToString(OrderInfo.NFI), Logger.LoggerSource.ordersContext);
+				Logger.info("===Добавлен комментарий. Заявка №" + order.OrderNumber.ToString("#.##", OrderInfo.NFI), Logger.LoggerSource.ordersContext);
 				
 				order.refreshOrderFromDB(orderDB, currentUser, false, null);
 				MailContext.sendMail(String.Format("Заявка №{0}. Новый комментарий ({2}) [{1}]", 
-					orderDB.orderYearNumber.Value.ToString(OrderInfo.NFI), order.FullOrderObjectInfo, CurrentUser.FullName),
+					orderDB.orderYearNumber.Value.ToString("#.##", OrderInfo.NFI), order.FullOrderObjectInfo, CurrentUser.FullName),
 					order, true, false);
 			} catch (Exception e) {
-				Logger.error(String.Format("===Ошибка при комментировании заявки №{1}: {0}", e, order.OrderNumber.ToString(OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
+				Logger.error(String.Format("===Ошибка при комментировании заявки №{1}: {0}", e, order.OrderNumber.ToString("#.##", OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
 				if (e is DomainException) {
 					throw e;
 				}
-				throw new DomainException(String.Format("Ошибка при комментировании заявки №{0}", order.OrderNumber.ToString(OrderInfo.NFI)));
+				throw new DomainException(String.Format("Ошибка при комментировании заявки №{0}", order.OrderNumber.ToString("#.##", OrderInfo.NFI)));
 			}
 		}
 
@@ -1065,15 +1065,15 @@ namespace VotGESOrders.Web.Models
 		}
 		
 		public void ReloadOrder(Order order) {
-			Logger.info("Пользователь обновляет заявку №" + order.OrderNumber.ToString(OrderInfo.NFI), Logger.LoggerSource.ordersContext);
+			Logger.info("Пользователь обновляет заявку №" + order.OrderNumber.ToString("#.##", OrderInfo.NFI), Logger.LoggerSource.ordersContext);
 			try {
 				VotGESOrdersEntities context=new VotGESOrdersEntities();
 				Orders orderDB=context.Orders.First(o => o.orderNumber == order.OrderNumber);
-				Logger.info("===Заявка обновлена. Заявка №" + order.OrderNumber.ToString(OrderInfo.NFI), Logger.LoggerSource.ordersContext);
+				Logger.info("===Заявка обновлена. Заявка №" + order.OrderNumber.ToString("#.##", OrderInfo.NFI), Logger.LoggerSource.ordersContext);
 				order.refreshOrderFromDB(orderDB, currentUser, false, null);
 			} catch (Exception e) {
-				Logger.error(String.Format("===Ошибка при обновлении заявки №{1}: {0}", e, order.OrderNumber.ToString(OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
-				throw new DomainException(String.Format("Ошибка при обновлении заявки №{0}", order.OrderNumber.ToString(OrderInfo.NFI)));
+				Logger.error(String.Format("===Ошибка при обновлении заявки №{1}: {0}", e, order.OrderNumber.ToString("#.##", OrderInfo.NFI)), Logger.LoggerSource.ordersContext);
+				throw new DomainException(String.Format("Ошибка при обновлении заявки №{0}", order.OrderNumber.ToString("#.##", OrderInfo.NFI)));
 			}
 		}
 

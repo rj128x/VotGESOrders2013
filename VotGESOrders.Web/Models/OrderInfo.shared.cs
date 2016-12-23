@@ -17,7 +17,7 @@ namespace VotGESOrders.Web.Models
 		static OrderInfo() {
 			NFI = new NumberFormatInfo();
 			NFI.NumberDecimalSeparator = "/";
-			//NFI.NumberDecimalDigits = 3;			
+			NFI.NumberDecimalDigits = 2;			
 			//NFI.NumberDecimalDigits = 3;			
 			
 
