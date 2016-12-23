@@ -18,6 +18,7 @@ namespace VotGESOrders.Web.Models
 			NFI = new NumberFormatInfo();
 			NFI.NumberDecimalSeparator = "/";
 			//NFI.NumberDecimalDigits = 3;			
+			//NFI.NumberDecimalDigits = 3;			
 			
 
 			OrderTypes.Add(OrderTypeEnum.crash, "Аварийная");

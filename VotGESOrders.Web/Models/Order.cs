@@ -689,6 +689,10 @@ namespace VotGESOrders.Web.Models
 			OrderCreated = true;
 		}
 
+		public double checkOrderNumber(double number) {
+			return Math.Floor((number - Math.Floor(number)) * 100) / 100.0 + Math.Floor(number);
+		}
+
 		public void refreshOrderFromDB(Orders dbOrder, OrdersUser currentUser, bool readRelated, List<Order> listOrders) {
 			if (listOrders != null) {
 				if (!listOrders.Contains(this)) {
@@ -697,9 +701,7 @@ namespace VotGESOrders.Web.Models
 			}
 
 			OrderOperation = OrderOperationEnum.none;
-			Logger.info("check", Logger.LoggerSource.server);
 			checkPremissions(dbOrder, currentUser);
-			Logger.info("check finish", Logger.LoggerSource.server);
 
 
 			SelOrderObject = OrderObject.getByID(dbOrder.orderObjectID);
@@ -799,6 +801,10 @@ namespace VotGESOrders.Web.Models
 				ParentOrderNumber = 0;
 				ParentOrderYearNumber = 0;
 			}
+
+			OrderYearNumber = checkOrderNumber(OrderYearNumber);
+			ParentOrderYearNumber = checkOrderNumber(ParentOrderYearNumber);
+			ChildOrderYearNumber = checkOrderNumber(ChildOrderYearNumber);
 
 			if (OrderIsExtend || OrderIsFixErrorEnter) {
 				try {

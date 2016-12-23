@@ -303,7 +303,7 @@ namespace VotGESOrders.Web.Models
 						}
 					} catch { }
 					orderDB.orderNumber = newNumber;
-					orderDB.orderYearNumber = newNumber - Order.MaxYearPrevNumber;
+					orderDB.orderYearNumber = newNumber - (int)Order.MaxYearPrevNumber;
 					orderDB.orderDateCreate = DateTime.Now;
 				}
 				orderDB.orderLastUpdate = DateTime.Now;				
