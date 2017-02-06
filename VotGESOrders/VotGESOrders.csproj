@@ -65,7 +65,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>7161227C0008310EAF38611E44F41EF6A83F12E5</ManifestCertificateThumbprint>
@@ -74,7 +74,7 @@
     <ManifestKeyFile>VotGESOrders_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>VotGESOrders_TemporaryKey.pfx</AssemblyOriginatorKeyFile>

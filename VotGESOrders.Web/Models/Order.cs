@@ -76,18 +76,22 @@ namespace VotGESOrders.Web.Models
 		public bool IsCurrentYear { get; set; }
 		public bool IsCurrentUser { get; set; }
 
-		public static double MaxYearPrevNumber;
+		public static Dictionary<int,double> MaxYearPrevNumbers;
 
 		public static void init() {
 			Logger.info("Чтение номера последней заявки в прошлом году", Logger.LoggerSource.server);
-			try {
-				VotGESOrdersEntities ctx = new VotGESOrdersEntities();
-				double max = (from o in ctx.Orders where o.orderDateCreate.Year == DateTime.Now.Year - 1 && Math.Floor(o.orderNumber) == o.orderNumber select o.orderNumber).Max();
-				MaxYearPrevNumber = max;
-				Logger.info("Присвоен номер " + max, Logger.LoggerSource.server);
-			} catch (Exception e) {
-				Logger.info("Ошибка при получении номера " + e.ToString(), Logger.LoggerSource.server);
-				MaxYearPrevNumber = 0;
+			MaxYearPrevNumbers = new Dictionary<int, double>();
+			for (int year = 2010; year <= DateTime.Now.Year; year++) {
+				try {
+					VotGESOrdersEntities ctx = new VotGESOrdersEntities();
+					double max = (from o in ctx.Orders where o.orderDateCreate.Year == year - 1 && Math.Floor(o.orderNumber) == o.orderNumber select o.orderNumber).Max();
+					MaxYearPrevNumbers.Add(year,max);
+					Logger.info("Присвоен номер " + max, Logger.LoggerSource.server);
+				} catch (Exception e) {
+					Logger.info("Ошибка при получении номера " + e.ToString(), Logger.LoggerSource.server);
+					MaxYearPrevNumbers.Add(year, 0);
+					//MaxYearPrevNumber = 0;
+				}
 			}
 		}
 

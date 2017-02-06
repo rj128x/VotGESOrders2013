@@ -303,7 +303,12 @@ namespace VotGESOrders.Web.Models
 						}
 					} catch { }
 					orderDB.orderNumber = newNumber;
-					orderDB.orderYearNumber = newNumber - (int)Order.MaxYearPrevNumber;
+					if (order.OrderIsExtend || order.OrderIsFixErrorEnter) {
+						int y = context.Orders.Where(o => Math.Floor(orderDB.orderNumber) == o.orderNumber).Max(o => o.orderDateCreate.Year);
+						orderDB.orderYearNumber = newNumber - (int)Order.MaxYearPrevNumbers[y];
+					} else {
+						orderDB.orderYearNumber = newNumber - (int)Order.MaxYearPrevNumbers[DateTime.Now.Year];
+					}
 					orderDB.orderDateCreate = DateTime.Now;
 				}
 				orderDB.orderLastUpdate = DateTime.Now;				
