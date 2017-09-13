@@ -88,7 +88,7 @@ namespace VotGESOrders.Web.Models
 					MaxYearPrevNumbers.Add(year,max);
 					Logger.info("Присвоен номер " + max, Logger.LoggerSource.server);
 				} catch (Exception e) {
-					Logger.info("Ошибка при получении номера " + e.ToString(), Logger.LoggerSource.server);
+					//Logger.info("Ошибка при получении номера " + e.ToString(), Logger.LoggerSource.server);
 					MaxYearPrevNumbers.Add(year, 0);
 					//MaxYearPrevNumber = 0;
 				}

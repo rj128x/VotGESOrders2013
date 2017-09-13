@@ -10,7 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <File Include="ADONETEntities/VotGESOrdersEntities.Designer.cs">
-      <publishTime>01/12/2016 08:04:52</publishTime>
+      <publishTime>12/01/2016 08:04:52</publishTime>
     </File>
     <File Include="bin/de/System.ServiceModel.DomainServices.Hosting.resources.dll">
       <publishTime>04/12/2013 02:58:10</publishTime>
@@ -178,7 +178,7 @@
       <publishTime>09/26/2012 03:16:08</publishTime>
     </File>
     <File Include="bin/VotGESOrders.Web.dll">
-      <publishTime>01/24/2017 10:30:18</publishTime>
+      <publishTime>09/13/2017 15:40:04</publishTime>
     </File>
     <File Include="bin/zh-Hans/System.ServiceModel.DomainServices.Hosting.resources.dll">
       <publishTime>04/12/2013 02:58:20</publishTime>
@@ -193,7 +193,7 @@
       <publishTime>04/12/2013 02:58:20</publishTime>
     </File>
     <File Include="ClientBin/VotGESOrders.xap">
-      <publishTime>01/24/2017 10:32:05</publishTime>
+      <publishTime>09/13/2017 15:40:33</publishTime>
     </File>
     <File Include="Content/Site.css">
       <publishTime>09/16/2014 08:27:38</publishTime>
@@ -244,7 +244,7 @@
       <publishTime>03/15/2016 11:12:17</publishTime>
     </File>
     <File Include="Controllers/HomeController.cs">
-      <publishTime>12/23/2016 12:42:15</publishTime>
+      <publishTime>08/09/2017 13:49:38</publishTime>
     </File>
     <File Include="CranService.svc">
       <publishTime>01/18/2016 10:42:13</publishTime>
@@ -271,10 +271,10 @@
       <publishTime>09/16/2014 08:27:38</publishTime>
     </File>
     <File Include="Models/MailContext.cs">
-      <publishTime>03/25/2016 09:57:40</publishTime>
+      <publishTime>08/09/2017 13:49:37</publishTime>
     </File>
     <File Include="Models/Order.cs">
-      <publishTime>01/24/2017 10:20:47</publishTime>
+      <publishTime>02/06/2017 09:15:09</publishTime>
     </File>
     <File Include="Models/OrderFilter.shared.cs">
       <publishTime>09/16/2014 08:27:38</publishTime>
@@ -289,7 +289,7 @@
       <publishTime>09/16/2014 08:27:38</publishTime>
     </File>
     <File Include="Models/OrdersContext.cs">
-      <publishTime>01/24/2017 10:27:17</publishTime>
+      <publishTime>09/13/2017 15:39:45</publishTime>
     </File>
     <File Include="Models/OrdersUser.cs">
       <publishTime>12/05/2016 10:04:12</publishTime>
@@ -301,7 +301,7 @@
       <publishTime>12/23/2016 12:42:15</publishTime>
     </File>
     <File Include="Models/UserContext.cs">
-      <publishTime>01/12/2016 08:06:42</publishTime>
+      <publishTime>12/01/2016 08:06:42</publishTime>
     </File>
     <File Include="Models/XMLStringSerializer.shared.cs">
       <publishTime>09/16/2014 08:27:38</publishTime>
@@ -313,7 +313,7 @@
       <publishTime>09/16/2014 08:27:38</publishTime>
     </File>
     <File Include="Properties/PublishProfiles/Release.pubxml">
-      <publishTime>04/15/2016 13:58:49</publishTime>
+      <publishTime>02/06/2017 09:50:13</publishTime>
     </File>
     <File Include="Properties/PublishProfiles/Test.pubxml">
       <publishTime>11/16/2015 12:45:42</publishTime>
@@ -454,7 +454,7 @@
       <publishTime>11/28/2016 08:26:51</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>01/24/2017 10:33:59</publishTime>
+      <publishTime>09/13/2017 15:41:06</publishTime>
     </File>
     <File Include="Web.Debug.config">
       <publishTime>09/16/2014 08:27:38</publishTime>

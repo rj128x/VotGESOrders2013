@@ -25,7 +25,7 @@ namespace VotGESOrders.Web.Models {
 
 
 		}
-		public static void sendMail(string header, Order order, bool isNewOrder, bool onlyAuthor, Order prevOrder = null) {
+		public static void sendMail(string header, Order order, bool isNewOrder, bool expired, Order prevOrder = null) {
 			if (HttpContext.Current.Request.Url.Port == 8072 || HttpContext.Current.Request.Url.Port == 8090)
 				return;
 			try {
@@ -34,11 +34,14 @@ namespace VotGESOrders.Web.Models {
 
 				foreach (OrdersUser user in users) {
 					if (
-						user.SendAllAgreeMail && order.AgreeUsers.Contains(user) && !mailToList.Contains(user.Mail) && !onlyAuthor ||
+						/*user.SendAllAgreeMail && order.AgreeUsers.Contains(user) && !mailToList.Contains(user.Mail) && !onlyAuthor ||
 						user.SendAllMail && !mailToList.Contains(user.Mail) ||
 						user.SendCreateMail && order.UserCreateOrderID == user.UserID && !mailToList.Contains(user.Mail) ||
 						onlyAuthor && order.UserCreateOrderID == user.UserID && !mailToList.Contains(user.Mail) ||
-						isNewOrder && (user.SendAllCreateMail || user.SendAgreeMail && order.AgreeUsers.Contains(user)) && !mailToList.Contains(user.Mail) && !onlyAuthor
+						isNewOrder && (user.SendAllCreateMail || user.SendAgreeMail && order.AgreeUsers.Contains(user)) && !mailToList.Contains(user.Mail) && !onlyAuthor*/
+						user.SendAllMail && !mailToList.Contains(user.Mail) ||
+						isNewOrder && (user.SendAllCreateMail || user.SendAgreeMail && order.AgreeUsers.Contains(user)) && !mailToList.Contains(user.Mail) ||
+						expired && (order.UserCreateOrderID == user.UserID || user.SendAllCreateMail) && !mailToList.Contains(user.Mail)
 						) {
 						if (user.Mails.Count > 0) {
 							foreach (string mail in user.Mails) {

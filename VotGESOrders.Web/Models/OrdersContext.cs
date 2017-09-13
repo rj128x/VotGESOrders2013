@@ -377,7 +377,7 @@ namespace VotGESOrders.Web.Models
 					if (isNew) {
 						MailContext.sendMail(String.Format("Заявка №{0}. Продление заявки ({2}) [{1}]", parentOrderNew.OrderYearNumber.ToString("#.##", OrderInfo.NFI),
 							parentOrderNew.FullOrderObjectInfo, CurrentUser.FullName),
-							parentOrderNew, true, false);
+							parentOrderNew, false, false);
 					}
 				}
 
@@ -414,7 +414,7 @@ namespace VotGESOrders.Web.Models
 						Order parentOrderNew=new Order(parentOrderDB, currentUser, false, null);
 						MailContext.sendMail(String.Format("Заявка №{0}. Заявка закрыта без ввода оборудования ({2}) [{1}]",
 							parentOrderNew.OrderYearNumber.ToString("#.##", OrderInfo.NFI), parentOrderNew.FullOrderObjectInfo, CurrentUser.FullName),
-							parentOrderNew, true, false);
+							parentOrderNew, false, false);
 					}
 				}
 
