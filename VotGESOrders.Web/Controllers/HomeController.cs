@@ -36,7 +36,7 @@ namespace VotGESOrders.Web.Controllers
             List<string> mailToList = new List<string>();
             foreach (OrdersUser user in users)
             {
-                if (user.SendAllMail || user.SendAllCreateMail)
+                if (user.SendAllMail||user.SendAllCreateMail)
                 {
                     if (user.Mails.Count > 0)
                     {
@@ -50,7 +50,7 @@ namespace VotGESOrders.Web.Controllers
                     }
                 }
             }
-            MailContext.sendOrdersListShort("Местные заявки", orders.ToList(), mailToList);
+            MailContext.sendOrdersListTable("Местные заявки", orders.ToList(), mailToList);
             return View();
         }
 

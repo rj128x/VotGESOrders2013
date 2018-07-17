@@ -180,6 +180,32 @@ namespace VotGESOrders.Web.Models {
             }
         }
 
+        public static void sendOrdersListTable(string header, List<Order> orders, List<string> mailToList)
+        {
+            try
+            {
+                bool isFirst = true;
+                if (mailToList.Count > 0)
+                {
+                    string trForm = "<table><tr><th>№</th><th>Оборудование</th><th>Текст заявки</th><th>План</th><th>Автор</th><th>Факт</th><th>Разр.ввод</th></tr>";
+                    string style = "<Style>table {border-collapse: collapse;} td{text-align:center;} td.comments{text-align:left;} td, th {border-width: 1px;	border-style: solid;	border-color: #BBBBFF;	padding-left: 3px;	padding-right: 3px;}</Style>";
+                    string message = style+trForm;
+                    foreach (Order order in orders)
+                    {
+                        message += OrderView.getOrderHTMLTR(order, isFirst);
+                        isFirst = false;
+                    }
+                    //SendMailLocal("mx-votges-021.corp.gidroogk.com", 25, "", "", "", "SR-VOTGES-INT@votges.rushydro.ru", mailToList, header, message,true);
+                    SendMailLocal(smtpServer, smtpPort, smtpUser, smtpPassword, smtpDomain, smtpFrom, mailToList, header, message, true);
+                    message += "</table>";
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.error(String.Format("Ошибка при отправке почты: {0}", e.ToString()), Logger.LoggerSource.server);
+            }
+        }
+
 
         private static bool SendMailLocal(string smtp_server, int port, string mail_user, string mail_password, string domain, string mail_from, List<string> mailToList, string subject, string message, bool is_html, Attachment attach = null) {
 

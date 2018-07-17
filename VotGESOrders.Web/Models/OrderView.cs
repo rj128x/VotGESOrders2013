@@ -85,5 +85,18 @@ namespace VotGESOrders.Web.Models
             return style + fullTable;
         }
 
+        public static string getOrderHTMLTR(Order order, bool showStyle = true)
+        {            
+            string trForm = "<tr><th>{0}<hr>{1}</th><td>{2}</td><td >{3}<hr>{4}</td><td>{5}<hr>{6}</td><td>{7}</td><td>{8}<hr>{9}</td><td>{10}</td></tr>";
+            string num = String.Format("{0} №{1}", order.OrderTypeShortName, order.OrderYearNumber.ToString("#.##", OrderInfo.NFI));
+            string tr = String.Format(trForm, num, order.OrderStateStr, order.FullOrderObjectInfo, order.OrderText,order.CreateText,
+                order.PlanStartDate.ToString("dd.MM.yy HH:mm"), order.PlanStopDate.ToString("dd.MM.yy HH:mm"),
+                order.UserCreateOrder.FullName,
+                order.FaktStartDate.HasValue ? order.FaktStartDate.Value.ToString("dd.MM.yy HH:mm") : "-",
+                order.FaktStopDate.HasValue ? order.FaktStopDate.Value.ToString("dd.MM.yy HH:mm") : "-",
+                order.FaktCompleteDate.HasValue ? order.FaktCompleteDate.Value.ToString("dd.MM.yy HH:mm") : "-");
+            return tr;
+        }
+
     }
 }
