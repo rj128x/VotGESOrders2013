@@ -52,7 +52,7 @@
       <publishTime>11/18/2013 05:51:44</publishTime>
     </File>
     <File Include="bin/Microsoft.CSharp.dll">
-      <publishTime>09/26/2012 03:16:08</publishTime>
+      <publishTime>09/26/2012 04:16:08</publishTime>
     </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
       <publishTime>04/14/2016 15:13:03</publishTime>
@@ -79,31 +79,31 @@
       <publishTime>09/07/2013 10:35:56</publishTime>
     </File>
     <File Include="bin/System.ComponentModel.DataAnnotations.dll">
-      <publishTime>09/26/2012 03:16:08</publishTime>
+      <publishTime>09/26/2012 04:16:08</publishTime>
     </File>
     <File Include="bin/System.Configuration.dll">
-      <publishTime>09/26/2012 03:16:08</publishTime>
+      <publishTime>09/26/2012 04:16:08</publishTime>
     </File>
     <File Include="bin/System.Data.DataSetExtensions.dll">
-      <publishTime>09/26/2012 03:16:08</publishTime>
+      <publishTime>09/26/2012 04:16:08</publishTime>
     </File>
     <File Include="bin/System.Data.dll">
-      <publishTime>09/26/2012 03:16:08</publishTime>
+      <publishTime>09/26/2012 04:16:08</publishTime>
     </File>
     <File Include="bin/System.Data.Entity.dll">
-      <publishTime>09/26/2012 03:16:08</publishTime>
+      <publishTime>09/26/2012 04:16:08</publishTime>
     </File>
     <File Include="bin/System.dll">
-      <publishTime>09/26/2012 03:16:08</publishTime>
+      <publishTime>09/26/2012 04:16:08</publishTime>
     </File>
     <File Include="bin/System.Drawing.dll">
-      <publishTime>09/26/2012 03:16:08</publishTime>
+      <publishTime>09/26/2012 04:16:08</publishTime>
     </File>
     <File Include="bin/System.EnterpriseServices.dll">
-      <publishTime>09/26/2012 03:16:08</publishTime>
+      <publishTime>09/26/2012 04:16:08</publishTime>
     </File>
     <File Include="bin/System.Net.Http.dll">
-      <publishTime>09/26/2012 03:16:08</publishTime>
+      <publishTime>09/26/2012 04:16:08</publishTime>
     </File>
     <File Include="bin/System.Net.Http.Extensions.dll">
       <publishTime>04/14/2016 15:19:26</publishTime>
@@ -112,16 +112,16 @@
       <publishTime>04/14/2016 15:19:26</publishTime>
     </File>
     <File Include="bin/System.Net.Http.WebRequest.dll">
-      <publishTime>09/26/2012 03:16:08</publishTime>
+      <publishTime>09/26/2012 04:16:08</publishTime>
     </File>
     <File Include="bin/System.Runtime.Serialization.dll">
-      <publishTime>09/26/2012 03:16:08</publishTime>
+      <publishTime>09/26/2012 04:16:08</publishTime>
     </File>
     <File Include="bin/System.Security.dll">
-      <publishTime>09/26/2012 03:16:08</publishTime>
+      <publishTime>09/26/2012 04:16:08</publishTime>
     </File>
     <File Include="bin/System.ServiceModel.dll">
-      <publishTime>09/26/2012 03:16:08</publishTime>
+      <publishTime>09/26/2012 04:16:08</publishTime>
     </File>
     <File Include="bin/System.ServiceModel.DomainServices.Hosting.dll">
       <publishTime>04/12/2013 02:58:10</publishTime>
@@ -130,22 +130,22 @@
       <publishTime>04/12/2013 02:58:10</publishTime>
     </File>
     <File Include="bin/System.Web.Abstractions.dll">
-      <publishTime>09/26/2012 03:16:08</publishTime>
+      <publishTime>09/26/2012 04:16:08</publishTime>
     </File>
     <File Include="bin/System.Web.ApplicationServices.dll">
-      <publishTime>09/26/2012 03:16:08</publishTime>
+      <publishTime>09/26/2012 04:16:08</publishTime>
     </File>
     <File Include="bin/System.Web.dll">
-      <publishTime>09/26/2012 03:16:08</publishTime>
+      <publishTime>09/26/2012 04:16:08</publishTime>
     </File>
     <File Include="bin/System.Web.DynamicData.dll">
-      <publishTime>09/26/2012 03:16:08</publishTime>
+      <publishTime>09/26/2012 04:16:08</publishTime>
     </File>
     <File Include="bin/System.Web.Entity.dll">
-      <publishTime>09/26/2012 03:16:08</publishTime>
+      <publishTime>09/26/2012 04:16:08</publishTime>
     </File>
     <File Include="bin/System.Web.Extensions.dll">
-      <publishTime>09/26/2012 03:16:08</publishTime>
+      <publishTime>09/26/2012 04:16:08</publishTime>
     </File>
     <File Include="bin/System.Web.Helpers.dll">
       <publishTime>04/14/2016 15:13:04</publishTime>
@@ -157,10 +157,10 @@
       <publishTime>04/14/2016 15:13:01</publishTime>
     </File>
     <File Include="bin/System.Web.Routing.dll">
-      <publishTime>09/26/2012 03:16:08</publishTime>
+      <publishTime>09/26/2012 04:16:08</publishTime>
     </File>
     <File Include="bin/System.Web.Services.dll">
-      <publishTime>09/26/2012 03:16:08</publishTime>
+      <publishTime>09/26/2012 04:16:08</publishTime>
     </File>
     <File Include="bin/System.Web.WebPages.Deployment.dll">
       <publishTime>04/14/2016 15:13:04</publishTime>
@@ -172,13 +172,13 @@
       <publishTime>04/14/2016 15:13:04</publishTime>
     </File>
     <File Include="bin/System.Xml.dll">
-      <publishTime>09/26/2012 03:16:08</publishTime>
+      <publishTime>09/26/2012 04:16:08</publishTime>
     </File>
     <File Include="bin/System.Xml.Linq.dll">
-      <publishTime>09/26/2012 03:16:08</publishTime>
+      <publishTime>09/26/2012 04:16:08</publishTime>
     </File>
     <File Include="bin/VotGESOrders.Web.dll">
-      <publishTime>09/13/2017 15:40:04</publishTime>
+      <publishTime>07/17/2018 10:27:07</publishTime>
     </File>
     <File Include="bin/zh-Hans/System.ServiceModel.DomainServices.Hosting.resources.dll">
       <publishTime>04/12/2013 02:58:20</publishTime>
@@ -193,7 +193,7 @@
       <publishTime>04/12/2013 02:58:20</publishTime>
     </File>
     <File Include="ClientBin/VotGESOrders.xap">
-      <publishTime>09/13/2017 15:40:33</publishTime>
+      <publishTime>07/17/2018 10:27:11</publishTime>
     </File>
     <File Include="Content/Site.css">
       <publishTime>09/16/2014 08:27:38</publishTime>
@@ -244,7 +244,7 @@
       <publishTime>03/15/2016 11:12:17</publishTime>
     </File>
     <File Include="Controllers/HomeController.cs">
-      <publishTime>08/09/2017 13:49:38</publishTime>
+      <publishTime>07/17/2018 10:27:05</publishTime>
     </File>
     <File Include="CranService.svc">
       <publishTime>01/18/2016 10:42:13</publishTime>
@@ -271,7 +271,7 @@
       <publishTime>09/16/2014 08:27:38</publishTime>
     </File>
     <File Include="Models/MailContext.cs">
-      <publishTime>08/09/2017 13:49:37</publishTime>
+      <publishTime>07/17/2018 09:46:18</publishTime>
     </File>
     <File Include="Models/Order.cs">
       <publishTime>02/06/2017 09:15:09</publishTime>
@@ -289,7 +289,7 @@
       <publishTime>09/16/2014 08:27:38</publishTime>
     </File>
     <File Include="Models/OrdersContext.cs">
-      <publishTime>09/13/2017 15:39:45</publishTime>
+      <publishTime>07/17/2018 10:03:29</publishTime>
     </File>
     <File Include="Models/OrdersUser.cs">
       <publishTime>12/05/2016 10:04:12</publishTime>
@@ -298,7 +298,7 @@
       <publishTime>09/16/2014 08:27:38</publishTime>
     </File>
     <File Include="Models/OrderView.cs">
-      <publishTime>12/23/2016 12:42:15</publishTime>
+      <publishTime>07/17/2018 10:26:52</publishTime>
     </File>
     <File Include="Models/UserContext.cs">
       <publishTime>12/01/2016 08:06:42</publishTime>
@@ -429,6 +429,9 @@
     <File Include="Views/Home/ProcessExpiredOrders.aspx">
       <publishTime>09/16/2014 08:27:38</publishTime>
     </File>
+    <File Include="Views/Home/ProcessNotClosedOrders.aspx">
+      <publishTime>07/17/2018 09:36:18</publishTime>
+    </File>
     <File Include="Views/Home/TestMail.aspx">
       <publishTime>09/16/2014 08:27:38</publishTime>
     </File>
@@ -448,13 +451,13 @@
       <publishTime>09/16/2014 08:27:38</publishTime>
     </File>
     <File Include="VotGESOrders.Web.csproj">
-      <publishTime>11/28/2016 08:26:51</publishTime>
+      <publishTime>07/17/2018 09:36:37</publishTime>
     </File>
     <File Include="VotGESOrders.Web.csproj.user">
-      <publishTime>11/28/2016 08:26:51</publishTime>
+      <publishTime>07/17/2018 09:36:37</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/13/2017 15:41:06</publishTime>
+      <publishTime>06/07/2018 09:01:29</publishTime>
     </File>
     <File Include="Web.Debug.config">
       <publishTime>09/16/2014 08:27:38</publishTime>

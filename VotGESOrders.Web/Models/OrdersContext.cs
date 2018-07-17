@@ -145,10 +145,53 @@ namespace VotGESOrders.Web.Models
 			}
 		}
 
+        public IQueryable<Order> OrdersNotClosed
+        {
+            get
+            {
+                try
+                {
+                    Logger.info("Получение списка заказов", Logger.LoggerSource.ordersContext);
+                    OrdersUser currentUser = new OrdersUser();
+                    VotGESOrdersEntities context = new VotGESOrdersEntities();
+
+                    List<string> states1 = new List<string>();
+                    List<string> states2 = new List<string>();
+                    states1.Add(OrderStateEnum.accepted.ToString());
+                    states1.Add(OrderStateEnum.created.ToString());
+                    states2.Add(OrderStateEnum.opened.ToString());
+                    states2.Add(OrderStateEnum.closed.ToString());
+
+
+                    //IQueryable<Orders> orders=context.Orders.Where(order => (!order.faktStopDate.HasValue)||(order.faktStopDate.HasValue&&order.faktStopDate.Value>lastDate));
+                    IQueryable<Orders> orders =
+                    from Orders o in context.Orders
+                    where
+                        (states1.Contains(o.orderState)) ||
+                        (states2.Contains(o.orderState))
+                    orderby o.orderState
+                    select o;
+                    List<Order> resultOrders = new List<Order>();
+                    foreach (Orders orderDB in orders)
+                    {
+                        resultOrders.Add(new Order(orderDB, currentUser, false, null));
+                    }
+
+                    return resultOrders.AsQueryable();
+                }
+                catch (Exception e)
+                {
+                    Logger.error("===Ошибка при получении списка заказов " + e.ToString(), Logger.LoggerSource.ordersContext);
+                    throw new DomainException(String.Format("Ошибка при получении списка заказов "));
+                }
+
+            }
+        }
 
 
 
-		public IQueryable<Order> getOrdersUserFilter(OrderFilter filter) {
+
+        public IQueryable<Order> getOrdersUserFilter(OrderFilter filter) {
 			Logger.info("Получение списка заказов (фильтр)", Logger.LoggerSource.ordersContext);
 			try {
 				OrdersUser currentUser=OrdersUser.loadFromCache(HttpContext.Current.User.Identity.Name);

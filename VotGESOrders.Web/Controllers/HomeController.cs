@@ -28,7 +28,33 @@ namespace VotGESOrders.Web.Controllers
 			return View();
 		}
 
-		public ActionResult TestMail() {
+        public ActionResult ProcessNotClosedOrders()
+        {
+            OrdersContext context = new OrdersContext();
+            IQueryable<Order> orders = context.OrdersNotClosed;
+            IQueryable users = OrdersUser.getAllUsers();
+            List<string> mailToList = new List<string>();
+            foreach (OrdersUser user in users)
+            {
+                if (user.SendAllMail || user.SendAllCreateMail)
+                {
+                    if (user.Mails.Count > 0)
+                    {
+                        foreach (string mail in user.Mails)
+                        {
+                            if (!String.IsNullOrEmpty(mail))
+                            {
+                                mailToList.Add(mail);
+                            }
+                        }
+                    }
+                }
+            }
+            MailContext.sendOrdersListShort("Местные заявки", orders.ToList(), mailToList);
+            return View();
+        }
+
+        public ActionResult TestMail() {
 			System.Net.Mail.MailMessage mess =	new System.Net.Mail.MailMessage();
 
 			mess.From = new MailAddress("ChekunovaMV@votges.rushydro.ru");

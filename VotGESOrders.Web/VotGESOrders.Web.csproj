@@ -244,6 +244,7 @@
     <Content Include="SQL\users_PI.sql" />
     <Content Include="Views\Home\GetAllObjects.aspx" />
     <Content Include="Views\Home\PrintCranTasks.aspx" />
+    <Content Include="Views\Home\ProcessNotClosedOrders.aspx" />
     <Content Include="Views\Home\ProcessExpiredOrders.aspx" />
     <Content Include="Views\Home\TestMail.aspx" />
     <Content Include="Views\Home\VotGESOrders.aspx" />

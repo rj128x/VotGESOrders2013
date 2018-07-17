@@ -47,5 +47,43 @@ namespace VotGESOrders.Web.Models
 				htmlFirstTRTable, htmlInfoTable, htmlExtend + htmlDatesTable, htmlOperTable);
 			return style+fullTable;
 		}
-	}
+
+        public static string getOrderHTMLShort(Order order, bool showStyle = true)
+        {
+            string style = showStyle ? "<Style>table {border-collapse: collapse;} td{text-align:center;} td.comments{text-align:left;} td, th {border-width: 1px;	border-style: solid;	border-color: #BBBBFF;	padding-left: 3px;	padding-right: 3px;}</Style>" : "";
+            string htmlNumber = String.Format("{0} №{1}<br/>{3}", order.OrderTypeShortName, order.OrderYearNumber.ToString("#.##", OrderInfo.NFI), order.OrderDateCreate.ToString("dd.MM.yy"),order.OrderStateStr);
+            string htmlFirstTRTable = String.Format("<table width='100%'><tr><th rowspan='3' style='width:15%'>{0}</th><td>{1}</td></tr><tr><td>{2}</td></tr><tr><td>Согласовано: {3}</td></tr></table>", htmlNumber, order.FullOrderObjectInfo,order.OrderText,order.AgreeText);
+            
+            /*string htmlExtend = order.OrderHasParentOrder ? "СТАРАЯ ЗАЯВКА №" + order.ParentOrderYearNumber.ToString("#.##", OrderInfo.NFI) : "";
+            string htmlExtended = order.OrderHasChildOrder ? "НОВАЯ ЗАЯВКА №" + order.ChildOrderYearNumber.ToString("#.##", OrderInfo.NFI) : "";
+            htmlExtend += order.OrderExtended ? "<br/>" + htmlExtended : "";
+            if (htmlExtend.Length > 0)
+                htmlExtend += "<br/>";*/
+
+            string htmlDatesTable =
+                String.Format("<table width='100%'><tr><th>&nbsp;</th><th>Старт</th><th>Стоп</th></tr><tr><th>План</th><td>{0}</td><td>{1}</td></tr><tr><th>Факт</th><td>{2}</td><td>{4}</td></tr><tr><th>Разр.ввод</th><td colspan='2'>{3}</td></tr></table>",
+                order.PlanStartDate.ToString("dd.MM.yy HH:mm"), order.PlanStopDate.ToString("dd.MM.yy HH:mm"),
+                order.FaktStartDate.HasValue ? order.FaktStartDate.Value.ToString("dd.MM.yy HH:mm") : "&nbsp;",
+                order.FaktStopDate.HasValue ? order.FaktStopDate.Value.ToString("dd.MM.yy HH:mm") : "&nbsp;",
+                order.FaktCompleteDate.HasValue ? order.FaktCompleteDate.Value.ToString("dd.MM.yy HH:mm") : "&nbsp;");
+
+            string formatTR = "<tr><th rowspan='2'>{0}</th><td>{1}</td><td>{2}</td></tr></tr><td colspan='2'>{3}</td></tr>";
+            string htmlCreateTR = String.Format(formatTR, "Создал", order.UserCreateOrder.FullName, order.OrderDateCreate.ToString("dd.MM.yy HH:mm"), order.CreateText);
+            string htmlAcceptTR = order.OrderReviewed ? String.Format(formatTR, "Рассмотрел", order.UserReviewOrder.FullName, order.OrderDateReview.Value.ToString("dd.MM.yy HH:mm"), order.ReviewText) : "";
+            string htmlOpenTR = order.OrderOpened ? String.Format(formatTR, "Открыл", order.UserOpenOrder.FullName, order.OrderDateOpen.Value.ToString("dd.MM.yy HH:mm"), order.OpenText) : "";
+            string htmlCloseTR = order.OrderClosed ? String.Format(formatTR, "Разрешил ввод", order.UserCloseOrder.FullName, order.OrderDateClose.Value.ToString("dd.MM.yy HH:mm"), order.CloseText) : "";
+            string htmlEnterTR = order.OrderCompleted ? String.Format(formatTR, "Завершил", order.UserCompleteOrder.FullName, order.OrderDateComplete.Value.ToString("dd.MM.yy HH:mm"), order.CompleteText) : "";
+            string htmlCancelTR = order.OrderCanceled ? String.Format(formatTR, "Снял", order.UserCancelOrder.FullName, order.OrderDateCancel.Value.ToString("dd.MM.yy HH:mm"), order.CancelText) : "";
+            string htmlCommentsTR = !String.IsNullOrEmpty(order.CommentsText) ?
+                String.Format("<tr><td colspan='3' class='comments'>{0}</td></tr>", order.CommentsText.Replace(" ", "&nbsp;").Replace("\n", "<br/>")) : "";
+
+            string htmlOperTable = String.Format("<table  width='100%'>{0}{1}{2}{3}{4}{5}{6}</table>",
+               htmlCreateTR, htmlAcceptTR, htmlOpenTR, htmlCloseTR, htmlEnterTR, htmlCancelTR, htmlCommentsTR);
+
+            string fullTable = String.Format("<table width='100%'><tr><td colspan='2'>{0}</td></tr><tr><td style='width:30%'>{1}</td><td>{2}</td></tr></table>",
+                htmlFirstTRTable,  htmlDatesTable, htmlOperTable);
+            return style + fullTable;
+        }
+
+    }
 }

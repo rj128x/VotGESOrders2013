@@ -32,16 +32,19 @@ namespace VotGESOrders.Web.Models {
 				IQueryable users = OrdersUser.getAllUsers();
 				List<string> mailToList = new List<string>();
 
-				foreach (OrdersUser user in users) {
-					if (
-						/*user.SendAllAgreeMail && order.AgreeUsers.Contains(user) && !mailToList.Contains(user.Mail) && !onlyAuthor ||
+                foreach (OrdersUser user in users) {
+                    if (
+                        /*user.SendAllAgreeMail && order.AgreeUsers.Contains(user) && !mailToList.Contains(user.Mail) && !onlyAuthor ||
 						user.SendAllMail && !mailToList.Contains(user.Mail) ||
 						user.SendCreateMail && order.UserCreateOrderID == user.UserID && !mailToList.Contains(user.Mail) ||
 						onlyAuthor && order.UserCreateOrderID == user.UserID && !mailToList.Contains(user.Mail) ||
 						isNewOrder && (user.SendAllCreateMail || user.SendAgreeMail && order.AgreeUsers.Contains(user)) && !mailToList.Contains(user.Mail) && !onlyAuthor*/
-						user.SendAllMail && !mailToList.Contains(user.Mail) ||
-						isNewOrder && (user.SendAllCreateMail || user.SendAgreeMail && order.AgreeUsers.Contains(user)) && !mailToList.Contains(user.Mail) ||
-						expired && (order.UserCreateOrderID == user.UserID || user.SendAllCreateMail) && !mailToList.Contains(user.Mail)
+                        user.SendAllMail && !mailToList.Contains(user.Mail) ||
+                        isNewOrder && (user.SendAllCreateMail || order.UserCreateOrderID == user.UserID || user.SendAgreeMail && order.AgreeUsers.Contains(user)) && !mailToList.Contains(user.Mail) ||
+                        expired && (order.UserCreateOrderID == user.UserID || user.SendAllCreateMail) && !mailToList.Contains(user.Mail) ||
+                        order.FullOrderObjectInfo.Contains("Кран") && order.FullOrderObjectInfo.IndexOf("Кран")<3 && user.Name.Contains("CRAN") && !mailToList.Contains(user.Mail)&&
+                            (isNewOrder||order.OrderState == OrderStateEnum.created||order.OrderState==OrderStateEnum.opened||order.OrderState==OrderStateEnum.completed)
+                                                
 						) {
 						if (user.Mails.Count > 0) {
 							foreach (string mail in user.Mails) {
@@ -154,8 +157,31 @@ namespace VotGESOrders.Web.Models {
 			}
 		}
 
+        public static void sendOrdersListShort(string header, List<Order> orders, List<string> mailToList)
+        {
+            try
+            {            
+                bool isFirst = true;
+                if (mailToList.Count > 0)
+                {
+                    string message = "";
+                    foreach (Order order in orders)
+                    {
+                        message += OrderView.getOrderHTMLShort(order, isFirst) + "<hr/>";
+                        isFirst = false;
+                    }
+                    //SendMailLocal("mx-votges-021.corp.gidroogk.com", 25, "", "", "", "SR-VOTGES-INT@votges.rushydro.ru", mailToList, header, message,true);
+                    SendMailLocal(smtpServer, smtpPort, smtpUser, smtpPassword, smtpDomain, smtpFrom, mailToList, header, message, true);
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.error(String.Format("Ошибка при отправке почты: {0}", e.ToString()), Logger.LoggerSource.server);
+            }
+        }
 
-		private static bool SendMailLocal(string smtp_server, int port, string mail_user, string mail_password, string domain, string mail_from, List<string> mailToList, string subject, string message, bool is_html, Attachment attach = null) {
+
+        private static bool SendMailLocal(string smtp_server, int port, string mail_user, string mail_password, string domain, string mail_from, List<string> mailToList, string subject, string message, bool is_html, Attachment attach = null) {
 
 			System.Net.Mail.MailMessage mess = new System.Net.Mail.MailMessage();
 
