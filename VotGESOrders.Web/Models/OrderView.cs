@@ -8,7 +8,7 @@ namespace VotGESOrders.Web.Models
 	public class OrderView
 	{
 		public static string getOrderHTML(Order order, bool showStyle=true) {			
-			string style=showStyle?"<Style>table {border-collapse: collapse;} td{text-align:center;} td.comments{text-align:left;} td, th {border-width: 1px;	border-style: solid;	border-color: #BBBBFF;	padding-left: 3px;	padding-right: 3px;}</Style>":"";
+			string style=showStyle?"<Style> td{text-align:center;} td.comments{text-align:left;} td, th {border-width: 1px;	border-style: solid;	border-color: #BBBBFF;	padding-left: 3px;	padding-right: 3px;}</Style>":"";
 			string htmlNumber = String.Format("Заявка {0} №{1} от {2}", order.OrderTypeShortName, order.OrderYearNumber.ToString("#.##",OrderInfo.NFI), order.OrderDateCreate.ToString("dd.MM.yy"));
 			string htmlState=String.Format("Состояние: {0}", order.OrderStateStr);
 			string htmlReady=String.Format("Ав.готовность: {0}", order.ReadyTime);
@@ -43,14 +43,14 @@ namespace VotGESOrders.Web.Models
 			string htmlOperTable=String.Format("<table  width='100%'><tr><th colspan='4'>Операции над заявкой</th></tr> {0}{1}{2}{3}{4}{5}{6}{7}</table>",
 				htmlOper, htmlCreateTR, htmlAcceptTR, htmlOpenTR, htmlCloseTR, htmlEnterTR, htmlCancelTR, htmlCommentsTR);
 
-			string fullTable=String.Format("<table width='100%'><tr><td colspan='2'>{0}</td></tr><tr><td colspan='2'>{1}</td></tr><tr><td>{2}</td><td>{3}</td></tr></table>",
+			string fullTable=String.Format("<table border='1' width='100%'><tr><td colspan='2'>{0}</td></tr><tr><td colspan='2'>{1}</td></tr><tr><td>{2}</td><td>{3}</td></tr></table>",
 				htmlFirstTRTable, htmlInfoTable, htmlExtend + htmlDatesTable, htmlOperTable);
 			return style+fullTable;
 		}
 
         public static string getOrderHTMLShort(Order order, bool showStyle = true)
         {
-            string style = showStyle ? "<Style>table {border-collapse: collapse;} td{text-align:center;} td.comments{text-align:left;} td, th {border-width: 1px;	border-style: solid;	border-color: #BBBBFF;	padding-left: 3px;	padding-right: 3px;}</Style>" : "";
+            string style = showStyle ? "<Style>td{text-align:center;} td.comments{text-align:left;} td, th {border-width: 1px;	border-style: solid;	border-color: #BBBBFF;	padding-left: 3px;	padding-right: 3px;}</Style>" : "";
             string htmlNumber = String.Format("{0} №{1}<br/>{3}", order.OrderTypeShortName, order.OrderYearNumber.ToString("#.##", OrderInfo.NFI), order.OrderDateCreate.ToString("dd.MM.yy"),order.OrderStateStr);
             string htmlFirstTRTable = String.Format("<table width='100%'><tr><th rowspan='3' style='width:15%'>{0}</th><td>{1}</td></tr><tr><td>{2}</td></tr><tr><td>Согласовано: {3}</td></tr></table>", htmlNumber, order.FullOrderObjectInfo,order.OrderText,order.AgreeText);
             

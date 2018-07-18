@@ -50,6 +50,7 @@ namespace VotGESOrders.Web.Controllers
                     }
                 }
             }
+            //mailToList.Add("alekseevvv@rushydro.ru");
             MailContext.sendOrdersListTable("Местные заявки", orders.ToList(), mailToList);
             return View();
         }

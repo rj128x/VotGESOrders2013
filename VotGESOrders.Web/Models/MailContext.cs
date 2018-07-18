@@ -187,8 +187,8 @@ namespace VotGESOrders.Web.Models {
                 bool isFirst = true;
                 if (mailToList.Count > 0)
                 {
-                    string trForm = "<table><tr><th>№</th><th>Оборудование</th><th>Текст заявки</th><th>План</th><th>Автор</th><th>Факт</th><th>Разр.ввод</th></tr>";
-                    string style = "<Style>table {border-collapse: collapse;} td{text-align:center;} td.comments{text-align:left;} td, th {border-width: 1px;	border-style: solid;	border-color: #BBBBFF;	padding-left: 3px;	padding-right: 3px;}</Style>";
+                    string trForm = "<html><body><table border='1'><tr><th>№</th><th>Оборудование</th><th>Текст заявки</th><th>План</th><th>Автор</th><th>Факт</th><th>Разр.ввод</th></tr>";
+                    string style = "<Style>td{text-align:center;} td.comments{text-align:left;} td, th {border-width: 1px;	border-style: solid;	border-color: #BBBBFF;	padding-left: 3px;	padding-right: 3px;}</Style>";
                     string message = style+trForm;
                     foreach (Order order in orders)
                     {
@@ -197,7 +197,7 @@ namespace VotGESOrders.Web.Models {
                     }
                     //SendMailLocal("mx-votges-021.corp.gidroogk.com", 25, "", "", "", "SR-VOTGES-INT@votges.rushydro.ru", mailToList, header, message,true);
                     SendMailLocal(smtpServer, smtpPort, smtpUser, smtpPassword, smtpDomain, smtpFrom, mailToList, header, message, true);
-                    message += "</table>";
+                    message += "</table></body></html>";
                 }
             }
             catch (Exception e)

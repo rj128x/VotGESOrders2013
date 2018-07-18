@@ -155,26 +155,28 @@ namespace VotGESOrders.Web.Models
                     OrdersUser currentUser = new OrdersUser();
                     VotGESOrdersEntities context = new VotGESOrdersEntities();
 
-                    List<string> states1 = new List<string>();
-                    List<string> states2 = new List<string>();
-                    states1.Add(OrderStateEnum.accepted.ToString());
-                    states1.Add(OrderStateEnum.created.ToString());
-                    states2.Add(OrderStateEnum.opened.ToString());
-                    states2.Add(OrderStateEnum.closed.ToString());
+                    List<string> states = new List<string>();
+                    states.Add(OrderStateEnum.accepted.ToString());
+                    states.Add(OrderStateEnum.created.ToString());
+                    states.Add(OrderStateEnum.opened.ToString());
+                    states.Add(OrderStateEnum.closed.ToString());
 
 
                     //IQueryable<Orders> orders=context.Orders.Where(order => (!order.faktStopDate.HasValue)||(order.faktStopDate.HasValue&&order.faktStopDate.Value>lastDate));
                     IQueryable<Orders> orders =
                     from Orders o in context.Orders
                     where
-                        (states1.Contains(o.orderState)) ||
-                        (states2.Contains(o.orderState))
-                    orderby o.orderState
+                        (states.Contains(o.orderState))
+                    orderby o.orderState, o.planStartDate descending, o.planStopDate descending
                     select o;
                     List<Order> resultOrders = new List<Order>();
-                    foreach (Orders orderDB in orders)
+                    foreach (string state in states)
                     {
-                        resultOrders.Add(new Order(orderDB, currentUser, false, null));
+                        foreach (Orders orderDB in orders)
+                        {
+                            if (orderDB.orderState==state)
+                                resultOrders.Add(new Order(orderDB, currentUser, false, null));
+                        }
                     }
 
                     return resultOrders.AsQueryable();
