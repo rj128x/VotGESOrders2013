@@ -31,7 +31,9 @@ namespace VotGESOrders.Web
 			Logger.init(Server.MapPath("/logs/"), "orders");
 			OrderObject.init();
 			Order.init();
-			AreaRegistration.RegisterAllAreas();
+            CranTaskInfo.PathFiles = Server.MapPath("/Data/");
+
+            AreaRegistration.RegisterAllAreas();
 
 			Logger.info(System.Configuration.ConfigurationManager.AppSettings["smtpServer"], Logger.LoggerSource.client);
 			RegisterRoutes(RouteTable.Routes);

@@ -129,6 +129,8 @@ namespace VotGESOrders.Views {
             StropUsers = CurrentFilter.StropUsers.ToList();
             CranUsers = CurrentFilter.CranUsers.ToList();
             CurrentFilter.Managers = null;
+            CurrentFilter.StropUsers = null;
+            CurrentFilter.CranUsers = null;
 			pnlFilter.DataContext = CurrentFilter;
 			//grdTasks.ItemsSource = CurrentFilter.Data;
 			PagedCollectionView pcv = new PagedCollectionView(CurrentFilter.Data);
@@ -155,7 +157,7 @@ namespace VotGESOrders.Views {
 			newTask.NeedEndDate = DateTime.Now.Date.AddDays(2);
             newTask.SelAuthor = WebContext.Current.User.Name;
             CranWindow taskWindow = new CranWindow();
-			taskWindow.init(newTask,Managers);
+			taskWindow.init(newTask,Managers,StropUsers);
 			taskWindow.Closed += taskWindow_Closed;
 			taskWindow.Show();
 		}
@@ -164,7 +166,7 @@ namespace VotGESOrders.Views {
 			if (CurrentTask == null)
 				return;
 			CranWindow taskWindow = new CranWindow();
-			taskWindow.init(CurrentTask,Managers);
+			taskWindow.init(CurrentTask,Managers,StropUsers);
 			taskWindow.Closed += taskWindow_Closed;
 			taskWindow.Show();
 		}
@@ -180,7 +182,7 @@ namespace VotGESOrders.Views {
 			if (CurrentTask == null)
 				return;
 			CranReviewWindow reviewWin = new CranReviewWindow();
-			reviewWin.init(CurrentTask);
+			reviewWin.init(CurrentTask,CranUsers);
 			reviewWin.Closed += reviewWin_Closed;
 			reviewWin.Show();
 		}

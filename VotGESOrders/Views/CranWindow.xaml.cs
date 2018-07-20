@@ -16,7 +16,8 @@ namespace VotGESOrders.Views {
 	public partial class CranWindow : ChildWindow {
 		public CranTaskInfo CurrentTask { get; set; }
 		public List<String> Managers { get; set; }
-		public Dictionary<int, string> Crans;
+        public List<String> StropUsers { get; set; }
+        public Dictionary<int, string> Crans;
         public Dictionary<string, string> SelUsers;
         public CranWindow() {
 			InitializeComponent();
@@ -59,12 +60,14 @@ namespace VotGESOrders.Views {
 			CransContext.Single.Client.CreateCranTaskCompleted -= Client_CreateCranTaskCompleted;
 		}
 
-		public void init(CranTaskInfo task,List<String>Managers) {
+		public void init(CranTaskInfo task,List<String>Managers, List<String> StropUsers) {
 			this.Managers = Managers;
+            this.StropUsers = StropUsers;
 			CurrentTask = task;
 			pnlTask.DataContext = CurrentTask;
 			//lstUsers.ItemsSource = from OrdersUser u in OrdersContext.Current.Context.OrdersUsers where u.CanAgreeCranTask select u;
 			acbManager.ItemsSource = Managers;
+            acbStropUser.ItemsSource = StropUsers;
 			cmbCranName.ItemsSource = Crans;
             cmbAuthorSelName.ItemsSource = SelUsers;
 		}

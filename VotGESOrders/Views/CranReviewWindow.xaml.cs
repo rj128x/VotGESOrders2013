@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using VotGESOrders.CranService;
@@ -7,7 +8,8 @@ namespace VotGESOrders.Views
 {
 	public partial class CranReviewWindow : ChildWindow {
 		public CranTaskInfo CurrentTask { get; set; }
-		public CranReviewWindow() {
+        public List<String> CranUsers { get; set; }
+        public CranReviewWindow() {
 			InitializeComponent();
 			CransContext.Single.Client.CreateCranTaskCompleted += Client_CreateCranTaskCompleted;
 		}
@@ -26,8 +28,10 @@ namespace VotGESOrders.Views
 			}
 		}
 
-		public void init(CranTaskInfo task) {
+		public void init(CranTaskInfo task,List<String> CranUsers) {
+            this.CranUsers = CranUsers;
 			CurrentTask = task;
+            acbCranUser.ItemsSource = CranUsers;
 			pnlTask.DataContext = CurrentTask;
 		}
 

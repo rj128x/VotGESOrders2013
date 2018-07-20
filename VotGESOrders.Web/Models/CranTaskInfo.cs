@@ -30,7 +30,7 @@ namespace VotGESOrders.Web.Models {
 	}
 
 	public class CranTaskInfo {
-		public static List<string> Managers;
+        public static string PathFiles;
 		public int CranNumber { get; set; }
 		public string CranName { get; set; }
 		public int Number { get; set; }
@@ -319,16 +319,18 @@ namespace VotGESOrders.Web.Models {
 
 		public static CranFilter LoadCranTasks(CranFilter Filter = null) {
 			Logger.info("Получение списка заявок на кран", Logger.LoggerSource.server);
-            Filter.Managers = ReadTextFile("Managers.txt");
-            Filter.CranUsers = ReadTextFile("CranUsers.txt");
-            Filter.StropUsers = ReadTextFile("StropUsers.txt");
+            
             if (Filter == null) {
 				Filter = new CranFilter();
 				Filter.DateStart = DateTime.Now.Date;
 				Filter.DateEnd = DateTime.Now.Date.AddDays(10);
-			}
-			Filter.Managers = Managers;
-			VotGESOrdersEntities eni = new VotGESOrdersEntities();
+                
+            }
+            Filter.Managers = ReadTextFile("Managers.txt");
+            Filter.CranUsers = ReadTextFile("CranUsers.txt");
+            Filter.StropUsers = ReadTextFile("StropUsers.txt");
+            //Filter.Managers = Managers;
+            VotGESOrdersEntities eni = new VotGESOrdersEntities();
 			List<CranTaskInfo> result = new List<CranTaskInfo>();
 			IQueryable<CranTask> data = from t in eni.CranTask
 																	where
@@ -390,7 +392,11 @@ namespace VotGESOrders.Web.Models {
 
         public static List<string> ReadTextFile(string fileName)
         {
-            return new List<string>();            
+            Logger.info("read file" + fileName, Logger.LoggerSource.server);
+            string[] lines = System.IO.File.ReadAllLines(PathFiles + fileName);
+            Logger.info(lines.Count().ToString(), Logger.LoggerSource.server);
+            return lines.ToList();
+            //return new List<string>();
         }
 
 		/*public static void ReadManagers() {
