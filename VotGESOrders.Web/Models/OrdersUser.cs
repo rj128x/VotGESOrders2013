@@ -33,13 +33,9 @@ namespace VotGESOrders.Web.Models
 		public bool AllowAgreeOrders { get; set; }
 		public bool CanCreateCranTask { get; set; }
 		public bool CanReviewCranTask { get; set; }
-		public bool CanReviewCranMZTask { get; set; }
-		public bool CanAgreeCranTask { get; set; }
+        public bool CanFinishCranTask { get; set; }
 		public bool SendAllCreateCranTask { get; set; }
 		public bool SendAllCranTask { get; set; }
-		public bool SendAgreeCranTask { get; set; }
-		public bool SendAllAgreeCranTask { get; set; }
-		public bool SendOnlyMZCranTask { get; set; }
 		public string AddLogins { get; set; }
 		public string AddFinishLogins { get; set; }
 
@@ -121,15 +117,11 @@ namespace VotGESOrders.Web.Models
 				user.AllowEditUsers = userDB.allowEditUsers;
 				user.AllowEditOrders = userDB.allowEditOrders;
 				user.AllowAgreeOrders = userDB.allowAgreeOrders;
-				user.CanAgreeCranTask = userDB.canAgreeCranTask;
 				user.CanCreateCranTask = userDB.canCreateCranTask;
 				user.CanReviewCranTask = userDB.canReviewCranTask;
-				user.CanReviewCranMZTask = userDB.canReviewCranMZTask;
-				user.SendAgreeCranTask = userDB.sendAgreeCranTask;
+				user.CanFinishCranTask = userDB.canFinishCranTask;
 				user.SendAllCreateCranTask = userDB.sendAllCreateCranTask;
-				user.SendAllAgreeCranTask = userDB.sendAllAgreeCranTask;
 				user.SendAllCranTask = userDB.sendAllCranTask;
-				user.SendOnlyMZCranTask = userDB.sendOnlyMZCranTask;
 				user.AddLogins = userDB.AddLogins;
 				user.AddFinishLogins = userDB.AddFinishLogins;
 				

@@ -99,7 +99,7 @@ namespace VotGESOrders.Views {
 			initChart(ChartNBVB);
 			initChart(ChartTransVSP);
 			initChart(ChartPromPlosh);
-			newTask.Visibility = WebContext.Current.User.AllowCreateCranTask ? Visibility.Visible : Visibility.Collapsed;
+			//newTask.Visibility = WebContext.Current.User.AllowCreateCranTask ? Visibility.Visible : Visibility.Collapsed;
 		}
 
 		

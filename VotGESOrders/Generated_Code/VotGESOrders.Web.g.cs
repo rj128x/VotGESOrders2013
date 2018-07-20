@@ -4119,11 +4119,9 @@ namespace VotGESOrders.Web.Models
         
         private bool _allowReviewOrder;
         
-        private bool _canAgreeCranTask;
-        
         private bool _canCreateCranTask;
         
-        private bool _canReviewCranMZTask;
+        private bool _canFinishCranTask;
         
         private bool _canReviewCranTask;
         
@@ -4135,11 +4133,7 @@ namespace VotGESOrders.Web.Models
         
         private string _name;
         
-        private bool _sendAgreeCranTask;
-        
         private bool _sendAgreeMail;
-        
-        private bool _sendAllAgreeCranTask;
         
         private bool _sendAllAgreeMail;
         
@@ -4152,8 +4146,6 @@ namespace VotGESOrders.Web.Models
         private bool _sendAllMail;
         
         private bool _sendCreateMail;
-        
-        private bool _sendOnlyMZCranTask;
         
         private int _userID;
         
@@ -4184,12 +4176,10 @@ namespace VotGESOrders.Web.Models
         partial void OnAllowEditUsersChanged();
         partial void OnAllowReviewOrderChanging(bool value);
         partial void OnAllowReviewOrderChanged();
-        partial void OnCanAgreeCranTaskChanging(bool value);
-        partial void OnCanAgreeCranTaskChanged();
         partial void OnCanCreateCranTaskChanging(bool value);
         partial void OnCanCreateCranTaskChanged();
-        partial void OnCanReviewCranMZTaskChanging(bool value);
-        partial void OnCanReviewCranMZTaskChanged();
+        partial void OnCanFinishCranTaskChanging(bool value);
+        partial void OnCanFinishCranTaskChanged();
         partial void OnCanReviewCranTaskChanging(bool value);
         partial void OnCanReviewCranTaskChanged();
         partial void OnFullNameChanging(string value);
@@ -4200,12 +4190,8 @@ namespace VotGESOrders.Web.Models
         partial void OnMailsChanged();
         partial void OnNameChanging(string value);
         partial void OnNameChanged();
-        partial void OnSendAgreeCranTaskChanging(bool value);
-        partial void OnSendAgreeCranTaskChanged();
         partial void OnSendAgreeMailChanging(bool value);
         partial void OnSendAgreeMailChanged();
-        partial void OnSendAllAgreeCranTaskChanging(bool value);
-        partial void OnSendAllAgreeCranTaskChanged();
         partial void OnSendAllAgreeMailChanging(bool value);
         partial void OnSendAllAgreeMailChanged();
         partial void OnSendAllCranTaskChanging(bool value);
@@ -4218,8 +4204,6 @@ namespace VotGESOrders.Web.Models
         partial void OnSendAllMailChanged();
         partial void OnSendCreateMailChanging(bool value);
         partial void OnSendCreateMailChanged();
-        partial void OnSendOnlyMZCranTaskChanging(bool value);
-        partial void OnSendOnlyMZCranTaskChanged();
         partial void OnUserIDChanging(int value);
         partial void OnUserIDChanged();
         partial void OnRegisterChangeUserInvoking();
@@ -4479,30 +4463,6 @@ namespace VotGESOrders.Web.Models
         }
         
         /// <summary>
-        /// Возвращает или задает значение параметра "CanAgreeCranTask".
-        /// </summary>
-        [DataMember()]
-        public bool CanAgreeCranTask
-        {
-            get
-            {
-                return this._canAgreeCranTask;
-            }
-            set
-            {
-                if ((this._canAgreeCranTask != value))
-                {
-                    this.OnCanAgreeCranTaskChanging(value);
-                    this.RaiseDataMemberChanging("CanAgreeCranTask");
-                    this.ValidateProperty("CanAgreeCranTask", value);
-                    this._canAgreeCranTask = value;
-                    this.RaiseDataMemberChanged("CanAgreeCranTask");
-                    this.OnCanAgreeCranTaskChanged();
-                }
-            }
-        }
-        
-        /// <summary>
         /// Возвращает или задает значение параметра "CanCreateCranTask".
         /// </summary>
         [DataMember()]
@@ -4527,25 +4487,25 @@ namespace VotGESOrders.Web.Models
         }
         
         /// <summary>
-        /// Возвращает или задает значение параметра "CanReviewCranMZTask".
+        /// Возвращает или задает значение параметра "CanFinishCranTask".
         /// </summary>
         [DataMember()]
-        public bool CanReviewCranMZTask
+        public bool CanFinishCranTask
         {
             get
             {
-                return this._canReviewCranMZTask;
+                return this._canFinishCranTask;
             }
             set
             {
-                if ((this._canReviewCranMZTask != value))
+                if ((this._canFinishCranTask != value))
                 {
-                    this.OnCanReviewCranMZTaskChanging(value);
-                    this.RaiseDataMemberChanging("CanReviewCranMZTask");
-                    this.ValidateProperty("CanReviewCranMZTask", value);
-                    this._canReviewCranMZTask = value;
-                    this.RaiseDataMemberChanged("CanReviewCranMZTask");
-                    this.OnCanReviewCranMZTaskChanged();
+                    this.OnCanFinishCranTaskChanging(value);
+                    this.RaiseDataMemberChanging("CanFinishCranTask");
+                    this.ValidateProperty("CanFinishCranTask", value);
+                    this._canFinishCranTask = value;
+                    this.RaiseDataMemberChanged("CanFinishCranTask");
+                    this.OnCanFinishCranTaskChanged();
                 }
             }
         }
@@ -4671,30 +4631,6 @@ namespace VotGESOrders.Web.Models
         }
         
         /// <summary>
-        /// Возвращает или задает значение параметра "SendAgreeCranTask".
-        /// </summary>
-        [DataMember()]
-        public bool SendAgreeCranTask
-        {
-            get
-            {
-                return this._sendAgreeCranTask;
-            }
-            set
-            {
-                if ((this._sendAgreeCranTask != value))
-                {
-                    this.OnSendAgreeCranTaskChanging(value);
-                    this.RaiseDataMemberChanging("SendAgreeCranTask");
-                    this.ValidateProperty("SendAgreeCranTask", value);
-                    this._sendAgreeCranTask = value;
-                    this.RaiseDataMemberChanged("SendAgreeCranTask");
-                    this.OnSendAgreeCranTaskChanged();
-                }
-            }
-        }
-        
-        /// <summary>
         /// Возвращает или задает значение параметра "SendAgreeMail".
         /// </summary>
         [DataMember()]
@@ -4714,30 +4650,6 @@ namespace VotGESOrders.Web.Models
                     this._sendAgreeMail = value;
                     this.RaiseDataMemberChanged("SendAgreeMail");
                     this.OnSendAgreeMailChanged();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Возвращает или задает значение параметра "SendAllAgreeCranTask".
-        /// </summary>
-        [DataMember()]
-        public bool SendAllAgreeCranTask
-        {
-            get
-            {
-                return this._sendAllAgreeCranTask;
-            }
-            set
-            {
-                if ((this._sendAllAgreeCranTask != value))
-                {
-                    this.OnSendAllAgreeCranTaskChanging(value);
-                    this.RaiseDataMemberChanging("SendAllAgreeCranTask");
-                    this.ValidateProperty("SendAllAgreeCranTask", value);
-                    this._sendAllAgreeCranTask = value;
-                    this.RaiseDataMemberChanged("SendAllAgreeCranTask");
-                    this.OnSendAllAgreeCranTaskChanged();
                 }
             }
         }
@@ -4882,30 +4794,6 @@ namespace VotGESOrders.Web.Models
                     this._sendCreateMail = value;
                     this.RaiseDataMemberChanged("SendCreateMail");
                     this.OnSendCreateMailChanged();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Возвращает или задает значение параметра "SendOnlyMZCranTask".
-        /// </summary>
-        [DataMember()]
-        public bool SendOnlyMZCranTask
-        {
-            get
-            {
-                return this._sendOnlyMZCranTask;
-            }
-            set
-            {
-                if ((this._sendOnlyMZCranTask != value))
-                {
-                    this.OnSendOnlyMZCranTaskChanging(value);
-                    this.RaiseDataMemberChanging("SendOnlyMZCranTask");
-                    this.ValidateProperty("SendOnlyMZCranTask", value);
-                    this._sendOnlyMZCranTask = value;
-                    this.RaiseDataMemberChanged("SendOnlyMZCranTask");
-                    this.OnSendOnlyMZCranTaskChanged();
                 }
             }
         }

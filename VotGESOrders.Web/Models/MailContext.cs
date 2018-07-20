@@ -80,10 +80,9 @@ namespace VotGESOrders.Web.Models {
 
 				foreach (OrdersUser user in users) {
 					if (
-						( user.SendAllCranTask && (user.SendOnlyMZCranTask&& task.CranNumber<=2 ||!user.SendOnlyMZCranTask) ) ||
-						( user.SendCreateMail && task.Author.ToLower() == user.Name.ToLower() )||
-						( task.State=="new" && user.SendAllCreateCranTask && (user.SendOnlyMZCranTask&& task.CranNumber<=2 ||!user.SendOnlyMZCranTask) )||
-						( task.AgreeDict.ContainsKey(user.UserID) && (user.SendAgreeMail || user.SendAllAgreeMail|| user.SendAllCranTask || user.SendAllCreateCranTask ||user.SendAllAgreeCranTask || user.SendAgreeCranTask && task.StateDB=="new") ) 
+						( user.SendAllCranTask ) ||
+						( user.SendCreateMail && task.SelAuthor.ToLower() == user.Name.ToLower() )||
+						( task.State=="new" && user.SendAllCreateCranTask  )
 						){						
 						if (user.Mails.Count > 0) {
 							foreach (string mail in user.Mails) {
