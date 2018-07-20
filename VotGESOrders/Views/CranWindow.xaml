@@ -4,7 +4,7 @@
            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
            xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
                       xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
-           Width="607" Height="291" 
+           Width="407" Height="291" 
            Title="Заявка">
     <Grid x:Name="LayoutRoot" Margin="2">
         <Grid.RowDefinitions>
@@ -13,11 +13,16 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
-        <ListBox Name="lstUsers" Grid.Column="1" DisplayMemberPath="FullName" MouseLeftButtonUp="lstUsers_MouseLeftButtonUp" Margin="0,0,0,10"/>
+
         <StackPanel Orientation="Vertical" Name="pnlTask" >
 
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Автор: " Width="100" Style="{StaticResource Label}"/>
+                <ComboBox Name="cmbAuthorSelName"  Width="278" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding SelAuthor, Mode=TwoWay}"/>
+                <!--<TextBox Text="{Binding CranNumber,Mode=TwoWay}" Width="50" IsEnabled="{Binding canChange}"/>-->
+            </StackPanel>
+            
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Кран: " Width="100" Style="{StaticResource Label}"/>
                 <ComboBox Name="cmbCranName"  Width="278" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding CranNumber, Mode=TwoWay}"/>
@@ -29,6 +34,11 @@
                 <sdk:AutoCompleteBox  Text="{Binding Manager, Mode=TwoWay}" Width="200" Name="acbManager"/>
                 <!--<TextBox Text="{Binding Manager, Mode=TwoWay}"  Width="200"/>-->
             </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Стропальщик " Width="100" Style="{StaticResource Label}"/>
+                <sdk:AutoCompleteBox  Text="{Binding StropUser, Mode=TwoWay}" Width="200" Name="acbStropUser"/>
+                <!--<TextBox Text="{Binding Manager, Mode=TwoWay}"  Width="200"/>-->
+            </StackPanel>
             <StackPanel Orientation="Horizontal" RenderTransformOrigin="0.5,0.5">
                 <StackPanel.RenderTransform>
                     <CompositeTransform SkewY="0.254" TranslateY="0.996"/>
@@ -36,13 +46,6 @@
                 <TextBlock Text="Заявка" Width="100" Style="{StaticResource Label}"/>
                 <TextBox Text="{Binding Comment, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" Width="279" Height="50"
                                      IsEnabled="{Binding canChange}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" RenderTransformOrigin="0.5,0.5">
-                <StackPanel.RenderTransform>
-                    <CompositeTransform SkewY="0.254" TranslateY="0.996"/>
-                </StackPanel.RenderTransform>
-                <TextBlock Text="Согласовано: " Width="100" Style="{StaticResource Label}"/>
-                <TextBox Text="{Binding AgreeUsersText}" TextWrapping="Wrap" Width="279" Height="50" IsEnabled="False"/>
             </StackPanel>
 
             <StackPanel Orientation="Vertical">

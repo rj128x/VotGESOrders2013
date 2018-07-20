@@ -12,7 +12,9 @@ namespace VotGESOrders.Web.Models {
 		public DateTime DateEnd { get; set; }
 		public List<CranTaskInfo> Data { get; set; }
 		public List<String> Managers { get; set; }
-	}
+        public List<String> StropUsers { get; set; }
+        public List<String> CranUsers { get; set; }
+    }
 
 	public class ReturnMessage {
 		public string Message { get; set; }
@@ -36,9 +38,13 @@ namespace VotGESOrders.Web.Models {
 		public DateTime NeedEndDate { get; set; }
 		public string Comment { get; set; }
 		public string Author { get; set; }
+        public string SelAuthor { get; set; }
+        public string AuthorText { get; set; }
 		public string AuthorAllow { get; set; }
 		public string AuthorFinish { get; set; }
 		public string Manager { get; set; }
+        public string StropUser { get; set; }
+        public string CranUser { get; set; }
 		public string AgreeComments { get; set; }
 		public DateTime AllowDateStart { get; set; }
 		public DateTime AllowDateEnd { get; set; }
@@ -53,12 +59,11 @@ namespace VotGESOrders.Web.Models {
 		public bool init { get; set; }
 		public bool change { get; set; }
 		public bool check { get; set; }
-		public bool changed { get; set; }
-		public string AgreeUsersIDS { get; set; }
-		public string AgreeUsersText { get; set; }
+		public bool changed { get; set; }		
 		public Dictionary<int, string> AgreeDict { get; set; }
 		public string StateDB { get; set; }
 		public DateTime DateCreate { get; set; }
+
 
 		public bool canChange { get; set; }
 		public bool canCheck { get; set; }
@@ -82,6 +87,8 @@ namespace VotGESOrders.Web.Models {
 			Comment = tbl.Comment;
 			CranName = tbl.CranName;
 			Author = OrdersUser.loadFromCache(tbl.Author).FullName;
+            SelAuthor = tbl.SelAuthor;
+            AuthorText = tbl.AuthorText;
 			State = "Новая";
 			StateDB = tbl.State;
 			Allowed = tbl.Allowed;
@@ -90,13 +97,15 @@ namespace VotGESOrders.Web.Models {
 			Finished = tbl.Finished;
 			AgreeComments = tbl.AgreeComment;
 			
-			canChange = (!Cancelled)&&(!Allowed) && (!Denied) && (!Finished) && tbl.Author.ToLower() == currentUser.Name.ToLower();
-			canCancel = (!Cancelled) && (!Denied) && (!Finished) && tbl.Author.ToLower() == currentUser.Name.ToLower();
-			canFinish = Allowed && (tbl.Author.ToLower() == currentUser.Name.ToLower() || currentUser.CanReviewCranTask || currentUser.CanReviewCranMZTask);
+			canChange = (!Cancelled)&&(!Allowed) && (!Denied) && (!Finished) /*&& (tbl.Author.ToLower() == currentUser.Name.ToLower() || tbl.SelAuthor.ToLower()==currentUser.Name.ToLower())*/;
+			canCancel = (!Cancelled) && (!Denied) && (!Finished) && (tbl.Author.ToLower() == currentUser.Name.ToLower()|| tbl.SelAuthor.ToLower() == currentUser.Name.ToLower());
+			canFinish = Allowed && (tbl.Author.ToLower() == currentUser.Name.ToLower()|| tbl.SelAuthor.ToLower() == currentUser.Name.ToLower() || currentUser.CanReviewCranTask || currentUser.CanReviewCranMZTask);
 
 			canCheck = (currentUser.CanReviewCranTask && CranNumber>2 || currentUser.CanReviewCranMZTask && CranNumber<=2) && (!Finished) &&(!Cancelled);
 			canComment = true;
 			Manager = tbl.Manager;
+            StropUser = tbl.StropUser;
+            CranUser = tbl.CranUser;
 			if (Denied) {
 				State = "Отклонена";
 				canChange = false;
@@ -120,9 +129,6 @@ namespace VotGESOrders.Web.Models {
 				if (!string.IsNullOrEmpty(tbl.AuthorFinish))
 					AuthorFinish = OrdersUser.loadFromCache(tbl.AuthorFinish).FullName;
 			}
-			AgreeUsersIDS = tbl.AgreeUsersIDS;
-			AgreeDict = getAgreeUsers(AgreeUsersIDS);
-			AgreeUsersText = string.Join(", ", AgreeDict.Values);
 			DateCreate = tbl.DateCreate;
 		}
 
@@ -166,7 +172,7 @@ namespace VotGESOrders.Web.Models {
 					tbl.Denied = false;
 					tbl.Author = currentUser.Name;
 					tbl.DateCreate = task.DateCreate;					
-					task.Author = currentUser.FullName;
+					task.Author = currentUser.FullName;                    
 					eni.CranTask.AddObject(tbl);
 					result = "Заявка на кран успешно создана";
 				}
@@ -184,6 +190,7 @@ namespace VotGESOrders.Web.Models {
 					return new ReturnMessage(false, "Дата окончания заявки больше чем дата начала");
 				}
 
+
 				tbl.Number = task.Number;
 				tbl.CranName = task.CranName;
 				tbl.AgreeComment = task.AgreeComments;
@@ -192,7 +199,10 @@ namespace VotGESOrders.Web.Models {
 				tbl.Comment = task.Comment;
 				tbl.Manager = task.Manager;
 				tbl.CranNumber = task.CranNumber;
-				if (task.AgreeDict != null)
+                tbl.SelAuthor = task.SelAuthor;                
+                tbl.StropUser = task.StropUser;
+                tbl.AuthorText = String.Format("{0} [{1}]", currentUser.FullName, OrdersUser.loadFromCache(tbl.SelAuthor).FullName);
+                if (task.AgreeDict != null)
 					tbl.AgreeUsersIDS = string.Join(";", task.AgreeDict.Keys);
 
 				if (task.Finished) {
@@ -209,6 +219,7 @@ namespace VotGESOrders.Web.Models {
 					tbl.AllowedDateEnd = task.AllowDateEnd;
 					tbl.RealDateStart = task.AllowDateStart;
 					tbl.RealDateEnd = task.AllowDateEnd;
+                    tbl.CranUser = task.CranUser;
 					tbl.Denied = false;
 					tbl.Allowed = true;
 					tbl.Cancelled = false;
@@ -226,6 +237,7 @@ namespace VotGESOrders.Web.Models {
 					tbl.Denied = true;
 					tbl.Cancelled = false;
 					tbl.State = "denied";
+                    tbl.CranUser = "";
 					task.AuthorAllow = currentUser.FullName;
 					result = "Заявка на кран отклонена";
 					message += " Заявка отклонена";
@@ -252,13 +264,6 @@ namespace VotGESOrders.Web.Models {
 
 				eni.SaveChanges();
 				MailContext.sendCranTask(message, new CranTaskInfo(tbl));
-				if (Managers != null) {
-					if (!Managers.Contains(task.Manager)) {
-						Managers.Add(task.Manager);
-					}
-				}
-				else
-					ReadManagers();
 				return new ReturnMessage(true, result);
 			}
 			catch (Exception e) {
@@ -290,13 +295,6 @@ namespace VotGESOrders.Web.Models {
 				eni.SaveChanges();
 				string message = String.Format("Заявка на работу крана \"{0}\" №{1}. Комментарий", task.CranName, task.CranNumber);
 				MailContext.sendCranTask(message, new CranTaskInfo(tbl));
-				if (Managers != null) {
-					if (!Managers.Contains(task.Manager)) {
-						Managers.Add(task.Manager);
-					}
-				}
-				else
-					ReadManagers();
 				return new ReturnMessage(true, "Комментарий добавлен");
 			}
 			catch (Exception e) {
@@ -321,9 +319,10 @@ namespace VotGESOrders.Web.Models {
 
 		public static CranFilter LoadCranTasks(CranFilter Filter = null) {
 			Logger.info("Получение списка заявок на кран", Logger.LoggerSource.server);
-			if (Managers == null)
-				ReadManagers();
-			if (Filter == null) {
+            Filter.Managers = ReadTextFile("Managers.txt");
+            Filter.CranUsers = ReadTextFile("CranUsers.txt");
+            Filter.StropUsers = ReadTextFile("StropUsers.txt");
+            if (Filter == null) {
 				Filter = new CranFilter();
 				Filter.DateStart = DateTime.Now.Date;
 				Filter.DateEnd = DateTime.Now.Date.AddDays(10);
@@ -389,7 +388,12 @@ namespace VotGESOrders.Web.Models {
 			return Filter;
 		}
 
-		public static void ReadManagers() {
+        public static List<string> ReadTextFile(string fileName)
+        {
+            return new List<string>();            
+        }
+
+		/*public static void ReadManagers() {
 			Logger.info("Получение списка ответственных", Logger.LoggerSource.server);
 			Managers = new List<string>();
 			try {
@@ -404,7 +408,7 @@ namespace VotGESOrders.Web.Models {
 			catch (Exception e) {
 				Logger.info("Ошибка при чтении доступных ответственных " + e.ToString(), Logger.LoggerSource.server);
 			}
-		}
+		}*/
 
 		public static string getTashHTML(CranTaskInfo order, bool showStyle = true) {
 			try {
@@ -413,7 +417,7 @@ namespace VotGESOrders.Web.Models {
 				string htmlState = String.Format("Состояние: {0}", order.State);
 				string htmlFirstTRTable = String.Format("<table width='100%'><tr><th>{0}</th><th>{1}</th></tr></table>", htmlNumber, htmlState);
 				string htmlInfoTable = String.Format("<table width='100%'><tr><th colspan='3'>Информация о заявке</th></tr><tr><th width='30%'>Оборудование</th><th  width='30%'>Текст заявки</th><th width='30%'>Согласовано</th></tr><tr><td width='30%'>{0}</td><td width='30%'>{1}</td><td width='30%'>{2}</td></tr></table>",
-					order.CranName, String.Format("{0}<br/><b>Ответственный: </b>{1}", order.Comment, order.Manager), order.AgreeUsersText);
+					order.CranName, String.Format("{0}<br/><b>Ответственный: </b>{1}", order.Comment, order.Manager), "");
 
 
 				string htmlDatesTable =

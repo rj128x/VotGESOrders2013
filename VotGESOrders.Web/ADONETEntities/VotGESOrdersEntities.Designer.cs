@@ -790,6 +790,102 @@ namespace VotGESOrders.Web.ADONETEntities
         private global::System.String _AuthorFinish;
         partial void OnAuthorFinishChanging(global::System.String value);
         partial void OnAuthorFinishChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String StropUser
+        {
+            get
+            {
+                return _StropUser;
+            }
+            set
+            {
+                OnStropUserChanging(value);
+                ReportPropertyChanging("StropUser");
+                _StropUser = StructuralObject.SetValidValue(value, true, "StropUser");
+                ReportPropertyChanged("StropUser");
+                OnStropUserChanged();
+            }
+        }
+        private global::System.String _StropUser;
+        partial void OnStropUserChanging(global::System.String value);
+        partial void OnStropUserChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CranUser
+        {
+            get
+            {
+                return _CranUser;
+            }
+            set
+            {
+                OnCranUserChanging(value);
+                ReportPropertyChanging("CranUser");
+                _CranUser = StructuralObject.SetValidValue(value, true, "CranUser");
+                ReportPropertyChanged("CranUser");
+                OnCranUserChanged();
+            }
+        }
+        private global::System.String _CranUser;
+        partial void OnCranUserChanging(global::System.String value);
+        partial void OnCranUserChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String SelAuthor
+        {
+            get
+            {
+                return _SelAuthor;
+            }
+            set
+            {
+                OnSelAuthorChanging(value);
+                ReportPropertyChanging("SelAuthor");
+                _SelAuthor = StructuralObject.SetValidValue(value, true, "SelAuthor");
+                ReportPropertyChanged("SelAuthor");
+                OnSelAuthorChanged();
+            }
+        }
+        private global::System.String _SelAuthor;
+        partial void OnSelAuthorChanging(global::System.String value);
+        partial void OnSelAuthorChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String AuthorText
+        {
+            get
+            {
+                return _AuthorText;
+            }
+            set
+            {
+                OnAuthorTextChanging(value);
+                ReportPropertyChanging("AuthorText");
+                _AuthorText = StructuralObject.SetValidValue(value, true, "AuthorText");
+                ReportPropertyChanged("AuthorText");
+                OnAuthorTextChanged();
+            }
+        }
+        private global::System.String _AuthorText;
+        partial void OnAuthorTextChanging(global::System.String value);
+        partial void OnAuthorTextChanged();
 
         #endregion
 

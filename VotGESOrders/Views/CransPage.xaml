@@ -79,7 +79,7 @@
                         <sdk:DataGridTemplateColumn Header="Автор" SortMemberPath="Author" Width="120">
                             <sdk:DataGridTemplateColumn.CellTemplate >
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Author}" TextWrapping="Wrap" FontSize="11"/>
+                                    <TextBlock Text="{Binding AuthorText}" TextWrapping="Wrap" FontSize="11"/>
                                 </DataTemplate>
                             </sdk:DataGridTemplateColumn.CellTemplate>
                         </sdk:DataGridTemplateColumn>
@@ -279,10 +279,16 @@
                                                            HorizontalAlignment="Center" TextAlignment="Center"/>
                                             </StackPanel>
                                             <StackPanel Orientation="Vertical">
-                                                <TextBlock Text="Согласовано:"  Style="{StaticResource Label}" VerticalAlignment="Top" TextWrapping="Wrap"/>
-                                                <TextBlock  Text="{Binding AgreeUsersText}" TextWrapping="Wrap" Height="30" Style="{StaticResource ValueText}" FontSize="11" 
-                                                            HorizontalAlignment="Center" TextAlignment="Center"/>
+                                                <TextBlock Text="Стропальщик:" Style="{StaticResource Label}" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+                                                <TextBlock Text="{Binding StropUser}" Style="{StaticResource Value}"  FontSize="11"
+                                                           HorizontalAlignment="Center" TextAlignment="Center"/>
                                             </StackPanel>
+                                            <StackPanel Orientation="Vertical">
+                                                <TextBlock Text="Крановщик:" Style="{StaticResource Label}" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+                                                <TextBlock Text="{Binding CranUser}" Style="{StaticResource Value}"  FontSize="11"
+                                                           HorizontalAlignment="Center" TextAlignment="Center"/>
+                                            </StackPanel>
+                                           
                                             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                                                 <Button Name="btnCancel" Content="Снять" Width="100" HorizontalAlignment="Right"
                                     Click="btnCancel_Click" IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"

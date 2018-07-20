@@ -178,7 +178,7 @@
       <publishTime>09/26/2012 04:16:08</publishTime>
     </File>
     <File Include="bin/VotGESOrders.Web.dll">
-      <publishTime>07/18/2018 08:55:31</publishTime>
+      <publishTime>07/18/2018 09:20:30</publishTime>
     </File>
     <File Include="bin/zh-Hans/System.ServiceModel.DomainServices.Hosting.resources.dll">
       <publishTime>04/12/2013 02:58:20</publishTime>
@@ -193,7 +193,7 @@
       <publishTime>04/12/2013 02:58:20</publishTime>
     </File>
     <File Include="ClientBin/VotGESOrders.xap">
-      <publishTime>07/18/2018 08:55:36</publishTime>
+      <publishTime>07/18/2018 09:17:22</publishTime>
     </File>
     <File Include="Content/Site.css">
       <publishTime>09/16/2014 08:27:38</publishTime>
@@ -244,7 +244,7 @@
       <publishTime>03/15/2016 11:12:17</publishTime>
     </File>
     <File Include="Controllers/HomeController.cs">
-      <publishTime>07/18/2018 08:55:29</publishTime>
+      <publishTime>07/18/2018 09:19:24</publishTime>
     </File>
     <File Include="CranService.svc">
       <publishTime>01/18/2016 10:42:13</publishTime>

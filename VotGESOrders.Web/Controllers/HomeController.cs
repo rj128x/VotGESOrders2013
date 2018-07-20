@@ -36,7 +36,7 @@ namespace VotGESOrders.Web.Controllers
             List<string> mailToList = new List<string>();
             foreach (OrdersUser user in users)
             {
-                if (user.SendAllMail||user.SendAllCreateMail)
+                if (user.SendAllMail||user.SendAllCreateMail||user.Name.Contains("SVOD"))
                 {
                     if (user.Mails.Count > 0)
                     {

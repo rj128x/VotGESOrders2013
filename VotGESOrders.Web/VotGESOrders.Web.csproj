@@ -233,6 +233,15 @@
   <ItemGroup>
     <Content Include="ClientBin\VotGESOrders.xap" />
     <Content Include="CranService.svc" />
+    <Content Include="Data\StropUsers.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Managers.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\CranUsers.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Global.asax" />
     <Content Include="Silverlight.js" />
     <Content Include="SQL\1.xml" />

@@ -31,6 +31,10 @@
           <Property Name="RealDateStart" Type="datetime" />
           <Property Name="RealDateEnd" Type="datetime" />
           <Property Name="AuthorFinish" Type="varchar" MaxLength="50" />
+          <Property Name="StropUser" Type="varchar" MaxLength="100" />
+          <Property Name="CranUser" Type="varchar" MaxLength="100" />
+          <Property Name="SelAuthor" Type="varchar" MaxLength="50" />
+          <Property Name="AuthorText" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="OrderObjects">
           <Key>
@@ -522,6 +526,10 @@
           <Property Name="RealDateStart" Type="DateTime" Precision="3" />
           <Property Name="RealDateEnd" Type="DateTime" Precision="3" />
           <Property Name="AuthorFinish" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StropUser" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CranUser" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SelAuthor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AuthorText" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -632,6 +640,10 @@
           <EntitySetMapping Name="CranTask">
             <EntityTypeMapping TypeName="VotGESOrdersModel.CranTask">
               <MappingFragment StoreEntitySet="CranTask">
+                <ScalarProperty Name="AuthorText" ColumnName="AuthorText" />
+                <ScalarProperty Name="SelAuthor" ColumnName="SelAuthor" />
+                <ScalarProperty Name="CranUser" ColumnName="CranUser" />
+                <ScalarProperty Name="StropUser" ColumnName="StropUser" />
                 <ScalarProperty Name="AuthorFinish" ColumnName="AuthorFinish" />
                 <ScalarProperty Name="RealDateEnd" ColumnName="RealDateEnd" />
                 <ScalarProperty Name="RealDateStart" ColumnName="RealDateStart" />

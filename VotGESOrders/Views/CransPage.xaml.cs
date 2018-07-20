@@ -27,9 +27,11 @@ namespace VotGESOrders.Views {
 
 		public CranFilter CurrentFilter { get; set; }
 		public List<String> Managers { get; set; }
+        public List<String> CranUsers { get; set; }
+        public List<String> StropUsers { get; set; }
 
 
-		protected CranTaskInfo _currentTask;
+        protected CranTaskInfo _currentTask;
 		public CranTaskInfo CurrentTask {
 			get { return _currentTask; }
 			set {
@@ -124,7 +126,9 @@ namespace VotGESOrders.Views {
 			GlobalStatus.Current.IsBusy = false;
 			CurrentFilter = e.Result as CranFilter;
 			Managers = CurrentFilter.Managers.ToList();
-			CurrentFilter.Managers = null;
+            StropUsers = CurrentFilter.StropUsers.ToList();
+            CranUsers = CurrentFilter.CranUsers.ToList();
+            CurrentFilter.Managers = null;
 			pnlFilter.DataContext = CurrentFilter;
 			//grdTasks.ItemsSource = CurrentFilter.Data;
 			PagedCollectionView pcv = new PagedCollectionView(CurrentFilter.Data);
@@ -149,7 +153,8 @@ namespace VotGESOrders.Views {
 			newTask.Comment = "";
 			newTask.NeedStartDate = DateTime.Now.Date.AddDays(1);
 			newTask.NeedEndDate = DateTime.Now.Date.AddDays(2);
-			CranWindow taskWindow = new CranWindow();
+            newTask.SelAuthor = WebContext.Current.User.Name;
+            CranWindow taskWindow = new CranWindow();
 			taskWindow.init(newTask,Managers);
 			taskWindow.Closed += taskWindow_Closed;
 			taskWindow.Show();

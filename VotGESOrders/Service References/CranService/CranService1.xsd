@@ -3,10 +3,12 @@
   <xs:import schemaLocation="http://localhost:8090/CranService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:complexType name="CranFilter">
     <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="CranUsers" nillable="true" type="q1:ArrayOfstring" />
       <xs:element minOccurs="0" name="Data" nillable="true" type="tns:ArrayOfCranTaskInfo" />
       <xs:element minOccurs="0" name="DateEnd" type="xs:dateTime" />
       <xs:element minOccurs="0" name="DateStart" type="xs:dateTime" />
-      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Managers" nillable="true" type="q1:ArrayOfstring" />
+      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Managers" nillable="true" type="q2:ArrayOfstring" />
+      <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="StropUsers" nillable="true" type="q3:ArrayOfstring" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="CranFilter" nillable="true" type="tns:CranFilter" />
@@ -19,19 +21,19 @@
   <xs:complexType name="CranTaskInfo">
     <xs:sequence>
       <xs:element minOccurs="0" name="AgreeComments" nillable="true" type="xs:string" />
-      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AgreeDict" nillable="true" type="q2:ArrayOfKeyValueOfintstring" />
-      <xs:element minOccurs="0" name="AgreeUsersIDS" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="AgreeUsersText" nillable="true" type="xs:string" />
+      <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AgreeDict" nillable="true" type="q4:ArrayOfKeyValueOfintstring" />
       <xs:element minOccurs="0" name="AllowDateEnd" type="xs:dateTime" />
       <xs:element minOccurs="0" name="AllowDateStart" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Allowed" type="xs:boolean" />
       <xs:element minOccurs="0" name="Author" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AuthorAllow" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AuthorFinish" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AuthorText" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Cancelled" type="xs:boolean" />
       <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CranName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CranNumber" type="xs:int" />
+      <xs:element minOccurs="0" name="CranUser" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DateCreate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Denied" type="xs:boolean" />
       <xs:element minOccurs="0" name="Finished" type="xs:boolean" />
@@ -41,8 +43,10 @@
       <xs:element minOccurs="0" name="Number" type="xs:int" />
       <xs:element minOccurs="0" name="RealDateEnd" type="xs:dateTime" />
       <xs:element minOccurs="0" name="RealDateStart" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="SelAuthor" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="State" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="StateDB" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StropUser" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="canCancel" type="xs:boolean" />
       <xs:element minOccurs="0" name="canChange" type="xs:boolean" />
       <xs:element minOccurs="0" name="canCheck" type="xs:boolean" />
