@@ -81,7 +81,7 @@ namespace VotGESOrders.Web.Models {
 				foreach (OrdersUser user in users) {
 					if (
 						( user.SendAllCranTask ) ||
-						( user.SendCreateMail && task.SelAuthor.ToLower() == user.Name.ToLower() )||
+						( task.SelAuthor.ToLower() == user.Name.ToLower() )||
 						( task.State=="new" && user.SendAllCreateCranTask  )
 						){						
 						if (user.Mails.Count > 0) {
@@ -93,8 +93,9 @@ namespace VotGESOrders.Web.Models {
 						}
 					}
 				}
-
-				//mailToList.Add("chekunovamv@votges.rushydro.ru");
+        try {
+          mailToList.Add("chekunovamv@rushydro.ru");
+        } catch { }
 
 				Attachment attach = null;
 

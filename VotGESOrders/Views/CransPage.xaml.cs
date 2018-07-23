@@ -527,6 +527,10 @@ namespace VotGESOrders.Views {
 		private void btnFinish_Click(object sender, RoutedEventArgs e) {
 			if (CurrentTask == null)
 				return;
+      if (CurrentTask.RealDateEnd <= CurrentTask.RealDateStart) {
+        MessageBox.Show("фактическая дата начала меньше даты окончания.");
+        return;
+      }
 			if (MessageBox.Show("Вы уверены что хотите закрыть заявку?", "Закрытие заявки", MessageBoxButton.OKCancel) == MessageBoxResult.OK) {
 				GlobalStatus.Current.IsBusy = true;
 				CurrentTask.Finished = true;

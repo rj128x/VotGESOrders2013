@@ -146,7 +146,7 @@
                             <CheckBox Content="Может рассматривать заявки на работу крана" IsChecked="{Binding CanReviewCranTask,Mode=TwoWay}"/>
                         </toolkit:DataField>
                         <toolkit:DataField Name="CanFinishCranTask" Label="">
-                            <CheckBox Content="Может закрывать заявки на работу крана" IsChecked="{Binding CanReviewCranTask,Mode=TwoWay}"/>
+                            <CheckBox Content="Может закрывать заявки на работу крана" IsChecked="{Binding CanFinishCranTask,Mode=TwoWay}"/>
                         </toolkit:DataField>
 
                         <toolkit:DataField Name="SendAllCranTask" Label="">

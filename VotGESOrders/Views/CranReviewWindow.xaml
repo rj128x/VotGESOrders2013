@@ -69,8 +69,9 @@
                 <StackPanel Orientation="Vertical" Visibility="{Binding Allowed, Converter={StaticResource visibilityConverter}}">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Крановщик " Width="100" Style="{StaticResource Label}"/>
-                        <sdk:AutoCompleteBox  Text="{Binding CranUser, Mode=TwoWay}" Width="200" Name="acbCranUser"/>
+                        <!--<sdk:AutoCompleteBox  Text="{Binding CranUser, Mode=TwoWay}" Width="200" Name="acbCranUser"/>-->
                         <!--<TextBox Text="{Binding Manager, Mode=TwoWay}"  Width="200"/>-->
+                        <ComboBox Name="acbCranUser"  Width="278"  SelectedValue="{Binding CranUser, Mode=TwoWay}"/>
                     </StackPanel>
                     <TextBlock Text="Разрешенное время" HorizontalAlignment="Right" Style="{StaticResource Label}"/>
                     <StackPanel Orientation="Horizontal">

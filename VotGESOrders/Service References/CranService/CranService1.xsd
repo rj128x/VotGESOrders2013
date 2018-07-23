@@ -27,6 +27,7 @@
       <xs:element minOccurs="0" name="Allowed" type="xs:boolean" />
       <xs:element minOccurs="0" name="Author" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AuthorAllow" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AuthorCancel" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AuthorFinish" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AuthorText" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Cancelled" type="xs:boolean" />

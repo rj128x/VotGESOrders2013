@@ -139,6 +139,8 @@ namespace VotGESOrders.CranService {
         
         private string AuthorAllowField;
         
+        private string AuthorCancelField;
+        
         private string AuthorFinishField;
         
         private string AuthorTextField;
@@ -288,6 +290,19 @@ namespace VotGESOrders.CranService {
                 if ((object.ReferenceEquals(this.AuthorAllowField, value) != true)) {
                     this.AuthorAllowField = value;
                     this.RaisePropertyChanged("AuthorAllow");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string AuthorCancel {
+            get {
+                return this.AuthorCancelField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AuthorCancelField, value) != true)) {
+                    this.AuthorCancelField = value;
+                    this.RaisePropertyChanged("AuthorCancel");
                 }
             }
         }

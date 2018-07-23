@@ -70,7 +70,9 @@ namespace VotGESOrders.Web.Models
 
 		public static OrdersUser loadFromCache(string userName) {
 			try {
+        Logger.info(userName,Logger.LoggerSource.client);
 				OrdersUser user = allUsers.AsQueryable().First(u => u.Name.ToLower() == userName.ToLower() || (u.AddLogins.ToLower() + ";").Contains(userName.ToLower() + ";"));
+
 				return user;
 			} catch (Exception e) {
 				OrdersUser user=new OrdersUser();
@@ -119,7 +121,7 @@ namespace VotGESOrders.Web.Models
 				user.AllowAgreeOrders = userDB.allowAgreeOrders;
 				user.CanCreateCranTask = userDB.canCreateCranTask;
 				user.CanReviewCranTask = userDB.canReviewCranTask;
-				user.CanFinishCranTask = userDB.canFinishCranTask;
+        user.CanFinishCranTask = userDB.canFinishCranTask;
 				user.SendAllCreateCranTask = userDB.sendAllCreateCranTask;
 				user.SendAllCranTask = userDB.sendAllCranTask;
 				user.AddLogins = userDB.AddLogins;

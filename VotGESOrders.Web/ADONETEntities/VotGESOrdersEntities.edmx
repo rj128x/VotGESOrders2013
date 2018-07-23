@@ -35,6 +35,7 @@
           <Property Name="CranUser" Type="varchar" MaxLength="100" />
           <Property Name="SelAuthor" Type="varchar" MaxLength="50" />
           <Property Name="AuthorText" Type="varchar" MaxLength="100" />
+          <Property Name="AuthorCancel" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="OrderObjects">
           <Key>
@@ -133,11 +134,15 @@
           <Property Name="sendAllCreateMail" Type="bit" Nullable="false" />
           <Property Name="sendAllAgreeMail" Type="bit" Nullable="false" />
           <Property Name="allowEditOrders" Type="bit" Nullable="false" />
+          <Property Name="canAgreeCranTask" Type="bit" Nullable="false" />
           <Property Name="canCreateCranTask" Type="bit" Nullable="false" />
           <Property Name="canReviewCranTask" Type="bit" Nullable="false" />
           <Property Name="canFinishCranTask" Type="bit" Nullable="false" />
           <Property Name="sendAllCreateCranTask" Type="bit" Nullable="false" />
           <Property Name="sendAllCranTask" Type="bit" Nullable="false" />
+          <Property Name="sendAgreeCranTask" Type="bit" Nullable="false" />
+          <Property Name="sendAllAgreeCranTask" Type="bit" Nullable="false" />
+          <Property Name="sendOnlyMZCranTask" Type="bit" Nullable="false" />
           <Property Name="AddLogins" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="AddFinishLogins" Type="varchar" MaxLength="250" Nullable="false" />
         </EntityType>
@@ -415,6 +420,7 @@
           <Property Name="CranUser" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="SelAuthor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="AuthorText" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AuthorCancel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -460,6 +466,10 @@
           <NavigationProperty Name="Orders3" Relationship="VotGESOrdersModel.FK_Orders_UsersCreate" FromRole="Users" ToRole="Orders" />
           <NavigationProperty Name="Orders4" Relationship="VotGESOrdersModel.FK_Orders_UsersOpen" FromRole="Users" ToRole="Orders" />
           <NavigationProperty Name="Orders5" Relationship="VotGESOrdersModel.FK_Orders_UsersReview" FromRole="Users" ToRole="Orders" />
+          <Property Name="canAgreeCranTask" Type="Boolean" Nullable="false" />
+          <Property Name="sendAgreeCranTask" Type="Boolean" Nullable="false" />
+          <Property Name="sendAllAgreeCranTask" Type="Boolean" Nullable="false" />
+          <Property Name="sendOnlyMZCranTask" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_Orders_UsersCancel">
           <End Type="VotGESOrdersModel.Users" Role="Users" Multiplicity="0..1" />
@@ -602,6 +612,7 @@
           <EntitySetMapping Name="CranTask">
             <EntityTypeMapping TypeName="VotGESOrdersModel.CranTask">
               <MappingFragment StoreEntitySet="CranTask">
+                <ScalarProperty Name="AuthorCancel" ColumnName="AuthorCancel" />
                 <ScalarProperty Name="AuthorText" ColumnName="AuthorText" />
                 <ScalarProperty Name="SelAuthor" ColumnName="SelAuthor" />
                 <ScalarProperty Name="CranUser" ColumnName="CranUser" />
@@ -645,6 +656,10 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="VotGESOrdersModel.Users">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="sendOnlyMZCranTask" ColumnName="sendOnlyMZCranTask" />
+                <ScalarProperty Name="sendAllAgreeCranTask" ColumnName="sendAllAgreeCranTask" />
+                <ScalarProperty Name="sendAgreeCranTask" ColumnName="sendAgreeCranTask" />
+                <ScalarProperty Name="canAgreeCranTask" ColumnName="canAgreeCranTask" />
                 <ScalarProperty Name="AddFinishLogins" ColumnName="AddFinishLogins" />
                 <ScalarProperty Name="AddLogins" ColumnName="AddLogins" />
                 <ScalarProperty Name="sendAllCranTask" ColumnName="sendAllCranTask" />

@@ -45,6 +45,7 @@ namespace VotGESOrders.Web.Models
     public string SelAuthor { get; set; }
     public string AuthorText { get; set; }
     public string AuthorAllow { get; set; }
+    public string AuthorCancel { get; set; }
     public string AuthorFinish { get; set; }
     public string Manager { get; set; }
     public string StropUser { get; set; }
@@ -126,6 +127,7 @@ namespace VotGESOrders.Web.Models
       }
       if (tbl.Cancelled) {
         State = "Снята";
+        AuthorCancel = OrdersUser.loadFromCache(tbl.AuthorCancel).FullName;
       }
       if (tbl.Finished) {
         State = "Закрыта";
@@ -201,7 +203,7 @@ namespace VotGESOrders.Web.Models
         tbl.CranNumber = task.CranNumber;
         tbl.SelAuthor = task.SelAuthor;
         tbl.StropUser = task.StropUser;
-        tbl.AuthorText = String.Format("{0} [{1}]", currentUser.FullName, OrdersUser.loadFromCache(tbl.SelAuthor).FullName);
+        tbl.AuthorText = OrdersUser.loadFromCache(tbl.SelAuthor).FullName;
         if (task.AgreeDict != null)
           tbl.AgreeUsersIDS = string.Join(";", task.AgreeDict.Keys);
 
@@ -249,6 +251,8 @@ namespace VotGESOrders.Web.Models
           tbl.AllowedDateEnd = null;
           tbl.RealDateEnd = null;
           tbl.RealDateStart = null;
+          tbl.AuthorCancel = currentUser.Name;
+          task.AuthorAllow = currentUser.FullName;
           result = "Заявка на кран снята";
           message += " Заявка снята";
         } else if (!task.init) {
@@ -412,28 +416,36 @@ namespace VotGESOrders.Web.Models
 
     public static string getTashHTML(CranTaskInfo order, bool showStyle = true) {
       try {
+        OrdersUser currentUser = OrdersUser.loadFromCache(HttpContext.Current.User.Identity.Name);
+        string UserInfo = "";
+        if (!order.Allowed && !order.Finished && !order.Denied && !order.Cancelled) {
+          if (currentUser.Name.ToLower() != order.SelAuthor.ToLower()) {
+            UserInfo = String.Format("Заявка подана/изменена из учетной записи {0} ({1})<br/>",currentUser.FullName,currentUser.Name);
+          }
+        }
         string style = showStyle ? "<Style>table {border-collapse: collapse;} td{text-align:center;} td.comments{text-align:left;} td, th {border-width: 1px;	border-style: solid;	border-color: #BBBBFF;	padding-left: 3px;	padding-right: 3px;}</Style>" : "";
         string htmlNumber = String.Format("Заявка на работу крана №{0} ", order.Number);
         string htmlState = String.Format("Состояние: {0}", order.State);
         string htmlFirstTRTable = String.Format("<table width='100%'><tr><th>{0}</th><th>{1}</th></tr></table>", htmlNumber, htmlState);
-        string htmlInfoTable = String.Format("<table width='100%'><tr><th colspan='3'>Информация о заявке</th></tr><tr><th width='30%'>Оборудование</th><th  width='30%'>Текст заявки</th><th width='30%'>Согласовано</th></tr><tr><td width='30%'>{0}</td><td width='30%'>{1}</td><td width='30%'>{2}</td></tr></table>",
-          order.CranName, String.Format("{0}<br/><b>Ответственный: </b>{1}", order.Comment, order.Manager), "");
+        string htmlInfoTable = String.Format("<table width='100%'><tr><th colspan='2'>Информация о заявке</th></tr><tr><th width='40%'>Кран</th><th  width='60%'>Текст заявки</th></tr><tr><td width='40%'>{0}</td><td width='60%'>{1}</td></tr></table>",
+          order.CranName, String.Format("{0}", order.Comment));
 
 
         string htmlDatesTable =
-          String.Format("<table width='100%'><tr><th colspan='4'>Сроки заявки</th></tr><tr><th>&nbsp;</th><th>Начало</th><th>Окончание</th><th>&nbsp;</th></tr><tr><th>Заявка</th><td>{0}</td><td>{1}</td><td>{2}</td></tr><tr><th>Разрешение</th><td>{3}</td><td>{4}</td><td>{5}</td></tr><tr><th>Факт</th><td>{6}</td><td>{7}</td><td>{8}</td></tr></table>",
-          order.NeedStartDate.ToString("dd.MM.yy HH:mm"), order.NeedEndDate.ToString("dd.MM.yy HH:mm"), order.Author,
+          String.Format("<table width='100%'><tr><th colspan='4'>Сроки заявки</th></tr><tr><th>&nbsp;</th><th>Сроки</th><th>Автор</th><th>***</th></tr><tr><th>Заявка</th><td>{0}<hr/>{1}</td><td>{2}</td><td>{3}</td></tr><tr><th>Разрешение</th><td>{4}<hr/>{5}</td><td>{6}</td><td>{7}</td></tr><tr><th>Факт</th><td>{8}<hr/>{9}</td><td>{10}</td><td>&nbsp;</td></tr></table>",
+          order.NeedStartDate.ToString("dd.MM.yy HH:mm"), order.NeedEndDate.ToString("dd.MM.yy HH:mm"), OrdersUser.loadFromCache(order.SelAuthor).FullName, String.Format("<b>Ответственный:</b><br/>{0}<br/><b>Стропальщик:</b><br/>{1}", order.Manager, order.StropUser),
           order.Allowed ? order.AllowDateStart.ToString("dd.MM.yy HH:mm") : order.Denied ? "Отклонено" : order.Cancelled ? "Снята" : "&nbsp;",
           order.Allowed ? order.AllowDateEnd.ToString("dd.MM.yy HH:mm") : order.Denied ? "Отклонено" : order.Cancelled ? "Снята" : "&nbsp;",
-          order.Allowed || order.Denied ? order.AuthorAllow : "-",
+          order.Allowed || order.Denied ? order.AuthorAllow : order.Cancelled ? order.AuthorCancel : "-",
+          order.Allowed ? String.Format("<b>Крановщик:</b><br/>{0}<br/>", order.CranUser) : "&nbsp;",
           order.Finished ? order.RealDateStart.ToString("dd.MM.yy HH:mm") : "-",
           order.Finished ? order.RealDateEnd.ToString("dd.MM.yy HH:mm") : "-", !string.IsNullOrEmpty(order.AuthorFinish) ? order.AuthorFinish : "-");
 
 
         string aComments = string.IsNullOrEmpty(order.AgreeComments) ? "" : order.AgreeComments.Replace("\r\n", "<br/>");
-        string fullTable = String.Format("<table width='100%'><tr><td colspan='2'>{0}</td></tr><tr><td colspan='2'>{1}</td></tr><tr><td width='50%'>{2}</td><td width='50%'>{3}</td></tr></table>",
+        string fullTable = String.Format("<table width='100%'><tr><td>{0}</td></tr><tr><td>{1}</td></tr><tr><td>{2}</td></tr><tr><td>{3}</td></tr></table>",
           htmlFirstTRTable, htmlInfoTable, htmlDatesTable, aComments);
-        return style + fullTable;
+        return style+UserInfo + fullTable;
       } catch (Exception e) {
         Logger.info("Ошибка при формировании html представления " + e.ToString(), Logger.LoggerSource.server);
         return "";
@@ -485,10 +497,9 @@ namespace VotGESOrders.Web.Models
 		<td align='center' valign='top' class='solid' >{2}</td>
 		<td align='center' valign='top' class='solid' >{3}</td>
 		<td align='center' valign='top' class='solid' >{4}</td>
-		<td align='center' valign='top' class='solid' >&nbsp;</td>
-		<td align='center' valign='top' class='solid' >&nbsp;</td>
-		<td align='center' valign='top' class='solid' >{5}</td>
+		<td align='center' valign='top' class='solid' colspan='2'>{5}</td>
 		<td align='center' valign='top' class='solid' >{6}</td>
+		<td align='center' valign='top' class='solid' >{7}</td>
 	</tr>
 
 	<tr>
@@ -536,7 +547,7 @@ namespace VotGESOrders.Web.Models
 	<tr>
 		<td bordercolor='white'  colspan='4'>Специалист, ответственный за безопасное производство работ с применением ПС «Заказчика»</td>
 		<td bordercolor='white' class='under' align='right'>/</td>
-		<td  bordercolor='white' class='under' colspan='2' >{7}</td>
+		<td  bordercolor='white' class='under' colspan='2' >{8}</td>
 	</tr>
 
 
@@ -562,17 +573,19 @@ namespace VotGESOrders.Web.Models
 
 	<tr><td  bordercolor='white' colspan='7' >&nbsp;</td></tr>
 	<tr>
-		<td  bordercolor='white' colspan='4'>{8}</td>
+		<td  bordercolor='white' colspan='4'>{9}</td>
 		<td  bordercolor='white' class='under' align='right'>/</td>
-		<td  bordercolor='white' class='under' colspan='2'>{9}</td>
+		<td  bordercolor='white' class='under' colspan='2'>{10}</td>
 	</tr>	
 
 
 </table>
 ", order.Number, order.DateCreate.ToString("dd.MM.yyyy"), 1, order.CranName, order.Comment,
+  order.StropUser,
   order.Allowed ? order.AllowDateStart.ToString("dd.MM.yy HH:mm") : order.NeedStartDate.ToString("dd.MM.yy HH:mm"),
   order.Allowed ? order.AllowDateEnd.ToString("dd.MM.yy HH:mm") : order.NeedEndDate.ToString("dd.MM.yy HH:mm"),
-  order.CranNumber <= 2 ? "Представитель группы ТиГМО ПТС (только для кранов МЗ)" : "Исполнитель заявки", order.Manager, !String.IsNullOrEmpty(order.AuthorAllow) ? order.AuthorAllow : " ");
+  order.CranNumber <= 2 ? "Представитель группы ТиГМО ПТС (только для кранов МЗ)" : "Исполнитель заявки",
+  !String.IsNullOrEmpty(order.AuthorAllow) ? order.AuthorAllow : " ", !String.IsNullOrEmpty(order.AuthorAllow) ? order.AuthorAllow : " ");
         return style + body;
       } catch (Exception e) {
         Logger.info("Ошибка при формировании html представления " + e.ToString(), Logger.LoggerSource.server);

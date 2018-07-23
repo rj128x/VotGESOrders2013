@@ -38,7 +38,11 @@ namespace VotGESOrders.Views
 		private void OKButton_Click(object sender, RoutedEventArgs e) {
 			if (GlobalStatus.Current.IsBusy)
 				return;
-			if (CurrentTask.Allowed && CurrentTask.AllowDateEnd < CurrentTask.AllowDateStart) {
+      if (!this.CranUsers.Contains(CurrentTask.CranUser)) {
+        MessageBox.Show("Введите крановщика");
+        return;
+      }
+      if (CurrentTask.Allowed && CurrentTask.AllowDateEnd < CurrentTask.AllowDateStart) {
 				MessageBox.Show("Время окончания меньше времени начала");
 				return;
 			}

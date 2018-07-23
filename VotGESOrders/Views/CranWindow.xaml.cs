@@ -75,15 +75,23 @@ namespace VotGESOrders.Views {
 		private void OKButton_Click(object sender, RoutedEventArgs e) {
 			if (GlobalStatus.Current.IsBusy)
 				return;
-			if (CurrentTask.CranNumber == 0) {
+      if (!this.SelUsers.Keys.Contains(CurrentTask.SelAuthor)) {
+        MessageBox.Show("Выберите автора заявки");
+        return;
+      }
+      if (CurrentTask.CranNumber == 0) {
 				MessageBox.Show("Выберите кран");
 				return;
 			}
-			if (string.IsNullOrEmpty(CurrentTask.Manager)) {
+			if (!this.Managers.Contains(CurrentTask.Manager)) {
 				MessageBox.Show("Введите ответственного");
 				return;
 			}
-			if (string.IsNullOrEmpty(CurrentTask.Comment)) {
+      if (!this.StropUsers.Contains(CurrentTask.StropUser)) {
+        MessageBox.Show("Введите стропальщика");
+        return;
+      }
+      if (string.IsNullOrEmpty(CurrentTask.Comment)) {
 				MessageBox.Show("Введите текст заявки");
 				return;
 			}
