@@ -48,6 +48,7 @@
       <xs:element minOccurs="0" name="Opened" type="xs:boolean" />
       <xs:element minOccurs="0" name="RealDateEnd" type="xs:dateTime" />
       <xs:element minOccurs="0" name="RealDateStart" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Reviewed" type="xs:boolean" />
       <xs:element minOccurs="0" name="SelAuthor" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="State" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="StateDB" nillable="true" type="xs:string" />

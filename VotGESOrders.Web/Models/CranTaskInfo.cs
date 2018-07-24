@@ -69,6 +69,7 @@ namespace VotGESOrders.Web.Models
     public bool Cancelled { get; set; }
     public bool Finished { get; set; }
     public bool Opened { get; set; }
+    public bool Reviewed { get; set; }
     public string State { get; set; }
     public CranTaskState TaskState { get; set; }
     public bool init { get; set; }
@@ -114,6 +115,7 @@ namespace VotGESOrders.Web.Models
       Cancelled = tbl.Cancelled;
       Finished = tbl.Finished;
       Opened = tbl.Opened;
+      Reviewed = Allowed || Denied;
       AgreeComments = tbl.AgreeComment;
 
       canChange = (!Cancelled) && (!Allowed) && (!Denied) && (!Finished)&&(!Opened) /*&& (tbl.Author.ToLower() == currentUser.Name.ToLower() || tbl.SelAuthor.ToLower()==currentUser.Name.ToLower())*/;
@@ -132,6 +134,7 @@ namespace VotGESOrders.Web.Models
         State = "Отклонена";
         TaskState = CranTaskState.reviewed;
         canChange = false;
+        
         AuthorAllow = OrdersUser.loadFromCache(tbl.AuthorAllow).FullName;
       }
       if (Allowed) {
@@ -501,14 +504,16 @@ namespace VotGESOrders.Web.Models
 
 
         string htmlDatesTable =
-          String.Format("<table width='100%'><tr><th colspan='4'>Сроки заявки</th></tr><tr><th>&nbsp;</th><th>Сроки</th><th>Автор</th><th>***</th></tr><tr><th>Заявка</th><td>{0}<hr/>{1}</td><td>{2}</td><td>{3}</td></tr><tr><th>Разрешение</th><td>{4}<hr/>{5}</td><td>{6}</td><td>{7}</td></tr><tr><th>Факт</th><td>{8}<hr/>{9}</td><td>{10}</td><td>&nbsp;</td></tr></table>",
+          String.Format("<table width='100%'><tr><th colspan='4'>Сроки заявки</th></tr><tr><th>&nbsp;</th><th>Сроки</th><th>Автор</th><th>***</th></tr><tr><th>Заявка</th><td>{0}<hr/>{1}</td><td>{2}</td><td>{3}</td></tr><tr><th>Разрешение</th><td>{4}<hr/>{5}</td><td>{6}</td><td>{7}</td></tr><tr><th>Факт</th><td>{8}<hr/>{9}</td><td>{10}<hr/>{11}</td><td>&nbsp;</td></tr></table>",
           order.NeedStartDate.ToString("dd.MM.yy HH:mm"), order.NeedEndDate.ToString("dd.MM.yy HH:mm"), OrdersUser.loadFromCache(order.SelAuthor).FullName, String.Format("<b>Ответственный:</b><br/>{0}<br/><b>Стропальщик:</b><br/>{1}", order.Manager, order.StropUser),
           order.Allowed ? order.AllowDateStart.ToString("dd.MM.yy HH:mm") : order.Denied ? "Отклонено" : order.Cancelled ? "Снята" : "&nbsp;",
           order.Allowed ? order.AllowDateEnd.ToString("dd.MM.yy HH:mm") : order.Denied ? "Отклонено" : order.Cancelled ? "Снята" : "&nbsp;",
           order.Allowed || order.Denied ? order.AuthorAllow : order.Cancelled ? order.AuthorCancel : "-",
           order.Allowed ? String.Format("<b>Крановщик:</b><br/>{0}<br/>", order.CranUser) : "&nbsp;",
-          order.Finished ? order.RealDateStart.ToString("dd.MM.yy HH:mm") : "-",
-          order.Finished ? order.RealDateEnd.ToString("dd.MM.yy HH:mm") : "-", !string.IsNullOrEmpty(order.AuthorFinish) ? order.AuthorFinish : "-");
+          order.Opened ? order.RealDateStart.ToString("dd.MM.yy HH:mm") : "-", 
+          order.Finished ? order.RealDateEnd.ToString("dd.MM.yy HH:mm") : "-", 
+          !string.IsNullOrEmpty(order.AuthorOpen) ? order.AuthorOpen : "-",
+          !string.IsNullOrEmpty(order.AuthorFinish) ? order.AuthorFinish : "-");
 
 
         string aComments = string.IsNullOrEmpty(order.AgreeComments) ? "" : order.AgreeComments.Replace("\r\n", "<br/>");

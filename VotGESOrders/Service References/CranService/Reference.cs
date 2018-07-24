@@ -181,6 +181,8 @@ namespace VotGESOrders.CranService {
         
         private System.DateTime RealDateStartField;
         
+        private bool ReviewedField;
+        
         private string SelAuthorField;
         
         private string StateField;
@@ -579,6 +581,19 @@ namespace VotGESOrders.CranService {
                 if ((this.RealDateStartField.Equals(value) != true)) {
                     this.RealDateStartField = value;
                     this.RaisePropertyChanged("RealDateStart");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Reviewed {
+            get {
+                return this.ReviewedField;
+            }
+            set {
+                if ((this.ReviewedField.Equals(value) != true)) {
+                    this.ReviewedField = value;
+                    this.RaisePropertyChanged("Reviewed");
                 }
             }
         }

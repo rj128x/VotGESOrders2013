@@ -78,7 +78,7 @@ namespace VotGESOrders.Web.Models {
 				List<string> mailToList = new List<string>();
 
 
-				foreach (OrdersUser user in users) {
+				/*foreach (OrdersUser user in users) {
 					if (
 						( user.SendAllCranTask ) ||
 						( task.SelAuthor.ToLower() == user.Name.ToLower() )||
@@ -92,14 +92,14 @@ namespace VotGESOrders.Web.Models {
 							}
 						}
 					}
-				}
+				}*/
         try {
           mailToList.Add("chekunovamv@rushydro.ru");
         } catch { }
 
 				Attachment attach = null;
 
-				try {
+				/*try {
 					MemoryStream stream = new MemoryStream();
 					StreamWriter writer = new StreamWriter(stream);
 					writer.Write(CranTaskInfo.getTaskPrintHTML(task));
@@ -110,7 +110,7 @@ namespace VotGESOrders.Web.Models {
 				}
 				catch (Exception e) {
 					Logger.info(e.ToString(), Logger.LoggerSource.server);
-				}
+				}*/
 
 
 				string message = CranTaskInfo.getTashHTML(task);
