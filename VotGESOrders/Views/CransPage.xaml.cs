@@ -524,7 +524,22 @@ namespace VotGESOrders.Views {
 			}
 		}
 
-		void Client_CancelCranTaskCompleted(object sender, CranService.CancelCranTaskCompletedEventArgs e) {
+    private void btnReturn_Click(object sender, RoutedEventArgs e) {
+      if (CurrentTask == null)
+        return;
+      if (MessageBox.Show("Вы уверены что хотите вернуть заявку?", "Возврат заявки", MessageBoxButton.OKCancel) == MessageBoxResult.OK) {
+        GlobalStatus.Current.IsBusy = true;
+        CurrentTask.Cancelled = false;
+        CurrentTask.Allowed = false;
+        CurrentTask.Denied = false;
+        CurrentTask.TaskState = CranTaskState.created;
+        CurrentTask.TaskAction = CranTaskAction.returnCancel;
+
+        CransContext.Single.Client.CancelCranTaskAsync(CurrentTask);
+      }
+    }
+
+    void Client_CancelCranTaskCompleted(object sender, CranService.CancelCranTaskCompletedEventArgs e) {
 			GlobalStatus.Current.IsBusy = false;
 			ReturnMessage ret = e.Result as ReturnMessage;
 			MessageBox.Show(ret.Message);
@@ -577,6 +592,9 @@ namespace VotGESOrders.Views {
         CransContext.Single.Client.FinishCranTaskAsync(CurrentTask);
       }
     }
+
+
+    
   }
 
 }

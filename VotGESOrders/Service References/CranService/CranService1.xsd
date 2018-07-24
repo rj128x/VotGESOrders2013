@@ -60,6 +60,7 @@
       <xs:element minOccurs="0" name="canComment" type="xs:boolean" />
       <xs:element minOccurs="0" name="canFinish" type="xs:boolean" />
       <xs:element minOccurs="0" name="canOpen" type="xs:boolean" />
+      <xs:element minOccurs="0" name="canReturn" type="xs:boolean" />
       <xs:element minOccurs="0" name="change" type="xs:boolean" />
       <xs:element minOccurs="0" name="changed" type="xs:boolean" />
       <xs:element minOccurs="0" name="check" type="xs:boolean" />
@@ -78,6 +79,7 @@
       <xs:enumeration value="open" />
       <xs:enumeration value="finish" />
       <xs:enumeration value="cancel" />
+      <xs:enumeration value="returnCancel" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="CranTaskAction" nillable="true" type="tns:CranTaskAction" />

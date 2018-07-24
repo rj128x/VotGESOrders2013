@@ -308,8 +308,11 @@
 
                                             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                                                 <Button Name="btnCancel" Content="Снять" Width="100" HorizontalAlignment="Right"
-                                    Click="btnCancel_Click" IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"
-                                            Visibility="{Binding canCancel, Converter={StaticResource visibilityConverter}}"/>
+                                                       Click="btnCancel_Click" IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"
+                                                        Visibility="{Binding canCancel, Converter={StaticResource visibilityConverter}}"/>
+                                                <Button Name="btnReturn" Content="Вернуть" Width="100" HorizontalAlignment="Right"
+                                                    Click="btnReturn_Click" IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"
+                                                    Visibility="{Binding canReturn, Converter={StaticResource visibilityConverter}}"/>
                                                 <Button Name="btnChange" Content="Изменить" Width="100" HorizontalAlignment="Right"
                                     Click="btnChange_Click" IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"
                                             Visibility="{Binding canChange, Converter={StaticResource visibilityConverter}}"/>
@@ -373,7 +376,7 @@
                                                 <TextBlock Text="{Binding RealDateEnd, StringFormat='dd.MM.yyyy HH:mm'}" FontSize="11"/>
                                             </StackPanel>
 
-                                            
+
 
 
                                             <StackPanel Orientation="Vertical"  Visibility="{Binding canFinish, Converter={StaticResource visibilityConverter}}">

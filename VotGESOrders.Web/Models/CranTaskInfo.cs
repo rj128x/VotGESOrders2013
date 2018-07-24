@@ -32,8 +32,8 @@ namespace VotGESOrders.Web.Models
 
   }
 
-  public enum CranTaskState { created, reviewed, canceled, opened, finished }
-  public enum CranTaskAction {none, create,change, review, open, finish, cancel }
+  public enum CranTaskState { created, reviewed, canceled, opened, finished, }
+  public enum CranTaskAction {none, create,change, review, open, finish, cancel,returnCancel }
 
   public class CranTaskInfo
   {
@@ -86,6 +86,7 @@ namespace VotGESOrders.Web.Models
     public bool canCancel { get; set; }
     public bool canOpen { get; set; }
     public bool canFinish { get; set; }
+    public bool canReturn { get; set; }
 
     public bool hasCrossTasks { get; set; }
     public string crossTasks { get; set; }
@@ -119,6 +120,7 @@ namespace VotGESOrders.Web.Models
       canCancel = (!Cancelled) && (!Denied) && (!Finished)&&(!Opened) /*&& (tbl.Author.ToLower() == currentUser.Name.ToLower()|| tbl.SelAuthor.ToLower() == currentUser.Name.ToLower())*/;
       canFinish = Opened && currentUser.CanFinishCranTask;
       canOpen = Allowed && currentUser.CanFinishCranTask;
+      canReturn = Cancelled;
 
       canCheck = (currentUser.CanReviewCranTask) && (!Finished) && (!Cancelled);
       canComment = true;
@@ -307,6 +309,22 @@ namespace VotGESOrders.Web.Models
             task.AuthorAllow = currentUser.FullName;
             result = "Заявка на кран снята";
             message += " Заявка снята";
+          }
+        }
+        if (task.TaskAction == CranTaskAction.returnCancel) {
+          if (!task.Cancelled) {
+            tbl.Denied = false;
+            tbl.Allowed = false;
+            tbl.Cancelled = false;
+            tbl.AuthorCancel= null;
+            tbl.AllowedDateStart = null;
+            tbl.AllowedDateEnd = null;
+            tbl.RealDateEnd = null;
+            tbl.RealDateStart = null;
+            tbl.AuthorCancel = currentUser.Name;
+            task.AuthorAllow = currentUser.FullName;
+            result = "Возврат заявки на кран";
+            message += " Возврат заявки";
           }
         }
         if (task.TaskAction==CranTaskAction.change) {

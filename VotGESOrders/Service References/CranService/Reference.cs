@@ -205,6 +205,8 @@ namespace VotGESOrders.CranService {
         
         private bool canOpenField;
         
+        private bool canReturnField;
+        
         private bool changeField;
         
         private bool changedField;
@@ -738,6 +740,19 @@ namespace VotGESOrders.CranService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool canReturn {
+            get {
+                return this.canReturnField;
+            }
+            set {
+                if ((this.canReturnField.Equals(value) != true)) {
+                    this.canReturnField = value;
+                    this.RaisePropertyChanged("canReturn");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool change {
             get {
                 return this.changeField;
@@ -849,6 +864,9 @@ namespace VotGESOrders.CranService {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         cancel = 6,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        returnCancel = 7,
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
