@@ -143,6 +143,8 @@ namespace VotGESOrders.CranService {
         
         private string AuthorFinishField;
         
+        private string AuthorOpenField;
+        
         private string AuthorTextField;
         
         private bool CancelledField;
@@ -159,6 +161,8 @@ namespace VotGESOrders.CranService {
         
         private bool DeniedField;
         
+        private bool FinishCurrentTimeField;
+        
         private bool FinishedField;
         
         private string ManagerField;
@@ -168,6 +172,10 @@ namespace VotGESOrders.CranService {
         private System.DateTime NeedStartDateField;
         
         private int NumberField;
+        
+        private bool OpenCurrentTimeField;
+        
+        private bool OpenedField;
         
         private System.DateTime RealDateEndField;
         
@@ -181,6 +189,10 @@ namespace VotGESOrders.CranService {
         
         private string StropUserField;
         
+        private VotGESOrders.CranService.CranTaskAction TaskActionField;
+        
+        private VotGESOrders.CranService.CranTaskState TaskStateField;
+        
         private bool canCancelField;
         
         private bool canChangeField;
@@ -190,6 +202,8 @@ namespace VotGESOrders.CranService {
         private bool canCommentField;
         
         private bool canFinishField;
+        
+        private bool canOpenField;
         
         private bool changeField;
         
@@ -321,6 +335,19 @@ namespace VotGESOrders.CranService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string AuthorOpen {
+            get {
+                return this.AuthorOpenField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AuthorOpenField, value) != true)) {
+                    this.AuthorOpenField = value;
+                    this.RaisePropertyChanged("AuthorOpen");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string AuthorText {
             get {
                 return this.AuthorTextField;
@@ -425,6 +452,19 @@ namespace VotGESOrders.CranService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool FinishCurrentTime {
+            get {
+                return this.FinishCurrentTimeField;
+            }
+            set {
+                if ((this.FinishCurrentTimeField.Equals(value) != true)) {
+                    this.FinishCurrentTimeField = value;
+                    this.RaisePropertyChanged("FinishCurrentTime");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool Finished {
             get {
                 return this.FinishedField;
@@ -485,6 +525,32 @@ namespace VotGESOrders.CranService {
                 if ((this.NumberField.Equals(value) != true)) {
                     this.NumberField = value;
                     this.RaisePropertyChanged("Number");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool OpenCurrentTime {
+            get {
+                return this.OpenCurrentTimeField;
+            }
+            set {
+                if ((this.OpenCurrentTimeField.Equals(value) != true)) {
+                    this.OpenCurrentTimeField = value;
+                    this.RaisePropertyChanged("OpenCurrentTime");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Opened {
+            get {
+                return this.OpenedField;
+            }
+            set {
+                if ((this.OpenedField.Equals(value) != true)) {
+                    this.OpenedField = value;
+                    this.RaisePropertyChanged("Opened");
                 }
             }
         }
@@ -568,6 +634,32 @@ namespace VotGESOrders.CranService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public VotGESOrders.CranService.CranTaskAction TaskAction {
+            get {
+                return this.TaskActionField;
+            }
+            set {
+                if ((this.TaskActionField.Equals(value) != true)) {
+                    this.TaskActionField = value;
+                    this.RaisePropertyChanged("TaskAction");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public VotGESOrders.CranService.CranTaskState TaskState {
+            get {
+                return this.TaskStateField;
+            }
+            set {
+                if ((this.TaskStateField.Equals(value) != true)) {
+                    this.TaskStateField = value;
+                    this.RaisePropertyChanged("TaskState");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool canCancel {
             get {
                 return this.canCancelField;
@@ -628,6 +720,19 @@ namespace VotGESOrders.CranService {
                 if ((this.canFinishField.Equals(value) != true)) {
                     this.canFinishField = value;
                     this.RaisePropertyChanged("canFinish");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool canOpen {
+            get {
+                return this.canOpenField;
+            }
+            set {
+                if ((this.canOpenField.Equals(value) != true)) {
+                    this.canOpenField = value;
+                    this.RaisePropertyChanged("canOpen");
                 }
             }
         }
@@ -718,6 +823,52 @@ namespace VotGESOrders.CranService {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CranTaskAction", Namespace="http://schemas.datacontract.org/2004/07/VotGESOrders.Web.Models")]
+    public enum CranTaskAction : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        none = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        create = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        change = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        review = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        open = 4,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        finish = 5,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        cancel = 6,
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CranTaskState", Namespace="http://schemas.datacontract.org/2004/07/VotGESOrders.Web.Models")]
+    public enum CranTaskState : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        created = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        reviewed = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        canceled = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        opened = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        finished = 4,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]

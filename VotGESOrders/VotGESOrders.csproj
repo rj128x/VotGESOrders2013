@@ -65,16 +65,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>false</SignManifests>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>7161227C0008310EAF38611E44F41EF6A83F12E5</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>B5701F974B85149BB876B205E8F83EEF10CA3B4C</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>VotGESOrders_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>VotGESOrders_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
@@ -419,6 +419,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <None Include="VotGESOrders_TemporaryKey.pfx" />
     <Page Include="Views\CranReviewWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -430,7 +431,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Service References\CranService\CranService3.xsd" />
-    <None Include="VotGESOrders_TemporaryKey.pfx" />
     <Page Include="Views\CransPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

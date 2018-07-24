@@ -149,10 +149,12 @@ namespace VotGESOrders.Views {
 		private void newTask_Click(object sender, RoutedEventArgs e) {
 			CranTaskInfo newTask  = new CranTaskInfo();
 			newTask.init = true;
+      newTask.TaskAction = CranTaskAction.create;
 			newTask.canChange = true;
 			newTask.canCheck = false;
 			newTask.CranNumber = 0;
 			newTask.Comment = "";
+      newTask.TaskState = CranTaskState.created;
 			newTask.NeedStartDate = DateTime.Now.Date.AddDays(1);
 			newTask.NeedEndDate = DateTime.Now.Date.AddDays(2);
             newTask.SelAuthor = WebContext.Current.User.Name;
@@ -165,6 +167,7 @@ namespace VotGESOrders.Views {
 		private void btnChange_Click(object sender, RoutedEventArgs e) {
 			if (CurrentTask == null)
 				return;
+      CurrentTask.TaskAction = CranTaskAction.change;
 			CranWindow taskWindow = new CranWindow();
 			taskWindow.init(CurrentTask,Managers,StropUsers);
 			taskWindow.Closed += taskWindow_Closed;
@@ -181,7 +184,9 @@ namespace VotGESOrders.Views {
 		private void btnCheck_Click(object sender, RoutedEventArgs e) {
 			if (CurrentTask == null)
 				return;
-			CranReviewWindow reviewWin = new CranReviewWindow();
+      CurrentTask.TaskAction = CranTaskAction.review;
+      CurrentTask.TaskState = CranTaskState.reviewed;
+      CranReviewWindow reviewWin = new CranReviewWindow();
 			reviewWin.init(CurrentTask,CranUsers);
 			reviewWin.Closed += reviewWin_Closed;
 			reviewWin.Show();
@@ -512,6 +517,9 @@ namespace VotGESOrders.Views {
 				CurrentTask.Cancelled = true;
 				CurrentTask.Allowed = false;
 				CurrentTask.Denied = false;
+        CurrentTask.TaskState = CranTaskState.canceled;
+        CurrentTask.TaskAction = CranTaskAction.cancel;
+
 				CransContext.Single.Client.CancelCranTaskAsync(CurrentTask);
 			}
 		}
@@ -527,6 +535,8 @@ namespace VotGESOrders.Views {
 		private void btnFinish_Click(object sender, RoutedEventArgs e) {
 			if (CurrentTask == null)
 				return;
+      if (CurrentTask.FinishCurrentTime)
+        CurrentTask.RealDateEnd = DateTime.Now;
       if (CurrentTask.RealDateEnd <= CurrentTask.RealDateStart) {
         MessageBox.Show("фактическая дата начала меньше даты окончания.");
         return;
@@ -534,6 +544,8 @@ namespace VotGESOrders.Views {
 			if (MessageBox.Show("Вы уверены что хотите закрыть заявку?", "Закрытие заявки", MessageBoxButton.OKCancel) == MessageBoxResult.OK) {
 				GlobalStatus.Current.IsBusy = true;
 				CurrentTask.Finished = true;
+        CurrentTask.TaskState = CranTaskState.finished;
+        CurrentTask.TaskAction = CranTaskAction.finish; 
 				CransContext.Single.Client.FinishCranTaskAsync(CurrentTask);
 			}
 		}
@@ -547,7 +559,25 @@ namespace VotGESOrders.Views {
 			CransContext.Single.Client.getCranTasksAsync(CurrentFilter);
 		}
 
-	}
+
+    private void btnOpen_Click(object sender, RoutedEventArgs e) {
+      if (CurrentTask == null)
+        return;
+      if (CurrentTask.OpenCurrentTime)
+        CurrentTask.RealDateStart = DateTime.Now;
+      if (CurrentTask.RealDateEnd <= CurrentTask.RealDateStart) {
+        MessageBox.Show("фактическая дата начала меньше даты окончания.");
+        return;
+      }
+      if (MessageBox.Show("Вы уверены что хотите открыть заявку?", "Открытие заявки", MessageBoxButton.OKCancel) == MessageBoxResult.OK) {
+        GlobalStatus.Current.IsBusy = true;        
+        CurrentTask.Opened = true;
+        CurrentTask.TaskAction = CranTaskAction.open;
+        CurrentTask.TaskState = CranTaskState.opened;
+        CransContext.Single.Client.FinishCranTaskAsync(CurrentTask);
+      }
+    }
+  }
 
 }
 

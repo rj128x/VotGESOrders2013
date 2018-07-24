@@ -20,22 +20,23 @@
           <Property Name="Allowed" Type="bit" Nullable="false" />
           <Property Name="Denied" Type="bit" Nullable="false" />
           <Property Name="Cancelled" Type="bit" Nullable="false" />
+          <Property Name="Opened" Type="bit" Nullable="false" />
           <Property Name="Finished" Type="bit" Nullable="false" />
           <Property Name="AllowedDateStart" Type="datetime" />
           <Property Name="AllowedDateEnd" Type="datetime" />
+          <Property Name="SelAuthor" Type="varchar" MaxLength="50" />
+          <Property Name="AuthorCancel" Type="varchar" MaxLength="50" />
           <Property Name="AuthorAllow" Type="varchar" MaxLength="50" />
+          <Property Name="AuthorOpen" Type="varchar" MaxLength="50" />
+          <Property Name="AuthorFinish" Type="varchar" MaxLength="50" />
           <Property Name="Manager" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="AgreeUsersIDS" Type="varchar" MaxLength="50" />
+          <Property Name="StropUser" Type="varchar" MaxLength="100" />
+          <Property Name="CranUser" Type="varchar" MaxLength="100" />
           <Property Name="AgreeComment" Type="varchar(max)" />
           <Property Name="State" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="RealDateStart" Type="datetime" />
           <Property Name="RealDateEnd" Type="datetime" />
-          <Property Name="AuthorFinish" Type="varchar" MaxLength="50" />
-          <Property Name="StropUser" Type="varchar" MaxLength="100" />
-          <Property Name="CranUser" Type="varchar" MaxLength="100" />
-          <Property Name="SelAuthor" Type="varchar" MaxLength="50" />
           <Property Name="AuthorText" Type="varchar" MaxLength="100" />
-          <Property Name="AuthorCancel" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="OrderObjects">
           <Key>
@@ -134,15 +135,11 @@
           <Property Name="sendAllCreateMail" Type="bit" Nullable="false" />
           <Property Name="sendAllAgreeMail" Type="bit" Nullable="false" />
           <Property Name="allowEditOrders" Type="bit" Nullable="false" />
-          <Property Name="canAgreeCranTask" Type="bit" Nullable="false" />
           <Property Name="canCreateCranTask" Type="bit" Nullable="false" />
           <Property Name="canReviewCranTask" Type="bit" Nullable="false" />
           <Property Name="canFinishCranTask" Type="bit" Nullable="false" />
           <Property Name="sendAllCreateCranTask" Type="bit" Nullable="false" />
           <Property Name="sendAllCranTask" Type="bit" Nullable="false" />
-          <Property Name="sendAgreeCranTask" Type="bit" Nullable="false" />
-          <Property Name="sendAllAgreeCranTask" Type="bit" Nullable="false" />
-          <Property Name="sendOnlyMZCranTask" Type="bit" Nullable="false" />
           <Property Name="AddLogins" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="AddFinishLogins" Type="varchar" MaxLength="250" Nullable="false" />
         </EntityType>
@@ -406,7 +403,6 @@
           <Property Name="Denied" Type="Boolean" Nullable="false" />
           <Property Name="NeedDateEnd" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Manager" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="AgreeUsersIDS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CranName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="AgreeComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="DateCreate" Type="DateTime" Nullable="false" Precision="3" />
@@ -421,6 +417,8 @@
           <Property Name="SelAuthor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="AuthorText" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="AuthorCancel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Opened" Type="Boolean" Nullable="false" />
+          <Property Name="AuthorOpen" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -466,10 +464,6 @@
           <NavigationProperty Name="Orders3" Relationship="VotGESOrdersModel.FK_Orders_UsersCreate" FromRole="Users" ToRole="Orders" />
           <NavigationProperty Name="Orders4" Relationship="VotGESOrdersModel.FK_Orders_UsersOpen" FromRole="Users" ToRole="Orders" />
           <NavigationProperty Name="Orders5" Relationship="VotGESOrdersModel.FK_Orders_UsersReview" FromRole="Users" ToRole="Orders" />
-          <Property Name="canAgreeCranTask" Type="Boolean" Nullable="false" />
-          <Property Name="sendAgreeCranTask" Type="Boolean" Nullable="false" />
-          <Property Name="sendAllAgreeCranTask" Type="Boolean" Nullable="false" />
-          <Property Name="sendOnlyMZCranTask" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_Orders_UsersCancel">
           <End Type="VotGESOrdersModel.Users" Role="Users" Multiplicity="0..1" />
@@ -612,6 +606,8 @@
           <EntitySetMapping Name="CranTask">
             <EntityTypeMapping TypeName="VotGESOrdersModel.CranTask">
               <MappingFragment StoreEntitySet="CranTask">
+                <ScalarProperty Name="AuthorOpen" ColumnName="AuthorOpen" />
+                <ScalarProperty Name="Opened" ColumnName="Opened" />
                 <ScalarProperty Name="AuthorCancel" ColumnName="AuthorCancel" />
                 <ScalarProperty Name="AuthorText" ColumnName="AuthorText" />
                 <ScalarProperty Name="SelAuthor" ColumnName="SelAuthor" />
@@ -626,7 +622,6 @@
                 <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
                 <ScalarProperty Name="AgreeComment" ColumnName="AgreeComment" />
                 <ScalarProperty Name="CranName" ColumnName="CranName" />
-                <ScalarProperty Name="AgreeUsersIDS" ColumnName="AgreeUsersIDS" />
                 <ScalarProperty Name="Manager" ColumnName="Manager" />
                 <ScalarProperty Name="NeedDateEnd" ColumnName="NeedDateEnd" />
                 <ScalarProperty Name="Denied" ColumnName="Denied" />
@@ -656,10 +651,6 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="VotGESOrdersModel.Users">
               <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="sendOnlyMZCranTask" ColumnName="sendOnlyMZCranTask" />
-                <ScalarProperty Name="sendAllAgreeCranTask" ColumnName="sendAllAgreeCranTask" />
-                <ScalarProperty Name="sendAgreeCranTask" ColumnName="sendAgreeCranTask" />
-                <ScalarProperty Name="canAgreeCranTask" ColumnName="canAgreeCranTask" />
                 <ScalarProperty Name="AddFinishLogins" ColumnName="AddFinishLogins" />
                 <ScalarProperty Name="AddLogins" ColumnName="AddLogins" />
                 <ScalarProperty Name="sendAllCranTask" ColumnName="sendAllCranTask" />

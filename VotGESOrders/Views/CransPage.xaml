@@ -57,14 +57,15 @@
                             <sdk:DataGridTemplateColumn.CellTemplate >
                                 <DataTemplate>
                                     <Grid>
+                                        <StackPanel Background="#FF23CFA0" Visibility="{Binding Allowed, Converter={StaticResource visibilityConverter}}" Opacity="1" />
+                                        <StackPanel Background="#FFEA9090" Visibility="{Binding Denied, Converter={StaticResource visibilityConverter}}" Opacity="1" />
+                                        <StackPanel Background="#FFF0F096" Visibility="{Binding Opened, Converter={StaticResource visibilityConverter}}" Opacity="1" />
+                                        <StackPanel Background="#FFBDBDF3" Visibility="{Binding Finished, Converter={StaticResource visibilityConverter}}" Opacity="1" />
+                                        <StackPanel Background="#FFCFCFD3" Visibility="{Binding Cancelled, Converter={StaticResource visibilityConverter}}" Opacity="1" />
                                         <StackPanel Orientation="Vertical">
                                             <TextBlock Text="{Binding State}" FontSize="11"/>
                                             <TextBlock Text="{Binding AuthorCancel}"  FontSize="10" Visibility="{Binding Cancelled, Converter={StaticResource visibilityConverter}}" FontStyle="Italic" HorizontalAlignment="Right"/>
                                         </StackPanel>
-                                        <StackPanel Background="Green" Visibility="{Binding Allowed, Converter={StaticResource visibilityConverter}}" Opacity="0.6" />
-                                        <StackPanel Background="Red" Visibility="{Binding Denied, Converter={StaticResource visibilityConverter}}" Opacity="0.6" />
-                                        <StackPanel Background="Blue" Visibility="{Binding Finished, Converter={StaticResource visibilityConverter}}" Opacity="0.6" />
-                                        <StackPanel Background="Gray" Visibility="{Binding Cancelled, Converter={StaticResource visibilityConverter}}" Opacity="0.6" />
                                     </Grid>
 
                                 </DataTemplate>
@@ -81,7 +82,7 @@
                             <sdk:DataGridTemplateColumn.CellTemplate >
                                 <DataTemplate>
                                     <StackPanel>
-                                        <TextBlock Text="{Binding AuthorText}" TextWrapping="Wrap" FontSize="11"/>                                        
+                                        <TextBlock Text="{Binding AuthorText}" TextWrapping="Wrap" FontSize="11"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </sdk:DataGridTemplateColumn.CellTemplate>
@@ -91,7 +92,7 @@
                                 <DataTemplate>
                                     <Grid>
                                         <StackPanel>
-                                            <TextBlock Text="{Binding Comment}" TextWrapping="Wrap" FontSize="11"/>                                            
+                                            <TextBlock Text="{Binding Comment}" TextWrapping="Wrap" FontSize="11"/>
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding hasCrossTasks, Converter={StaticResource visibilityConverter}}">
                                                 <TextBlock Text="Конфликт: " HorizontalAlignment="Right" FontSize="9" FontStyle="Italic"/>
                                                 <TextBlock Text="{Binding crossTasks}"  FontSize="9" FontStyle="Italic"/>
@@ -107,15 +108,15 @@
                                 <DataTemplate>
                                     <StackPanel>
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Ответственный: " FontSize="10" FontWeight="Bold"/>
+                                            <TextBlock Text="Ответственный: " FontSize="10" FontWeight="Bold" Width="100"/>
                                             <TextBlock Text="{Binding Manager}" TextWrapping="Wrap" FontSize="11"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Стропальщик: " FontSize="10" FontWeight="Bold"/>
+                                            <TextBlock Text="Стропальщик: " FontSize="10" FontWeight="Bold"  Width="100"/>
                                             <TextBlock Text="{Binding StropUser}" TextWrapping="Wrap" FontSize="11"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Visibility="{Binding Allowed, Converter={StaticResource visibilityConverter}}">
-                                            <TextBlock Text="Крановщик: " FontSize="10" FontWeight="Bold"/>
+                                            <TextBlock Text="Крановщик: " FontSize="10" FontWeight="Bold"  Width="100"/>
                                             <TextBlock Text="{Binding CranUser}" TextWrapping="Wrap" FontSize="11"/>
                                         </StackPanel>
                                         <TextBlock Text="{Binding AgreeComments}" TextWrapping="Wrap" FontSize="11"/>
@@ -304,7 +305,7 @@
                                                 <TextBlock Text="{Binding CranUser}" Style="{StaticResource Value}"  FontSize="11"
                                                            HorizontalAlignment="Center" TextAlignment="Center"/>
                                             </StackPanel>
-                                           
+
                                             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                                                 <Button Name="btnCancel" Content="Снять" Width="100" HorizontalAlignment="Right"
                                     Click="btnCancel_Click" IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"
@@ -342,30 +343,57 @@
                                     </Border>
                                     <Border Style="{StaticResource borderFilterControl}" Visibility="{Binding Allowed, Converter={StaticResource visibilityConverter}}" Margin="0,5,0,0" >
                                         <StackPanel >
-                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                <TextBlock Text="Заявка закрыта" HorizontalAlignment="Right" Visibility="{Binding Finished, Converter={StaticResource visibilityConverter}}" 
-                                               Foreground="Blue"  Style="{StaticResource ValueText}"/>
-                                                <TextBlock Style="{StaticResource Value}" Text="{Binding AuthorFinish}" Margin="10,0,0,0" FontSize="11"/>
+                                            <StackPanel HorizontalAlignment="Center"  Visibility="{Binding Opened, Converter={StaticResource visibilityConverter}}">
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  >
+                                                    <TextBlock Text="Заявка открыта" HorizontalAlignment="Right" Foreground="Blue"  Style="{StaticResource ValueText}"/>
+                                                    <TextBlock Style="{StaticResource Value}" Text="{Binding AuthorOpen}" Margin="10,0,0,0" FontSize="11"/>
+                                                </StackPanel>
+                                                <TextBlock Text="{Binding RealDateStart, StringFormat='dd.MM.yyyy HH:mm'}" FontSize="11"/>
                                             </StackPanel>
-                                            <StackPanel Orientation="Horizontal" >
-                                                <TextBlock Text="Начало" Width="50" Style="{StaticResource Label}"/>
-                                                <sdk:DatePicker SelectedDate="{Binding RealDateStart, Mode=TwoWay}" Width="120" HorizontalAlignment="Left"
+                                            <StackPanel Orientation="Vertical"  Visibility="{Binding canOpen, Converter={StaticResource visibilityConverter}}">
+                                                <StackPanel Orientation="Horizontal" Visibility="{Binding OpenCurrentTime, Converter={StaticResource visibilityNotConverter}}">
+                                                    <TextBlock Text="Начало" Width="50" Style="{StaticResource Label}"/>
+                                                    <sdk:DatePicker SelectedDate="{Binding RealDateStart, Mode=TwoWay}" Width="120" HorizontalAlignment="Left"
                                                         IsEnabled="{Binding canFinish}" />
-                                                <toolkit:TimeUpDown Value="{Binding RealDateStart, Mode=TwoWay}" HorizontalAlignment="Right"
+                                                    <toolkit:TimeUpDown Value="{Binding RealDateStart, Mode=TwoWay}" HorizontalAlignment="Right"
                                                             IsEnabled="{Binding canFinish}"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"  Visibility="{Binding canOpen, Converter={StaticResource visibilityConverter}}">
+                                                    <CheckBox IsChecked="{Binding OpenCurrentTime, Mode=TwoWay}" Content="Текущее время" Visibility="{Binding Opened,Converter={StaticResource visibilityNotConverter}}"/>
+                                                    <Button Name="btnOpen" Content="Открыть" HorizontalAlignment="Right"
+                                                    Click="btnOpen_Click" IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"
+                                                    Width="100"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <StackPanel HorizontalAlignment="Center"  Visibility="{Binding Finished, Converter={StaticResource visibilityConverter}}">
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  >
+                                                    <TextBlock Text="Заявка закрыта" HorizontalAlignment="Right" Foreground="Blue"  Style="{StaticResource ValueText}"/>
+                                                    <TextBlock Style="{StaticResource Value}" Text="{Binding AuthorFinish}" Margin="10,0,0,0" FontSize="11"/>
+                                                </StackPanel>
+                                                <TextBlock Text="{Binding RealDateEnd, StringFormat='dd.MM.yyyy HH:mm'}" FontSize="11"/>
                                             </StackPanel>
 
-                                            <StackPanel Orientation="Horizontal" >
-                                                <TextBlock Text="Конец" Width="50" Style="{StaticResource Label}"/>
-                                                <sdk:DatePicker SelectedDate="{Binding RealDateEnd, Mode=TwoWay}" Width="120" HorizontalAlignment="Left"
+                                            
+
+
+                                            <StackPanel Orientation="Vertical"  Visibility="{Binding canFinish, Converter={StaticResource visibilityConverter}}">
+                                                <StackPanel Orientation="Horizontal"  Visibility="{Binding FinishCurrentTime, Converter={StaticResource visibilityNotConverter}}">
+                                                    <TextBlock Text="Конец" Width="50" Style="{StaticResource Label}"/>
+                                                    <sdk:DatePicker SelectedDate="{Binding RealDateEnd, Mode=TwoWay}" Width="120" HorizontalAlignment="Left"
                                                         IsEnabled="{Binding canFinish}"/>
-                                                <toolkit:TimeUpDown Value="{Binding RealDateEnd, Mode=TwoWay}" HorizontalAlignment="Right"
+                                                    <toolkit:TimeUpDown Value="{Binding RealDateEnd, Mode=TwoWay}" HorizontalAlignment="Right"
                                                             IsEnabled="{Binding canFinish}"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding canFinish, Converter={StaticResource visibilityConverter}}">
+                                                    <CheckBox IsChecked="{Binding FinishCurrentTime, Mode=TwoWay}" Content="Текущее время" Visibility="{Binding Finished,Converter={StaticResource visibilityNotConverter}}"/>
+                                                    <Button Name="btnFinish" Content="Закрыть" HorizontalAlignment="Right"
+                                                Click="btnFinish_Click" IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"
+                                                 Width="100"/>
+                                                </StackPanel>
                                             </StackPanel>
 
-                                            <Button Name="btnFinish" Content="Закрыть" HorizontalAlignment="Right"
-                                                Click="btnFinish_Click" IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"
-                                                Visibility="{Binding canFinish, Converter={StaticResource visibilityConverter}}" Width="100"/>
+
+
                                         </StackPanel>
                                     </Border>
 

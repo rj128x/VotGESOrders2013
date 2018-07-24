@@ -32,6 +32,9 @@ namespace VotGESOrders.Web.Models
 
   }
 
+  public enum CranTaskState { created, reviewed, canceled, opened, finished }
+  public enum CranTaskAction {none, create,change, review, open, finish, cancel }
+
   public class CranTaskInfo
   {
     public static string PathFiles;
@@ -46,6 +49,7 @@ namespace VotGESOrders.Web.Models
     public string AuthorText { get; set; }
     public string AuthorAllow { get; set; }
     public string AuthorCancel { get; set; }
+    public string AuthorOpen { get; set; }
     public string AuthorFinish { get; set; }
     public string Manager { get; set; }
     public string StropUser { get; set; }
@@ -55,12 +59,18 @@ namespace VotGESOrders.Web.Models
     public DateTime AllowDateEnd { get; set; }
     public DateTime RealDateStart { get; set; }
     public DateTime RealDateEnd { get; set; }
+    public CranTaskAction TaskAction { get; set; }
+
+    public bool OpenCurrentTime { get; set; }
+    public bool FinishCurrentTime { get; set; }
 
     public bool Allowed { get; set; }
     public bool Denied { get; set; }
     public bool Cancelled { get; set; }
     public bool Finished { get; set; }
+    public bool Opened { get; set; }
     public string State { get; set; }
+    public CranTaskState TaskState { get; set; }
     public bool init { get; set; }
     public bool change { get; set; }
     public bool check { get; set; }
@@ -74,6 +84,7 @@ namespace VotGESOrders.Web.Models
     public bool canCheck { get; set; }
     public bool canComment { get; set; }
     public bool canCancel { get; set; }
+    public bool canOpen { get; set; }
     public bool canFinish { get; set; }
 
     public bool hasCrossTasks { get; set; }
@@ -95,46 +106,69 @@ namespace VotGESOrders.Web.Models
       SelAuthor = tbl.SelAuthor;
       AuthorText = tbl.AuthorText;
       State = "Новая";
+      TaskState = CranTaskState.created;
       StateDB = tbl.State;
       Allowed = tbl.Allowed;
       Denied = tbl.Denied;
       Cancelled = tbl.Cancelled;
       Finished = tbl.Finished;
+      Opened = tbl.Opened;
       AgreeComments = tbl.AgreeComment;
 
-      canChange = (!Cancelled) && (!Allowed) && (!Denied) && (!Finished) /*&& (tbl.Author.ToLower() == currentUser.Name.ToLower() || tbl.SelAuthor.ToLower()==currentUser.Name.ToLower())*/;
-      canCancel = (!Cancelled) && (!Denied) && (!Finished) /*&& (tbl.Author.ToLower() == currentUser.Name.ToLower()|| tbl.SelAuthor.ToLower() == currentUser.Name.ToLower())*/;
-      canFinish = Allowed && (/*tbl.Author.ToLower() == currentUser.Name.ToLower()|| tbl.SelAuthor.ToLower() == currentUser.Name.ToLower() || */currentUser.CanReviewCranTask || currentUser.CanFinishCranTask);
+      canChange = (!Cancelled) && (!Allowed) && (!Denied) && (!Finished)&&(!Opened) /*&& (tbl.Author.ToLower() == currentUser.Name.ToLower() || tbl.SelAuthor.ToLower()==currentUser.Name.ToLower())*/;
+      canCancel = (!Cancelled) && (!Denied) && (!Finished)&&(!Opened) /*&& (tbl.Author.ToLower() == currentUser.Name.ToLower()|| tbl.SelAuthor.ToLower() == currentUser.Name.ToLower())*/;
+      canFinish = Opened && currentUser.CanFinishCranTask;
+      canOpen = Allowed && currentUser.CanFinishCranTask;
 
       canCheck = (currentUser.CanReviewCranTask) && (!Finished) && (!Cancelled);
       canComment = true;
       Manager = tbl.Manager;
       StropUser = tbl.StropUser;
       CranUser = tbl.CranUser;
+      TaskAction = CranTaskAction.none;
       if (Denied) {
         State = "Отклонена";
+        TaskState = CranTaskState.reviewed;
         canChange = false;
         AuthorAllow = OrdersUser.loadFromCache(tbl.AuthorAllow).FullName;
       }
-      if (tbl.Allowed) {
+      if (Allowed) {
         AuthorAllow = OrdersUser.loadFromCache(tbl.AuthorAllow).FullName;
         AllowDateStart = tbl.AllowedDateStart.Value;
         AllowDateEnd = tbl.AllowedDateEnd.Value;
         RealDateStart = tbl.RealDateStart.Value;
         RealDateEnd = tbl.RealDateEnd.Value;
+        OpenCurrentTime = true;
+        FinishCurrentTime = true;
         canChange = false;
         State = "Разрешена";
+        TaskState = CranTaskState.reviewed;
       }
-      if (tbl.Cancelled) {
+
+      if (Cancelled) {
         State = "Снята";
+        TaskState = CranTaskState.canceled;
         AuthorCancel = OrdersUser.loadFromCache(tbl.AuthorCancel).FullName;
       }
-      if (tbl.Finished) {
+
+      if (Opened) {
+        if (!string.IsNullOrEmpty(tbl.AuthorOpen))
+          AuthorOpen = OrdersUser.loadFromCache(tbl.AuthorOpen).FullName;
+        //RealDateStart = tbl.RealDateStart.Value;
+        OpenCurrentTime = false;
+        canChange = false;
+        TaskState = CranTaskState.opened;
+        State = "Открыта";
+      }
+
+      if (Finished) {
         State = "Закрыта";
-        Finished = tbl.Finished;
+        TaskState = CranTaskState.finished;
+        FinishCurrentTime = false;
         if (!string.IsNullOrEmpty(tbl.AuthorFinish))
           AuthorFinish = OrdersUser.loadFromCache(tbl.AuthorFinish).FullName;
       }
+
       DateCreate = tbl.DateCreate;
     }
 
@@ -161,9 +195,8 @@ namespace VotGESOrders.Web.Models
         OrdersUser currentUser = OrdersUser.loadFromCache(HttpContext.Current.User.Identity.Name);
         VotGESOrdersEntities eni = new VotGESOrdersEntities();
         CranTask tbl = new CranTask();
-        if (task.init) {
-          Logger.info("Определение номера заявки на кран", Logger.LoggerSource.server);
-          tbl.State = "new";
+        if (task.TaskAction==CranTaskAction.create) {
+          Logger.info("Определение номера заявки на кран", Logger.LoggerSource.server);          
           CranTask tsk = (from t in eni.CranTask orderby t.Number descending select t).FirstOrDefault();
           task.DateCreate = DateTime.Now;
           if (tsk != null) {
@@ -173,6 +206,9 @@ namespace VotGESOrders.Web.Models
           }
           tbl.Allowed = false;
           tbl.Denied = false;
+          tbl.Finished = false;
+          tbl.Opened = false;
+          tbl.Cancelled = false;
           tbl.Author = currentUser.Name;
           tbl.DateCreate = task.DateCreate;
           task.Author = currentUser.FullName;
@@ -192,7 +228,7 @@ namespace VotGESOrders.Web.Models
           return new ReturnMessage(false, "Дата окончания заявки больше чем дата начала");
         }
 
-
+        tbl.State = task.TaskState.ToString();
         tbl.Number = task.Number;
         tbl.CranName = task.CranName;
         tbl.AgreeComment = task.AgreeComments;
@@ -204,67 +240,82 @@ namespace VotGESOrders.Web.Models
         tbl.SelAuthor = task.SelAuthor;
         tbl.StropUser = task.StropUser;
         tbl.AuthorText = OrdersUser.loadFromCache(tbl.SelAuthor).FullName;
-        if (task.AgreeDict != null)
-          tbl.AgreeUsersIDS = string.Join(";", task.AgreeDict.Keys);
 
-        if (task.Finished) {
-          tbl.State = "finished";
-          result = "Заявка на кран завершена";
-          tbl.RealDateStart = task.RealDateStart;
-          tbl.RealDateEnd = task.RealDateEnd;
-          tbl.AuthorFinish = currentUser.Name;
-          tbl.Finished = true;
-          message += " Заявка завершена";
-        } else if (task.Allowed) {
-          tbl.AllowedDateStart = task.AllowDateStart;
-          tbl.AllowedDateEnd = task.AllowDateEnd;
-          tbl.RealDateStart = task.AllowDateStart;
-          tbl.RealDateEnd = task.AllowDateEnd;
-          tbl.CranUser = task.CranUser;
-          tbl.Denied = false;
-          tbl.Allowed = true;
-          tbl.Cancelled = false;
-          tbl.State = "allowed";
-          task.AuthorAllow = currentUser.FullName;
-          result = "Заявка на кран разрешена";
-          message += " Заявка разрешена";
-        } else if (task.Denied) {
-          tbl.AllowedDateStart = null;
-          tbl.AllowedDateEnd = null;
-          tbl.RealDateEnd = null;
-          tbl.RealDateStart = null;
-          tbl.Allowed = false;
-          tbl.Denied = true;
-          tbl.Cancelled = false;
-          tbl.State = "denied";
-          tbl.CranUser = "";
-          task.AuthorAllow = currentUser.FullName;
-          result = "Заявка на кран отклонена";
-          message += " Заявка отклонена";
-        } else if (task.Cancelled) {
-          tbl.State = "cancelled";
-          tbl.Denied = false;
-          tbl.Allowed = false;
-          tbl.Cancelled = true;
-          tbl.AuthorAllow = null;
-          tbl.AllowedDateStart = null;
-          tbl.AllowedDateEnd = null;
-          tbl.RealDateEnd = null;
-          tbl.RealDateStart = null;
-          tbl.AuthorCancel = currentUser.Name;
-          task.AuthorAllow = currentUser.FullName;
-          result = "Заявка на кран снята";
-          message += " Заявка снята";
-        } else if (!task.init) {
+        if (task.TaskAction == CranTaskAction.finish) {
+          if (task.Finished) {
+            result = "Заявка на кран завершена";
+            tbl.RealDateStart = task.RealDateStart;
+            tbl.RealDateEnd = task.RealDateEnd;
+            tbl.AuthorFinish = currentUser.Name;
+            tbl.Finished = true;
+            message += " Заявка завершена";
+          }
+        }
+        if (task.TaskAction == CranTaskAction.open) {
+          if (task.Opened) {
+            result = "Заявка на кран открыта";
+            tbl.RealDateStart = task.RealDateStart;
+            tbl.RealDateEnd = task.RealDateEnd;
+            tbl.AuthorOpen = currentUser.Name;
+            tbl.Opened = true;
+            message += " Заявка открыта";
+          }
+        }
+        if (task.TaskAction == CranTaskAction.review) {
+          tbl.AuthorAllow = currentUser.Name;
+          if (task.Allowed) {
+            tbl.AllowedDateStart = task.AllowDateStart;
+            tbl.AllowedDateEnd = task.AllowDateEnd;
+            tbl.RealDateStart = task.AllowDateStart;
+            tbl.RealDateEnd = task.AllowDateEnd;
+            tbl.CranUser = task.CranUser;
+            tbl.Denied = false;
+            tbl.Allowed = true;
+            tbl.Cancelled = false;
+            tbl.Opened = false;
+            tbl.Finished = false;
+            task.AuthorAllow = currentUser.FullName;
+            result = "Заявка на кран разрешена";
+            message += " Заявка разрешена";
+          } else if (task.Denied) {
+            tbl.AllowedDateStart = null;
+            tbl.AllowedDateEnd = null;
+            tbl.RealDateEnd = null;
+            tbl.RealDateStart = null;
+            tbl.Allowed = false;
+            tbl.Denied = true;
+            tbl.Cancelled = false;
+            tbl.Opened = false;
+            tbl.Finished = false;
+            tbl.CranUser = "";
+            task.AuthorAllow = currentUser.FullName;
+            result = "Заявка на кран отклонена";
+            message += " Заявка отклонена";
+          }
+        }
+        if (task.TaskAction == CranTaskAction.cancel) {
+          if (task.Cancelled) {
+            tbl.Denied = false;
+            tbl.Allowed = false;
+            tbl.Cancelled = true;
+            tbl.AuthorAllow = null;
+            tbl.AllowedDateStart = null;
+            tbl.AllowedDateEnd = null;
+            tbl.RealDateEnd = null;
+            tbl.RealDateStart = null;
+            tbl.AuthorCancel = currentUser.Name;
+            task.AuthorAllow = currentUser.FullName;
+            result = "Заявка на кран снята";
+            message += " Заявка снята";
+          }
+        }
+        if (task.TaskAction==CranTaskAction.change) {
           message += " Заявка изменена";
         }
 
-        if (task.Allowed || task.Denied) {
-          tbl.AuthorAllow = currentUser.Name;
-        }
-
         eni.SaveChanges();
-        MailContext.sendCranTask(message, new CranTaskInfo(tbl));
+        if (task.TaskState!=CranTaskState.opened)
+          MailContext.sendCranTask(message, new CranTaskInfo(tbl));
         return new ReturnMessage(true, result);
       } catch (Exception e) {
         Logger.info("Ошибка при создании/изменении заявки на работу крана " + e.ToString(), Logger.LoggerSource.server);
@@ -420,7 +471,7 @@ namespace VotGESOrders.Web.Models
         string UserInfo = "";
         if (!order.Allowed && !order.Finished && !order.Denied && !order.Cancelled) {
           if (currentUser.Name.ToLower() != order.SelAuthor.ToLower()) {
-            UserInfo = String.Format("Заявка подана/изменена из учетной записи {0} ({1})<br/>",currentUser.FullName,currentUser.Name);
+            UserInfo = String.Format("Заявка подана/изменена из учетной записи {0} ({1})<br/>", currentUser.FullName, currentUser.Name);
           }
         }
         string style = showStyle ? "<Style>table {border-collapse: collapse;} td{text-align:center;} td.comments{text-align:left;} td, th {border-width: 1px;	border-style: solid;	border-color: #BBBBFF;	padding-left: 3px;	padding-right: 3px;}</Style>" : "";
@@ -445,7 +496,7 @@ namespace VotGESOrders.Web.Models
         string aComments = string.IsNullOrEmpty(order.AgreeComments) ? "" : order.AgreeComments.Replace("\r\n", "<br/>");
         string fullTable = String.Format("<table width='100%'><tr><td>{0}</td></tr><tr><td>{1}</td></tr><tr><td>{2}</td></tr><tr><td>{3}</td></tr></table>",
           htmlFirstTRTable, htmlInfoTable, htmlDatesTable, aComments);
-        return style+UserInfo + fullTable;
+        return style + UserInfo + fullTable;
       } catch (Exception e) {
         Logger.info("Ошибка при формировании html представления " + e.ToString(), Logger.LoggerSource.server);
         return "";

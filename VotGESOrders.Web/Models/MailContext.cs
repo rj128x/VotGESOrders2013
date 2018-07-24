@@ -42,7 +42,7 @@ namespace VotGESOrders.Web.Models {
                         user.SendAllMail && !mailToList.Contains(user.Mail) ||
                         isNewOrder && (user.SendAllCreateMail || order.UserCreateOrderID == user.UserID || user.SendAgreeMail && order.AgreeUsers.Contains(user)) && !mailToList.Contains(user.Mail) ||
                         expired && (order.UserCreateOrderID == user.UserID || user.SendAllCreateMail) && !mailToList.Contains(user.Mail) ||
-                        order.FullOrderObjectInfo.Contains("Кран") && order.FullOrderObjectInfo.IndexOf("Кран")<3 && user.Name.Contains("CRAN") && !mailToList.Contains(user.Mail)&&
+                        order.FullOrderObjectInfo.Contains("Кран") && order.FullOrderObjectInfo.IndexOf("Кран")<3 && user.Name.ToUpper()=="CRAN" && !mailToList.Contains(user.Mail)&&
                             (isNewOrder||order.OrderState == OrderStateEnum.created||order.OrderState==OrderStateEnum.opened||order.OrderState==OrderStateEnum.completed)
                                                 
 						) {
@@ -82,7 +82,7 @@ namespace VotGESOrders.Web.Models {
 					if (
 						( user.SendAllCranTask ) ||
 						( task.SelAuthor.ToLower() == user.Name.ToLower() )||
-						( task.State=="new" && user.SendAllCreateCranTask  )
+						( task.TaskState==CranTaskState.created && user.SendAllCreateCranTask  )
 						){						
 						if (user.Mails.Count > 0) {
 							foreach (string mail in user.Mails) {

@@ -38,7 +38,7 @@ namespace VotGESOrders.Views
 		private void OKButton_Click(object sender, RoutedEventArgs e) {
 			if (GlobalStatus.Current.IsBusy)
 				return;
-      if (!this.CranUsers.Contains(CurrentTask.CranUser)) {
+      if (CurrentTask.Allowed && !this.CranUsers.Contains(CurrentTask.CranUser)) {
         MessageBox.Show("Введите крановщика");
         return;
       }

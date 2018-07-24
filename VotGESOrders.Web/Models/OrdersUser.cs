@@ -70,7 +70,7 @@ namespace VotGESOrders.Web.Models
 
 		public static OrdersUser loadFromCache(string userName) {
 			try {
-        Logger.info(userName,Logger.LoggerSource.client);
+        //Logger.info(userName,Logger.LoggerSource.client);
 				OrdersUser user = allUsers.AsQueryable().First(u => u.Name.ToLower() == userName.ToLower() || (u.AddLogins.ToLower() + ";").Contains(userName.ToLower() + ";"));
 
 				return user;
