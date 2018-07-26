@@ -96,6 +96,8 @@
                 </td>
                 <td><%=rec.Comment%>                    
                     <%=!string.IsNullOrEmpty(rec.crossTasks)?"<p align='right'><b>Конфликт: </b>"+rec.crossTasks+"</p>":"" %>
+                    <%=!string.IsNullOrEmpty(rec.StropUser) ? "<p align='right'><b>Стропальщик </b>" + rec.StropUser + "</p>" : ""%>
+                    <%=!string.IsNullOrEmpty(rec.CranUser) ? "<p align='right'><b>Крановщик </b>" + rec.CranUser + "</p>" : ""%>
                 </td>
                 <td><%=rec.State%>
                     <%=(!rec.Finished &&!string.IsNullOrEmpty(rec.AuthorAllow)) ? "<p align='right'><i>" + rec.AuthorAllow + "</i></p>" : !string.IsNullOrEmpty(rec.AuthorFinish)?"<p align='right'><i>" + rec.AuthorFinish + "</i></p>":""%>
@@ -104,7 +106,11 @@
                 <td><%=rec.NeedStartDate.ToString("dd.MM.yy HH:mm") + "<p align='right'>" + rec.NeedEndDate.ToString("dd.MM.yy HH:mm") + "</p>"%></td>
                 <td><%=rec.Allowed ? "<b>" + rec.AllowDateStart.ToString("dd.MM.yy HH:mm") + "<p align='right'>" + rec.AllowDateEnd.ToString("dd.MM.yy HH:mm") + "</p></b>" : "-"%></td>
                 <td><%=rec.Finished ? "<b>" + rec.RealDateStart.ToString("dd.MM.yy HH:mm") + "<p align='right'>" + rec.RealDateEnd.ToString("dd.MM.yy HH:mm") + "</p></b>" : "-"%></td>
-                <td><%=!string.IsNullOrEmpty(rec.AgreeComments) ? rec.AgreeComments.Replace("\r\n", "<br/>") : ""%></td>
+                <td>
+                    <%=!string.IsNullOrEmpty(rec.ReviewComment) ? rec.ReviewComment+"<hr/>" : ""%>
+                    <%=!string.IsNullOrEmpty(rec.AgreeComments) ? rec.AgreeComments.Replace("\r\n", "<br/>") : ""%>
+
+                </td>
             </tr>
             <%}
                   }

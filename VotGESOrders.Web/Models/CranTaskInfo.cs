@@ -54,7 +54,11 @@ namespace VotGESOrders.Web.Models
     public string Manager { get; set; }
     public string StropUser { get; set; }
     public string CranUser { get; set; }
+    public string ManagerShort { get; set; }
+    public string CranUserShort { get; set; }
+    public string StropUserShort { get; set; }
     public string AgreeComments { get; set; }
+    public string ReviewComment { get; set; }
     public DateTime AllowDateStart { get; set; }
     public DateTime AllowDateEnd { get; set; }
     public DateTime RealDateStart { get; set; }
@@ -70,6 +74,8 @@ namespace VotGESOrders.Web.Models
     public bool Finished { get; set; }
     public bool Opened { get; set; }
     public bool Reviewed { get; set; }
+    public bool HasReviewComment { get; set; }
+    public bool HasAgreeComment { get; set; }
     public string State { get; set; }
     public CranTaskState TaskState { get; set; }
     public bool init { get; set; }
@@ -117,6 +123,9 @@ namespace VotGESOrders.Web.Models
       Opened = tbl.Opened;
       Reviewed = Allowed || Denied;
       AgreeComments = tbl.AgreeComment;
+      ReviewComment = tbl.ReviewComment;
+      HasReviewComment = !String.IsNullOrEmpty(tbl.ReviewComment);
+      HasAgreeComment = !String.IsNullOrEmpty(tbl.AgreeComment);
 
       canChange = (!Cancelled) && (!Allowed) && (!Denied) && (!Finished)&&(!Opened) /*&& (tbl.Author.ToLower() == currentUser.Name.ToLower() || tbl.SelAuthor.ToLower()==currentUser.Name.ToLower())*/;
       canCancel = (!Cancelled) && (!Denied) && (!Finished)&&(!Opened) /*&& (tbl.Author.ToLower() == currentUser.Name.ToLower()|| tbl.SelAuthor.ToLower() == currentUser.Name.ToLower())*/;
@@ -129,6 +138,9 @@ namespace VotGESOrders.Web.Models
       Manager = tbl.Manager;
       StropUser = tbl.StropUser;
       CranUser = tbl.CranUser;
+      ManagerShort = getShortName(Manager);
+      StropUserShort = getShortName(StropUser);
+      CranUserShort = getShortName(CranUser);
       TaskAction = CranTaskAction.none;
       if (Denied) {
         State = "Отклонена";
@@ -200,6 +212,7 @@ namespace VotGESOrders.Web.Models
         OrdersUser currentUser = OrdersUser.loadFromCache(HttpContext.Current.User.Identity.Name);
         VotGESOrdersEntities eni = new VotGESOrdersEntities();
         CranTask tbl = new CranTask();
+
         if (task.TaskAction==CranTaskAction.create) {
           Logger.info("Определение номера заявки на кран", Logger.LoggerSource.server);          
           CranTask tsk = (from t in eni.CranTask orderby t.Number descending select t).FirstOrDefault();
@@ -268,7 +281,8 @@ namespace VotGESOrders.Web.Models
         }
         if (task.TaskAction == CranTaskAction.review) {
           tbl.AuthorAllow = currentUser.Name;
-          if (task.Allowed) {
+          tbl.ReviewComment = task.ReviewComment;
+          if (task.Allowed) {            
             tbl.AllowedDateStart = task.AllowDateStart;
             tbl.AllowedDateEnd = task.AllowDateEnd;
             tbl.RealDateStart = task.AllowDateStart;
@@ -461,11 +475,17 @@ namespace VotGESOrders.Web.Models
       return Filter;
     }
 
-    public static List<string> ReadTextFile(string fileName) {
-      Logger.info("read file" + fileName, Logger.LoggerSource.server);
+    public static List<string> ReadTextFile(string fileName) {      
       string[] lines = System.IO.File.ReadAllLines(PathFiles + fileName);
-      Logger.info(lines.Count().ToString(), Logger.LoggerSource.server);
-      return lines.ToList();
+      List<string> result=new List<string>();
+      foreach (string line in lines) {
+        string fn = getFullName(line);
+        if (fn.Length > 10) {
+          result.Add(getFullName(line));
+        }
+      }
+      result.Sort();
+      return result;
       //return new List<string>();
     }
 
@@ -486,7 +506,7 @@ namespace VotGESOrders.Web.Models
 			}
 		}*/
 
-    public static string getTashHTML(CranTaskInfo order, bool showStyle = true) {
+    public static string getTaskHTML(CranTaskInfo order, bool showStyle = true) {
       try {
         OrdersUser currentUser = OrdersUser.loadFromCache(HttpContext.Current.User.Identity.Name);
         string UserInfo = "";
@@ -509,7 +529,7 @@ namespace VotGESOrders.Web.Models
           order.Allowed ? order.AllowDateStart.ToString("dd.MM.yy HH:mm") : order.Denied ? "Отклонено" : order.Cancelled ? "Снята" : "&nbsp;",
           order.Allowed ? order.AllowDateEnd.ToString("dd.MM.yy HH:mm") : order.Denied ? "Отклонено" : order.Cancelled ? "Снята" : "&nbsp;",
           order.Allowed || order.Denied ? order.AuthorAllow : order.Cancelled ? order.AuthorCancel : "-",
-          order.Allowed ? String.Format("<b>Крановщик:</b><br/>{0}<br/>", order.CranUser) : "&nbsp;",
+          order.Allowed ? String.Format("{0}<br/><b>Крановщик:</b><br/>{1}<br/>", order.ReviewComment, order.CranUser) : order.ReviewComment,
           order.Opened ? order.RealDateStart.ToString("dd.MM.yy HH:mm") : "-", 
           order.Finished ? order.RealDateEnd.ToString("dd.MM.yy HH:mm") : "-", 
           !string.IsNullOrEmpty(order.AuthorOpen) ? order.AuthorOpen : "-",
@@ -667,5 +687,28 @@ namespace VotGESOrders.Web.Models
       }
     }
 
+    public static string getShortName(string manager) {
+      try {
+        string[] parts = manager.Split(new char[] { ':','(' });
+        if (parts.Length >=2)
+          return parts[1];
+        else return manager;
+      }catch (Exception e) {
+        return manager;
+      }
+    }
+
+    public static string getFullName(string manager) {
+      try {
+        string[] parts = manager.Split(new char[] { ';' });
+        string name=String.Format("{0}: {1}",parts[0],parts[1]);
+        name=name.Trim(new char[] { ' ' });
+        return name;
+      } catch (Exception e) {
+        return manager;
+      }
+    }
   }
+
+
 }

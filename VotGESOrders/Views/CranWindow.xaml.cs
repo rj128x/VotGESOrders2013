@@ -67,7 +67,7 @@ namespace VotGESOrders.Views {
 			pnlTask.DataContext = CurrentTask;
 			//lstUsers.ItemsSource = from OrdersUser u in OrdersContext.Current.Context.OrdersUsers where u.CanAgreeCranTask select u;
 			acbManager.ItemsSource = Managers;
-            acbStropUser.ItemsSource = StropUsers;
+            acbStropUser.ItemsSource = StropUsers;      
 			cmbCranName.ItemsSource = Crans;
             cmbAuthorSelName.ItemsSource = SelUsers;
 		}
@@ -83,11 +83,11 @@ namespace VotGESOrders.Views {
 				MessageBox.Show("Выберите кран");
 				return;
 			}
-			if (!this.Managers.Contains(CurrentTask.Manager)) {
+			if (CurrentTask.Manager.Length<5) {
 				MessageBox.Show("Введите ответственного");
 				return;
 			}
-      if (!this.StropUsers.Contains(CurrentTask.StropUser)) {
+      if (CurrentTask.StropUser.Length < 5) {
         MessageBox.Show("Введите стропальщика");
         return;
       }
@@ -116,7 +116,19 @@ namespace VotGESOrders.Views {
 			this.DialogResult = false;
 		}
 
+    private void btnManager_Click(object sender, RoutedEventArgs e) {
+      acbManager.Focus();
+      if (String.IsNullOrEmpty(acbManager.Text))
+        acbManager.Text = " ";
+      acbManager.IsDropDownOpen = true;
+    }
 
-	}
+    private void btnStropUser_Click(object sender, RoutedEventArgs e) {
+      acbStropUser.Focus();
+      if (String.IsNullOrEmpty(acbStropUser.Text))
+        acbStropUser.Text = " ";
+      acbStropUser.IsDropDownOpen = true;
+    }
+  }
 }
 

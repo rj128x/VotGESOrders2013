@@ -157,6 +157,8 @@ namespace VotGESOrders.CranService {
         
         private string CranUserField;
         
+        private string CranUserShortField;
+        
         private System.DateTime DateCreateField;
         
         private bool DeniedField;
@@ -165,7 +167,13 @@ namespace VotGESOrders.CranService {
         
         private bool FinishedField;
         
+        private bool HasAgreeCommentField;
+        
+        private bool HasReviewCommentField;
+        
         private string ManagerField;
+        
+        private string ManagerShortField;
         
         private System.DateTime NeedEndDateField;
         
@@ -181,6 +189,8 @@ namespace VotGESOrders.CranService {
         
         private System.DateTime RealDateStartField;
         
+        private string ReviewCommentField;
+        
         private bool ReviewedField;
         
         private string SelAuthorField;
@@ -190,6 +200,8 @@ namespace VotGESOrders.CranService {
         private string StateDBField;
         
         private string StropUserField;
+        
+        private string StropUserShortField;
         
         private VotGESOrders.CranService.CranTaskAction TaskActionField;
         
@@ -430,6 +442,19 @@ namespace VotGESOrders.CranService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CranUserShort {
+            get {
+                return this.CranUserShortField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CranUserShortField, value) != true)) {
+                    this.CranUserShortField = value;
+                    this.RaisePropertyChanged("CranUserShort");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.DateTime DateCreate {
             get {
                 return this.DateCreateField;
@@ -482,6 +507,32 @@ namespace VotGESOrders.CranService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool HasAgreeComment {
+            get {
+                return this.HasAgreeCommentField;
+            }
+            set {
+                if ((this.HasAgreeCommentField.Equals(value) != true)) {
+                    this.HasAgreeCommentField = value;
+                    this.RaisePropertyChanged("HasAgreeComment");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool HasReviewComment {
+            get {
+                return this.HasReviewCommentField;
+            }
+            set {
+                if ((this.HasReviewCommentField.Equals(value) != true)) {
+                    this.HasReviewCommentField = value;
+                    this.RaisePropertyChanged("HasReviewComment");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Manager {
             get {
                 return this.ManagerField;
@@ -490,6 +541,19 @@ namespace VotGESOrders.CranService {
                 if ((object.ReferenceEquals(this.ManagerField, value) != true)) {
                     this.ManagerField = value;
                     this.RaisePropertyChanged("Manager");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ManagerShort {
+            get {
+                return this.ManagerShortField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ManagerShortField, value) != true)) {
+                    this.ManagerShortField = value;
+                    this.RaisePropertyChanged("ManagerShort");
                 }
             }
         }
@@ -586,6 +650,19 @@ namespace VotGESOrders.CranService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ReviewComment {
+            get {
+                return this.ReviewCommentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ReviewCommentField, value) != true)) {
+                    this.ReviewCommentField = value;
+                    this.RaisePropertyChanged("ReviewComment");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool Reviewed {
             get {
                 return this.ReviewedField;
@@ -646,6 +723,19 @@ namespace VotGESOrders.CranService {
                 if ((object.ReferenceEquals(this.StropUserField, value) != true)) {
                     this.StropUserField = value;
                     this.RaisePropertyChanged("StropUser");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string StropUserShort {
+            get {
+                return this.StropUserShortField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StropUserShortField, value) != true)) {
+                    this.StropUserShortField = value;
+                    this.RaisePropertyChanged("StropUserShort");
                 }
             }
         }

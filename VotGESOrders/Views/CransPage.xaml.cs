@@ -99,8 +99,9 @@ namespace VotGESOrders.Views {
 			initChart(ChartNBVB);
 			initChart(ChartTransVSP);
 			initChart(ChartPromPlosh);
-			//newTask.Visibility = WebContext.Current.User.AllowCreateCranTask ? Visibility.Visible : Visibility.Collapsed;
-		}
+      //ChartCranAll.YAxis.ActualRange.Maximum = 10;
+      //newTask.Visibility = WebContext.Current.User.AllowCreateCranTask ? Visibility.Visible : Visibility.Collapsed;
+    }
 
 		
 
@@ -132,10 +133,12 @@ namespace VotGESOrders.Views {
             CurrentFilter.StropUsers = null;
             CurrentFilter.CranUsers = null;
 			pnlFilter.DataContext = CurrentFilter;
-			//grdTasks.ItemsSource = CurrentFilter.Data;
-			PagedCollectionView pcv = new PagedCollectionView(CurrentFilter.Data);
+      grdTasks.ItemsSource = CurrentFilter.Data;
+
+      /*PagedCollectionView pcv = new PagedCollectionView(CurrentFilter.Data);
 			pcv.GroupDescriptions.Add(new PropertyGroupDescription("CranName"));
-			grdTasks.ItemsSource = pcv;
+			grdTasks.ItemsSource = pcv;*/
+
 			processCransData(ChartMZ,(new int[]{1,2}).ToList());
 			processCransData(ChartSUS, (new int[] { 3, 4 }).ToList());
 			processCransData(ChartNBVB, (new int[] { 5, 6 }).ToList());
@@ -345,7 +348,7 @@ namespace VotGESOrders.Views {
 					prevTaskD = task;
 				}
 
-				else if (task.Finished) {
+				else if (task.Finished||task.Opened) {
 					if (prevTaskA != null && task.AllowDateStart > prevTaskA.AllowDateEnd) {
 						diffA = 0;
 					}
@@ -401,7 +404,15 @@ namespace VotGESOrders.Views {
 					if (task.AllowDateEnd > max)
 						max = task.AllowDateEnd;
 				}
-			}
+        if (task.Opened) {
+          if (task.RealDateStart < min)
+            min = task.RealDateStart;          
+        }
+        if (task.Finished) {
+          if (task.RealDateEnd > max)
+            max = task.RealDateEnd;
+        }
+      }
 
 			LineSeries nulSer = new LineSeries();
 			DataSeries<DateTime, double> nulP = new DataSeries<DateTime, double>();
@@ -432,8 +443,9 @@ namespace VotGESOrders.Views {
 			}
 					
 		}
+   
 
-		private int getTaskNumber(string name) {
+    private int getTaskNumber(string name) {
 			string[] parts = name.Split(new char[] { '_' });
 			string num = parts[1];
 			int number = Int32.Parse(num);

@@ -36,11 +36,15 @@
       <xs:element minOccurs="0" name="CranName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CranNumber" type="xs:int" />
       <xs:element minOccurs="0" name="CranUser" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CranUserShort" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DateCreate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Denied" type="xs:boolean" />
       <xs:element minOccurs="0" name="FinishCurrentTime" type="xs:boolean" />
       <xs:element minOccurs="0" name="Finished" type="xs:boolean" />
+      <xs:element minOccurs="0" name="HasAgreeComment" type="xs:boolean" />
+      <xs:element minOccurs="0" name="HasReviewComment" type="xs:boolean" />
       <xs:element minOccurs="0" name="Manager" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ManagerShort" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="NeedEndDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="NeedStartDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Number" type="xs:int" />
@@ -48,11 +52,13 @@
       <xs:element minOccurs="0" name="Opened" type="xs:boolean" />
       <xs:element minOccurs="0" name="RealDateEnd" type="xs:dateTime" />
       <xs:element minOccurs="0" name="RealDateStart" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ReviewComment" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Reviewed" type="xs:boolean" />
       <xs:element minOccurs="0" name="SelAuthor" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="State" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="StateDB" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="StropUser" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StropUserShort" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="TaskAction" type="tns:CranTaskAction" />
       <xs:element minOccurs="0" name="TaskState" type="tns:CranTaskState" />
       <xs:element minOccurs="0" name="canCancel" type="xs:boolean" />

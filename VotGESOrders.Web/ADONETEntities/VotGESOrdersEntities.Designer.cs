@@ -936,6 +936,30 @@ namespace VotGESOrders.Web.ADONETEntities
         private global::System.String _AuthorOpen;
         partial void OnAuthorOpenChanging(global::System.String value);
         partial void OnAuthorOpenChanged();
+    
+        /// <summary>
+        /// Нет доступной документации по метаданным.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ReviewComment
+        {
+            get
+            {
+                return _ReviewComment;
+            }
+            set
+            {
+                OnReviewCommentChanging(value);
+                ReportPropertyChanging("ReviewComment");
+                _ReviewComment = StructuralObject.SetValidValue(value, true, "ReviewComment");
+                ReportPropertyChanged("ReviewComment");
+                OnReviewCommentChanged();
+            }
+        }
+        private global::System.String _ReviewComment;
+        partial void OnReviewCommentChanging(global::System.String value);
+        partial void OnReviewCommentChanged();
 
         #endregion
 

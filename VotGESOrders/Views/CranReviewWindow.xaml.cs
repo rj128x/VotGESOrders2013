@@ -38,7 +38,12 @@ namespace VotGESOrders.Views
 		private void OKButton_Click(object sender, RoutedEventArgs e) {
 			if (GlobalStatus.Current.IsBusy)
 				return;
-      if (CurrentTask.Allowed && !this.CranUsers.Contains(CurrentTask.CranUser)) {
+      if (!CurrentTask.Allowed && !CurrentTask.Denied) {
+        MessageBox.Show("Выберите действие");
+        return;
+      }
+
+      if (CurrentTask.Allowed && CurrentTask.CranUser.Length<5) {
         MessageBox.Show("Введите крановщика");
         return;
       }
@@ -69,6 +74,13 @@ namespace VotGESOrders.Views
 			CurrentTask.Denied = true;
 			CurrentTask.Allowed = false;
 		}
-	}
+
+    private void btnCranUser_Click(object sender, RoutedEventArgs e) {
+      acbCranUser.Focus();
+      if (String.IsNullOrEmpty(acbCranUser.Text))
+        acbCranUser.Text = " ";
+      acbCranUser.IsDropDownOpen = true;
+    }
+  }
 }
 

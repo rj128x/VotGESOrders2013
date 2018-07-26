@@ -113,7 +113,7 @@ namespace VotGESOrders.Web.Models {
 				}*/
 
 
-				string message = CranTaskInfo.getTashHTML(task);
+				string message = CranTaskInfo.getTaskHTML(task);
 
 				message += String.Format("<h3><a href='{0}'>Перейти к списку заявок</a></h3>", String.Format("http://{0}:{1}/#/CransPage", HttpContext.Current.Request.Url.Host, HttpContext.Current.Request.Url.Port));
 

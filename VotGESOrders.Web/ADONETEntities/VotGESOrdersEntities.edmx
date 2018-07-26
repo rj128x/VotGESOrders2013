@@ -37,6 +37,7 @@
           <Property Name="RealDateStart" Type="datetime" />
           <Property Name="RealDateEnd" Type="datetime" />
           <Property Name="AuthorText" Type="varchar" MaxLength="100" />
+          <Property Name="ReviewComment" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="OrderObjects">
           <Key>
@@ -419,6 +420,7 @@
           <Property Name="AuthorCancel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Opened" Type="Boolean" Nullable="false" />
           <Property Name="AuthorOpen" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ReviewComment" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -606,6 +608,7 @@
           <EntitySetMapping Name="CranTask">
             <EntityTypeMapping TypeName="VotGESOrdersModel.CranTask">
               <MappingFragment StoreEntitySet="CranTask">
+                <ScalarProperty Name="ReviewComment" ColumnName="ReviewComment" />
                 <ScalarProperty Name="AuthorOpen" ColumnName="AuthorOpen" />
                 <ScalarProperty Name="Opened" ColumnName="Opened" />
                 <ScalarProperty Name="AuthorCancel" ColumnName="AuthorCancel" />

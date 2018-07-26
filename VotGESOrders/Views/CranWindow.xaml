@@ -31,14 +31,16 @@
 
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Ответственный " Width="100" Style="{StaticResource Label}"/>
-                <!--<sdk:AutoCompleteBox  Text="{Binding Manager, Mode=TwoWay}" Width="200" Name="acbManager" FilterMode="None"/>-->
-                <ComboBox Name="acbManager"  Width="278"  SelectedValue="{Binding Manager, Mode=TwoWay}"/>
+                <sdk:AutoCompleteBox  Text="{Binding Manager, Mode=TwoWay}" Width="250" Name="acbManager" FilterMode="Contains"/>
+                <Button Width="23" Content="..." Name="btnManager" Click="btnManager_Click"/>
+                <!--<ComboBox Name="acbManager"  Width="278"  SelectedValue="{Binding Manager, Mode=TwoWay}"/>-->
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Стропальщик " Width="100" Style="{StaticResource Label}"/>
-                <!--<sdk:AutoCompleteBox  Text="{Binding StropUser, Mode=TwoWay}" Width="200" Name="acbStropUser" FilterMode="None"/>-->
+                <sdk:AutoCompleteBox  Text="{Binding StropUser, Mode=TwoWay}" Width="250" Name="acbStropUser" FilterMode="Contains"/>
+                <Button Width="23" Content="..." Name="btnStropUser" Click="btnStropUser_Click"/>
                 <!--<TextBox Text="{Binding Manager, Mode=TwoWay}"  Width="200"/>-->
-                <ComboBox Name="acbStropUser"  Width="278"  SelectedValue="{Binding StropUser, Mode=TwoWay}"/>
+                <!--<ComboBox Name="acbStropUser"  Width="278"  SelectedValue="{Binding StropUser, Mode=TwoWay}"/>-->
             </StackPanel>
             <StackPanel Orientation="Horizontal" RenderTransformOrigin="0.5,0.5">
                 <StackPanel.RenderTransform>
