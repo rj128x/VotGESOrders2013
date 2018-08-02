@@ -92,12 +92,12 @@
             <tr>
                 <td><%=rec.Number%></td>
                 <td><%=rec.Author%>
-                    <%=!string.IsNullOrEmpty(rec.Manager) ? "<p align='right'><b>Отв. </b>" + rec.Manager + "</p>" : ""%>
+                    <%=!string.IsNullOrEmpty(rec.Manager) ? "<p align='right'><b>Отв. </b>" + rec.ManagerShort + "</p>" : ""%>
                 </td>
                 <td><%=rec.Comment%>                    
                     <%=!string.IsNullOrEmpty(rec.crossTasks)?"<p align='right'><b>Конфликт: </b>"+rec.crossTasks+"</p>":"" %>
-                    <%=!string.IsNullOrEmpty(rec.StropUser) ? "<p align='right'><b>Стропальщик </b>" + rec.StropUser + "</p>" : ""%>
-                    <%=!string.IsNullOrEmpty(rec.CranUser) ? "<p align='right'><b>Крановщик </b>" + rec.CranUser + "</p>" : ""%>
+                    <%=!string.IsNullOrEmpty(rec.StropUser) ? "<p align='right'><b>Стропальщик </b>" + rec.StropUserShort + "</p>" : ""%>
+                    <%=!string.IsNullOrEmpty(rec.CranUser) ? "<p align='right'><b>Крановщик </b>" + rec.CranUserShort + "</p>" : ""%>
                 </td>
                 <td><%=rec.State%>
                     <%=(!rec.Finished &&!string.IsNullOrEmpty(rec.AuthorAllow)) ? "<p align='right'><i>" + rec.AuthorAllow + "</i></p>" : !string.IsNullOrEmpty(rec.AuthorFinish)?"<p align='right'><i>" + rec.AuthorFinish + "</i></p>":""%>

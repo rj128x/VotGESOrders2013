@@ -78,7 +78,7 @@ namespace VotGESOrders.Web.Models {
 				List<string> mailToList = new List<string>();
 
 
-				/*foreach (OrdersUser user in users) {
+				foreach (OrdersUser user in users) {
 					if (
 						( user.SendAllCranTask ) ||
 						( task.SelAuthor.ToLower() == user.Name.ToLower() )||
@@ -92,7 +92,7 @@ namespace VotGESOrders.Web.Models {
 							}
 						}
 					}
-				}*/
+				}
         try {
           mailToList.Add("chekunovamv@rushydro.ru");
         } catch { }

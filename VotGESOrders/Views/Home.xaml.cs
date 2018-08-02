@@ -38,7 +38,19 @@ namespace VotGESOrders
 		}
 
 
-		public void finish() {
+    protected override void OnNavigatedTo(NavigationEventArgs e) {
+      try {
+        timerExistChanges.Start();
+      } catch { }
+    }
+
+    protected override void OnNavigatedFrom(NavigationEventArgs e) {
+      try {
+        timerExistChanges.Stop();
+      } catch { }
+    }
+
+    public void finish() {
 			Logger.info("Начало загрузки главной страницы");
 			pnlButtons.DataContext = WebContext.Current.User;
 
@@ -51,9 +63,9 @@ namespace VotGESOrders
 			timerExistChanges = new DispatcherTimer();
 			timerExistChanges.Tick += new EventHandler(timerExistChanges_Tick);
 			timerExistChanges.Interval = new TimeSpan(0, 0, 30);
-			timerExistChanges.Start();
+      timerExistChanges.Start();
 
-			cntrlOrder.Visibility = System.Windows.Visibility.Collapsed;
+      cntrlOrder.Visibility = System.Windows.Visibility.Collapsed;
 			cntrlFilter.DataContext = OrdersContext.Current.Filter;
 			cmbFilterType.ItemsSource = OrderFilter.FilterTypes;
 			cmbFilterType.DataContext = OrdersContext.Current.Filter;

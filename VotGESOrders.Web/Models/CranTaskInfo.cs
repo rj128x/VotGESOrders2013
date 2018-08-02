@@ -38,6 +38,7 @@ namespace VotGESOrders.Web.Models
   public class CranTaskInfo
   {
     public static string PathFiles;
+    public static DateTime LastUpdate;
     public int CranNumber { get; set; }
     public string CranName { get; set; }
     public int Number { get; set; }
@@ -102,6 +103,10 @@ namespace VotGESOrders.Web.Models
 
     }
 
+    static CranTaskInfo() {
+      LastUpdate = DateTime.Now;
+    }
+
     public CranTaskInfo(CranTask tbl) {
       OrdersUser currentUser = OrdersUser.loadFromCache(HttpContext.Current.User.Identity.Name);
       CranNumber = tbl.CranNumber;
@@ -126,6 +131,7 @@ namespace VotGESOrders.Web.Models
       ReviewComment = tbl.ReviewComment;
       HasReviewComment = !String.IsNullOrEmpty(tbl.ReviewComment);
       HasAgreeComment = !String.IsNullOrEmpty(tbl.AgreeComment);
+           
 
       canChange = (!Cancelled) && (!Allowed) && (!Denied) && (!Finished)&&(!Opened) /*&& (tbl.Author.ToLower() == currentUser.Name.ToLower() || tbl.SelAuthor.ToLower()==currentUser.Name.ToLower())*/;
       canCancel = (!Cancelled) && (!Denied) && (!Finished)&&(!Opened) /*&& (tbl.Author.ToLower() == currentUser.Name.ToLower()|| tbl.SelAuthor.ToLower() == currentUser.Name.ToLower())*/;
@@ -213,8 +219,8 @@ namespace VotGESOrders.Web.Models
         VotGESOrdersEntities eni = new VotGESOrdersEntities();
         CranTask tbl = new CranTask();
 
-        if (task.TaskAction==CranTaskAction.create) {
-          Logger.info("Определение номера заявки на кран", Logger.LoggerSource.server);          
+        if (task.TaskAction == CranTaskAction.create) {
+          Logger.info("Определение номера заявки на кран", Logger.LoggerSource.server);
           CranTask tsk = (from t in eni.CranTask orderby t.Number descending select t).FirstOrDefault();
           task.DateCreate = DateTime.Now;
           if (tsk != null) {
@@ -282,7 +288,7 @@ namespace VotGESOrders.Web.Models
         if (task.TaskAction == CranTaskAction.review) {
           tbl.AuthorAllow = currentUser.Name;
           tbl.ReviewComment = task.ReviewComment;
-          if (task.Allowed) {            
+          if (task.Allowed) {
             tbl.AllowedDateStart = task.AllowDateStart;
             tbl.AllowedDateEnd = task.AllowDateEnd;
             tbl.RealDateStart = task.AllowDateStart;
@@ -333,7 +339,7 @@ namespace VotGESOrders.Web.Models
             tbl.Denied = false;
             tbl.Allowed = false;
             tbl.Cancelled = false;
-            tbl.AuthorCancel= null;
+            tbl.AuthorCancel = null;
             tbl.AllowedDateStart = null;
             tbl.AllowedDateEnd = null;
             tbl.RealDateEnd = null;
@@ -344,16 +350,18 @@ namespace VotGESOrders.Web.Models
             message += " Возврат заявки";
           }
         }
-        if (task.TaskAction==CranTaskAction.change) {
+        if (task.TaskAction == CranTaskAction.change) {
           message += " Заявка изменена";
         }
 
         eni.SaveChanges();
-        if (task.TaskState!=CranTaskState.opened)
+        if (task.TaskState != CranTaskState.opened)
           MailContext.sendCranTask(message, new CranTaskInfo(tbl));
+        LastUpdate = DateTime.Now;
         return new ReturnMessage(true, result);
       } catch (Exception e) {
         Logger.info("Ошибка при создании/изменении заявки на работу крана " + e.ToString(), Logger.LoggerSource.server);
+        LastUpdate = DateTime.Now;
         return new ReturnMessage(false, "Ошибка при создании/изменении заявки на работу крана");
       }
     }

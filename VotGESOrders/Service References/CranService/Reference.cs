@@ -1072,6 +1072,11 @@ namespace VotGESOrders.CranService {
         System.IAsyncResult BeginFinishCranTask(VotGESOrders.CranService.CranTaskInfo task, System.AsyncCallback callback, object asyncState);
         
         VotGESOrders.CranService.ReturnMessage EndFinishCranTask(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:CranService/getLastUpdate", ReplyAction="urn:CranService/getLastUpdateResponse")]
+        System.IAsyncResult BegingetLastUpdate(System.AsyncCallback callback, object asyncState);
+        
+        System.DateTime EndgetLastUpdate(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1175,6 +1180,25 @@ namespace VotGESOrders.CranService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class getLastUpdateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public getLastUpdateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.DateTime Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.DateTime)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class CranServiceClient : System.ServiceModel.ClientBase<VotGESOrders.CranService.CranService>, VotGESOrders.CranService.CranService {
         
         private BeginOperationDelegate onBeginDoWorkDelegate;
@@ -1212,6 +1236,12 @@ namespace VotGESOrders.CranService {
         private EndOperationDelegate onEndFinishCranTaskDelegate;
         
         private System.Threading.SendOrPostCallback onFinishCranTaskCompletedDelegate;
+        
+        private BeginOperationDelegate onBegingetLastUpdateDelegate;
+        
+        private EndOperationDelegate onEndgetLastUpdateDelegate;
+        
+        private System.Threading.SendOrPostCallback ongetLastUpdateCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -1277,6 +1307,8 @@ namespace VotGESOrders.CranService {
         public event System.EventHandler<CancelCranTaskCompletedEventArgs> CancelCranTaskCompleted;
         
         public event System.EventHandler<FinishCranTaskCompletedEventArgs> FinishCranTaskCompleted;
+        
+        public event System.EventHandler<getLastUpdateCompletedEventArgs> getLastUpdateCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -1557,6 +1589,50 @@ namespace VotGESOrders.CranService {
                         task}, this.onEndFinishCranTaskDelegate, this.onFinishCranTaskCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult VotGESOrders.CranService.CranService.BegingetLastUpdate(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BegingetLastUpdate(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.DateTime VotGESOrders.CranService.CranService.EndgetLastUpdate(System.IAsyncResult result) {
+            return base.Channel.EndgetLastUpdate(result);
+        }
+        
+        private System.IAsyncResult OnBegingetLastUpdate(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((VotGESOrders.CranService.CranService)(this)).BegingetLastUpdate(callback, asyncState);
+        }
+        
+        private object[] OnEndgetLastUpdate(System.IAsyncResult result) {
+            System.DateTime retVal = ((VotGESOrders.CranService.CranService)(this)).EndgetLastUpdate(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OngetLastUpdateCompleted(object state) {
+            if ((this.getLastUpdateCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.getLastUpdateCompleted(this, new getLastUpdateCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void getLastUpdateAsync() {
+            this.getLastUpdateAsync(null);
+        }
+        
+        public void getLastUpdateAsync(object userState) {
+            if ((this.onBegingetLastUpdateDelegate == null)) {
+                this.onBegingetLastUpdateDelegate = new BeginOperationDelegate(this.OnBegingetLastUpdate);
+            }
+            if ((this.onEndgetLastUpdateDelegate == null)) {
+                this.onEndgetLastUpdateDelegate = new EndOperationDelegate(this.OnEndgetLastUpdate);
+            }
+            if ((this.ongetLastUpdateCompletedDelegate == null)) {
+                this.ongetLastUpdateCompletedDelegate = new System.Threading.SendOrPostCallback(this.OngetLastUpdateCompleted);
+            }
+            base.InvokeAsync(this.onBegingetLastUpdateDelegate, null, this.onEndgetLastUpdateDelegate, this.ongetLastUpdateCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -1707,6 +1783,18 @@ namespace VotGESOrders.CranService {
             public VotGESOrders.CranService.ReturnMessage EndFinishCranTask(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 VotGESOrders.CranService.ReturnMessage _result = ((VotGESOrders.CranService.ReturnMessage)(base.EndInvoke("FinishCranTask", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BegingetLastUpdate(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("getLastUpdate", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.DateTime EndgetLastUpdate(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.DateTime _result = ((System.DateTime)(base.EndInvoke("getLastUpdate", _args, result)));
                 return _result;
             }
         }

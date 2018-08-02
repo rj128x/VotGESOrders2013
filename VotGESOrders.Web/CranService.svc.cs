@@ -41,7 +41,12 @@ namespace VotGESOrders.Web {
 			return CranTaskInfo.CreateCranTask(task);
 		}
 
+    [OperationContract]
+    public DateTime getLastUpdate() {
+      return CranTaskInfo.LastUpdate;
+    }
 
-		// Добавьте здесь дополнительные операции и отметьте их атрибутом [OperationContract]
-	}
+
+    // Добавьте здесь дополнительные операции и отметьте их атрибутом [OperationContract]
+  }
 }
