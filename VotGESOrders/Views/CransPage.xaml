@@ -46,7 +46,7 @@
                                 <DataTemplate>
                                     <Grid>
                                         <StackPanel>
-                                            <TextBlock Text="{Binding Number}"  FontSize="11"/>
+                                            <TextBlock Text="{Binding YearNumber}"  FontSize="11"/>
                                         </StackPanel>
                                     </Grid>
 
@@ -283,7 +283,7 @@
                                             <StackPanel Orientation="Horizontal">
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock Text="Номер: " Width="50" Style="{StaticResource Label}"/>
-                                                    <TextBlock Text="{Binding Number}" Style="{StaticResource Value}" Width="50"/>
+                                                    <TextBlock Text="{Binding YearNumber}" Style="{StaticResource Value}" Width="50"/>
                                                 </StackPanel>
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock Text="Автор:" Width="50" Style="{StaticResource Label}"/>

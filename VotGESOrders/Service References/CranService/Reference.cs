@@ -207,6 +207,8 @@ namespace VotGESOrders.CranService {
         
         private VotGESOrders.CranService.CranTaskState TaskStateField;
         
+        private int YearNumberField;
+        
         private bool canCancelField;
         
         private bool canChangeField;
@@ -762,6 +764,19 @@ namespace VotGESOrders.CranService {
                 if ((this.TaskStateField.Equals(value) != true)) {
                     this.TaskStateField = value;
                     this.RaisePropertyChanged("TaskState");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int YearNumber {
+            get {
+                return this.YearNumberField;
+            }
+            set {
+                if ((this.YearNumberField.Equals(value) != true)) {
+                    this.YearNumberField = value;
+                    this.RaisePropertyChanged("YearNumber");
                 }
             }
         }

@@ -37,11 +37,13 @@ namespace VotGESOrders.Web.Models
 
   public class CranTaskInfo
   {
+    public static Dictionary<int, int> MaxYearPrevNumbers;
     public static string PathFiles;
     public static DateTime LastUpdate;
     public int CranNumber { get; set; }
     public string CranName { get; set; }
     public int Number { get; set; }
+    public int YearNumber { get; set; }
     public DateTime NeedStartDate { get; set; }
     public DateTime NeedEndDate { get; set; }
     public string Comment { get; set; }
@@ -111,6 +113,7 @@ namespace VotGESOrders.Web.Models
       OrdersUser currentUser = OrdersUser.loadFromCache(HttpContext.Current.User.Identity.Name);
       CranNumber = tbl.CranNumber;
       Number = tbl.Number;
+      YearNumber = tbl.Number - MaxYearPrevNumbers[tbl.DateCreate.Year];
       NeedStartDate = tbl.NeedDateStart;
       NeedEndDate = tbl.NeedDateEnd;
       Comment = tbl.Comment;
@@ -139,7 +142,7 @@ namespace VotGESOrders.Web.Models
       canOpen = Allowed && currentUser.CanFinishCranTask;
       canReturn = Cancelled;
 
-      canCheck = (currentUser.CanReviewCranTask) && (!Finished) && (!Cancelled);
+      canCheck = (currentUser.CanReviewCranTask) && (!Finished) && (!Cancelled)&&(!Opened);
       canComment = true;
       Manager = tbl.Manager;
       StropUser = tbl.StropUser;
@@ -246,7 +249,8 @@ namespace VotGESOrders.Web.Models
           tbl = tsk;
           result = "Заявка на кран успешно изменена";
         }
-        message += task.Number + ". ";
+        task.YearNumber = task.Number - MaxYearPrevNumbers[task.DateCreate.Year];
+        message += task.YearNumber + ". ";
 
         if ((task.NeedEndDate <= task.NeedStartDate) || (task.Allowed && (task.AllowDateEnd <= task.AllowDateStart))) {
           return new ReturnMessage(false, "Дата окончания заявки больше чем дата начала");
@@ -266,6 +270,9 @@ namespace VotGESOrders.Web.Models
         tbl.AuthorText = OrdersUser.loadFromCache(tbl.SelAuthor).FullName;
 
         if (task.TaskAction == CranTaskAction.finish) {
+          if (tbl.Denied || tbl.Cancelled || (!tbl.Opened) || (!tbl.Allowed)) {
+            return new ReturnMessage(false, "Невозможно завершить заявку. Заявка не открыта");            
+          }
           if (task.Finished) {
             result = "Заявка на кран завершена";
             tbl.RealDateStart = task.RealDateStart;
@@ -276,6 +283,9 @@ namespace VotGESOrders.Web.Models
           }
         }
         if (task.TaskAction == CranTaskAction.open) {
+          if (tbl.Denied || tbl.Cancelled || (!tbl.Allowed)) {
+            return new ReturnMessage(false, "Невозможно открыть заявку. Заявка не разрешена");
+          }
           if (task.Opened) {
             result = "Заявка на кран открыта";
             tbl.RealDateStart = task.RealDateStart;
@@ -286,6 +296,9 @@ namespace VotGESOrders.Web.Models
           }
         }
         if (task.TaskAction == CranTaskAction.review) {
+          if (tbl.Cancelled || tbl.Finished ||tbl.Opened) {
+            return new ReturnMessage(false, "Невозможно рассмотреть заявку. Заявка снята или закрыта");
+          }
           tbl.AuthorAllow = currentUser.Name;
           tbl.ReviewComment = task.ReviewComment;
           if (task.Allowed) {
@@ -319,6 +332,9 @@ namespace VotGESOrders.Web.Models
           }
         }
         if (task.TaskAction == CranTaskAction.cancel) {
+          if (tbl.Opened || tbl.Finished ||tbl.Cancelled) {
+            return new ReturnMessage(false, "Невозможно снять заявку. Заявка открыта");
+          }
           if (task.Cancelled) {
             tbl.Denied = false;
             tbl.Allowed = false;
@@ -335,6 +351,9 @@ namespace VotGESOrders.Web.Models
           }
         }
         if (task.TaskAction == CranTaskAction.returnCancel) {
+          if (!tbl.Cancelled) {
+            return new ReturnMessage(false, "Невозможно вернуть заявку");
+          }
           if (!task.Cancelled) {
             tbl.Denied = false;
             tbl.Allowed = false;
@@ -387,7 +406,7 @@ namespace VotGESOrders.Web.Models
 
 
         eni.SaveChanges();
-        string message = String.Format("Заявка на работу крана \"{0}\" №{1}. Комментарий", task.CranName, task.CranNumber);
+        string message = String.Format("Заявка на работу крана \"{0}\" №{1}. Комментарий", task.CranName, task.YearNumber);
         MailContext.sendCranTask(message, new CranTaskInfo(tbl));
         return new ReturnMessage(true, "Комментарий добавлен");
       } catch (Exception e) {
@@ -412,13 +431,14 @@ namespace VotGESOrders.Web.Models
 
     public static CranFilter LoadCranTasks(CranFilter Filter = null) {
       Logger.info("Получение списка заявок на кран", Logger.LoggerSource.server);
-
+      Logger.info(String.Format("Filter: {0}", Filter), Logger.LoggerSource.server);
       if (Filter == null) {
         Filter = new CranFilter();
         Filter.DateStart = DateTime.Now.Date;
         Filter.DateEnd = DateTime.Now.Date.AddDays(10);
 
       }
+      
       Filter.Managers = ReadTextFile("Managers.txt");
       Filter.CranUsers = ReadTextFile("CranUsers.txt");
       Filter.StropUsers = ReadTextFile("StropUsers.txt");
@@ -475,11 +495,12 @@ namespace VotGESOrders.Web.Models
           }
           if (crossed) {
             task.hasCrossTasks = true;
-            task.crossTasks += string.IsNullOrEmpty(task.crossTasks) ? crossTask.Number.ToString() : "," + crossTask.Number.ToString();
+            task.crossTasks += string.IsNullOrEmpty(task.crossTasks) ? crossTask.YearNumber.ToString() : "," + crossTask.YearNumber.ToString();
           }
         }
       }
       Filter.Data = result;
+      Logger.info(String.Format("cnt: {0}", Filter.Data.Count), Logger.LoggerSource.server);
       return Filter;
     }
 
@@ -524,7 +545,7 @@ namespace VotGESOrders.Web.Models
           }
         }
         string style = showStyle ? "<Style>table {border-collapse: collapse;} td{text-align:center;} td.comments{text-align:left;} td, th {border-width: 1px;	border-style: solid;	border-color: #BBBBFF;	padding-left: 3px;	padding-right: 3px;}</Style>" : "";
-        string htmlNumber = String.Format("Заявка на работу крана №{0} ", order.Number);
+        string htmlNumber = String.Format("Заявка на работу крана №{0} ", order.YearNumber);
         string htmlState = String.Format("Состояние: {0}", order.State);
         string htmlFirstTRTable = String.Format("<table width='100%'><tr><th>{0}</th><th>{1}</th></tr></table>", htmlNumber, htmlState);
         string htmlInfoTable = String.Format("<table width='100%'><tr><th colspan='2'>Информация о заявке</th></tr><tr><th width='40%'>Кран</th><th  width='60%'>Текст заявки</th></tr><tr><td width='40%'>{0}</td><td width='60%'>{1}</td></tr></table>",
@@ -682,7 +703,7 @@ namespace VotGESOrders.Web.Models
 
 
 </table>
-", order.Number, order.DateCreate.ToString("dd.MM.yyyy"), 1, order.CranName, order.Comment,
+", order.YearNumber, order.DateCreate.ToString("dd.MM.yyyy"), 1, order.CranName, order.Comment,
   order.StropUser,
   order.Allowed ? order.AllowDateStart.ToString("dd.MM.yy HH:mm") : order.NeedStartDate.ToString("dd.MM.yy HH:mm"),
   order.Allowed ? order.AllowDateEnd.ToString("dd.MM.yy HH:mm") : order.NeedEndDate.ToString("dd.MM.yy HH:mm"),
@@ -714,6 +735,23 @@ namespace VotGESOrders.Web.Models
         return name;
       } catch (Exception e) {
         return manager;
+      }
+    }
+
+    public static void initTaskNumbers() {
+      Logger.info("Чтение номера последней заявки  на кран в прошлом году", Logger.LoggerSource.server);
+      MaxYearPrevNumbers = new Dictionary<int, int>();
+      for (int year = 2010; year <= DateTime.Now.Year; year++) {
+        try {
+          VotGESOrdersEntities ctx = new VotGESOrdersEntities();
+          int max = (from o in ctx.CranTask where o.DateCreate.Year == year - 1 select o.Number).Max();
+          MaxYearPrevNumbers.Add(year, max);
+          Logger.info("Присвоен номер " + max, Logger.LoggerSource.server);
+        } catch (Exception e) {
+          //Logger.info("Ошибка при получении номера " + e.ToString(), Logger.LoggerSource.server);
+          MaxYearPrevNumbers.Add(year, 0);
+          //MaxYearPrevNumber = 0;
+        }
       }
     }
   }

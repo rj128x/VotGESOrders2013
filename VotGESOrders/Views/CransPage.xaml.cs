@@ -22,7 +22,7 @@ namespace VotGESOrders.Views
   public partial class CransPage : Page, INotifyPropertyChanged
   {
     DispatcherTimer timerExistChanges;
-    DateTime LastUpdate=DateTime.Now;
+    DateTime LastUpdate = DateTime.Now;
     bool NeedRefresh = false;
     bool IsOperating = false;
     public event PropertyChangedEventHandler PropertyChanged;
@@ -119,7 +119,7 @@ namespace VotGESOrders.Views
       timerExistChanges.Start();
     }
 
-    
+
 
     public void deinit() {
       CransContext.Single.Client.getCranTasksCompleted -= Client_getCranTasksCompleted;
@@ -171,9 +171,9 @@ namespace VotGESOrders.Views
             }
           }
         }
-      }catch {  }
+      } catch { }
 
-     
+
     }
 
     private void TimerExistChanges_Tick(object sender, EventArgs e) {
@@ -182,8 +182,8 @@ namespace VotGESOrders.Views
 
     private void Client_getLastUpdateCompleted(object sender, getLastUpdateCompletedEventArgs e) {
       try {
-        DateTime date = e.Result;        
-        if (LastUpdate < date || LastUpdate.AddMinutes(10)<DateTime.Now) {
+        DateTime date = e.Result;
+        if (LastUpdate < date || LastUpdate.AddMinutes(10) < DateTime.Now) {
           NeedRefresh = true;
         } else {
           NeedRefresh = false;
@@ -232,7 +232,7 @@ namespace VotGESOrders.Views
       GlobalStatus.Current.IsBusy = true;
       IsOperating = false;
       CurrentTask = null;
-      CransContext.Single.Client.getCranTasksAsync(CurrentFilter);      
+      CransContext.Single.Client.getCranTasksAsync(CurrentFilter);
     }
 
     private void btnCheck_Click(object sender, RoutedEventArgs e) {
@@ -280,7 +280,7 @@ namespace VotGESOrders.Views
         case 1:
         case 2:
           CurrentChart = ChartMZ;
-          tCntrl.SelectedIndex = 0;
+          tCntrl.SelectedIndex = 0;          
           break;
         case 3:
         case 4:
@@ -307,16 +307,17 @@ namespace VotGESOrders.Views
 
       try {
         if (grdTasks.SelectedItem != task)
-          grdTasks.SelectedItem = task;
+          grdTasks.SelectedItem = task;        
         foreach (LineSeries serie in CurrentChart.Series) {
-          try {
-            if (serie.Name == String.Format("order_{0}", task.Number)) {
-              serie.LineStrokeThickness = 10;
-            } else {
+          if (serie.Name == String.Format("order_{0}", task.Number)) {
+            serie.LineStrokeThickness = 5;
+          } else {
+            if (serie.Name.Contains("order_")) {
               int num = getTaskNumber(serie.Name);
-              serie.LineStrokeThickness = 5;
+              if (serie.LineStrokeThickness != 3)
+                serie.LineStrokeThickness = 3;
             }
-          } catch { }
+          }
         }
       } catch { }
     }
@@ -418,12 +419,12 @@ namespace VotGESOrders.Views
         DataSeries<DateTime, double> Points = new DataSeries<DateTime, double>();
         serie.Name = String.Format("order_{0}", task.Number);
         serie.MouseLeftButtonUp += serie_MouseLeftButtonUp;
-        serie.LineStrokeThickness = 5;
+        serie.LineStrokeThickness = 3;
         serie.PointShape = Visiblox.Charts.Primitives.ShapeType.Rectangle;
-        serie.PointSize = 15;
+        serie.PointSize = 8;
         serie.ShowPoints = true;
 
-        if (task.TaskState==CranTaskState.reviewed&&task.Allowed) {
+        if (task.TaskState == CranTaskState.reviewed && task.Allowed) {
           if (prevTaskA != null && task.AllowDateStart.AddMinutes(1) >= prevTaskA.AllowDateEnd) {
             diffA = 0;
           }
@@ -460,17 +461,17 @@ namespace VotGESOrders.Views
           serie.PointFill = new SolidColorBrush(Colors.LightGray);
           diffD += stepD;
           prevTaskD = task;
-        } else if (task.TaskState==CranTaskState.opened) {
+        } else if (task.TaskState == CranTaskState.opened) {
           if (prevTaskA != null && task.RealDateStart.AddMinutes(1) >= prevTaskA.AllowDateEnd) {
             diffA = 0;
           }
-          Points.Add(new DataPoint<DateTime, double>(task.RealDateStart , cranVal + diffA));
+          Points.Add(new DataPoint<DateTime, double>(task.RealDateStart, cranVal + diffA));
           Points.Add(new DataPoint<DateTime, double>(task.AllowDateEnd, cranVal + diffA));
           serie.LineStroke = new SolidColorBrush(Colors.Orange);
           serie.PointFill = new SolidColorBrush(Colors.Orange);
           diffA += stepA;
           prevTaskA = task;
-        } else if (task.TaskState==CranTaskState.finished) {
+        } else if (task.TaskState == CranTaskState.finished) {
           if (prevTaskA != null && task.RealDateStart.AddMinutes(1) >= prevTaskA.AllowDateEnd) {
             diffA = 0;
           }

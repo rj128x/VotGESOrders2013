@@ -61,6 +61,7 @@
       <xs:element minOccurs="0" name="StropUserShort" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="TaskAction" type="tns:CranTaskAction" />
       <xs:element minOccurs="0" name="TaskState" type="tns:CranTaskState" />
+      <xs:element minOccurs="0" name="YearNumber" type="xs:int" />
       <xs:element minOccurs="0" name="canCancel" type="xs:boolean" />
       <xs:element minOccurs="0" name="canChange" type="xs:boolean" />
       <xs:element minOccurs="0" name="canCheck" type="xs:boolean" />
