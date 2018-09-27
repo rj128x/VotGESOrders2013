@@ -206,9 +206,32 @@ namespace VotGESOrders.Views
       newTask.CranNumber = 0;
       newTask.Comment = "";
       newTask.TaskState = CranTaskState.created;
-      newTask.NeedStartDate = DateTime.Now.Date.AddDays(1);
-      newTask.NeedEndDate = DateTime.Now.Date.AddDays(2);
+      newTask.NeedStartDate = DateTime.Now.Date.AddDays(1).AddHours(8);
+      newTask.NeedEndDate = DateTime.Now.Date.AddDays(1).AddHours(12);
       newTask.SelAuthor = WebContext.Current.User.Name;
+      CranWindow taskWindow = new CranWindow();
+      taskWindow.init(newTask, Managers, StropUsers);
+      taskWindow.Closed += taskWindow_Closed;
+      IsOperating = true;
+      taskWindow.Show();
+    }
+
+    private void newTaskOn_Click(object sender, RoutedEventArgs e) {
+      if (CurrentTask == null)
+        return;
+      CranTaskInfo newTask = new CranTaskInfo();
+      newTask.init = true;
+      newTask.TaskAction = CranTaskAction.create;
+      newTask.canChange = true;
+      newTask.canCheck = false;
+      newTask.CranNumber = CurrentTask.CranNumber;
+      newTask.Comment = CurrentTask.Comment;
+      newTask.TaskState = CranTaskState.created;
+      newTask.NeedStartDate = CurrentTask.NeedEndDate;
+      newTask.NeedEndDate = CurrentTask.NeedEndDate.AddHours(12);
+      newTask.SelAuthor = CurrentTask.SelAuthor;
+      newTask.Manager = CurrentTask.Manager;
+      newTask.StropUser = CurrentTask.StropUser;
       CranWindow taskWindow = new CranWindow();
       taskWindow.init(newTask, Managers, StropUsers);
       taskWindow.Closed += taskWindow_Closed;
@@ -339,6 +362,7 @@ namespace VotGESOrders.Views
           crans.Add(date, task);
         }
       }
+
       IEnumerable<KeyValuePair<DateTime, CranTaskInfo>> sorted = crans.OrderBy(task => task.Value.NeedStartDate);
 
       double maxCntA = 0;
@@ -350,10 +374,11 @@ namespace VotGESOrders.Views
       CranTaskInfo prevTaskD = null;
 
       foreach (KeyValuePair<DateTime, CranTaskInfo> de in sorted) {
+
         CranTaskInfo task = de.Value;
 
         if (task.TaskState == CranTaskState.reviewed && task.Allowed) {
-          if (prevTaskA != null && task.AllowDateStart.AddMinutes(1) >= prevTaskA.AllowDateEnd) {
+          if (prevTaskA != null && task.AllowDateStart.AddMinutes(1) > prevTaskA.AllowDateEnd) {
             if (maxCntA < cntA)
               maxCntA = cntA;
             cntA = 0;
@@ -361,7 +386,7 @@ namespace VotGESOrders.Views
           cntA++;
           prevTaskA = task;
         } else if (task.Denied) {
-          if (prevTaskD != null && task.NeedStartDate.AddMinutes(1) >= prevTaskD.NeedEndDate) {
+          if (prevTaskD != null && task.NeedStartDate.AddMinutes(1) > prevTaskD.NeedEndDate) {
             if (maxCntD < cntD)
               maxCntD = cntD;
             cntD = 0;
@@ -369,7 +394,7 @@ namespace VotGESOrders.Views
           cntD++;
           prevTaskD = task;
         } else if (task.Cancelled) {
-          if (prevTaskD != null && task.NeedStartDate.AddMinutes(1) >= prevTaskD.NeedEndDate) {
+          if (prevTaskD != null && task.NeedStartDate.AddMinutes(1) > prevTaskD.NeedEndDate) {
             if (maxCntD < cntD)
               maxCntD = cntD;
             cntD = 0;
@@ -377,7 +402,7 @@ namespace VotGESOrders.Views
           cntD++;
           prevTaskD = task;
         } else if (task.Finished || task.Opened) {
-          if (prevTaskA != null && task.RealDateStart.AddMinutes(1) >= prevTaskA.AllowDateEnd) {
+          if (prevTaskA != null && task.RealDateStart.AddMinutes(1) > prevTaskA.AllowDateEnd) {
             if (maxCntA < cntA)
               maxCntA = cntA;
             cntA = 0;
@@ -385,7 +410,7 @@ namespace VotGESOrders.Views
           cntA++;
           prevTaskA = task;
         } else {
-          if (prevTaskD != null && task.NeedStartDate.AddMinutes(1) >= prevTaskD.NeedEndDate) {
+          if (prevTaskD != null && task.NeedStartDate.AddMinutes(1) > prevTaskD.NeedEndDate) {
             if (maxCntD < cntD)
               maxCntD = cntD;
             cntD = 0;
@@ -420,6 +445,7 @@ namespace VotGESOrders.Views
         serie.Name = String.Format("order_{0}", task.Number);
         serie.MouseLeftButtonUp += serie_MouseLeftButtonUp;
         serie.LineStrokeThickness = 3;
+        serie.SelectionMode = Visiblox.Charts.SelectionMode.None;
         serie.PointShape = Visiblox.Charts.Primitives.ShapeType.Rectangle;
         serie.PointSize = 8;
         serie.ShowPoints = true;
@@ -725,9 +751,7 @@ namespace VotGESOrders.Views
       }
     }
 
-
-
-
+    
   }
 
 }

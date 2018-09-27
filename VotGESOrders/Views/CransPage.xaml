@@ -23,7 +23,7 @@
                 <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="210"/>
                     </Grid.ColumnDefinitions>
                     <StackPanel Name="pnlFilter" Orientation="Horizontal" Grid.Column="0">
                         <StackPanel Orientation="Horizontal">
@@ -36,8 +36,13 @@
                         <Button Content="Печать" Name="btnPrint" Click="btnPrint_Click" Width="100" HorizontalAlignment="Center"
                                 IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"/>
                     </StackPanel>
-                    <Button Content="Создать заявку" Name="newTask" Click="newTask_Click" Grid.Column="1"
+                    <StackPanel Orientation="Horizontal" Grid.Column="1">
+                        <Button Content="Создать заявку" Name="newTask" Click="newTask_Click" 
                         IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"/>
+                        <Button Content="Создать на основе" Name="newTaskOn" Click="newTaskOn_Click" 
+                        IsEnabled="{Binding IsBusy, Source={StaticResource globalStatus}, Converter={StaticResource logicNotConverter}}"/>
+                    </StackPanel>
+                    
                 </Grid>
                 <sdk:DataGrid Name="grdTasks" AutoGenerateColumns="False" SelectionChanged="grdTasks_SelectionChanged" Grid.Row="1" ColumnHeaderStyle="{StaticResource CenterHeaderText}">
                     <sdk:DataGrid.Columns>
@@ -110,7 +115,7 @@
                                 <DataTemplate>
                                     <Grid>
                                         <StackPanel>
-                                            <TextBlock Text="{Binding StropUserShort}" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="{Binding StropUserShort}" HorizontalAlignment="Center" TextWrapping="Wrap"/>
                                         </StackPanel>
                                     </Grid>
                                 </DataTemplate>
@@ -319,7 +324,7 @@
                                             <StackPanel Orientation="Vertical">
                                                 <TextBlock Text="Стропальщик:" Style="{StaticResource Label}" TextWrapping="Wrap" HorizontalAlignment="Left"/>
                                                 <TextBlock Text="{Binding StropUser}" Style="{StaticResource Value}"  FontSize="11"
-                                                           HorizontalAlignment="Center" TextAlignment="Center"/>
+                                                           HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"/>
                                             </StackPanel>
                                             <StackPanel Orientation="Vertical">
                                                 <TextBlock Text="Крановщик:" Style="{StaticResource Label}" TextWrapping="Wrap" HorizontalAlignment="Left"/>

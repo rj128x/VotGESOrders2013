@@ -56,7 +56,7 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Начало" Width="100" Style="{StaticResource Label}"/>
                     <sdk:DatePicker SelectedDate="{Binding NeedStartDate, Mode=TwoWay}" Width="120" HorizontalAlignment="Left"
-                                                    IsEnabled="{Binding canChange}"/>
+                                                    IsEnabled="{Binding canChange}" />
                     <toolkit:TimeUpDown Value="{Binding NeedStartDate, Mode=TwoWay}" HorizontalAlignment="Right"
                                                         IsEnabled="{Binding canChange}"/>
                 </StackPanel>
