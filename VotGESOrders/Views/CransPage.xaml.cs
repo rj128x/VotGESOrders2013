@@ -149,9 +149,9 @@ namespace VotGESOrders.Views
       pnlFilter.DataContext = CurrentFilter;
       grdTasks.ItemsSource = CurrentFilter.Data;
 
-      /*PagedCollectionView pcv = new PagedCollectionView(CurrentFilter.Data);
+      PagedCollectionView pcv = new PagedCollectionView(CurrentFilter.Data);
 			pcv.GroupDescriptions.Add(new PropertyGroupDescription("CranName"));
-			grdTasks.ItemsSource = pcv;*/
+			grdTasks.ItemsSource = pcv;
 
       processCransData(ChartMZ, (new int[] { 1, 2 }).ToList());
       processCransData(ChartSUS, (new int[] { 3, 4 }).ToList());
@@ -329,8 +329,12 @@ namespace VotGESOrders.Views
       }
 
       try {
-        if (grdTasks.SelectedItem != task)
-          grdTasks.SelectedItem = task;        
+        if (grdTasks.SelectedItem != task) {
+          grdTasks.SelectedItem = task;          
+        }
+        try {
+          grdTasks.ScrollIntoView(task, grdTasks.Columns[0]);
+        } catch { }
         foreach (LineSeries serie in CurrentChart.Series) {
           if (serie.Name == String.Format("order_{0}", task.Number)) {
             serie.LineStrokeThickness = 5;

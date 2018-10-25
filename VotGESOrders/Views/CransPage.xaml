@@ -93,12 +93,12 @@
                                 </DataTemplate>
                             </sdk:DataGridTemplateColumn.CellTemplate>
                         </sdk:DataGridTemplateColumn>
-                        <sdk:DataGridTemplateColumn Header="Текст" SortMemberPath="CranName" Width="3*">
+                        <sdk:DataGridTemplateColumn Header="Текст" SortMemberPath="Comment" Width="3*">
                             <sdk:DataGridTemplateColumn.CellTemplate >
                                 <DataTemplate>
                                     <Grid>
                                         <StackPanel>
-                                            <TextBlock Text="{Binding CranName}" TextWrapping="Wrap" FontSize="11" HorizontalAlignment="Left" FontWeight="Bold"/>
+                                            <!--<TextBlock Text="{Binding CranName}" TextWrapping="Wrap" FontSize="11" HorizontalAlignment="Left" FontWeight="Bold"/>-->
                                             <TextBlock Text="{Binding Comment}" TextWrapping="Wrap" FontSize="11" HorizontalAlignment="Center"/>                                                                            
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding hasCrossTasks, Converter={StaticResource visibilityConverter}}">
                                                 <TextBlock Text="Конфликт: " HorizontalAlignment="Right" FontSize="9" FontStyle="Italic"/>
