@@ -4,7 +4,7 @@
            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
            xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
                       xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
-           Width="407" Height="291" 
+           Width="407" Height="350" 
            Title="Заявка">
     <Grid x:Name="LayoutRoot" Margin="2">
         <Grid.RowDefinitions>
@@ -35,10 +35,20 @@
                 <Button Width="23" Content="..." Name="btnManager" Click="btnManager_Click"/>
                 <!--<ComboBox Name="acbManager"  Width="278"  SelectedValue="{Binding Manager, Mode=TwoWay}"/>-->
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,10">                
                 <TextBlock Text="Стропальщик " Width="100" Style="{StaticResource Label}"/>
-                <sdk:AutoCompleteBox  Text="{Binding StropUser, Mode=TwoWay}" Width="250" Name="acbStropUser" FilterMode="Contains"/>
-                <Button Width="23" Content="..." Name="btnStropUser" Click="btnStropUser_Click"/>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Text="{Binding StropUser, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" Width="250" Height="50"
+                                     IsEnabled="{Binding canChange}" HorizontalAlignment="Left" IsReadOnly="True"/>
+                        <Button Width="23" Content="X" Name="btnClearStropUser" Click="btnClearStropUser_Click" Height="30" VerticalAlignment="Top"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <sdk:AutoCompleteBox  Width="230" Name="acbStropUser" FilterMode="Contains" HorizontalAlignment="Left"/>
+                        <Button Width="23" Content="..." Name="btnStropUser" Click="btnStropUser_Click"/>
+                        <Button Width="23" Content="+" Name="btnAddStropUser" Click="btnAddStropUser_Click"/>
+                    </StackPanel>
+                </StackPanel>
                 <!--<TextBox Text="{Binding Manager, Mode=TwoWay}"  Width="200"/>-->
                 <!--<ComboBox Name="acbStropUser"  Width="278"  SelectedValue="{Binding StropUser, Mode=TwoWay}"/>-->
             </StackPanel>

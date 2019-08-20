@@ -554,7 +554,7 @@ namespace VotGESOrders.Web.Models
 
         string htmlDatesTable =
           String.Format("<table width='100%'><tr><th colspan='4'>Сроки заявки</th></tr><tr><th>&nbsp;</th><th>Сроки</th><th>Автор</th><th>***</th></tr><tr><th>Заявка</th><td>{0}<hr/>{1}</td><td>{2}</td><td>{3}</td></tr><tr><th>Разрешение</th><td>{4}<hr/>{5}</td><td>{6}</td><td>{7}</td></tr><tr><th>Факт</th><td>{8}<hr/>{9}</td><td>{10}<hr/>{11}</td><td>&nbsp;</td></tr></table>",
-          order.NeedStartDate.ToString("dd.MM.yy HH:mm"), order.NeedEndDate.ToString("dd.MM.yy HH:mm"), OrdersUser.loadFromCache(order.SelAuthor).FullName, String.Format("<b>Ответственный:</b><br/>{0}<br/><b>Стропальщик:</b><br/>{1}", order.Manager, order.StropUser),
+          order.NeedStartDate.ToString("dd.MM.yy HH:mm"), order.NeedEndDate.ToString("dd.MM.yy HH:mm"), OrdersUser.loadFromCache(order.SelAuthor).FullName, String.Format("<b>Ответственный:</b><br/>{0}<br/><b>Стропальщик:</b><br/>{1}", order.Manager, order.StropUser.Replace("\r\n","<br/>")),
           order.Allowed ? order.AllowDateStart.ToString("dd.MM.yy HH:mm") : order.Denied ? "Отклонено" : order.Cancelled ? "Снята" : "&nbsp;",
           order.Allowed ? order.AllowDateEnd.ToString("dd.MM.yy HH:mm") : order.Denied ? "Отклонено" : order.Cancelled ? "Снята" : "&nbsp;",
           order.Allowed || order.Denied ? order.AuthorAllow : order.Cancelled ? order.AuthorCancel : "-",
@@ -704,7 +704,7 @@ namespace VotGESOrders.Web.Models
 
 </table>
 ", order.YearNumber, order.DateCreate.ToString("dd.MM.yyyy"), 1, order.CranName, order.Comment,
-  order.StropUser,
+  order.StropUser.Replace("\r\n","<br/>"),
   order.Allowed ? order.AllowDateStart.ToString("dd.MM.yy HH:mm") : order.NeedStartDate.ToString("dd.MM.yy HH:mm"),
   order.Allowed ? order.AllowDateEnd.ToString("dd.MM.yy HH:mm") : order.NeedEndDate.ToString("dd.MM.yy HH:mm"),
   order.CranNumber <= 2 ? "Представитель группы ТиГМО ПТС (только для кранов МЗ)" : "Исполнитель заявки",
@@ -716,15 +716,48 @@ namespace VotGESOrders.Web.Models
       }
     }
 
+		protected static string getShortNameOnce(string manager)
+		{
+			try	{
+				string[] parts = manager.Split(new char[] { ':', '(' });
+				if (parts.Length >= 2)
+					return parts[1];
+				else return manager;
+			}
+			catch (Exception e)		{
+				return manager;
+			}
+		}
+
     public static string getShortName(string manager) {
-      try {
-        string[] parts = manager.Split(new char[] { ':','(' });
-        if (parts.Length >=2)
-          return parts[1];
-        else return manager;
-      }catch (Exception e) {
-        return manager;
-      }
+			try
+			{
+				if (manager.Contains("\r\n"))
+				{
+					try
+					{
+						string[] managers = manager.Split(new string[] { "\r\n" }, 10, StringSplitOptions.RemoveEmptyEntries);
+						string res = "";
+						foreach (string man in managers)
+						{
+							res += getShortNameOnce(man) + "\r\n";
+						}
+						return res;
+					}
+					catch
+					{
+						return manager;
+					}
+				}
+				else
+				{
+					return getShortNameOnce(manager);
+				}
+			}catch (Exception e)
+			{
+				return manager;
+			}
+			
     }
 
     public static string getFullName(string manager) {

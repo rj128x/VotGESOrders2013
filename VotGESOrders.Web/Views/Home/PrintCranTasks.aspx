@@ -96,7 +96,7 @@
                 </td>
                 <td><%=rec.Comment%>                    
                     <%=!string.IsNullOrEmpty(rec.crossTasks)?"<p align='right'><b>Конфликт: </b>"+rec.crossTasks+"</p>":"" %>
-                    <%=!string.IsNullOrEmpty(rec.StropUser) ? "<p align='right'><b>Стропальщик </b>" + rec.StropUserShort + "</p>" : ""%>
+                    <%=!string.IsNullOrEmpty(rec.StropUser) ? "<p align='right'><b>Стропальщик </b>" + rec.StropUserShort.Replace("\r\n","<br/>") + "</p>" : ""%>
                     <%=!string.IsNullOrEmpty(rec.CranUser) ? "<p align='right'><b>Крановщик </b>" + rec.CranUserShort + "</p>" : ""%>
                 </td>
                 <td><%=rec.State%>

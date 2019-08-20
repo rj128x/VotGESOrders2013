@@ -413,7 +413,7 @@
           <Property Name="RealDateStart" Type="DateTime" Precision="3" />
           <Property Name="RealDateEnd" Type="DateTime" Precision="3" />
           <Property Name="AuthorFinish" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="StropUser" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="StropUser" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="CranUser" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="SelAuthor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="AuthorText" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
